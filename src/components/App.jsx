@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/App.css";
+import QuizMain from './QuizComponents/QuizMain'
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
         >
           Learn React
         </a>
+        <QuizMain />
       </header>
+
     </div>
   );
 }
