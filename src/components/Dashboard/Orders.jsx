@@ -48,7 +48,7 @@ export default function Orders() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Your Investments</Title>
+      <Title>Your Friends</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -73,7 +73,7 @@ export default function Orders() {
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
+          Discover more investments
         </Link>
       </div>
     </React.Fragment>
