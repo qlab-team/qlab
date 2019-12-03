@@ -31,7 +31,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Your qScore</Title>
+      <Title>qScore</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
