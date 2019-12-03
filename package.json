@@ -34,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "firebase-tools": "^7.8.1",
     "nodemon": "^2.0.1"
   }
 }
