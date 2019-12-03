@@ -9,7 +9,7 @@ export default function Landing() {
     <Container maxWidth="sm">
       <Typography variant="h6">QLAB</Typography>
       <a href="/dashboard" style={{ textDecoration: "none" }}>
-        <Fab variant="extended">Dashboard</Fab>{" "}
+        <Fab variant="extended">LOGIN</Fab>{" "}
       </a>
     </Container>
   );
