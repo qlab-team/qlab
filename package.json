@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test-nowatch": "react-scripts test --watchAll=false",
+    "test-nowatch": "react-scripts test --watchAll=false"
   },
   "dependencies": {
     "firebase": "^7.5.0",
