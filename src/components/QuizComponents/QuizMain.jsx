@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-//import { Grid } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
-import QuizQuestion from './QuizQuestion'
+
 
 export default class QuizMain extends Component {
 
@@ -36,12 +36,18 @@ export default class QuizMain extends Component {
     render() {
         return(
         <div>
-
-            <QuizQuestion question={this.state.Quiz[this.state.currentQuestion].question} />
+            <div>
+            <Paper>
+                {this.state.Quiz[this.state.currentQuestion].question}
+            </Paper>
+    
             <QuizAnswers 
             answers={this.state.Quiz[this.state.currentQuestion].answers}
             correctAnswer={this.state.Quiz[this.state.currentQuestion].correctAnswer}
             />
+            </div>
+            
+
         </div> 
         )
     }
