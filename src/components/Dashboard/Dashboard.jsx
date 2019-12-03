@@ -18,10 +18,12 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import Avatar from "@material-ui/core/Avatar";
 import { mainListItems, secondaryListItems } from "./ListItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits.jsx";
 import Orders from "./Orders";
+import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
 
 function Copyright() {
   return (
@@ -172,6 +174,17 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          <Grid container>
+            <Grid item xs={4}>
+              <Avatar alt="sidiousvic" src={sidiousvicAvatar} />
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="h6" display="block" gutterBottom>
+                sidiousvic
+              </Typography>
+            </Grid>
+          </Grid>
+
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>

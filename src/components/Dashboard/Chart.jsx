@@ -23,8 +23,7 @@ const data = [
   createData("12:00", 1500),
   createData("15:00", 2000),
   createData("18:00", 2400),
-  createData("21:00", 2400),
-  createData("24:00", undefined)
+  createData("21:00", 9999)
 ];
 
 export default function Chart() {
@@ -32,7 +31,7 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>Your qScore</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -49,9 +48,7 @@ export default function Chart() {
               angle={270}
               position="left"
               style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
-            >
-              Sales ($)
-            </Label>
+            ></Label>
           </YAxis>
           <Line
             type="monotone"
