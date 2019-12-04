@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUser } from "../../store/actions/getUserActions";
+// import { createUser } from "../../store/actions/userActions"
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
@@ -14,7 +14,7 @@ class Sidebar extends Component {
   }
   handleClick = e => {
     e.preventDefault();
-    this.props.getUser(this.state);
+    this.props.createUser(this.state);
   };
   render() {
     const { users } = this.props;
@@ -43,17 +43,18 @@ const mapStateToProps = state => {
   // console.log("state", state);
   const users = state.firestore.data.users;
   return {
-    users: users
+    users: users,
+    auth: state.firebase.auth
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getUser: users => dispatch(getUser(users))
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     createUser: users => dispatch(createUser(users))
+//   };
+// };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   firestoreConnect([{ collection: "users" }])
 )(Sidebar);
