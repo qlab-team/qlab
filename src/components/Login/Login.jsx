@@ -2,6 +2,11 @@
 import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../../config/fbConfig";
+// redux
+import { connect } from "react-redux";
+import { createUser } from "../../store/actions/userActions";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 // material ui
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -24,7 +29,7 @@ const uiConfig = {
   signInFlow: "popup",
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
   signInSuccessUrl: "/dashboard",
-  // We will display Google and Facebook as auth providers.
+  // We will display Google as an auth provider.
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID
     // firebase.auth.FacebookAuthProvider.PROVIDER_ID
@@ -66,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   lockOutlinedIcon: {}
 }));
 
-export default function SignInScreen() {
+function Login() {
   const classes = useStyles();
 
   // componentDidMount() {
@@ -149,3 +154,22 @@ export default function SignInScreen() {
     </Container>
   );
 }
+
+const mapStateToProps = state => {
+  const users = state.firestore.data.users;
+  return {
+    users: users,
+    auth: state.firebase.auth
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createUser: users => dispatch(createUser(users))
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{ collection: "users" }])
+)(Login);
