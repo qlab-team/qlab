@@ -1,16 +1,46 @@
 import React from "react";
 // material ui
-import { Container } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+// components
+import ButtonAppBar from "./ButtonAppBar";
+import TitleAndStartButton from "./TitleAndStartButton";
+import Box from "@material-ui/core/Box";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  title: {
+    fontSize: 100,
+    color: "white",
+    textShadow: "15px 15px 0px #C275FF",
+    marginBottom: 6,
+    fontFamily: "Aquino"
+  },
+  button: {
+    flexGrow: 1
+  }
+}));
 
 export default function Landing() {
+  const classes = useStyles();
+
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h6">QLAB</Typography>
-      <a href="/login" style={{ textDecoration: "none" }}>
-        <Fab variant="extended">LOGIN</Fab>{" "}
-      </a>
-    </Container>
+    <React.Fragment>
+      <ButtonAppBar />
+      <Container display="flex">
+        <Box
+          minHeight="100vh"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="space-around"
+          className={classes.root}
+        >
+          <TitleAndStartButton />
+        </Box>
+      </Container>
+    </React.Fragment>
   );
 }

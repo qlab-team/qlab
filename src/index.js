@@ -11,6 +11,33 @@ import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
 
+// material ui
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { deepPurple } from "@material-ui/core/colors";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: deepPurple
+  },
+  typography: {
+    fontFamily: [
+      "Fira Code",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(",")
+  }
+});
+
+console.log(theme);
+
 const store = createStore(
   rootReducer,
   compose(
@@ -22,8 +49,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
   </Provider>,
+
   document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change

@@ -27,10 +27,10 @@ import Orders from "./Orders";
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
 
 //Firebase Stuff
-import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 import firebase from "../../config/fbConfig";
 
 function Copyright() {
@@ -67,7 +67,10 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    background:
+      "linear-gradient(90deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    color: "#fff"
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -93,7 +96,10 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    background:
+      "linear-gradient(90deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    color: "#fff"
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -127,7 +133,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = (props) => {
+const Dashboard = props => {
   //Set Props from Redux
   const { auth } = props;
 
@@ -143,9 +149,8 @@ const Dashboard = (props) => {
 
   //If No Auth, Redirect To Front Page
   if (auth.isLoaded) {
-    if (auth.isEmpty) return <Redirect to='/login' />
+    if (auth.isEmpty) return <Redirect to="/login" />;
   }
-
 
   return (
     <div className={classes.root}>
@@ -193,7 +198,10 @@ const Dashboard = (props) => {
         <div className={classes.toolbarIcon}>
           <Grid container>
             <Grid item xs={4}>
-              <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
+              <Avatar
+                alt="sidiousvic"
+                src={auth.photoURL || sidiousvicAvatar}
+              />
             </Grid>
             <Grid item xs={8}>
               <Typography variant="h6" display="block" gutterBottom>
@@ -245,21 +253,21 @@ const Dashboard = (props) => {
       </main>
     </div>
   );
-}
-
+};
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state);
   const users = state.firestore.data.users;
   return {
     users: users,
     auth: state.firebase.auth
-  }
-}
+  };
+};
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([{
-    collection: 'users'
-  }])
-)(Dashboard)
+  firestoreConnect([
+    {
+      collection: "users"
+    }
+  ])
+)(Dashboard);
