@@ -4,9 +4,21 @@ import "./style/index.css";
 import App from "./components/App.jsx";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+const theme = createMuiTheme({
+  palette: {
+    primary: red
+  }
+});
+
+console.log(theme);
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <App />
+  </MuiThemeProvider>,
+  document.getElementById("root")
+);
 serviceWorker.unregister();
