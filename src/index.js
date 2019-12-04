@@ -13,11 +13,26 @@ import fbConfig from "./config/fbConfig";
 
 // material ui
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+import { deepPurple } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
-    primary: red
+    primary: deepPurple
+  },
+  typography: {
+    fontFamily: [
+      "Fira Code",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(",")
   }
 });
 
