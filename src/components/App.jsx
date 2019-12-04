@@ -4,6 +4,8 @@ import "../style/App.css";
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
 import Landing from "./Landing/Landing";
+import QuizMain from "./Quiz/QuizMain";
+import Sidebar from "./Dashboard/Sidebar";
 
 // react-router
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -14,12 +16,10 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={Landing}></Route>
-        </Switch>
-        <Switch>
           <Route path="/login" component={Login}></Route>
-        </Switch>
-        <Switch>
           <Route path="/dashboard" component={Dashboard}></Route>
+          <Route path="/quiz" component={QuizMain}></Route>
+          <Route path="/sidebar" component={Sidebar}></Route>
         </Switch>
       </div>
     </BrowserRouter>

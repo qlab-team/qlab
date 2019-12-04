@@ -1,24 +1,10 @@
 // Import FirebaseAuth and firebase.
 import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "firebase";
+import firebase from "../../config/fbConfig";
 
 // material ui
 import Fab from "@material-ui/core/Fab";
-
-// Configure Firebase.
-const config = {
-  apiKey: "AIzaSyD9aJpocdFwzNf7kVRQk7c0rxfXwcC2og0",
-  authDomain: "qlab-cc.firebaseapp.com",
-  databaseURL: "https://qlab-cc.firebaseio.com",
-  projectId: "qlab-cc",
-  storageBucket: "qlab-cc.appspot.com",
-  messagingSenderId: "966425750434",
-  appId: "1:966425750434:web:44c20f5cc3cc3b815620fb",
-  measurementId: "G-HDGRZHMZDV"
-};
-
-firebase.initializeApp(config);
 
 // Configure FirebaseUI.
 const uiConfig = {
