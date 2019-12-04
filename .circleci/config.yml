@@ -8,9 +8,9 @@ jobs: # a collection of steps
       - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
           name: update yarn
-          command: 'sudo yarn upgrade'
-      - restore_cache:  # special step to restore the dependency cache
-                        # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          command: "sudo yarn upgrade"
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
@@ -22,36 +22,36 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: 
-          name: React Tests
-          command: yarn test-nowatch
+      # - run:
+      #     name: React Tests
+      #     command: yarn test-nowatch
   deploy: # deploy script
-      working_directory: ~/repository
-      docker:
-        - image: circleci/node:10.16.3
-      steps:
-        - checkout
-        - run: # Update Yarn if required
-            name: update yarn
-            command: 'sudo yarn upgrade'
-        - restore_cache:  # special step to restore the dependency cache
-            name: Restore Yarn Package Cache
-            keys:
-              - yarn-packages-{{ checksum "yarn.lock" }}
-        - run: # Run Yarn
-            name: Install Dependencies
-            command: yarn install --frozen-lockfile
-        - save_cache: # special step to save the dependency cache
-            name: Save Yarn Package Cache
-            key: yarn-packages-{{ checksum "yarn.lock" }}
-            paths:
-              - ~/.cache/yarn
-        - run: # Build the Project
-            name: react-build
-            command: yarn build
-        - run: # Deploy to Firebase
-            name: Deploy to Firebase
-            command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+    working_directory: ~/repository
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run: # Update Yarn if required
+          name: update yarn
+          command: "sudo yarn upgrade"
+      - restore_cache: # special step to restore the dependency cache
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache: # special step to save the dependency cache
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: # Build the Project
+          name: react-build
+          command: yarn build
+      - run: # Deploy to Firebase
+          name: Deploy to Firebase
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
 
 workflows:
   version: 2
@@ -64,6 +64,3 @@ workflows:
           filters: # only for the master branch
             branches:
               only: master
-
-
-      
