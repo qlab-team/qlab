@@ -1,13 +1,24 @@
 import React from "react";
 import "../style/App.css";
-import QuizMain from './QuizComponents/QuizMain'
+// components
+import Dashboard from "./Dashboard/Dashboard";
+import Landing from "./Landing/Landing";
+
+// react-router
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <QuizMain /> 
-
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={Landing}></Route>
+        </Switch>
+        <Switch>
+          <Route path="/dashboard" component={Dashboard}></Route>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
