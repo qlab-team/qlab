@@ -5,24 +5,26 @@ import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
 import Landing from "./Landing/Landing";
 import QuizMain from "./Quiz/QuizMain";
-import Sidebar from "./Dashboard/Sidebar";
-
 // react-router
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
+    <Router>
+      <div
+        className="App"
+        style={{
+          background: "linear-gradient(180deg, #50F2FF 0%, #FF64F9 100%)"
+        }}
+      >
         <Switch>
           <Route exact path="/" component={Landing}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
           <Route path="/quiz" component={QuizMain}></Route>
-          <Route path="/sidebar" component={Sidebar}></Route>
         </Switch>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
