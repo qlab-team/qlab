@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
+import Fab from "@material-ui/core/Fab";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -24,6 +25,13 @@ import Chart from "./Chart";
 import Deposits from "./Deposits.jsx";
 import Orders from "./Orders";
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
+
+//Firebase Stuff
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
+import { Redirect } from 'react-router-dom'
+import firebase from "../../config/fbConfig";
 
 function Copyright() {
   return (
@@ -119,7 +127,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard() {
+const Dashboard = (props) => {
+  //Set Props from Redux
+  const { auth } = props;
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -129,6 +140,12 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  //If No Auth, Redirect To Front Page
+  if (auth.isLoaded) {
+    if (auth.isEmpty) return <Redirect to='/login' />
+  }
+
 
   return (
     <div className={classes.root}>
@@ -176,11 +193,11 @@ export default function Dashboard() {
         <div className={classes.toolbarIcon}>
           <Grid container>
             <Grid item xs={4}>
-              <Avatar alt="sidiousvic" src={sidiousvicAvatar} />
+              <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
             </Grid>
             <Grid item xs={8}>
               <Typography variant="h6" display="block" gutterBottom>
-                sidiousvic
+                {auth.displayName || "...loading"}
               </Typography>
             </Grid>
           </Grid>
@@ -193,6 +210,10 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
+        <Divider />
+        <Fab onClick={() => firebase.auth().signOut()} variant="extended">
+          SIGN OUT
+        </Fab>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -225,3 +246,20 @@ export default function Dashboard() {
     </div>
   );
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+  // console.log(state);
+  const users = state.firestore.data.users;
+  return {
+    users: users,
+    auth: state.firebase.auth
+  }
+}
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{
+    collection: 'users'
+  }])
+)(Dashboard)
