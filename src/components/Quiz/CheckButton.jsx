@@ -5,6 +5,6 @@ const progress = 50;
 
 export default props => {
     return (
-        <Button />
+        <Button variant="contained" color="primary">CHECK</Button>
     )
 }

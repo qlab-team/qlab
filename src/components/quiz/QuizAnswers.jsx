@@ -12,12 +12,15 @@ const styles = {
   }
 };
 
+const answerValidator = (e) => {
+  console.log(e.target);
+}
 export default props => {
   return (
     <div>
       <Grid container>
         <Grid item xs={6}>
-          <Paper style={styles.Paper}>{props.answers[0]}</Paper>
+          <Paper onClick={answerValidator}style={styles.Paper}>{props.answers[0]}</Paper>
         </Grid>
 
         <Grid item xs={6}>
