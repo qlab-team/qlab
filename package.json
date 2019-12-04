@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
     "firebase": "^7.5.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
@@ -20,6 +21,7 @@
     "react-redux-firebase": "2.1.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "recharts": "^2.0.0-beta.1",
     "redux": "^4.0.4",
     "redux-firestore": "^0.11.0",
     "redux-thunk": "^2.3.0"
