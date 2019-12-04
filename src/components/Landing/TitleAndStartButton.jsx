@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -27,6 +28,7 @@ const useStyles = makeStyles(theme => ({
     color: "#FFF",
     fontSize: 20,
     textTransform: "none",
+    textDecoration: "none !important",
     padding: "10px 50px 10px 50px"
   }
 }));
@@ -49,9 +51,9 @@ export default function TileAndStartButton() {
       <Typography className={classes.tagline} variant="h2">
         Where effort's the currency.
       </Typography>
-      <a href="/login" style={{ textDecoration: "none", color: "white" }}>
+      <Link style={{ textDecoration: "none" }} to="/login">
         <Button className={classes.button}>start</Button>
-      </a>
+      </Link>
     </Box>
   );
 }
