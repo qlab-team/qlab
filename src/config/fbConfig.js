@@ -4,8 +4,14 @@ import "firebase/auth";
 
 // Replace this with your own config details
 const config = {
-  apiKey: "AIzaSyAI8bN_6LTSnH1Q1N6SvPY4MULRsATNNZQ",
-  projectId: "qlab-cc"
+  apiKey: "AIzaSyD9aJpocdFwzNf7kVRQk7c0rxfXwcC2og0",
+  authDomain: "qlab-cc.firebaseapp.com",
+  databaseURL: "https://qlab-cc.firebaseio.com",
+  projectId: "qlab-cc",
+  storageBucket: "qlab-cc.appspot.com",
+  messagingSenderId: "966425750434",
+  appId: "1:966425750434:web:44c20f5cc3cc3b815620fb",
+  measurementId: "G-HDGRZHMZDV"
 };
 firebase.initializeApp(config);
 // firebase.firestore().settings({ timestampsInSnapshots: true });
