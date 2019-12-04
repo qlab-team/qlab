@@ -1,3 +1,12 @@
+/* FONTS */
+/* Aquino */
+@font-face {
+  font-family: "Aquino";
+  src: url("../assets/fonts/Aquino-Demo.ttf") format("truetype");
+}
+/* Fira Family */
+@import url("https://fonts.googleapis.com/css?family=Fira+Code|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed&display=swap");
+
 body,
 html {
   margin: 0;
