@@ -22,9 +22,9 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      # - run:
-      #     name: React Tests
-      #     command: yarn test-nowatch
+      - run:
+          name: Run Jest Test
+          command: yarn test
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
