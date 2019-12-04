@@ -11,17 +11,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div
-        className="App"
-        style={{
-          background: "linear-gradient(180deg, #50F2FF 0%, #FF64F9 100%)"
-        }}
-      >
+      <div className="App">
         <Switch>
-          <Route exact path="/" component={Landing}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
           <Route path="/quiz" component={QuizMain}></Route>
+          <Route exact path="/" component={Landing}></Route>
         </Switch>
       </div>
     </Router>
