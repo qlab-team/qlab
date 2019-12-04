@@ -3,6 +3,9 @@ import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase";
 
+// material ui
+import Fab from "@material-ui/core/Fab";
+
 // Configure Firebase.
 const config = {
   apiKey: "AIzaSyD9aJpocdFwzNf7kVRQk7c0rxfXwcC2og0",
@@ -50,7 +53,9 @@ export default class SignInScreen extends React.Component {
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}
         />
-        <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+        <Fab onClick={() => firebase.auth().signOut()} variant="extended">
+          SIGN OUT
+        </Fab>
       </div>
     );
   }
