@@ -39,9 +39,3 @@ export default props => {
     </div>
   );
 };
-
-// const mapStateToProps = (state) => {
-//   return {
-//       Quiz
-//   }
-// }

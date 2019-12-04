@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 
 const styles = {
@@ -18,6 +18,7 @@ const answerValidator = (e) => {
 export default props => {
   return (
     <div>
+      
       <Grid container>
         <Grid item xs={6}>
           <Paper onClick={answerValidator}style={styles.Paper}>{props.answers[0]}</Paper>
