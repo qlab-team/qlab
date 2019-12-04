@@ -6,5 +6,5 @@ export default props => {
           <Paper style={styles.Paper}>{props.answers[2]}</Paper>
         </Grid>
     )
-    
 }
+
