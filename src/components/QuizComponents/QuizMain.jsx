@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Paper } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
-
-
+import {LinearProgress} from '@material-ui/core'
+import CheckButton from './CheckButton'
 export default class QuizMain extends Component {
 
     constructor(props) {
@@ -46,7 +46,9 @@ export default class QuizMain extends Component {
             correctAnswer={this.state.Quiz[this.state.currentQuestion].correctAnswer}
             />
             </div>
-            
+            <LinearProgress variant="determinate" value="80"/>
+
+            <CheckButton />
 
         </div> 
         )
