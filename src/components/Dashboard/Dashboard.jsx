@@ -59,7 +59,10 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    background:
+      "linear-gradient(90deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    color: "#fff"
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -85,7 +88,10 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    background:
+      "linear-gradient(90deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    color: "#fff"
   },
   drawerPaperClose: {
     overflowX: "hidden",
