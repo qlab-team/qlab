@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import QuizAnswers from "./QuizAnswers";
+import { connect } from 'react-redux'
 
-export default class QuizMain extends Component {
+class QuizMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      quizInfo: [],
       currentQuestion: 0,
       quizTitle: "Planets Level 1", //will get this from the store afterwards
       Quiz: [
@@ -29,6 +31,10 @@ export default class QuizMain extends Component {
     };
   }
 
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <div>
@@ -46,3 +52,11 @@ export default class QuizMain extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizMain)

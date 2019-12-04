@@ -15,7 +15,7 @@ class QuizSelection extends Component  {
 
     return(
         <Grid item xs={6}>
-          <Paper onClick={this.loadQuiz}>{this.props.quizTitle}</Paper>
+          <a href="/quiz"><Paper onClick={this.loadQuiz}>{this.props.quizTitle}</Paper></a>
         </Grid>
     )
     }

@@ -1,9 +1,11 @@
-const initState = {};
+import initState from '../initState'
 
 const quizReducer = (state = initState, action) => {
   switch (action.type) {
     case "UPDATE_QUIZ_INFO": {
-        console.log(action.quizId);
+        state.currentQuiz = action.quizId;
+        console.log(state);
+        break
     }
     default:
       return state;

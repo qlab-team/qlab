@@ -34,6 +34,7 @@ export default class QuizMain extends Component {
     }
 
     render() {
+        const currentProgress = 80;
         return(
         <div>
             <div>
@@ -46,7 +47,7 @@ export default class QuizMain extends Component {
             correctAnswer={this.state.Quiz[this.state.currentQuestion].correctAnswer}
             />
             </div>
-            <LinearProgress variant="determinate" value="80"/>
+            <LinearProgress variant="determinate" value={currentProgress}/>
 
             <CheckButton />
 
