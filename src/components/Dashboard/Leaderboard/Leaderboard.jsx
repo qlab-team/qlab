@@ -1,6 +1,6 @@
 import React from "react";
 // components
-import Orders from "../Stats/Orders";
+import Leaders from "./Leaders";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -66,7 +66,7 @@ const Leaderboard = props => {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <Leaders />
               </Paper>
             </Grid>
           </Grid>
