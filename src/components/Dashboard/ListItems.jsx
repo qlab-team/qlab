@@ -7,8 +7,11 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 // react-router
 import { Link } from "react-router-dom";
+// firebase
+import firebase from "../../config/fbConfig";
 
 export const mainListItems = (
   <div>
@@ -59,4 +62,19 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = <div></div>;
+export const secondaryListItems = (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <ExitToAppIcon />
+      </ListItemIcon>
+      <Link
+        onClick={() => firebase.auth().signOut()}
+        style={{ textDecoration: "none", color: "white" }}
+        to="/"
+      >
+        <ListItemText primary="Logout" />
+      </Link>
+    </ListItem>
+  </div>
+);

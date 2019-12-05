@@ -10,7 +10,6 @@ import { mainListItems, secondaryListItems } from "./ListItems";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 // assets
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
@@ -19,7 +18,8 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
-import firebase from "../../config/fbConfig";
+// react-router
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -32,6 +32,19 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
     padding: "0 8px",
     ...theme.mixins.toolbar
+  },
+  button: {
+    // background: "rgb(92,27,249)",
+    margin: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    borderRadius: 50,
+    border: "solid white 1px",
+    color: "#FFF",
+    fontSize: 20,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: "10px 10px 10px 10px"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -131,7 +144,6 @@ const Sidebar = props => {
             </Typography>
           </Grid>
         </Grid>
-
         <IconButton onClick={props.handleDrawerClose}>
           <ChevronLeftIcon />
         </IconButton>
@@ -141,9 +153,13 @@ const Sidebar = props => {
       <Divider />
       <List>{secondaryListItems}</List>
       <Divider />
-      <Fab onClick={() => firebase.auth().signOut()} variant="extended">
-        SIGN OUT
-      </Fab>
+      <Link
+        className={classes.button}
+        style={{ textDecoration: "none" }}
+        to="/quiz"
+      >
+        quiz
+      </Link>
     </Drawer>
   );
 };
