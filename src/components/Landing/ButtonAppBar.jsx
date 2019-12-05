@@ -18,6 +18,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 6,
     fontFamily: "Aquino"
   },
+  appBar: {
+    background:
+      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
+  },
   button: {
     flexGrow: 1,
     textTransform: "none",
@@ -31,7 +35,7 @@ export default function ButtonAppBar() {
   return (
     <Router>
       <div className={classes.root}>
-        <AppBar position="fixed">
+        <AppBar className={classes.appBar} position="fixed">
           <Toolbar>
             <Box
               width={"50%"}
