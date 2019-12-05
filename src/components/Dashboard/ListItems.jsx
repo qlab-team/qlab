@@ -1,4 +1,5 @@
 import React from "react";
+// material ui
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -6,6 +7,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
+// react-router
+import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <div>
@@ -13,25 +16,45 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Profile" />
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/profile"
+      >
+        <ListItemText primary="Profile" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Friends" />
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/leaderboard"
+      >
+        <ListItemText primary="Leaderboard" />
+      </Link>{" "}
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Stats" />
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/stats"
+      >
+        <ListItemText primary="Stats" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Quizzes" />
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/quizzes"
+      >
+        <ListItemText primary="Quizzes" />
+      </Link>
     </ListItem>
   </div>
 );
