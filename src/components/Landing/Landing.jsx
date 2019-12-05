@@ -1,12 +1,12 @@
 import React from "react";
-// material ui
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 // components
 import ButtonAppBar from "./ButtonAppBar";
 import TitleAndStartButton from "./TitleAndStartButton";
 import Box from "@material-ui/core/Box";
-
+// material ui
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+// styles
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1

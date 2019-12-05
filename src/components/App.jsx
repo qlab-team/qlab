@@ -1,4 +1,5 @@
 import React from "react";
+// css
 import "../style/App.css";
 // components
 import Dashboard from "./Dashboard/Dashboard";

@@ -1,4 +1,9 @@
 import React from "react";
+// firebase
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,13 +18,6 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 // assets
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
-// firebase
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
-import { Redirect } from "react-router-dom";
-// react-router
-// import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({

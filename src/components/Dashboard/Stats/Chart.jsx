@@ -1,5 +1,9 @@
 import React from "react";
+// components
+import Title from "../Title";
+// material ui
 import { useTheme } from "@material-ui/core/styles";
+// recharts
 import {
   LineChart,
   Line,
@@ -8,9 +12,8 @@ import {
   Label,
   ResponsiveContainer
 } from "recharts";
-import Title from "../Title";
 
-// Generate Sales Data
+// generate data
 function createData(time, amount) {
   return { time, amount };
 }

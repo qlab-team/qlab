@@ -1,4 +1,8 @@
 import React from "react";
+// react-router
+import { Link } from "react-router-dom";
+// firebase
+import firebase from "../../config/fbConfig";
 // material ui
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -8,10 +12,6 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-// react-router
-import { Link } from "react-router-dom";
-// firebase
-import firebase from "../../config/fbConfig";
 
 export const mainListItems = (
   <div>
