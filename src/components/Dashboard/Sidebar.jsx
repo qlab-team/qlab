@@ -19,7 +19,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 // react-router
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
