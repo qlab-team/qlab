@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
@@ -62,10 +62,10 @@ export default function Quizzes() {
 
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} wrap="wrap">
         {state.Quizzes.map(quiz => {
           return (
-            <Grid item xs={4}>
+            <Grid item xs>
               <Paper className={fixedHeightPaper}>
                 <QuizCard
                   quizTitle={quiz.quizTitle}

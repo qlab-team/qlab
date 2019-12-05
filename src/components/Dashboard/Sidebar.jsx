@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  username: {
+    margin: 0
+  },
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
@@ -139,7 +142,12 @@ const Sidebar = props => {
             alignItems="center"
             xs={8}
           >
-            <Typography variant="subtitle1" display="block" gutterBottom>
+            <Typography
+              className={classes.username}
+              variant="subtitle1"
+              display="block"
+              gutterBottom
+            >
               {auth.displayName || "...loading"}
             </Typography>
           </Grid>
@@ -153,13 +161,13 @@ const Sidebar = props => {
       <Divider />
       <List>{secondaryListItems}</List>
       <Divider />
-      <Link
+      {/* <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
         to="/quiz"
       >
         quiz
-      </Link>
+      </Link> */}
     </Drawer>
   );
 };

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 // components
 import Title from "../Title";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 
 // actions
 import updateQuizInfo from "../../../store/actions/quizActions";
@@ -12,6 +12,9 @@ import updateQuizInfo from "../../../store/actions/quizActions";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
   button: {
     background: "rgb(92,27,249)",
     margin: theme.spacing(3),
@@ -23,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 20,
     textTransform: "none",
     textDecoration: "none !important",
-    padding: "10px 10px 10px 10px"
+    padding: theme.spacing(2)
   }
 }));
 
@@ -36,7 +39,12 @@ const QuizCard = props => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <Grid
+      className={classes.root}
+      container
+      justify="space-around"
+      direction="column"
+    >
       <Title>{props.quizTitle}</Title>
       <Typography variant="body2">{props.quizDescription}</Typography>
       <Link
@@ -47,7 +55,7 @@ const QuizCard = props => {
       >
         start
       </Link>
-    </React.Fragment>
+    </Grid>
   );
 };
 
