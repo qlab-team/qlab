@@ -1,4 +1,10 @@
 import React from "react";
+// components
+import Stats from "./Stats/Stats";
+import Quizzes from "./Quizzes/Quizzes";
+// react-router
+import { Route, Switch } from "react-router-dom";
+// material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,7 +19,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -21,12 +26,9 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Avatar from "@material-ui/core/Avatar";
 import { mainListItems, secondaryListItems } from "./ListItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits.jsx";
-import Orders from "./Orders";
+// assets
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
-//Firebase Stuff
+// firebase
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
@@ -145,7 +147,6 @@ const Dashboard = props => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   //If No Auth, Redirect To Front Page
   if (auth.isLoaded) {
@@ -226,26 +227,11 @@ const Dashboard = props => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
+          {/* DASHBOARD VIEWS */}
+          <Switch>
+            <Route path="/dashboard/stats" component={Stats}></Route>
+            <Route path="/dashboard/quizzes" component={Quizzes}></Route>
+          </Switch>
           <Box pt={4}>
             <Copyright />
           </Box>

@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     flexGrow: 1,
-    background: "#C070FF",
+    background:
+      "linear-gradient(45deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
     borderRadius: 50,
     color: "#FFF",
     fontSize: 20,
