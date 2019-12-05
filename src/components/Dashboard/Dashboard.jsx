@@ -1,5 +1,6 @@
 import React from "react";
 // components
+import Leaderboard from "./Leaderboard/Leaderboard";
 import Stats from "./Stats/Stats";
 import Quizzes from "./Quizzes/Quizzes";
 // react-router
@@ -229,6 +230,10 @@ const Dashboard = props => {
         <Container maxWidth="lg" className={classes.container}>
           {/* DASHBOARD VIEWS */}
           <Switch>
+            <Route
+              path="/dashboard/leaderboard"
+              component={Leaderboard}
+            ></Route>
             <Route path="/dashboard/stats" component={Stats}></Route>
             <Route path="/dashboard/quizzes" component={Quizzes}></Route>
           </Switch>
