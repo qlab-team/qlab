@@ -86,16 +86,6 @@ const useStyles = makeStyles(theme => ({
 function Login() {
   const classes = useStyles();
 
-  // componentDidMount() {
-  //   this.unregisterAuthObserver = firebase
-  //     .auth()
-  //     .onAuthStateChanged(user => console.log(user));
-  // }
-  // // Make sure we un-register Firebase observers when the component unmounts.
-  // componentWillUnmount() {
-  //   this.unregisterAuthObserver();
-  // }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

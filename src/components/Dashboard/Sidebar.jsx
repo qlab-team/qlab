@@ -1,41 +1,27 @@
 import React from "react";
-// components
-import Leaderboard from "./Leaderboard/Leaderboard";
-import Stats from "./Stats/Stats";
-import Quizzes from "./Quizzes/Quizzes";
-import Topbar from "./Topbar";
-import Sidebar from "./Sidebar";
-// react-router
-import { Route, Switch } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Link from "@material-ui/core/Link";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { mainListItems, secondaryListItems } from "./ListItems";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
+// assets
+import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
 // firebase
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Redirect } from "react-router-dom";
+import firebase from "../../config/fbConfig";
 
 const drawerWidth = 240;
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -109,47 +95,56 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = props => {
+const Sidebar = props => {
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+  // set props from redux
+  const { auth } = props;
+  // if No auth, redirect to Landing
+  if (auth.isLoaded) {
+    if (auth.isEmpty) return <Redirect to="/login" />;
+  }
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        {/* TOPBAR */}
-        <Topbar handleDrawerOpen={handleDrawerOpen} open={open} />
-      </AppBar>
-      {/* SIDEBAR */}
-      <Sidebar handleDrawerClose={handleDrawerClose} open={open} />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          {/* DASHBOARD VIEWS */}
-          <Switch>
-            <Route
-              path="/dashboard/leaderboard"
-              component={Leaderboard}
-            ></Route>
-            <Route path="/dashboard/stats" component={Stats}></Route>
-            <Route path="/dashboard/quizzes" component={Quizzes}></Route>
-          </Switch>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+    <Drawer
+      variant="permanent"
+      classes={{
+        paper: clsx(
+          classes.drawerPaper,
+          !props.open && classes.drawerPaperClose
+        )
+      }}
+      open={props.open}
+    >
+      <div className={classes.toolbarIcon}>
+        <Grid container>
+          <Grid item xs={4}>
+            <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            xs={8}
+          >
+            <Typography variant="subtitle1" display="block" gutterBottom>
+              {auth.displayName || "...loading"}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <IconButton onClick={props.handleDrawerClose}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <Divider />
+      <List>{mainListItems}</List>
+      <Divider />
+      <List>{secondaryListItems}</List>
+      <Divider />
+      <Fab onClick={() => firebase.auth().signOut()} variant="extended">
+        SIGN OUT
+      </Fab>
+    </Drawer>
   );
 };
 
@@ -168,4 +163,4 @@ export default compose(
       collection: "users"
     }
   ])
-)(Dashboard);
+)(Sidebar);
