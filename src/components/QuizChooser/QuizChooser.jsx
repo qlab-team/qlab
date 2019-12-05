@@ -7,15 +7,15 @@ export default class QuizChooser extends Component {
         this.state = {
             Quizzes: [
                 {
-                    quizId: 1,
+                    quizId: 'quiz1',
                     quizTitle: "Planets Level 1", 
                 },
                 {
-                    quizId: 3,
+                    quizId: 'quiz2',
                     quizTitle: "Planets Level 2", 
                 },
                 {
-                    quizId: 2,
+                    quizId: 'quiz3',
                     quizTitle: "Planets Level 3", 
                 }
             ]

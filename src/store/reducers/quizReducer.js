@@ -7,6 +7,11 @@ const quizReducer = (state = initState, action) => {
         console.log(state);
         break
     }
+
+    case "GET_QUIZ": {
+      console.log(action.quiz)
+      break
+    }
     default:
       return state;
   }

@@ -3,7 +3,10 @@ import { Paper } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
 import {LinearProgress} from '@material-ui/core'
 import CheckButton from './CheckButton'
-export default class QuizMain extends Component {
+import { connect } from 'react-redux'
+import {getQuiz} from '../../store/actions/quizActions'
+
+class QuizMain extends Component {
 
     constructor(props) {
         super(props);
@@ -33,8 +36,15 @@ export default class QuizMain extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.getQuiz('quiz1');
+        //update the state with this info
+        //for now just using dummy data
+    }
+
     render() {
         const currentProgress = 80;
+        console.log(this.props.quizId)
         return(
         <div>
             <div>
@@ -54,4 +64,18 @@ export default class QuizMain extends Component {
         </div> 
         )
     }
-} 
+}
+
+const mapStateToProps = (state) => {
+    return {
+        quizId: state.quiz.currentQuiz
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        getQuiz: quizId => dispatch(getQuiz(quizId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizMain)
