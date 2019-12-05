@@ -24,7 +24,9 @@ import { mainListItems, secondaryListItems } from "./ListItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits.jsx";
 import Orders from "./Orders";
-import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
+
+//Placeholder Avatar while account Loads - currently Vic
+import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
 
 //Firebase Stuff
 import { connect } from "react-redux";
@@ -32,6 +34,9 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import firebase from "../../config/fbConfig";
+
+//Actions
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 function Copyright() {
   return (
@@ -135,7 +140,7 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = props => {
   //Set Props from Redux
-  const { auth } = props;
+  const { auth, user } = props;
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -147,9 +152,12 @@ const Dashboard = props => {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  //If No Auth, Redirect To Front Page
+  //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
+    //If No Auth, Redirect To Front Page
     if (auth.isEmpty) return <Redirect to="/login" />;
+    //If Auth, get User Data and Set Login to True -- TODO, MAYBE THIS SHOULD GO ON THE LOGIN SCREEN?
+    props.getUserAndLogin(auth.uid);
   }
 
   return (
@@ -199,13 +207,13 @@ const Dashboard = props => {
           <Grid container>
             <Grid item xs={4}>
               <Avatar
-                alt="sidiousvic"
-                src={auth.photoURL || sidiousvicAvatar}
+                alt="useravatar"
+                src={auth.photoURL || placeholderAvatar}
               />
             </Grid>
             <Grid item xs={8}>
               <Typography variant="h6" display="block" gutterBottom>
-                {auth.displayName || "...loading"}
+                {user.userProfile ? user.userProfile.username : "...loading"}
               </Typography>
             </Grid>
           </Grid>
@@ -219,7 +227,13 @@ const Dashboard = props => {
         <Divider />
         <List>{secondaryListItems}</List>
         <Divider />
-        <Fab onClick={() => firebase.auth().signOut()} variant="extended">
+        <Fab
+          onClick={() => {
+            firebase.auth().signOut();
+            props.userLogout();
+          }}
+          variant="extended"
+        >
           SIGN OUT
         </Fab>
       </Drawer>
@@ -256,18 +270,24 @@ const Dashboard = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const users = state.firestore.data.users;
   return {
-    users: users,
+    user: state.user,
     auth: state.firebase.auth
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserAndLogin: authId => dispatch(getUserAndLogin(authId)),
+    userLogout: () => dispatch(userLogout())
+  };
+};
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
     {
-      collection: "users"
+      collection: "Quizzes"
     }
   ])
 )(Dashboard);
