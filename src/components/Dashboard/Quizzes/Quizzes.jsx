@@ -29,15 +29,33 @@ export default function Quizzes() {
     Quizzes: [
       {
         quizId: 1,
-        quizTitle: "Planets Level 1"
-      },
-      {
-        quizId: 3,
-        quizTitle: "Planets Level 2"
+        quizTitle: "Mars",
+        quizDescription: "The red planet."
       },
       {
         quizId: 2,
-        quizTitle: "Planets Level 3"
+        quizTitle: "Oxygen",
+        quizDescription: "It's everywhere."
+      },
+      {
+        quizId: 3,
+        quizTitle: "Mammals",
+        quizDescription: "What are whales?"
+      },
+      {
+        quizId: 4,
+        quizTitle: "Japan",
+        quizDescription: "Land of the rising sun."
+      },
+      {
+        quizId: 5,
+        quizTitle: "Derek's An Ass",
+        quizDescription: "Totally."
+      },
+      {
+        quizId: 6,
+        quizTitle: "Astronomy",
+        quizDescription: "Look right up!"
       }
     ]
   };
@@ -47,9 +65,15 @@ export default function Quizzes() {
       <Grid container spacing={3}>
         {state.Quizzes.map(quiz => {
           return (
-            <Paper className={fixedHeightPaper}>
-              <QuizCard quizTitle={quiz.quizTitle} quizId={quiz.quizId} />
-            </Paper>
+            <Grid item xs={4}>
+              <Paper className={fixedHeightPaper}>
+                <QuizCard
+                  quizTitle={quiz.quizTitle}
+                  quizId={quiz.quizId}
+                  quizDescription={quiz.quizDescription}
+                />
+              </Paper>
+            </Grid>
           );
         })}
       </Grid>
