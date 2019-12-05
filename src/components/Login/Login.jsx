@@ -21,7 +21,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Fab from "@material-ui/core/Fab";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -52,21 +51,34 @@ function Copyright() {
 const useStyles = makeStyles(theme => ({
   paper: {
     // marginTop: theme.spacing(8),
+    color: "#FFF",
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
   },
+  textField: {
+    color: "black"
+    // background:
+    //   "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
+  },
   avatar: {
     margin: theme.spacing(1),
     marginTop: theme.spacing(8),
-    backgroundColor: theme.palette.secondary.main
+    background:
+      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(3),
+    borderRadius: 20
+    // background:
+    //   "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
+    background:
+      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   lockOutlinedIcon: {}
 }));
@@ -96,6 +108,10 @@ function Login() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            className={classes.textField}
+            InputProps={{
+              className: classes.textField
+            }}
             variant="outlined"
             margin="normal"
             required
@@ -107,6 +123,10 @@ function Login() {
             autoFocus
           />
           <TextField
+            className={classes.textField}
+            InputProps={{
+              className: classes.textField
+            }}
             variant="outlined"
             margin="normal"
             required
@@ -131,12 +151,12 @@ function Login() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
+            <Grid item xs={12}>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
@@ -145,9 +165,6 @@ function Login() {
         </form>
       </div>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      <Fab onClick={() => firebase.auth().signOut()} variant="extended">
-        SIGN OUT
-      </Fab>
       <Box mt={8}>
         <Copyright />
       </Box>
