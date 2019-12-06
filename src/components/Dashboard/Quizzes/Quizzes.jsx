@@ -33,7 +33,7 @@ export default function Quizzes() {
         quizDescription: "The red planet."
       },
       {
-        quizId: 2,
+        quizId: "quiz1",
         quizTitle: "Oxygen",
         quizDescription: "It's everywhere."
       },
