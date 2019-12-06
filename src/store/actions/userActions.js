@@ -7,6 +7,7 @@ const generateUser = (authObject) => {
     quiz_total: 0,
     created_at: new Date(),
     investments: [],
+    last_quiz_done: new Date()
   }
 }
 
