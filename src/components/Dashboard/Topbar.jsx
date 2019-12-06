@@ -8,6 +8,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import { fontSize } from "@material-ui/system";
 // styles
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -30,7 +31,8 @@ const useStyles = makeStyles(theme => ({
     color: "white",
     textShadow: "2px 2px 0px #C275FF",
     marginBottom: 6,
-    fontFamily: "Aquino"
+    fontFamily: "Aquino",
+    fontSize: "30px"
   }
 }));
 
