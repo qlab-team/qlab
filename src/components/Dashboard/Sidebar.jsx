@@ -2,7 +2,6 @@ import React from "react";
 // firebase
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -131,10 +130,11 @@ const Sidebar = props => {
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    //If No Auth, Redirect To Front Page
-    if (auth.isEmpty) return <Redirect to="/login" />;
-    //If Auth, get User Data and Set Login to True -- TODO, MAYBE THIS SHOULD GO ON THE LOGIN SCREEN?
-    props.getUserAndLogin(auth.uid);
+    //Refill User ID if not there already 
+    //  (can probably be replaced by session storage of state)
+    if (!user.userProfile) {
+      props.getUserAndLogin(auth.uid);
+    }
   }
 
   return (

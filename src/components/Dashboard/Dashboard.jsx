@@ -6,7 +6,7 @@ import Quizzes from "./Quizzes/Quizzes";
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
 // react-router
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 // firebase
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -123,6 +123,15 @@ const Dashboard = props => {
     setOpen(false);
   };
 
+  //Set Props from Redux
+  const { auth } = props;
+
+  //If Auth Not Loaded, Don't Worry
+  if (auth.isLoaded) {
+    //If No Auth, Redirect To Front Page
+    if (auth.isEmpty) return <Redirect to="/login" />;
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -158,7 +167,6 @@ const Dashboard = props => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user,
     auth: state.firebase.auth
   };
 };
