@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     color: "white",
     textShadow: "2px 2px 0px #C275FF",
     marginBottom: 6,
-    fontFamily: "Aquino"
+    fontFamily: "Aquino",
+    fontSize: "30px"
   }
 }));
 
