@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   username: {
-    margin: 0
+    margin: 0,
+    marginLeft: "10px"
   },
   toolbarIcon: {
     display: "flex",
