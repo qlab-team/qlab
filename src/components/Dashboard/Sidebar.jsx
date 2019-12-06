@@ -7,11 +7,13 @@ import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./ListItems";
+import { MainListItems, SecondaryListItems } from "./ListItems";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -123,6 +125,9 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = props => {
   const classes = useStyles();
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   // set props from redux
   const { auth } = props;
   // if No auth, redirect to Landing
@@ -168,9 +173,20 @@ const Sidebar = props => {
         </IconButton>
       </div>
       <Divider />
-      <List>{mainListItems}</List>
+      <List>
+        {mobile ? (
+          <MainListItems handleDrawerClose={props.handleDrawerClose} />
+        ) : (
+          <MainListItems />
+        )}
+      </List>
       <Divider />
-      <List>{secondaryListItems}</List>
+      <List>
+        <SecondaryListItems
+          handleDrawerClose={props.handleDrawerClose}
+          open={props.open}
+        />
+      </List>
       <Divider />
       {props.open && (
         <Typography
