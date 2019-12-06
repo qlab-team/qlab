@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
   },
   username: {
     margin: 0,
-    marginLeft: "10px"
+    marginLeft: "10px",
+    fontSize: "14px",
+    fontWeight: "bold"
   },
   toolbarIcon: {
     display: "flex",
@@ -131,6 +133,7 @@ const Sidebar = props => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   // Set Props from Redux
   const { auth, user } = props;
+
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
     //Refill User ID if not there already
