@@ -3,12 +3,18 @@ import { Paper } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
 import {LinearProgress} from '@material-ui/core'
 import CheckButton from './CheckButton'
-export default class QuizMain extends Component {
+import { connect } from 'react-redux'
+import {getQuiz} from '../../store/actions/quizActions'
+
+class QuizMain extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            currentProgress: 80,
             currentQuestion: 0,
+            currentAnswer: "",
+            currentCorrectAnswer: "",
             quizTitle: "Planets Level 1", //will get this from the store afterwards
             Quiz: [
                 {
@@ -33,8 +39,20 @@ export default class QuizMain extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.getQuiz(this.props.quizId);
+        this.setState({currentCorrectAnswer: this.state.Quiz[this.state.currentQuestion].correctAnswer})
+        //update the state with this info
+        //for now just using dummy data
+    }
+
+    getCurrentAnswer = (currentAnswer) => {
+        this.setState({currentAnswer})
+    }
+
+
+
     render() {
-        const currentProgress = 80;
         return(
         <div>
             <div>
@@ -42,16 +60,33 @@ export default class QuizMain extends Component {
                 {this.state.Quiz[this.state.currentQuestion].question}
             </Paper>
     
-            <QuizAnswers 
+            <QuizAnswers
+            getCurrentAnswer={this.getCurrentAnswer} 
             answers={this.state.Quiz[this.state.currentQuestion].answers}
             correctAnswer={this.state.Quiz[this.state.currentQuestion].correctAnswer}
             />
             </div>
-            <LinearProgress variant="determinate" value={currentProgress}/>
+            <LinearProgress variant="determinate" value={this.state.currentProgress}/>
 
-            <CheckButton />
+            <CheckButton currentAnswer={this.state.currentAnswer} currentCorrectAnswer={this.state.currentCorrectAnswer}/>
 
         </div> 
         )
     }
-} 
+}
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        quizId: state.quiz.currentQuiz
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        getQuiz: quizId => dispatch(getQuiz(quizId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizMain)

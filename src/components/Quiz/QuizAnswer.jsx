@@ -1,10 +1,26 @@
 import React from 'react'
+import { Grid, Paper, withStyles } from "@material-ui/core";
 
-export default props => {
+
+const styles = {
+    Paper: {
+      padding: 20,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 60,
+      '&:hover': {
+          backgroundColor: 'blue'
+       }
+    }
+  };
+
+
+function QuizAnswer(props) {
     return(
-        <Grid item xs={6}>
-          <Paper style={styles.Paper}>{props.answers[2]}</Paper>
+        <Grid item xs={6} onClick={ () => props.getCurrentAnswer(props.answer)}>
+          <Paper className={props.classes.Paper}>{props.answer}</Paper>
         </Grid>
     )
 }
 
+export default withStyles(styles)(QuizAnswer);
