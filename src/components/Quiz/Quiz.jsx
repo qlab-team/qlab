@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import QuizAnswers from "./QuizAnswers";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
 class QuizMain extends Component {
   constructor(props) {
@@ -31,16 +31,13 @@ class QuizMain extends Component {
     };
   }
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   render() {
     return (
       <div>
         <div>
           <Paper>{this.state.Quiz[this.state.currentQuestion].question}</Paper>
-
           <QuizAnswers
             answers={this.state.Quiz[this.state.currentQuestion].answers}
             correctAnswer={
@@ -53,10 +50,8 @@ class QuizMain extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    
-  }
-}
+const mapStateToProps = state => {
+  return {};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuizMain)
+export default connect(mapStateToProps, mapDispatchToProps)(QuizMain);

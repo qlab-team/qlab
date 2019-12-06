@@ -8,6 +8,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+// styles
 const useStyles = makeStyles(theme => ({
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -19,13 +20,17 @@ const useStyles = makeStyles(theme => ({
     display: "none"
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    // fontSize: 100,
+    color: "white",
+    textShadow: "2px 2px 0px #C275FF",
+    marginBottom: 6,
+    fontFamily: "Aquino"
   }
 }));
 
 export default function Topbar(props) {
   const classes = useStyles();
-
   return (
     <Toolbar className={classes.toolbar}>
       <IconButton
@@ -47,7 +52,7 @@ export default function Topbar(props) {
         noWrap
         className={classes.title}
       >
-        Dashboard
+        QLAB
       </Typography>
       <IconButton color="inherit">
         <Badge badgeContent={4} color="secondary">

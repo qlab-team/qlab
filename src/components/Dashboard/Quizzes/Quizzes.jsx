@@ -5,13 +5,13 @@ import QuizCard from "./QuizCard";
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+// styles
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
@@ -28,28 +28,52 @@ export default function Quizzes() {
     // will get Quizzes from database
     Quizzes: [
       {
-        quizId: 1,
-        quizTitle: "Planets Level 1"
+        quizId: "quiz1",
+        quizTitle: "Mars",
+        quizDescription: "The red planet."
+      },
+      {
+        quizId: "quiz1",
+        quizTitle: "Oxygen",
+        quizDescription: "It's everywhere."
       },
       {
         quizId: 3,
-        quizTitle: "Planets Level 2"
+        quizTitle: "Mammals",
+        quizDescription: "What are whales?"
       },
       {
-        quizId: 2,
-        quizTitle: "Planets Level 3"
+        quizId: 4,
+        quizTitle: "Japan",
+        quizDescription: "Land of the rising sun."
+      },
+      {
+        quizId: 5,
+        quizTitle: "Derek's An Ass",
+        quizDescription: "Totally."
+      },
+      {
+        quizId: 6,
+        quizTitle: "Astronomy",
+        quizDescription: "Look right up!"
       }
     ]
   };
 
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} wrap="wrap">
         {state.Quizzes.map(quiz => {
           return (
-            <Paper className={fixedHeightPaper}>
-              <QuizCard quizTitle={quiz.quizTitle} quizId={quiz.quizId} />
-            </Paper>
+            <Grid item xs lg={4}>
+              <Paper className={fixedHeightPaper}>
+                <QuizCard
+                  quizTitle={quiz.quizTitle}
+                  quizId={quiz.quizId}
+                  quizDescription={quiz.quizDescription}
+                />
+              </Paper>
+            </Grid>
           );
         })}
       </Grid>

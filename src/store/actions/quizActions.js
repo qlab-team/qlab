@@ -5,22 +5,18 @@ const updateQuizInfo = quizId => {
     }  
   };
 
-//   export const getQuiz = quizId => {
-//     return (dispatch, getState, { getFirestore }) => {
-//       // make async call to database
-//       const firestore = getFirestore();
-//       firestore
-//         .collection("Quizzes")
-//         .add({
-//           ...user,
-//           username: "eriko",
-//           points: 2,
-//           createdAt: new Date()
-//         })
-//         .then(() => {
-//           dispatch({ type: "USER_LOGGED_IN" });
-//         });
-//     };
-//   };
+const getQuiz = quizId => {
+    return (dispatch, getState, { getFirestore }) => {
+      // make async call to database
+      const firestore = getFirestore();
+      firestore
+        .get({collection: 'Quizzes', doc: quizId})
+        .then((doc) => {
+          console.log(doc.data())
+          dispatch({ type: "USER_LOGGED_IN", quiz: doc });
+        });
+    };
+  };
 
-export default updateQuizInfo
+
+export { updateQuizInfo, getQuiz }

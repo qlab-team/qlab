@@ -1,4 +1,9 @@
 import React from "react";
+// firebase
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +40,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+  },
+  username: {
+    margin: 0
   },
   toolbarIcon: {
     display: "flex",
@@ -155,9 +163,14 @@ const Sidebar = props => {
             direction="column"
             justify="center"
             alignItems="center"
-            xs={8}
+          // xs={8}
           >
-            <Typography variant="subtitle1" display="block" gutterBottom>
+            <Typography
+              className={classes.username}
+              variant="subtitle1"
+              display="block"
+              gutterBottom
+            >
               {user.userProfile ? user.userProfile.username : "...loading"}
             </Typography>
           </Grid>
@@ -171,14 +184,13 @@ const Sidebar = props => {
       <Divider />
       <List>{secondaryListItems(props)}</List>
       <Divider />
-      <Link
+      {/* <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
         to="/quiz"
       >
         quiz
-      </Link>
-      <Divider />
+      </Link> */}
     </Drawer>
   );
 };

@@ -1,4 +1,8 @@
 import React from "react";
+// react-router
+import { Link } from "react-router-dom";
+// firebase
+import firebase from "../../config/fbConfig";
 // material ui
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -8,57 +12,54 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-// react-router
-import { Link } from "react-router-dom";
-// firebase
-import firebase from "../../config/fbConfig";
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link
-        style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/profile"
-      >
+    <Link
+      style={{ textDecoration: "none", color: "white" }}
+      to="/dashboard/profile"
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
         <ListItemText primary="Profile" />
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <Link
-        style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/leaderboard"
-      >
+      </ListItem>
+    </Link>
+    <Link
+      style={{ textDecoration: "none", color: "white" }}
+      to="/dashboard/leaderboard"
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
         <ListItemText primary="Leaderboard" />
-      </Link>{" "}
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <Link
-        style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/stats"
-      >
+      </ListItem>
+    </Link>
+    <Link
+      style={{ textDecoration: "none", color: "white" }}
+      to="/dashboard/stats"
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
         <ListItemText primary="Stats" />
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <Link
-        style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/quizzes"
-      >
+      </ListItem>
+    </Link>
+    <Link
+      style={{ textDecoration: "none", color: "white" }}
+      to="/dashboard/quizzes"
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+
         <ListItemText primary="Quizzes" />
-      </Link>
-    </ListItem>
+      </ListItem>
+    </Link>
   </div>
 );
 

@@ -1,14 +1,14 @@
 import React from "react";
-import Link from "@material-ui/core/Link";
+// material ui
 import { makeStyles } from "@material-ui/core/styles";
+import Link from "@material-ui/core/Link";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "../Title";
-
-// Generate Order Data
+// generate table data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }

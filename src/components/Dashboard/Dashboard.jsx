@@ -7,6 +7,10 @@ import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
 // react-router
 import { Route, Switch } from "react-router-dom";
+// firebase
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,10 +20,6 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-// firebase
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
 
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
