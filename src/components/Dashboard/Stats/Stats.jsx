@@ -1,15 +1,14 @@
 import React from "react";
+// components
+import Chart from "./Chart";
+import Deposits from "./Deposits.jsx";
+import Orders from "./Orders";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
-
-// components
-import Chart from "./Chart";
-import Deposits from "./Deposits.jsx";
-import Orders from "./Orders";
-
+// styles
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"

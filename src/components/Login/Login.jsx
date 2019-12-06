@@ -1,13 +1,14 @@
-// Import FirebaseAuth and firebase.
 import React from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "../../config/fbConfig";
 // redux
 import { connect } from "react-redux";
 import { createUser } from "../../store/actions/userActions";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+// firebase
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from "../../config/fbConfig";
 // material ui
+import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,35 +20,8 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: "popup",
-  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: "/dashboard",
-  // We will display Google as an auth provider.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ]
-};
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+// styles
 const useStyles = makeStyles(theme => ({
   paper: {
     // marginTop: theme.spacing(8),
@@ -82,19 +56,34 @@ const useStyles = makeStyles(theme => ({
   },
   lockOutlinedIcon: {}
 }));
+// firebaseUI config
+const uiConfig = {
+  // popup signin flow vs redirect flow
+  signInFlow: "popup",
+  // redirect to /dashboard
+  signInSuccessUrl: "/dashboard",
+  // auth providers
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ]
+};
+// copyright
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 function Login() {
   const classes = useStyles();
-
-  // componentDidMount() {
-  //   this.unregisterAuthObserver = firebase
-  //     .auth()
-  //     .onAuthStateChanged(user => console.log(user));
-  // }
-  // // Make sure we un-register Firebase observers when the component unmounts.
-  // componentWillUnmount() {
-  //   this.unregisterAuthObserver();
-  // }
 
   return (
     <Container component="main" maxWidth="xs">

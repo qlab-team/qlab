@@ -1,44 +1,31 @@
 import React from "react";
-// components
-import Leaderboard from "./Leaderboard/Leaderboard";
-import Stats from "./Stats/Stats";
-import Quizzes from "./Quizzes/Quizzes";
-import Topbar from "./Topbar";
-import Sidebar from "./Sidebar";
-// react-router
-import { Route, Switch } from "react-router-dom";
 // firebase
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Link from "@material-ui/core/Link";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Avatar from "@material-ui/core/Avatar";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { mainListItems, secondaryListItems } from "./ListItems";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import Grid from "@material-ui/core/Grid";
+// assets
+import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
 
 const drawerWidth = 240;
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+  },
+  username: {
+    margin: 0
   },
   toolbarIcon: {
     display: "flex",
@@ -46,6 +33,19 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
     padding: "0 8px",
     ...theme.mixins.toolbar
+  },
+  button: {
+    // background: "rgb(92,27,249)",
+    margin: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    borderRadius: 50,
+    border: "solid white 1px",
+    color: "#FFF",
+    fontSize: 20,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: "10px 10px 10px 10px"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -109,47 +109,64 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = props => {
+const Sidebar = props => {
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+  // set props from redux
+  const { auth } = props;
+  // if No auth, redirect to Landing
+  if (auth.isLoaded) {
+    if (auth.isEmpty) return <Redirect to="/login" />;
+  }
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+    <Drawer
+      variant="permanent"
+      classes={{
+        paper: clsx(
+          classes.drawerPaper,
+          !props.open && classes.drawerPaperClose
+        )
+      }}
+      open={props.open}
+    >
+      <div className={classes.toolbarIcon}>
+        <Grid container>
+          <Grid item xs={4}>
+            <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            xs={8}
+          >
+            <Typography
+              className={classes.username}
+              variant="subtitle1"
+              display="block"
+              gutterBottom
+            >
+              {auth.displayName || "...loading"}
+            </Typography>
+          </Grid>
+        </Grid>
+        <IconButton onClick={props.handleDrawerClose}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <Divider />
+      <List>{mainListItems}</List>
+      <Divider />
+      <List>{secondaryListItems}</List>
+      <Divider />
+      {/* <Link
+        className={classes.button}
+        style={{ textDecoration: "none" }}
+        to="/quiz"
       >
-        {/* TOPBAR */}
-        <Topbar handleDrawerOpen={handleDrawerOpen} open={open} />
-      </AppBar>
-      {/* SIDEBAR */}
-      <Sidebar handleDrawerClose={handleDrawerClose} open={open} />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          {/* DASHBOARD VIEWS */}
-          <Switch>
-            <Route
-              path="/dashboard/leaderboard"
-              component={Leaderboard}
-            ></Route>
-            <Route path="/dashboard/stats" component={Stats}></Route>
-            <Route path="/dashboard/quizzes" component={Quizzes}></Route>
-          </Switch>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+        quiz
+      </Link> */}
+    </Drawer>
   );
 };
 
@@ -168,4 +185,4 @@ export default compose(
       collection: "users"
     }
   ])
-)(Dashboard);
+)(Sidebar);
