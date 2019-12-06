@@ -79,7 +79,7 @@ const uiConfig = {
   callbacks: {
     //Run This After Signin
     signInSuccessWithAuthResult: () => {
-      return false
+      return false;
     }
   }
 };
@@ -107,7 +107,7 @@ function Login(props) {
   if (auth.isLoaded) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
-      console.log("Redirecting to Dashboard")
+      console.log("Redirecting to Dashboard");
       props.getUserAndLogin(auth);
       return <Redirect to="/dashboard" />;
     }
@@ -203,10 +203,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Login);
-
-
-
-
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Login);

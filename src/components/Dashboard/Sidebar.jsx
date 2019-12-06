@@ -14,10 +14,8 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-
 //Placeholder Avatar while account Loads - currently Vic
 import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
@@ -127,10 +125,11 @@ const Sidebar = props => {
   const classes = useStyles();
   //Set Props from Redux
   const { auth, user } = props;
+  console.log(user);
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    //Refill User ID if not there already 
+    //Refill User ID if not there already
     //  (can probably be replaced by session storage of state)
     if (!user.userProfile) {
       props.getUserAndLogin(auth);
@@ -216,6 +215,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Sidebar);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Sidebar);
