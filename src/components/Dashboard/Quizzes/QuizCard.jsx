@@ -6,57 +6,60 @@ import Title from "../Title";
 // react-router
 import { Link } from "react-router-dom";
 // material ui
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Typography, Grid } from "@material-ui/core";
 // styles
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  button: {
-    background: "rgb(92,27,249)",
-    margin: theme.spacing(3),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    borderRadius: 50,
-    border: "solid white 1px",
-    color: "#FFF",
-    fontSize: 20,
-    textTransform: "none",
-    textDecoration: "none !important",
-    padding: theme.spacing(2)
-  }
-}));
+// const styles = theme => ({
+//   root: {
+//     flexGrow: 1
+//   },
+//   button: {
+//     background: "rgb(92,27,249)",
+//     margin: theme.spacing(3),
+//     marginTop: theme.spacing(1),
+//     marginBottom: theme.spacing(1),
+//     borderRadius: 50,
+//     border: "solid white 1px",
+//     color: "#FFF",
+//     fontSize: 20,
+//     textTransform: "none",
+//     textDecoration: "none !important",
+//     padding: theme.spacing(2)
+//   }
+// });
 
-const QuizCard = props => {
-  const classes = useStyles();
+// const classes = useStyles();
 
-  const loadQuiz = () => {
-    // props.updateCurrentQuiz(props.quizId);
-    console.log(props.quizId);
+class QuizCard extends React.Component {
+  loadQuiz = () => {
+    this.props.updateCurrentQuiz(this.props.quizId);
+    console.log(this.props.quizId);
   };
 
-  return (
-    <Grid
-      className={classes.root}
-      container
-      justify="space-around"
-      direction="column"
-    >
-      <Title>{props.quizTitle}</Title>
-      <Typography variant="body2">{props.quizDescription}</Typography>
-      <Link
-        onMouseEnter={loadQuiz}
-        className={classes.button}
-        style={{ textDecoration: "none" }}
-        to="/quiz"
+  render() {
+    // const { classes } = this.props;
+    return (
+      <Grid
+        // className={classes.root}
+        // onMouseEnter={this.loadQuiz}
+        container
+        justify="space-around"
+        direction="column"
       >
-        start
-      </Link>
-    </Grid>
-  );
-};
+        <Title>{this.props.quizTitle}</Title>
+        <Typography variant="body2">{this.props.quizDescription}</Typography>
+        <Link
+          // className={classes.button}
+          style={{ textDecoration: "none" }}
+          to="/quiz"
+        >
+          start
+        </Link>
+      </Grid>
+    );
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
