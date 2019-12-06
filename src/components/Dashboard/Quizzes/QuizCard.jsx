@@ -5,7 +5,7 @@ import Title from "../Title";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 // actions
-import updateQuizInfo from "../../../store/actions/quizActions";
+import {updateQuizInfo} from "../../../store/actions/quizActions";
 // react-router
 import { Link } from "react-router-dom";
 

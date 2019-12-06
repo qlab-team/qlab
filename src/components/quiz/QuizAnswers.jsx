@@ -11,7 +11,7 @@ export default props => {
       
       <Grid container>
           {props.answers.map((answer, index) => {
-            return <QuizAnswer key={index} answer={answer}></QuizAnswer>
+            return <QuizAnswer  getCurrentAnswer={props.getCurrentAnswer} key={index} answer={answer}></QuizAnswer>
           })}
       </Grid>
     </div>
