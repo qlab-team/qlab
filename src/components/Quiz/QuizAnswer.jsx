@@ -8,16 +8,27 @@ const styles = {
       marginTop: 10,
       marginBottom: 10,
       height: 60,
+      backgroundColor: "white",
       '&:hover': {
-          backgroundColor: 'blue'
+          backgroundColor: 'blue !important'
        }
+    },
+
+    selected: {
+        backgroundColor: "blue !important"
     }
   };
+
+const colorChanger = (event) => {
+    console.log(styles.Paper.backgroundColor)
+
+    styles.Paper.backgroundColor = "blue"
+}
 
 
 function QuizAnswer(props) {
     return(
-        <Grid item xs={6} onClick={ () => props.getCurrentAnswer(props.answer, props.correctAnswer)}>
+        <Grid item xs={6} onClick={ (event) => { colorChanger(event); props.getCurrentAnswer(props.answer, props.correctAnswer);}}>
           <Paper className={props.classes.Paper}>{props.answer}</Paper>
         </Grid>
     )

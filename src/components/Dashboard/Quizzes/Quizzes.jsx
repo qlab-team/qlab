@@ -28,32 +28,32 @@ export default function Quizzes() {
     // will get Quizzes from database
     Quizzes: [
       {
-        quizId: "quiz1",
+        quizId: "1",
         quizTitle: "Mars",
         quizDescription: "The red planet."
       },
       {
-        quizId: "quiz1",
+        quizId: "1",
         quizTitle: "Oxygen",
         quizDescription: "It's everywhere."
       },
       {
-        quizId: 3,
-        quizTitle: "Mammals",
+        quizId: "1",
+        quizTitle: "1",
         quizDescription: "What are whales?"
       },
       {
-        quizId: 4,
-        quizTitle: "Japan",
+        quizId: "1",
+        quizTitle: "1",
         quizDescription: "Land of the rising sun."
       },
       {
-        quizId: 5,
+        quizId: "1",
         quizTitle: "Derek's An Ass",
         quizDescription: "Totally."
       },
       {
-        quizId: 6,
+        quizId: "1",
         quizTitle: "Astronomy",
         quizDescription: "Look right up!"
       }

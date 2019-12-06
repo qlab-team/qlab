@@ -132,7 +132,7 @@ const Sidebar = props => {
   if (auth.isLoaded) {
     //Refill User ID if not there already 
     //  (can probably be replaced by session storage of state)
-    if (!user.userProfile) {
+    if (!user) {
       props.getUserAndLogin(auth);
     }
   }
@@ -167,7 +167,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {user.userProfile ? user.userProfile.username : "...loading"}
+              {user ? user.userProfile ? user.userProfile.username : "...loading" : "no user"}
             </Typography>
           </Grid>
         </Grid>

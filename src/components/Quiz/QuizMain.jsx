@@ -45,7 +45,6 @@ class QuizMain extends Component {
     componentDidMount() {
         this.props.getQuiz(this.props.quizId).then( res => {
             this.setState({Quiz: this.props.quiz.quiz_info})
-            console.log('hi',this.state.Quiz)
             this.setState({loadedOrNot: true})
         })
     }
