@@ -1,16 +1,15 @@
 import React from "react";
+// actions
+import updateQuizInfo from "../../../store/actions/quizActions";
 // components
 import Title from "../Title";
+// react-router
+import { Link } from "react-router-dom";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Typography, Grid } from "@material-ui/core";
-
-// actions
-import updateQuizInfo from "../../../store/actions/quizActions";
-// react-router
-import { Link } from "react-router-dom";
-
+// styles
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -31,12 +30,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const QuizCard = props => {
+  const classes = useStyles();
+
   const loadQuiz = () => {
     // props.updateCurrentQuiz(props.quizId);
     console.log(props.quizId);
   };
-
-  const classes = useStyles();
 
   return (
     <Grid
