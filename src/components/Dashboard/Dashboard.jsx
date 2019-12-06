@@ -6,7 +6,7 @@ import Quizzes from "./Quizzes/Quizzes";
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
 // react-router
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 // firebase
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -20,6 +20,9 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+
+//Actions
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 function Copyright() {
   return (
@@ -120,6 +123,15 @@ const Dashboard = props => {
     if (xs) setOpen(false);
   };
 
+  //Set Props from Redux
+  const { auth } = props;
+
+  //If Auth Not Loaded, Don't Worry
+  if (auth.isLoaded) {
+    //If No Auth, Redirect To Front Page
+    if (auth.isEmpty) return <Redirect to="/login" />;
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -154,18 +166,23 @@ const Dashboard = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const users = state.firestore.data.users;
   return {
-    users: users,
     auth: state.firebase.auth
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserAndLogin: authId => dispatch(getUserAndLogin(authId)),
+    userLogout: () => dispatch(userLogout())
+  };
+};
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
     {
-      collection: "users"
+      collection: "Quizzes"
     }
   ])
 )(Dashboard);

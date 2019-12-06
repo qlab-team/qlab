@@ -77,7 +77,10 @@ export const SecondaryListItems = props => {
           <ExitToAppIcon />
         </ListItemIcon>
         <Link
-          onClick={() => firebase.auth().signOut()}
+          onClick={() => {
+            firebase.auth().signOut();
+            props.userLogout();
+          }}
           style={{ textDecoration: "none", color: "white" }}
           to="/"
         >
