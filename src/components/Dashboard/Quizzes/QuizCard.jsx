@@ -1,14 +1,13 @@
 import React from "react";
 // actions
-import updateQuizInfo from "../../../store/actions/quizActions";
-// components
-import Title from "../Title";
+import {updateQuizInfo} from "../../../store/actions/quizActions";
 // react-router
 import { Link } from "react-router-dom";
 // material ui
 // import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Typography, Grid } from "@material-ui/core";
+import Title from '../Title'
 // styles
 // const styles = theme => ({
 //   root: {
@@ -42,7 +41,7 @@ class QuizCard extends React.Component {
     return (
       <Grid
         // className={classes.root}
-        // onMouseEnter={this.loadQuiz}
+        onMouseEnter={this.loadQuiz}
         container
         justify="space-around"
         direction="column"
