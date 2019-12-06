@@ -51,13 +51,6 @@ class Leaderboard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    leaderboard: state.leaderboard
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     getLeaderboard: () => dispatch(getLeaderboard())
@@ -66,5 +59,5 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(Leaderboard);
