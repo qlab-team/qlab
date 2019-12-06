@@ -1,32 +1,34 @@
 import React from "react";
 // actions
-import {updateQuizInfo} from "../../../store/actions/quizActions";
+import { updateQuizInfo } from "../../../store/actions/quizActions";
 // react-router
 import { Link } from "react-router-dom";
 // material ui
-// import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+// redux
+import { compose } from "redux";
 import { Typography, Grid } from "@material-ui/core";
-import Title from '../Title'
+import Title from "../Title";
 // styles
-// const styles = theme => ({
-//   root: {
-//     flexGrow: 1
-//   },
-//   button: {
-//     background: "rgb(92,27,249)",
-//     margin: theme.spacing(3),
-//     marginTop: theme.spacing(1),
-//     marginBottom: theme.spacing(1),
-//     borderRadius: 50,
-//     border: "solid white 1px",
-//     color: "#FFF",
-//     fontSize: 20,
-//     textTransform: "none",
-//     textDecoration: "none !important",
-//     padding: theme.spacing(2)
-//   }
-// });
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  button: {
+    background: "rgb(92,27,249)",
+    margin: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    borderRadius: 50,
+    border: "solid white 1px",
+    color: "#FFF",
+    fontSize: 20,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: theme.spacing(2)
+  }
+});
 
 // const classes = useStyles();
 
@@ -37,10 +39,10 @@ class QuizCard extends React.Component {
   };
 
   render() {
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
       <Grid
-        // className={classes.root}
+        className={classes.root}
         onMouseEnter={this.loadQuiz}
         container
         justify="space-around"
@@ -49,7 +51,7 @@ class QuizCard extends React.Component {
         <Title>{this.props.quizTitle}</Title>
         <Typography variant="body2">{this.props.quizDescription}</Typography>
         <Link
-          // className={classes.button}
+          className={classes.button}
           style={{ textDecoration: "none" }}
           to="/quiz"
         >
@@ -66,4 +68,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(QuizCard);
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(QuizCard);
