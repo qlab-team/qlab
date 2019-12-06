@@ -1,4 +1,6 @@
-import initState from '../initState'
+const initState = {
+  currentQuiz: '1',
+}
 
 const quizReducer = (state = initState, action) => {
   switch (action.type) {
@@ -10,8 +12,9 @@ const quizReducer = (state = initState, action) => {
     }
 
     case "GET_QUIZ": {
-      console.log(action.quiz)
-      break
+      state.quizInfo = action.quiz["quiz_info"]
+      console.log('obj',action.quiz["quiz_info"])
+      return state;
     }
     default:
       return state;

@@ -9,14 +9,14 @@ const getQuiz = quizId => {
     return (dispatch, getState, { getFirestore }) => {
       // make async call to database
       const firestore = getFirestore();
-      firestore
-        .get({collection: 'Quizzes', doc: quizId})
+      return firestore
+        .get({collection: 'quizzes', doc: quizId})
         .then((doc) => {
-          console.log(doc.data())
-          dispatch({ type: "USER_LOGGED_IN", quiz: doc });
+          dispatch({ type: "GET_QUIZ", quiz: doc.data() });
         });
     };
   };
 
+  
 
 export { updateQuizInfo, getQuiz }

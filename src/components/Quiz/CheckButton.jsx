@@ -1,25 +1,49 @@
-import React from 'react'
-import { Button }  from '@material-ui/core'
+import React, { useState } from 'react'
+import { Button, withStyles }  from '@material-ui/core'
 
-
-
-export default props => {
-    let answerConfirmation = "";
-
-    const answerChecker = () => {
-        if(props.currentAnswer === props.currentCorrectAnswer) {
-            answerConfirmation = <div>True</div>
-            console.log(answerConfirmation)
-        } else {
-            answerConfirmation=<div>False</div>
-            console.log(answerConfirmation)
-        }
+const styles = {
+    Confirmation: {
+      padding: 20,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 60,
+      backgroundColor: 'red',
+      '&:hover': {
+          backgroundColor: 'blue'
+       }
     }
+  };
 
+function CheckButton (props) {
+    const [buttonValue, setButtonValue] = useState("CHECK");    
+
+    console.log(props.currentAnswer, props.currentCorrectAnswer)
+    let answerConfirmation = "";
+    const answerChecker = (e) => {
+
+        if(buttonValue === "NEXT") {
+            console.log('hey')
+            setButtonValue("CHECK")
+            props.updateCurrentQuestion();
+            
+        }
+        else if(props.currentAnswer === props.currentCorrectAnswer) {
+            setButtonValue("NEXT")
+            answerConfirmation = "true"
+            props.getAnswerConfirmation(answerConfirmation)
+        } else {
+            setButtonValue("NEXT")
+            answerConfirmation= "false"
+            props.addQuizQuestionToEnd();
+            props.getAnswerConfirmation(answerConfirmation)
+        }
+        
+    }
     return (
         <React.Fragment>
-        <Button onClick={answerChecker} variant="contained" color="primary">CHECK</Button>
-        {answerConfirmation}
+        <Button onClick={answerChecker} variant="contained" color="primary">{buttonValue}</Button>
         </React.Fragment>
     )
 }
+
+export default withStyles(styles)(CheckButton);
