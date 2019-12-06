@@ -13,6 +13,12 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
   },
+  dashboardOpen: {
+    display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    }
+  },
   menuButton: {
     marginRight: 36
   },
@@ -21,7 +27,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    // fontSize: 100,
     color: "white",
     textShadow: "2px 2px 0px #C275FF",
     marginBottom: 6,
@@ -32,7 +37,9 @@ const useStyles = makeStyles(theme => ({
 export default function Topbar(props) {
   const classes = useStyles();
   return (
-    <Toolbar className={classes.toolbar}>
+    <Toolbar
+      className={clsx(classes.toolbar, props.open && classes.dashboardOpen)}
+    >
       <IconButton
         edge="start"
         color="inherit"
@@ -52,7 +59,7 @@ export default function Topbar(props) {
         noWrap
         className={classes.title}
       >
-        QLAB
+        {"QLAB"}
       </Typography>
       <IconButton color="inherit">
         <Badge badgeContent={4} color="secondary">
