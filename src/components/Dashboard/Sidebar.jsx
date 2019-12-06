@@ -128,15 +128,6 @@ const Sidebar = props => {
   //Set Props from Redux
   const { auth, user } = props;
 
-  //If Auth Not Loaded, Don't Worry
-  if (auth.isLoaded) {
-    //Refill User ID if not there already 
-    //  (can probably be replaced by session storage of state)
-    if (!user.userProfile) {
-      props.getUserAndLogin(auth);
-    }
-  }
-
   return (
     <Drawer
       variant="permanent"
