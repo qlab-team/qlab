@@ -28,7 +28,7 @@ export default function Quizzes() {
     // will get Quizzes from database
     Quizzes: [
       {
-        quizId: 1,
+        quizId: "quiz1",
         quizTitle: "Mars",
         quizDescription: "The red planet."
       },
@@ -65,7 +65,7 @@ export default function Quizzes() {
       <Grid container spacing={3} wrap="wrap">
         {state.Quizzes.map(quiz => {
           return (
-            <Grid item xs>
+            <Grid item xs lg={4}>
               <Paper className={fixedHeightPaper}>
                 <QuizCard
                   quizTitle={quiz.quizTitle}
