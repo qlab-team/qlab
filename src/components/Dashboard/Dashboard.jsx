@@ -142,7 +142,9 @@ const Dashboard = props => {
               component={Leaderboard}
             ></Route>
             <Route path="/dashboard/stats" component={Stats}></Route>
-            <Route path="/dashboard/quizzes" component={Quizzes}></Route>
+            {!open && (
+              <Route path="/dashboard/quizzes" component={Quizzes}></Route>
+            )}
           </Switch>
           <Box pt={4}>
             <Copyright />
