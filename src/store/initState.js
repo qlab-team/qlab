@@ -1,5 +1,4 @@
 const initState = {
-    profile: {"what": "what"},
-    currentQuiz: 0,
+    currentQuiz: 'quiz1',
 }
 export default initState

@@ -162,9 +162,7 @@ function Login() {
 }
 
 const mapStateToProps = state => {
-  const users = state.firestore.data.users;
   return {
-    users: users,
     auth: state.firebase.auth
   };
 };
@@ -177,5 +175,5 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "users" }])
+  firestoreConnect([{ collection: "Quizzes" }])
 )(Login);
