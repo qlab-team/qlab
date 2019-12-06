@@ -35,16 +35,9 @@ const styles = theme => ({
 class Leaderboard extends React.Component {
   componentDidMount() {
     this.props.getLeaderboard();
-    // this.setState({
-    //   currentCorrectAnswer: this.state.Quiz[this.state.currentQuestion]
-    //     .correctAnswer
-    // });
-    //update the state with this info
-    //for now just using dummy data
   }
 
   render() {
-    console.log(this.props);
     const { classes } = this.props;
     return (
       <Grid container spacing={3}>
@@ -58,13 +51,13 @@ class Leaderboard extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   const users = state.firestore.data.users;
-//   return {
-//     users: users,
-//     auth: state.firebase.auth
-//   };
-// };
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    leaderboard: state.leaderboard
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     getLeaderboard: () => dispatch(getLeaderboard())
@@ -73,5 +66,5 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(Leaderboard);

@@ -1,5 +1,4 @@
 const initState = {
-  currentQuiz: "quiz1",
-  allUsers: {}
+  currentQuiz: "quiz1"
 };
 export default initState;

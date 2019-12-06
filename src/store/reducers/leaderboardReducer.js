@@ -1,11 +1,16 @@
-import initState from "../initState";
+const initState = {
+  board: [],
+  last_updated: ""
+};
 
 const leaderboardReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_LEADERBOARD_INFO": {
-      state.allUsers = action.users;
-      console.log(state);
-      return state;
+      return {
+        ...state,
+        board: action.leaderboard.allUsers.board,
+        last_updated: action.leaderboard.allUsers.last_updated
+      };
     }
     default:
       return state;

@@ -5,7 +5,10 @@ const getLeaderboard = () => {
     firestore
       .get({ collection: "leaderboard", doc: "allUsers" })
       .then(doc => {
-        dispatch({ type: "GET_LEADERBOARD_INFO", users: doc.data() });
+        dispatch({
+          type: "GET_LEADERBOARD_INFO",
+          leaderboard: { allUsers: doc.data() }
+        });
       })
       .catch(e => {
         console.log("err :", e);
