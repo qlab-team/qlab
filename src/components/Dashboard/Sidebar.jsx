@@ -138,7 +138,7 @@ const Sidebar = props => {
             direction="column"
             justify="center"
             alignItems="center"
-            xs={8}
+            // xs={8}
           >
             <Typography
               className={classes.username}

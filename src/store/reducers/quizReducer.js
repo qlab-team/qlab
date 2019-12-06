@@ -5,7 +5,8 @@ const quizReducer = (state = initState, action) => {
     case "UPDATE_QUIZ_INFO": {
         state.currentQuiz = action.quizId;
         console.log(state);
-        break
+        return state;
+  
     }
 
     case "GET_QUIZ": {
