@@ -1,17 +1,77 @@
-export const createUser = user => {
+const generateUser = (authObject) => {
+  return {
+    auth_id: authObject.uid,
+    username: authObject.email.split("@")[0],
+    q_points: 0,
+    q_score: 0,
+    quiz_total: 0,
+    created_at: new Date(),
+    investments: [],
+    last_quiz_done: new Date()
+  }
+}
+
+const createUser = (auth, usersCollection) => {
+  console.log("Creating User")
+  usersCollection
+    .add(generateUser(auth))
+    .then(() => {
+      console.log("Account Created");
+      return
+    })
+    .catch(err => {
+      console.log("Error creating account", err);
+    });
+};
+
+export const getUserAndLogin = auth => {
   return (dispatch, getState, { getFirestore }) => {
     // make async call to database
-    const firestore = getFirestore();
-    firestore
-      .collection("users")
-      .add({
-        ...user,
-        username: "eriko",
-        points: 2,
-        createdAt: new Date()
-      })
-      .then(() => {
-        dispatch({ type: "USER_LOGGED_IN" });
-      });
+    const usersCollection = getFirestore().collection("users");
+
+    const getUser = () => {
+      usersCollection
+        .where("auth_id", "==", auth.uid)
+        .get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log("No matching documents.");
+            createUser(auth, usersCollection)
+            getUser()
+            return;
+          }
+
+          if (snapshot.size !== 1) {
+            console.log("There should only be one user with this ID");
+            return;
+          }
+
+          dispatch({
+            type: "USER_LOGIN",
+            userProfile: snapshot.docs[0].data()
+          });
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
+    }
+    getUser()
+
   };
 };
+
+export const userLogout = authId => {
+  return dispatch => {
+    console.log("Logging User Out")
+    dispatch({
+      type: "USER_LOGOUT"
+    });
+  };
+};
+
+// console.log(snapshot.docs);
+// console.log(snapshot.size);
+
+// snapshot.forEach(doc => {
+//   console.log(doc.id, "=>", doc.data());
+// });

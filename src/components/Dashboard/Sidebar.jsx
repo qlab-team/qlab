@@ -1,9 +1,7 @@
 import React from "react";
 // firebase
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,9 +14,13 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-// assets
-import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
-// styles
+
+//Placeholder Avatar while account Loads - currently Vic
+import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
+
+//Actions
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,12 +125,18 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = props => {
   const classes = useStyles();
-  // set props from redux
-  const { auth } = props;
-  // if No auth, redirect to Landing
+  //Set Props from Redux
+  const { auth, user } = props;
+
+  //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    if (auth.isEmpty) return <Redirect to="/login" />;
+    //Refill User ID if not there already 
+    //  (can probably be replaced by session storage of state)
+    if (!user.userProfile) {
+      props.getUserAndLogin(auth);
+    }
   }
+
   return (
     <Drawer
       variant="permanent"
@@ -143,7 +151,7 @@ const Sidebar = props => {
       <div className={classes.toolbarIcon}>
         <Grid container wrap="nowrap">
           <Grid item xs>
-            <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
+            <Avatar alt="useravatar" src={auth.photoURL || placeholderAvatar} />
           </Grid>
           <Grid
             item
@@ -159,7 +167,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {auth.displayName || "...loading"}
+              {user.userProfile ? user.userProfile.username : "...loading"}
             </Typography>
           </Grid>
         </Grid>
@@ -170,7 +178,7 @@ const Sidebar = props => {
       <Divider />
       <List>{mainListItems}</List>
       <Divider />
-      <List>{secondaryListItems}</List>
+      <List>{secondaryListItems(props)}</List>
       <Divider />
       {props.open && (
         <Typography
@@ -195,18 +203,19 @@ const Sidebar = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const users = state.firestore.data.users;
   return {
-    users: users,
+    user: state.user,
     auth: state.firebase.auth
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
+    userLogout: () => dispatch(userLogout())
+  };
+};
+
 export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([
-    {
-      collection: "users"
-    }
-  ])
+  connect(mapStateToProps, mapDispatchToProps)
 )(Sidebar);
