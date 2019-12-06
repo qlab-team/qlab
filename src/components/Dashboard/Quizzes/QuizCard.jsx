@@ -1,32 +1,63 @@
-import React, { Component } from "react";
+import React from "react";
 // components
 import Title from "../Title";
 // material ui
-import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import { Typography, Grid } from "@material-ui/core";
+
 // actions
 import updateQuizInfo from "../../../store/actions/quizActions";
 // react-router
 import { Link } from "react-router-dom";
 
-class QuizCard extends Component {
-  loadQuiz = () => {
-    this.props.updateCurrentQuiz(this.props.quizId);
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  button: {
+    background: "rgb(92,27,249)",
+    margin: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    borderRadius: 50,
+    border: "solid white 1px",
+    color: "#FFF",
+    fontSize: 20,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: theme.spacing(2)
+  }
+}));
+
+const QuizCard = props => {
+  const loadQuiz = () => {
+    // props.updateCurrentQuiz(props.quizId);
+    console.log(props.quizId);
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        {/* <Title>{this.props.quizTitle}</Title> */}
-        <Grid item xs={4}>
-          <Link style={{ textDecoration: "none", color: "white" }} to="/quiz">
-            <Title onClick={this.loadQuiz}>Quiz</Title>
-          </Link>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-}
+  const classes = useStyles();
+
+  return (
+    <Grid
+      className={classes.root}
+      container
+      justify="space-around"
+      direction="column"
+    >
+      <Title>{props.quizTitle}</Title>
+      <Typography variant="body2">{props.quizDescription}</Typography>
+      <Link
+        onMouseEnter={loadQuiz}
+        className={classes.button}
+        style={{ textDecoration: "none" }}
+        to="/quiz"
+      >
+        start
+      </Link>
+    </Grid>
+  );
+};
 
 const mapDispatchToProps = dispatch => {
   return {

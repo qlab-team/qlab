@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
@@ -29,27 +29,51 @@ export default function Quizzes() {
     Quizzes: [
       {
         quizId: 1,
-        quizTitle: "Planets Level 1"
-      },
-      {
-        quizId: 3,
-        quizTitle: "Planets Level 2"
+        quizTitle: "Mars",
+        quizDescription: "The red planet."
       },
       {
         quizId: 2,
-        quizTitle: "Planets Level 3"
+        quizTitle: "Oxygen",
+        quizDescription: "It's everywhere."
+      },
+      {
+        quizId: 3,
+        quizTitle: "Mammals",
+        quizDescription: "What are whales?"
+      },
+      {
+        quizId: 4,
+        quizTitle: "Japan",
+        quizDescription: "Land of the rising sun."
+      },
+      {
+        quizId: 5,
+        quizTitle: "Derek's An Ass",
+        quizDescription: "Totally."
+      },
+      {
+        quizId: 6,
+        quizTitle: "Astronomy",
+        quizDescription: "Look right up!"
       }
     ]
   };
 
   return (
     <React.Fragment>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} wrap="wrap">
         {state.Quizzes.map(quiz => {
           return (
-            <Paper className={fixedHeightPaper}>
-              <QuizCard quizTitle={quiz.quizTitle} quizId={quiz.quizId} />
-            </Paper>
+            <Grid item xs>
+              <Paper className={fixedHeightPaper}>
+                <QuizCard
+                  quizTitle={quiz.quizTitle}
+                  quizId={quiz.quizId}
+                  quizDescription={quiz.quizDescription}
+                />
+              </Paper>
+            </Grid>
           );
         })}
       </Grid>
