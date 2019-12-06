@@ -133,7 +133,7 @@ const Sidebar = props => {
     //Refill User ID if not there already 
     //  (can probably be replaced by session storage of state)
     if (!user.userProfile) {
-      props.getUserAndLogin(auth.uid);
+      props.getUserAndLogin(auth);
     }
   }
 
@@ -211,7 +211,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: authId => dispatch(getUserAndLogin(authId)),
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };
