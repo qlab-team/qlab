@@ -5,7 +5,7 @@ const generateUser = (authObject) => {
     q_points: 0,
     q_score: 0,
     quiz_total: 0,
-    created_at: Date.now(),
+    created_at: new Date(),
     investments: [],
   }
 }
