@@ -8,7 +8,6 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { fontSize } from "@material-ui/system";
 // styles
 const useStyles = makeStyles(theme => ({
   toolbar: {
