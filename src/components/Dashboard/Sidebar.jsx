@@ -18,14 +18,15 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 // assets
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
+// styles
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
   username: {
-    margin: 0
+    margin: 0,
+    marginLeft: "10px"
   },
   toolbarIcon: {
     display: "flex",
@@ -69,6 +70,9 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
+    [theme.breakpoints.down("xs")]: {
+      width: "100vw"
+    },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -84,7 +88,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("xs")]: {
       width: theme.spacing(9)
     }
   },
@@ -106,6 +110,14 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 240
+  },
+  title: {
+    flexGrow: 1,
+    fontSize: 50,
+    color: "white",
+    textShadow: "2px 2px 0px #C275FF",
+    marginBottom: 6,
+    fontFamily: "Aquino"
   }
 }));
 
@@ -129,16 +141,17 @@ const Sidebar = props => {
       open={props.open}
     >
       <div className={classes.toolbarIcon}>
-        <Grid container>
-          <Grid item xs={4}>
+        <Grid container wrap="nowrap">
+          <Grid item xs>
             <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
           </Grid>
           <Grid
+            item
             container
-            direction="column"
-            justify="center"
+            xs={10}
+            direction="row"
+            justify="flex-start"
             alignItems="center"
-            // xs={8}
           >
             <Typography
               className={classes.username}
@@ -159,6 +172,17 @@ const Sidebar = props => {
       <Divider />
       <List>{secondaryListItems}</List>
       <Divider />
+      {props.open && (
+        <Typography
+          component="h1"
+          variant="h6"
+          color="inherit"
+          noWrap
+          className={classes.title}
+        >
+          {"QLAB"}
+        </Typography>
+      )}
       {/* <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
