@@ -1,7 +1,6 @@
 import React from "react";
 // firebase
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 // material ui
@@ -19,19 +18,6 @@ import Grid from "@material-ui/core/Grid";
 
 //Placeholder Avatar while account Loads - currently Vic
 import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
-// Firebasey Imports
-import { connect } from "react-redux";
-
-//Redux
-import { compose } from "redux";
-// import { firestoreConnect } from "react-redux-firebase";
-
-//Routing
-import { Redirect } from "react-router-dom";
-
-// react-router
-import { Link } from "react-router-dom";
 
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
