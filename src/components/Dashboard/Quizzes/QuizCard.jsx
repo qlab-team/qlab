@@ -6,7 +6,7 @@ import Title from "../Title";
 // react-router
 import { Link } from "react-router-dom";
 // material ui
-import { withStyles } from "@material-ui/core/styles";
+// import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Typography, Grid } from "@material-ui/core";
 // styles
