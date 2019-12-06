@@ -1,9 +1,7 @@
 import React from "react";
 // firebase
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,8 +14,12 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-// assets
-import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
+
+//Placeholder Avatar while account Loads - currently Vic
+import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
+
+//Actions
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -25,7 +27,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   username: {
-    margin: 0
+    margin: 0,
+    marginLeft: "10px"
   },
   toolbarIcon: {
     display: "flex",
@@ -69,6 +72,9 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
+    [theme.breakpoints.down("xs")]: {
+      width: "100vw"
+    },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -84,7 +90,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("xs")]: {
       width: theme.spacing(9)
     }
   },
@@ -106,17 +112,31 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 240
+  },
+  title: {
+    flexGrow: 1,
+    fontSize: 50,
+    color: "white",
+    textShadow: "2px 2px 0px #C275FF",
+    marginBottom: 6,
+    fontFamily: "Aquino"
   }
 }));
 
 const Sidebar = props => {
   const classes = useStyles();
-  // set props from redux
-  const { auth } = props;
-  // if No auth, redirect to Landing
+  //Set Props from Redux
+  const { auth, user } = props;
+
+  //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    if (auth.isEmpty) return <Redirect to="/login" />;
+    //Refill User ID if not there already 
+    //  (can probably be replaced by session storage of state)
+    if (!user.userProfile) {
+      props.getUserAndLogin(auth);
+    }
   }
+
   return (
     <Drawer
       variant="permanent"
@@ -129,16 +149,17 @@ const Sidebar = props => {
       open={props.open}
     >
       <div className={classes.toolbarIcon}>
-        <Grid container>
-          <Grid item xs={4}>
-            <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
+        <Grid container wrap="nowrap">
+          <Grid item xs>
+            <Avatar alt="useravatar" src={auth.photoURL || placeholderAvatar} />
           </Grid>
           <Grid
+            item
             container
-            direction="column"
-            justify="center"
+            xs={10}
+            direction="row"
+            justify="flex-start"
             alignItems="center"
-            // xs={8}
           >
             <Typography
               className={classes.username}
@@ -146,7 +167,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {auth.displayName || "...loading"}
+              {user.userProfile ? user.userProfile.username : "...loading"}
             </Typography>
           </Grid>
         </Grid>
@@ -157,8 +178,19 @@ const Sidebar = props => {
       <Divider />
       <List>{mainListItems}</List>
       <Divider />
-      <List>{secondaryListItems}</List>
+      <List>{secondaryListItems(props)}</List>
       <Divider />
+      {props.open && (
+        <Typography
+          component="h1"
+          variant="h6"
+          color="inherit"
+          noWrap
+          className={classes.title}
+        >
+          {"QLAB"}
+        </Typography>
+      )}
       {/* <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
@@ -171,18 +203,19 @@ const Sidebar = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const users = state.firestore.data.users;
   return {
-    users: users,
+    user: state.user,
     auth: state.firebase.auth
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
+    userLogout: () => dispatch(userLogout())
+  };
+};
+
 export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([
-    {
-      collection: "users"
-    }
-  ])
+  connect(mapStateToProps, mapDispatchToProps)
 )(Sidebar);

@@ -1,9 +1,14 @@
 import React from "react";
 // redux
 import { connect } from "react-redux";
-import { createUser } from "../../store/actions/userActions";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+
+//Actions
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+
+// react-router
+import { Redirect } from "react-router-dom";
+
 // firebase
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../../config/fbConfig";
@@ -21,6 +26,10 @@ import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+
+//Redirect
+// import { Redirect } from "react-router-dom";
+
 // styles
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -61,12 +70,18 @@ const uiConfig = {
   // popup signin flow vs redirect flow
   signInFlow: "popup",
   // redirect to /dashboard
-  signInSuccessUrl: "/dashboard",
+  //signInSuccessUrl: "/dashboard",
   // auth providers
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID
     // firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ]
+  ],
+  callbacks: {
+    //Run This After Signin
+    signInSuccessWithAuthResult: () => {
+      return false
+    }
+  }
 };
 // copyright
 function Copyright() {
@@ -82,8 +97,21 @@ function Copyright() {
   );
 }
 
-function Login() {
+function Login(props) {
   const classes = useStyles();
+
+  //Set Props from Redux
+  const { auth } = props;
+
+  //If Auth Not Loaded, Don't Worry
+  if (auth.isLoaded) {
+    //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
+    if (!auth.isEmpty) {
+      console.log("Redirecting to Dashboard")
+      props.getUserAndLogin(auth);
+      return <Redirect to="/dashboard" />;
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -163,17 +191,22 @@ function Login() {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createUser: users => dispatch(createUser(users))
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
+    userLogout: () => dispatch(userLogout())
   };
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "Quizzes" }])
+  connect(mapStateToProps, mapDispatchToProps)
 )(Login);
+
+
+
+
