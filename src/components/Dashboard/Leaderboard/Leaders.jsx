@@ -60,15 +60,24 @@ export default function Leaders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
-            </TableRow>
-          ))}
+          {
+            (rows.sort((a, b) => {
+              a = Number(a.shipTo);
+              b = Number(b.shipTo);
+              if (a < b) return 1;
+              if (a > b) return -1;
+              return 0;
+            }),
+            rows.map(row => (
+              <TableRow key={row.id}>
+                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.shipTo}</TableCell>
+                <TableCell>{row.paymentMethod}</TableCell>
+                <TableCell align="right">{row.amount}</TableCell>
+              </TableRow>
+            )))
+          }
         </TableBody>
       </Table>
       <div className={classes.seeMore}>

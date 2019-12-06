@@ -1,4 +1,5 @@
 const initState = {
-    currentQuiz: 'quiz1',
-}
-export default initState
+  currentQuiz: "quiz1",
+  allUsers: {}
+};
+export default initState;
