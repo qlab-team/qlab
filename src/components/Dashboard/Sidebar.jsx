@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 // assets
 import sidiousvicAvatar from "../../assets/images/carefulwiththataxevic.gif";
 // firebase
@@ -115,60 +116,65 @@ const Sidebar = props => {
   const classes = useStyles();
   // set props from redux
   const { auth } = props;
-  // if No auth, redirect to Landing
+  // if no auth, redirect to Landing
   if (auth.isLoaded) {
     if (auth.isEmpty) return <Redirect to="/login" />;
   }
   return (
-    <Drawer
-      variant="permanent"
-      classes={{
-        paper: clsx(
-          classes.drawerPaper,
-          !props.open && classes.drawerPaperClose
-        )
-      }}
-      open={props.open}
-    >
-      <div className={classes.toolbarIcon}>
-        <Grid container>
-          <Grid item xs={4}>
-            <Avatar alt="sidiousvic" src={auth.photoURL || sidiousvicAvatar} />
-          </Grid>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-            xs={8}
-          >
-            <Typography
-              className={classes.username}
-              variant="subtitle1"
-              display="block"
-              gutterBottom
+    <Hidden xsDown>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(
+            classes.drawerPaper,
+            !props.open && classes.drawerPaperClose
+          )
+        }}
+        open={props.open}
+      >
+        <div className={classes.toolbarIcon}>
+          <Grid container>
+            <Grid item xs={4}>
+              <Avatar
+                alt="sidiousvic"
+                src={auth.photoURL || sidiousvicAvatar}
+              />
+            </Grid>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              xs={8}
             >
-              {auth.displayName || "...loading"}
-            </Typography>
+              <Typography
+                className={classes.username}
+                variant="subtitle1"
+                display="block"
+                gutterBottom
+              >
+                {auth.displayName || "...loading"}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <IconButton onClick={props.handleDrawerClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <Divider />
-      <List>{mainListItems}</List>
-      <Divider />
-      <List>{secondaryListItems}</List>
-      <Divider />
-      {/* <Link
+          <IconButton onClick={props.handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>{mainListItems}</List>
+        <Divider />
+        <List>{secondaryListItems}</List>
+        <Divider />
+        {/* <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
         to="/quiz"
       >
         quiz
       </Link> */}
-    </Drawer>
+      </Drawer>
+    </Hidden>
   );
 };
 
