@@ -44,7 +44,7 @@ const theme = createMuiTheme({
     },
     MuiTableCell: {
       root: {
-        borderBottom: "1px solid rebeccapurple"
+        borderBottom: "1px solid rgba(100, 0, 200, 0.2)"
       }
     }
   },
