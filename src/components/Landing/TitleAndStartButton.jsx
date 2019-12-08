@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: 130,
     color: "white",
-    textShadow: "10px 10px 0px #C275FF",
+    textShadow: "7px 7px 0px #C275FF",
     marginBottom: 6,
     fontFamily: "Aquino"
   },
@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: 20,
     textTransform: "none",
     textDecoration: "none !important",
-    padding: "10px 50px 10px 50px"
+    padding: "10px 50px 10px 50px",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   }
 }));
 

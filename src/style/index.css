@@ -21,12 +21,18 @@ code {
 }
 
 /* recharts line */
-g path {
+.recharts-layer,
+.recharts-line path {
   stroke: lightsalmon;
   animation-name: chartlinecolor;
   animation-timing-function: ease-in-out;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+}
+
+/*  lock icon, Login page */
+.MuiSvgIcon-root path {
+  color: whitesmoke;
 }
 
 @keyframes chartlinecolor {
