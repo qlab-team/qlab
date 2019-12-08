@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 //Actions
-import { getUserAndLogin, userLogout, createUser } from "../../store/actions/userActions";
+import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 // react-router
 import { Redirect } from "react-router-dom";
@@ -108,7 +108,7 @@ function Login(props) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
       console.log("Redirecting to Dashboard")
-      props.getUserAndLogin(auth.uid);
+      props.getUserAndLogin(auth);
       return <Redirect to="/dashboard" />;
     }
   }
@@ -198,8 +198,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createUser: users => dispatch(createUser(users)),
-    getUserAndLogin: authId => dispatch(getUserAndLogin(authId)),
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };

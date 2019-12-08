@@ -9,7 +9,6 @@ import Sidebar from "./Sidebar";
 import { Route, Switch, Redirect } from "react-router-dom";
 // firebase
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 // material ui
 import clsx from "clsx";
@@ -173,16 +172,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: authId => dispatch(getUserAndLogin(authId)),
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([
-    {
-      collection: "Quizzes"
-    }
-  ])
+  connect(mapStateToProps, mapDispatchToProps)
 )(Dashboard);

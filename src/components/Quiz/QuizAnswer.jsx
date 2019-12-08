@@ -17,7 +17,7 @@ const styles = {
 
 function QuizAnswer(props) {
     return(
-        <Grid item xs={6} onClick={ () => props.getCurrentAnswer(props.answer)}>
+        <Grid item xs={6} onClick={ () => props.getCurrentAnswer(props.answer, props.correctAnswer)}>
           <Paper className={props.classes.Paper}>{props.answer}</Paper>
         </Grid>
     )
