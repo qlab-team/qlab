@@ -2,7 +2,7 @@ import React from "react";
 // components
 import Chart from "./Chart";
 import QPoints from "./QPoints.jsx";
-import Orders from "./Orders";
+import PerformanceTable from "./PerformanceTable";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -41,10 +41,10 @@ export default function Stats() {
           <QPoints />
         </Paper>
       </Grid>
-      {/* Recent Orders */}
+      {/* PerformanceTable */}
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Orders />
+          <PerformanceTable />
         </Paper>
       </Grid>
     </Grid>
