@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   textField: {
-    color: "black"
+    color: "white"
     // background:
     //   "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
