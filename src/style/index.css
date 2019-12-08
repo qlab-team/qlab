@@ -29,13 +29,6 @@ g path {
   animation-iteration-count: infinite;
 }
 
-/*  quizCard buttons */
-.Connect\(QuizCard\)-button-299 {
-  color: rgb(92, 27, 249) !important;
-  border: solid white 1px !important;
-  background: whitesmoke !important;
-}
-
 @keyframes chartlinecolor {
   0% {
     stroke: darkorange;
