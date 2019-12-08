@@ -17,11 +17,40 @@ import { deepPurple } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
-    primary: deepPurple
+    type: "dark",
+    primary: deepPurple,
+    color: "white"
+  },
+  overrides: {
+    MuiPaper: {
+      rounded: {
+        borderRadius: "20px"
+      },
+      root: {
+        background:
+          "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+        color: "white"
+      }
+    },
+    MuiTypography: {
+      colorPrimary: {
+        color: "white"
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        color: "white"
+      }
+    },
+    MuiTableCell: {
+      root: {
+        borderBottom: "1px solid rebeccapurple"
+      }
+    }
   },
   typography: {
     fontFamily: [
-      "Fira Code",
+      "'M PLUS Rounded 1c', sans-serif",
       "-apple-system",
       "BlinkMacSystemFont",
       '"Segoe UI"',
