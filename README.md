@@ -7,6 +7,8 @@
 QLAB is a learning envioronment where you can learn any topic to earn points.
 You can then invest your points in your friends to benefit from their effort and create a collaborative growth environment.
 
+![qlab screenshot of dashboard](/misc/qlab-screen.png "QLAB Dashboard")
+
 ### Try out the app @ [qlab-cc.web.app](https://qlab-cc.web.app/)
 
 ## Project
