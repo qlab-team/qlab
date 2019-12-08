@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {},
   title: {
-    fontSize: 100,
+    fontSize: 130,
     color: "white",
     textShadow: "10px 10px 0px #C275FF",
     marginBottom: 6,
@@ -53,7 +53,7 @@ export default function TileAndStartButton() {
         Where effort's the currency.
       </Typography>
       <Link style={{ textDecoration: "none" }} to="/login">
-        <Button className={classes.button}>start</Button>
+        <Button className={classes.button}>Start</Button>
       </Link>
     </Box>
   );
