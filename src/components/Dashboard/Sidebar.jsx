@@ -78,7 +78,8 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: "nowrap",
     width: drawerWidth,
     [theme.breakpoints.down("xs")]: {
-      width: "100vw"
+      width: "101vw",
+      borderRadius: "0px"
     },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
