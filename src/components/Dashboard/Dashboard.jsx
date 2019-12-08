@@ -50,6 +50,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   appBar: {
+    borderRadius: "0px 0px 20px 0px",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -177,6 +178,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Dashboard);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Dashboard);
