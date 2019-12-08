@@ -37,15 +37,15 @@ code {
 
 @keyframes chartlinecolor {
   0% {
-    stroke: darkorange;
+    stroke: rgb(255, 179, 87);
   }
   30% {
-    stroke: darkorange;
+    stroke: rgb(255, 179, 87);
   }
   50% {
     stroke: greenyellow;
   }
   100% {
-    stroke: darkorange;
+    stroke: rgb(255, 179, 87);
   }
 }
