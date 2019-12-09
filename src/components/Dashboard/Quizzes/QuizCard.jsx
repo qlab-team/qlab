@@ -36,8 +36,6 @@ const styles = theme => ({
   }
 });
 
-// const classes = useStyles();
-
 class QuizCard extends React.Component {
   loadQuiz = () => {
     this.props.updateCurrentQuiz(this.props.quizId);
