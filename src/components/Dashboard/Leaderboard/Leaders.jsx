@@ -8,6 +8,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
 
 // redux
 import { connect } from "react-redux";
@@ -16,33 +17,28 @@ import { compose } from "redux";
 const styles = theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
+  },
+  button: {
+    minWidth: theme.spacing(9),
+    borderRadius: 50,
+    fontSize: 10,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    color: "rgb(92, 27, 249)",
+    transition: "ease-in-out 0.15s",
+    background: "whitesmoke",
+    "&:hover": {
+      background: "rgb(92, 27, 249)",
+      color: "whitesmoke",
+      cursor: "pointer"
+    },
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   }
 });
-// generate table data
-// function createData(id, date, name, shipTo, paymentMethod, amount) {
-//   return { id, date, name, shipTo, paymentMethod, amount };
-// }
-
-// const rows = [
-//   createData(0, "16 Nov, 2019", "José", "432", "✅❌❌✅✅", "4 Dec, 2019"),
-//   createData(
-//     1,
-//     "16 Nov, 2019",
-//     "Juanito",
-//     "43123",
-//     "❌❌✅❌✅",
-//     "2 Oct, 2019"
-//   ),
-//   createData(
-//     3,
-//     "16 Nov, 2019",
-//     "Miguelito",
-//     "654",
-//     "✅✅✅✅✅",
-//     "4 Nov, 2019"
-//   ),
-//   createData(4, "15 Nov, 2019", "Alejandra", "666", "✅❌❌❌❌", "3 Dec, 2019")
-// ];
 
 class Leaders extends React.Component {
   render() {
@@ -69,8 +65,8 @@ class Leaders extends React.Component {
             <TableRow>
               <TableCell>Rank</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>qScore</TableCell>
-              <TableCell align="right">qPoint</TableCell>
+              <TableCell align="right">qPoints</TableCell>
+              <TableCell align="right">qScore</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,8 +80,21 @@ class Leaders extends React.Component {
                 <TableRow key={row.user_id}>
                   <TableCell>{id + 1}</TableCell>
                   <TableCell>{row.username}</TableCell>
-                  <TableCell>{row.q_score}</TableCell>
                   <TableCell align="right">{row.q_points}</TableCell>
+                  <TableCell align="right">
+                    <Button
+                      className={classes.button}
+                      style={{ textDecoration: "none" }}
+                      onMouseEnter={e => {
+                        e.target.innerHTML = "Invest";
+                      }}
+                      onMouseLeave={e => {
+                        e.target.innerHTML = row.q_score;
+                      }}
+                    >
+                      {row.q_score}
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )))
             }
