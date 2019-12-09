@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, Paper, withStyles } from "@material-ui/core";
 
 
@@ -20,13 +20,13 @@ const styles = {
   };
 
 const colorChanger = (event) => {
-    console.log(styles.Paper.backgroundColor)
-
-    styles.Paper.backgroundColor = "blue"
+    console.log('clicked')
 }
 
 
 function QuizAnswer(props) {
+     const [style, setStyle]= useState(styles)
+   
     return(
         <Grid item xs={6} onClick={ (event) => { colorChanger(event); props.getCurrentAnswer(props.answer, props.correctAnswer);}}>
           <Paper className={props.classes.Paper}>{props.answer}</Paper>
