@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Grid, withStyles, Container, Typography } from "@material-ui/core";
 import { useState } from 'react'
 
-
 import QuizAnswer from "./QuizAnswer";
 
 

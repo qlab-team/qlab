@@ -1,5 +1,6 @@
 import React from "react";
 // components
+import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Stats from "./Stats/Stats";
 import Quizzes from "./Quizzes/Quizzes";
@@ -21,7 +22,7 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
 //Actions
-import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+import { userLogout } from "../../store/actions/userActions";
 
 function Copyright() {
   return (
@@ -149,6 +150,7 @@ const Dashboard = props => {
         <Container maxWidth="lg" className={classes.container}>
           {/* DASHBOARD VIEWS */}
           <Switch>
+            <Route path="/dashboard/profile" component={Profile}></Route>
             <Route
               path="/dashboard/leaderboard"
               component={Leaderboard}
@@ -173,7 +175,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };
