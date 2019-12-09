@@ -28,11 +28,6 @@ const styles = theme =>( {
   });
 
 
-
-const colorChanger = event => {
-  console.log("clicked");
-};
-
 function QuizAnswer(props) {
     const myRef = useRef(null);
 

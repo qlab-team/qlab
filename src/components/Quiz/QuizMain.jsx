@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Typography } from '@material-ui/core'
+//import { Typography } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
 import {LinearProgress} from '@material-ui/core'
 import CheckButton from './CheckButton'
