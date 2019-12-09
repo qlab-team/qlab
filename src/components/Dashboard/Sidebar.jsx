@@ -18,8 +18,6 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 // react-router
 import { Redirect } from "react-router-dom";
-//Placeholder Avatar while account Loads - currently Vic
-import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
@@ -163,7 +161,11 @@ const Sidebar = props => {
       <div className={classes.toolbarIcon}>
         <Grid container wrap="nowrap">
           <Grid item xs>
-            <Avatar alt="useravatar" src={auth.photoURL || placeholderAvatar} />
+            {(() => {
+              if (auth.photoURL) {
+                return <Avatar alt="useravatar" src={auth.photoURL} />;
+              }
+            })()}
           </Grid>
           <Grid
             item
@@ -179,7 +181,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {user.userProfile ? user.userProfile.username : "...loading"}
+              {auth.displayName ? auth.displayName : "...loading"}
             </Typography>
           </Grid>
         </Grid>
