@@ -65,9 +65,8 @@ class Leaders extends React.Component {
             <TableRow>
               <TableCell>Rank</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell align="right">qPoint</TableCell>
+              <TableCell align="right">qPoints</TableCell>
               <TableCell align="right">qScore</TableCell>
-              {/* <TableCell align="right">Invest</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
