@@ -12,7 +12,9 @@ const profileReducer = (state = initState, action) => {
         createdAt: action.profile.createdAt,
         lastLoginAt: action.profile.lastLoginAt,
         photoURL: action.profile.photoURL,
-        uid: action.profile.uid
+        uid: action.profile.uid,
+        q_points: action.q_points,
+        q_score: action.q_score
       };
     }
     default:

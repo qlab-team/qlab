@@ -101,7 +101,7 @@ function Login(props) {
   const classes = useStyles();
 
   //Set Props from Redux
-  const { auth } = props;
+  const { auth, user } = props;
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
@@ -110,6 +110,7 @@ function Login(props) {
       console.log("Redirecting to Dashboard");
       // save profile to local Strage
       localStorage.auth = JSON.stringify(auth);
+      localStorage.user = JSON.stringify(user);
       return <Redirect to="/dashboard" />;
     }
   }
@@ -191,6 +192,7 @@ function Login(props) {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     auth: state.firebase.auth,
     user: state.user

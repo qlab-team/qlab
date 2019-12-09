@@ -1,8 +1,10 @@
 import React from "react";
 // material ui
 import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-// import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -11,22 +13,21 @@ import { getProfile } from "../../../store/actions/profileActions";
 // styles
 const styles = theme => ({
   root: {
-    display: "flex"
-  },
-  content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto"
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    overflow: "hidden",
+    padding: theme.spacing(0, 3)
   },
   paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column"
+    maxWidth: 400,
+    margin: `${theme.spacing(1)}px auto`,
+    padding: theme.spacing(2)
+  },
+  bigAvatar: {
+    width: "100px",
+    height: "100px"
+  },
+  displayName: {
+    fontSize: "52px"
   }
 });
 
@@ -41,13 +42,30 @@ class Profile extends React.Component {
   render() {
     const { classes, profile } = this.props;
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          my name is {profile.displayName}
-          {/* my score is {profile.displayName} */}
-          <img src={profile.photoURL} />
-        </Grid>
-      </Grid>
+      <div className={classes.root}>
+        {(() => {
+          if (profile.photoURL) {
+            return (
+              <Paper className={classes.paper}>
+                <Grid container wrap="nowrap" spacing={2}>
+                  <Grid item>
+                    <Avatar
+                      alt="useravatar"
+                      src={profile.photoURL}
+                      className={classes.bigAvatar}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <Typography className={classes.displayName}>
+                      {profile.displayName}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Paper>
+            );
+          }
+        })()}
+      </div>
     );
   }
 }
