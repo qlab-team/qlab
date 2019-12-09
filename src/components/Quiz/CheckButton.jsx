@@ -30,7 +30,9 @@ function CheckButton (props) {
         else if(props.currentAnswer === props.currentCorrectAnswer) {
             setButtonValue("NEXT")
             answerConfirmation = "true"
+            props.updateProgressBar()
             props.getAnswerConfirmation(answerConfirmation)
+
         } else {
             setButtonValue("NEXT")
             answerConfirmation= "false"

@@ -10,7 +10,9 @@
     "eject": "react-scripts eject",
     "test-nowatch": "react-scripts test --watchAll=false",
     "int": "yarn build && firebase serve",
-    "login": "firebase login"
+    "login": "firebase login",
+    "deploy": "firebase deploy --token '$FIREBASE_TOKEN' --only hosting",
+    "deployFunctions": "cd functions && yarn deploy && cd .."
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",
