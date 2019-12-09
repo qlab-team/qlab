@@ -1,5 +1,6 @@
 import React from "react";
 // components
+import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Stats from "./Stats/Stats";
 import Quizzes from "./Quizzes/Quizzes";
@@ -148,6 +149,7 @@ const Dashboard = props => {
         <Container maxWidth="lg" className={classes.container}>
           {/* DASHBOARD VIEWS */}
           <Switch>
+            <Route path="/dashboard/profile" component={Profile}></Route>
             <Route
               path="/dashboard/leaderboard"
               component={Leaderboard}
@@ -177,6 +179,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Dashboard);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Dashboard);
