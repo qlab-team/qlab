@@ -1,88 +1,87 @@
-import React, { Component } from "react";
-import { Paper } from "@material-ui/core";
-import QuizAnswers from "./QuizAnswers";
-import { LinearProgress } from "@material-ui/core";
-import CheckButton from "./CheckButton";
-import { connect } from "react-redux";
-import { getQuiz } from "../../store/actions/quizActions";
-import AnswerValidator from "./AnswerValidator";
+import React, { Component } from 'react'
+import { Paper } from '@material-ui/core'
+import QuizAnswers from './QuizAnswers'
+import {LinearProgress} from '@material-ui/core'
+import CheckButton from './CheckButton'
+import { connect } from 'react-redux'
+import {getQuiz} from '../../store/actions/quizActions'
+import AnswerValidator from './AnswerValidator'
+import QuizFinished from './QuizFinished'
 class QuizMain extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loadedOrNot: false,
-      quizLength: "hi",
-      currentProgress: 80,
-      currentQuestion: 0,
-      currentAnswer: "",
-      currentCorrectAnswer: "",
-      answerConfirmation: "",
-      quizTitle: "Planets Level 1", //will get this from the store afterwards
-      Quiz: [
-        [
-          {
-            question: "How many Planets in the solar system?",
-            answers: ["8", "7", "5", "10"],
-            _acorrectAnswer: "8"
-          },
 
-          {
-            question: "Which Planet is the largest in the solar system?",
-            answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-            _acorrectAnswer: "Jupiter"
-          },
-
-          {
-            question: "Which planet is the closest to the sun?",
-            answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-            _acorrectAnswer: "Mercury"
-          }
-        ]
-      ]
-    };
-  }
-
-  componentDidMount() {
-    this.props.getQuiz(this.props.quizId).then(res => {
-      this.setState({ Quiz: this.props.quiz.quiz_info });
-      console.log("hi", this.state.Quiz);
-      this.setState({ loadedOrNot: true });
-    });
-  }
-
-  getCurrentAnswer = (currentAnswer, currentCorrectAnswer) => {
-    this.setState({ currentAnswer, currentCorrectAnswer });
-  };
-
-  getAnswerConfirmation = answerConfirmation => {
-    this.setState({ answerConfirmation });
-  };
-
-  updateCurrentQuestion = () => {
-    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
-  };
-
-  addQuizQuestionToEnd = () => {
-    let updatedQuiz = this.state.Quiz;
-    const currentQuestion = this.state.Quiz[this.state.currentQuestion];
-    updatedQuiz.push(currentQuestion);
-    this.setState({ Quiz: updatedQuiz });
-  };
-
-  render() {
-    let answerValidation = "";
-    if (this.state.answerConfirmation !== "") {
-      answerValidation = (
-        <AnswerValidator answerConfirmation={this.state.answerConfirmation} />
-      );
+    constructor(props) {
+        super(props);
+        this.state = {
+            quizView: "",
+            loadedOrNot: false,
+            quizLength: "hi",
+            currentProgress: 0,
+            currentQuestion: 0,
+            currentAnswer: "",
+            currentCorrectAnswer: "",
+            answerConfirmation: "",
+            quizTitle: "Planets Level 1", //will get this from the store afterwards
+            Quiz: []
+        }
     }
-    let quizAfterAndBeforeLoading;
-    if (this.state.loadedOrNot === false) {
-      quizAfterAndBeforeLoading = <div>loading</div>;
-    } else {
-      quizAfterAndBeforeLoading = (
-        <div>
-          <div>
+
+    componentDidMount() {
+        this.props.getQuiz(this.props.quizId).then( res => {
+            console.log(this.props.quiz)
+            this.setState({Quiz: this.props.quiz.quiz_info})
+            this.setState({quizLength: this.props.quiz.quiz_length })
+            this.setState({loadedOrNot: true})
+        })
+    }
+
+    getCurrentAnswer = (currentAnswer, currentCorrectAnswer) => {
+        this.setState({currentAnswer, currentCorrectAnswer})
+    }
+
+    getAnswerConfirmation = (answerConfirmation) => {
+        this.setState({answerConfirmation})
+    }
+
+    updateCurrentQuestion = () => {
+        this.setState({currentQuestion: this.state.currentQuestion + 1})
+    }
+
+    updateProgressBar = () => {
+        let progressAmount = (1 / this.state.quizLength) * 100 ;
+        this.setState({currentProgress: this.state.currentProgress + progressAmount})
+        if(this.state.currentProgress >= 99 - progressAmount) {
+            this.setState({quizView: "finished"})
+        }
+        console.log(this.state.currentProgress);
+        console.log('quizView:',this.state.quizView)
+    }
+
+    addQuizQuestionToEnd = () => {
+        let updatedQuiz = this.state.Quiz;
+        const currentQuestion = this.state.Quiz[this.state.currentQuestion]
+        updatedQuiz.push(currentQuestion)
+        this.setState({Quiz: updatedQuiz})
+    }
+
+
+
+
+    render() {
+        let answerValidation ="";
+        if(this.state.answerConfirmation !== "") {
+            answerValidation = <AnswerValidator answerConfirmation ={this.state.answerConfirmation} />
+        }
+
+        let quizView;
+
+        if(this.state.quizView === "finished") {
+            quizView = <QuizFinished />
+        }
+        else if (this.state.loadedOrNot === false) {
+            quizView = <div>loading</div>
+        } else {
+            quizView = <div>
+            <div>
             <Paper>
               {this.state.Quiz[this.state.currentQuestion].question}
             </Paper>
@@ -106,15 +105,22 @@ class QuizMain extends Component {
             currentCorrectAnswer={this.state.currentCorrectAnswer}
             updateCurrentQuestion={this.updateCurrentQuestion}
             addQuizQuestionToEnd={this.addQuizQuestionToEnd}
-          />
+            updateProgressBar={this.updateProgressBar}
+            />
 
-          {answerValidation}
-        </div>
-      );
+            {answerValidation}
+
+        </div> 
+        }
+        return(
+        <div>
+            {quizView}
+        </div> 
+        )
     }
-    return <div>{quizAfterAndBeforeLoading}</div>;
-  }
 }
+
+         
 
 const mapStateToProps = state => {
   return {

@@ -15,9 +15,8 @@ const styles = {
   };
 
 function AnswerValidator (props) {
-   const test = props.answerConfirmation
     return (
-        <div>{test}</div>
+        <div>{props.answerConfirmation}</div>
     )
 }
 
