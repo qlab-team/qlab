@@ -101,6 +101,8 @@ const Leaders = props => {
                       const data = {
                         username: row.username,
                         date: new Date().toDateString(),
+                        q_score: row.q_score,
+                        q_points: row.q_points,
                         uid: auth.uid
                       };
                       props.addInvestment(data);
