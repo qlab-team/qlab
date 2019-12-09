@@ -118,8 +118,8 @@ const Dashboard = props => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerClose = xs => {
+    if (xs) setOpen(false);
   };
 
   //Set Props from Redux
