@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 //Actions
-import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+import { userLogout } from "../../store/actions/userActions";
 
 // react-router
 import { Redirect } from "react-router-dom";
@@ -101,13 +101,16 @@ function Login(props) {
   const classes = useStyles();
 
   //Set Props from Redux
-  const { auth } = props;
+  const { auth, user } = props;
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
       console.log("Redirecting to Dashboard");
+      // save profile to local Strage
+      localStorage.auth = JSON.stringify(auth);
+      localStorage.user = JSON.stringify(user);
       return <Redirect to="/dashboard" />;
     }
   }
@@ -189,6 +192,7 @@ function Login(props) {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     auth: state.firebase.auth,
     user: state.user
@@ -197,7 +201,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };
