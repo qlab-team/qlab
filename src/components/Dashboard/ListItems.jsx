@@ -72,21 +72,21 @@ export const MainListItems = props => {
 export const SecondaryListItems = props => {
   return (
     <div>
-      <ListItem button>
-        <ListItemIcon>
-          <ExitToAppIcon />
-        </ListItemIcon>
-        <Link
-          onClick={() => {
-            firebase.auth().signOut();
-            props.userLogout();
-          }}
-          style={{ textDecoration: "none", color: "white" }}
-          to="/"
-        >
+      <Link
+        onClick={() => {
+          firebase.auth().signOut();
+          props.userLogout();
+        }}
+        style={{ textDecoration: "none", color: "white" }}
+        to="/"
+      >
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
           <ListItemText primary="Logout" />
-        </Link>
-      </ListItem>
+        </ListItem>
+      </Link>
     </div>
   );
 };

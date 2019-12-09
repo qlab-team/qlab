@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     background:
-      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
+      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    borderRadius: "0px 0px 20px 20px"
   },
   button: {
     flexGrow: 1,
@@ -51,7 +52,7 @@ export default function ButtonAppBar() {
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Button className={classes.button} color="inherit">
-                  about
+                  About
                 </Button>
               </a>
             </Box>

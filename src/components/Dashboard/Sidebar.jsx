@@ -16,10 +16,8 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-
 //Placeholder Avatar while account Loads - currently Vic
 import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
@@ -27,6 +25,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+  },
+  palette: {
+    type: "light"
   },
   username: {
     margin: 0,
@@ -74,10 +75,15 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     position: "relative",
+    border: "none",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    borderRadius: "0px 0px 20px 0px",
     whiteSpace: "nowrap",
     width: drawerWidth,
     [theme.breakpoints.down("xs")]: {
-      width: "100vw"
+      width: "101vw",
+      borderRadius: "0px"
     },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -95,7 +101,7 @@ const useStyles = makeStyles(theme => ({
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up("xs")]: {
-      width: theme.spacing(9)
+      width: "56px"
     }
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -133,6 +139,7 @@ const Sidebar = props => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   // Set Props from Redux
   const { auth, user } = props;
+  console.log(user);
 
   return (
     <Drawer

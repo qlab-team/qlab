@@ -1,8 +1,8 @@
 import React from "react";
 // components
 import Chart from "./Chart";
-import Deposits from "./Deposits.jsx";
-import Orders from "./Orders";
+import QPoints from "./QPoints.jsx";
+import PerformanceTable from "./PerformanceTable";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -35,16 +35,16 @@ export default function Stats() {
           <Chart />
         </Paper>
       </Grid>
-      {/* Recent Deposits */}
+      {/* QPoints */}
       <Grid item xs={12} md={4} lg={3}>
         <Paper className={fixedHeightPaper}>
-          <Deposits />
+          <QPoints />
         </Paper>
       </Grid>
-      {/* Recent Orders */}
+      {/* PerformanceTable */}
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Orders />
+          <PerformanceTable />
         </Paper>
       </Grid>
     </Grid>
