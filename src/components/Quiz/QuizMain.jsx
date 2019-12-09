@@ -6,11 +6,13 @@ import CheckButton from './CheckButton'
 import { connect } from 'react-redux'
 import {getQuiz} from '../../store/actions/quizActions'
 import AnswerValidator from './AnswerValidator'
+import QuizFinished from './QuizFinished'
 class QuizMain extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            quizView: "",
             loadedOrNot: false,
             quizLength: "hi",
             currentProgress: 0,
@@ -47,7 +49,11 @@ class QuizMain extends Component {
     updateProgressBar = () => {
         let progressAmount = (1 / this.state.quizLength) * 100 ;
         this.setState({currentProgress: this.state.currentProgress + progressAmount})
+        if(this.state.currentProgress >= 99 - progressAmount) {
+            this.setState({quizView: "finished"})
+        }
         console.log(this.state.currentProgress);
+        console.log('quizView:',this.state.quizView)
     }
 
     addQuizQuestionToEnd = () => {
@@ -66,11 +72,15 @@ class QuizMain extends Component {
             answerValidation = <AnswerValidator answerConfirmation ={this.state.answerConfirmation} />
         }
 
-        let quizAfterAndBeforeLoading;
-        if (this.state.loadedOrNot === false) {
-            quizAfterAndBeforeLoading = <div>loading</div>
+        let quizView;
+
+        if(this.state.quizView === "finished") {
+            quizView = <QuizFinished />
+        }
+        else if (this.state.loadedOrNot === false) {
+            quizView = <div>loading</div>
         } else {
-            quizAfterAndBeforeLoading = <div>
+            quizView = <div>
             <div>
             <Paper>
                 {this.state.Quiz[this.state.currentQuestion].question}
@@ -99,7 +109,7 @@ class QuizMain extends Component {
         }
         return(
         <div>
-            {quizAfterAndBeforeLoading}
+            {quizView}
         </div> 
         )
     }

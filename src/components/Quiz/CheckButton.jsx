@@ -24,13 +24,13 @@ function CheckButton (props) {
         if(buttonValue === "NEXT") {
             console.log('hey')
             setButtonValue("CHECK")
+            props.updateProgressBar()
             props.updateCurrentQuestion();
             
         }
         else if(props.currentAnswer === props.currentCorrectAnswer) {
             setButtonValue("NEXT")
             answerConfirmation = "true"
-            props.updateProgressBar()
             props.getAnswerConfirmation(answerConfirmation)
 
         } else {
