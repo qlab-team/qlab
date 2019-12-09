@@ -12,6 +12,7 @@ const getQuiz = quizId => {
       return firestore
         .get({collection: 'quizzes', doc: quizId})
         .then((doc) => {
+          console.log('data',doc.data())
           dispatch({ type: "GET_QUIZ", quiz: doc.data() });
         });
     };

@@ -28,7 +28,7 @@ export default function Quizzes() {
     // will get Quizzes from database
     Quizzes: [
       {
-        quizId: "1",
+        quizId: "0",
         quizTitle: "Mars",
         quizDescription: "The red planet."
       },

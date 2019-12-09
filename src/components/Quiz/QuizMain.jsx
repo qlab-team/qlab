@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Paper } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
 import {LinearProgress} from '@material-ui/core'
 import CheckButton from './CheckButton'
@@ -13,7 +13,8 @@ import {compose } from 'redux'
 const styles = {
     Validator: {
         backgroundColor: "white",
-    }
+        marginBottom: 10,
+    },
    };
 
 class QuizMain extends Component {
@@ -41,7 +42,7 @@ class QuizMain extends Component {
     componentDidMount() {
         this.props.getQuiz(this.props.quizId).then( res => {
             console.log(this.props.quiz)
-            this.setState({Quiz: this.props.quiz.quiz_info})
+            this.setState({Quiz: this.props.quiz.quiz_questions})
             this.setState({quizLength: this.props.quiz.quiz_length })
             this.setState({loadedOrNot: true})
         })
@@ -105,11 +106,10 @@ class QuizMain extends Component {
         } else {
             quizView = <div>
             <div>
-            <Paper>
-              {this.state.Quiz[this.state.currentQuestion].question}
-            </Paper>
+            
 
             <QuizAnswers
+              quizQuestion={this.state.Quiz[this.state.currentQuestion].question}
               questionsDisabled={this.state.questionsDisabled}
               getCurrentAnswer={this.getCurrentAnswer}
               answers={this.state.Quiz[this.state.currentQuestion].answers}
