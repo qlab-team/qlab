@@ -16,6 +16,8 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
+// react-router
+import { Redirect } from "react-router-dom";
 //Placeholder Avatar while account Loads - currently Vic
 import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
 //Actions
@@ -140,6 +142,13 @@ const Sidebar = props => {
   // Set Props from Redux
   const { auth, user } = props;
   console.log(user);
+
+  //If Auth Not Loaded, Don't Worry
+  if (auth.isLoaded) {
+    //If No Auth, Redirect To Front Page
+    if (auth.isEmpty) return <Redirect to="/login" />;
+    if (!user.isLoggedIn) props.getUserAndLogin(auth);
+  }
 
   return (
     <Drawer

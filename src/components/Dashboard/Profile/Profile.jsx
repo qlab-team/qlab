@@ -32,15 +32,15 @@ const styles = theme => ({
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.props.getProfile();
+    this.props.getProfile(this.props.auth);
   }
   render() {
-    console.log(this.props);
     const { classes, profile } = this.props;
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
           my name is {profile.displayName}
+          {/* my score is {profile.displayName} */}
           <img src={profile.photoURL} />
         </Grid>
       </Grid>
@@ -49,14 +49,14 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
+    auth: state.firebase.auth,
     profile: state.profile
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getProfile: () => dispatch(getProfile())
+    getProfile: auth => dispatch(getProfile(auth))
   };
 };
 
