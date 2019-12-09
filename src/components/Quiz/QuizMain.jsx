@@ -13,38 +13,21 @@ class QuizMain extends Component {
         this.state = {
             loadedOrNot: false,
             quizLength: "hi",
-            currentProgress: 80,
+            currentProgress: 0,
             currentQuestion: 0,
             currentAnswer: "",
             currentCorrectAnswer: "",
             answerConfirmation: "",
             quizTitle: "Planets Level 1", //will get this from the store afterwards
-            Quiz: [[
-                {
-                    question: "How many Planets in the solar system?",
-                    answers: ["8", "7", "5", "10"],
-                _acorrectAnswer: "8"
-                },
-
-                {
-                    question: "Which Planet is the largest in the solar system?",
-                    answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-                _acorrectAnswer: "Jupiter"
-                },
-
-                {
-                    question: "Which planet is the closest to the sun?",
-                    answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-                _acorrectAnswer: "Mercury"
-                },
-
-            ]]
+            Quiz: []
         }
     }
 
     componentDidMount() {
         this.props.getQuiz(this.props.quizId).then( res => {
+            console.log(this.props.quiz)
             this.setState({Quiz: this.props.quiz.quiz_info})
+            this.setState({quizLength: this.props.quiz.quiz_length })
             this.setState({loadedOrNot: true})
         })
     }
@@ -59,6 +42,12 @@ class QuizMain extends Component {
 
     updateCurrentQuestion = () => {
         this.setState({currentQuestion: this.state.currentQuestion + 1})
+    }
+
+    updateProgressBar = () => {
+        let progressAmount = (1 / this.state.quizLength) * 100 ;
+        this.setState({currentProgress: this.state.currentProgress + progressAmount})
+        console.log(this.state.currentProgress);
     }
 
     addQuizQuestionToEnd = () => {
@@ -76,6 +65,7 @@ class QuizMain extends Component {
         if(this.state.answerConfirmation !== "") {
             answerValidation = <AnswerValidator answerConfirmation ={this.state.answerConfirmation} />
         }
+
         let quizAfterAndBeforeLoading;
         if (this.state.loadedOrNot === false) {
             quizAfterAndBeforeLoading = <div>loading</div>
@@ -100,6 +90,7 @@ class QuizMain extends Component {
             currentCorrectAnswer={this.state.currentCorrectAnswer}
             updateCurrentQuestion={this.updateCurrentQuestion}
             addQuizQuestionToEnd={this.addQuizQuestionToEnd}
+            updateProgressBar={this.updateProgressBar}
             />
 
             {answerValidation}
@@ -109,7 +100,6 @@ class QuizMain extends Component {
         return(
         <div>
             {quizAfterAndBeforeLoading}
-
         </div> 
         )
     }
