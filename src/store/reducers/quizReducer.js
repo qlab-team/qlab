@@ -5,10 +5,8 @@ const initState = {
 const quizReducer = (state = initState, action) => {
   switch (action.type) {
     case "UPDATE_QUIZ_INFO": {
-        state.currentQuiz = action.quizId;
-        console.log(state);
-        return state;
-  
+      state.currentQuiz = action.quizId;
+      return state;
     }
 
     case "GET_QUIZ": {

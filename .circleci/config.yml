@@ -22,9 +22,15 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && yarn && cd ..
+      - run: # Run FrontEnd Tests
           name: Run Jest Test
           command: yarn test
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
@@ -38,26 +44,26 @@ jobs: # a collection of steps
           name: update yarn
           command: "sudo yarn upgrade"
       - restore_cache: # special step to restore the dependency cache
-          name: Restore Yarn Package Cache
+          name: Restore Yarn Package Cache for Hosting
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Run Yarn
-          name: Install Dependencies
+          name: Install Dependencies for Hosting
           command: yarn install --frozen-lockfile
       - save_cache: # special step to save the dependency cache
-          name: Save Yarn Package Cache
+          name: Save Yarn Package Cache for Hosting
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && yarn && cd ..
       - run: # Build the Project
           name: react-build
           command: yarn build
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
-      - run: # Deploy Functions to Firebase
-          name: Deploy to Firebase
-          command: cd functions && yarn firebase deploy --token "$FIREBASE_TOKEN" --only functions && cd ..
 
 workflows:
   version: 2
