@@ -61,7 +61,7 @@ class QuizCard extends React.Component {
           style={{ textDecoration: "none" }}
           to="/quiz"
         >
-          start
+          Start
         </Link>
       </Grid>
     );
