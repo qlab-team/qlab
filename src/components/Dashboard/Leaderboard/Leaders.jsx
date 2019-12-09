@@ -8,7 +8,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 
 // redux
 import { connect } from "react-redux";
@@ -19,14 +19,14 @@ const styles = theme => ({
     marginTop: theme.spacing(3)
   },
   button: {
-    // margin: theme.spacing(3),
-    // marginTop: theme.spacing(1),
-    // marginBottom: theme.spacing(1),
+    minWidth: theme.spacing(9),
     borderRadius: 50,
     fontSize: 10,
     textTransform: "none",
     textDecoration: "none !important",
     padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     color: "rgb(92, 27, 249)",
     transition: "ease-in-out 0.15s",
     background: "whitesmoke",
@@ -65,9 +65,9 @@ class Leaders extends React.Component {
             <TableRow>
               <TableCell>Rank</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>qScore</TableCell>
               <TableCell align="right">qPoint</TableCell>
-              <TableCell align="right">Invest</TableCell>
+              <TableCell align="right">qScore</TableCell>
+              {/* <TableCell align="right">Invest</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -81,16 +81,20 @@ class Leaders extends React.Component {
                 <TableRow key={row.user_id}>
                   <TableCell>{id + 1}</TableCell>
                   <TableCell>{row.username}</TableCell>
-                  <TableCell>{row.q_score}</TableCell>
                   <TableCell align="right">{row.q_points}</TableCell>
                   <TableCell align="right">
-                    {" "}
-                    <Link
+                    <Button
                       className={classes.button}
                       style={{ textDecoration: "none" }}
+                      onMouseEnter={e => {
+                        e.target.innerHTML = "Invest";
+                      }}
+                      onMouseLeave={e => {
+                        e.target.innerHTML = row.q_score;
+                      }}
                     >
-                      Invest
-                    </Link>
+                      {row.q_score}
+                    </Button>
                   </TableCell>
                 </TableRow>
               )))
