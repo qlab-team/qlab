@@ -38,24 +38,3 @@ export default class QuizChooser extends Component {
     );
   }
 }
-
-/*
-quiz: [
-                            {
-                            question: "How many Planets in the solar system?",
-                            answers: ["8", "7", "5", "10"],
-                            correctAnswer: "8"
-                            },
-                            {
-                            question: "Which Planet is the largest in the solar system?",
-                            answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-                            correctAnswer: "Jupiter"
-                            },
-
-                            {
-                            question: "Which planet is the closest to the sun?",
-                            answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
-                            correctAnswer: "Mercury"
-                            }
-                    ]
-*/
