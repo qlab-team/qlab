@@ -128,6 +128,89 @@ describe("QLAB Functions Test", () => {
       qlabFunctions.didUserQuizYesterday(req, res);
     });
   });
-});
 
-test.cleanup();
+
+  describe("/generateLeaderboard"), function() {
+    let oldDatabase;
+
+    // eslint-disable-next-line
+    before(() => {
+      // Save the old database method so it can be restored after the test.
+      oldDatabase = admin.firestore;
+    });
+
+    // eslint-disable-next-line
+    after(() => {
+      // Restoring admin.database() to the original method.
+      admin.firestore = oldDatabase;
+    });
+
+    it("generates a new leaderboard", function(done) {
+      //Fake Data
+      const collectionParam = "users";
+      const users = [
+        {
+          auth_id: "blahblahblah",
+          created_at: new Date,
+          last_quiz_done: new Date,
+          q_points: 30,
+          q_score: 200,
+          quiz_total: 3,
+          username: "mrs_test"
+        },
+        {
+          auth_id: "wooooooo",
+          created_at: new Date,
+          last_quiz_done: new Date,
+          q_points: 250,
+          q_score: 100,
+          quiz_total: 2,
+          username: "mr_test"
+        }
+      ]
+      //Stubs
+      const firestoreStub = sinon.stub();
+      const collectionStub = sinon.stub();
+      const getStub = sinon.stub();
+
+      // The following lines override the behavior of admin.database().ref('/messages')
+      // .push({ original: 'input' }) to return a promise that resolves with { ref: 'new_ref' }.
+      // This mimics the behavior of a push to the database, which returns an object containing a
+      // ref property representing the URL of the newly pushed item.
+
+      Object.defineProperty(admin, "firestore", { get: () => firestoreStub });
+      firestoreStub.returns({ collection: collectionStub });
+      collectionStub.withArgs(collectionParam).returns({ get: getStub });
+      getStub.returns(Promise.resolve({ data: userObject }));
+
+
+      const req = { query: { user_id: "DEADBEEF" } };
+      const expectedResponse = {
+        board: [
+          {
+            q_points: 250,
+            q_score: 100,
+            user_id: "DEADBEEF",
+            username: "mr_test"
+          },
+          {
+            q_points: 30,
+            q_score: 200,
+            user_id: "BEEFDEAD",
+            username: "mrs_test"
+          }
+        ]
+      };
+      const res = {
+        send: body => {
+          // console.log({ body });
+          assert.deepEqual(body, expectedResponse);
+          done();
+        }
+      };
+
+      qlabFunctions.generateLeaderboard(req, res);
+    });
+    
+  }); 
+});
