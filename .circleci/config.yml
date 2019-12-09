@@ -52,9 +52,12 @@ jobs: # a collection of steps
       - run: # Build the Project
           name: react-build
           command: yarn build
-      - run: # Deploy to Firebase
+      - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+      - run: # Deploy Functions to Firebase
+          name: Deploy to Firebase
+          command: cd functions && yarn firebase deploy --token "$FIREBASE_TOKEN" --only functions && cd ..
 
 workflows:
   version: 2
