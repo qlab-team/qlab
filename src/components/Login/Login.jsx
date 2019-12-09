@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 //Actions
-import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+import { userLogout } from "../../store/actions/userActions";
 
 // react-router
 import { Redirect } from "react-router-dom";
@@ -110,7 +110,6 @@ function Login(props) {
       console.log("Redirecting to Dashboard");
       // save profile to local Strage
       localStorage.auth = JSON.stringify(auth);
-      // props.getUserAndLogin(auth);
       return <Redirect to="/dashboard" />;
     }
   }
@@ -200,7 +199,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };

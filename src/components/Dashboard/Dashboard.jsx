@@ -22,7 +22,7 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
 //Actions
-import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
+import { userLogout } from "../../store/actions/userActions";
 
 function Copyright() {
   return (
@@ -175,7 +175,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     userLogout: () => dispatch(userLogout())
   };
 };

@@ -32,7 +32,11 @@ const styles = theme => ({
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.props.getProfile(this.props.auth);
+    // Want to pass profile data from state.user(props.user).
+    // But, now it can't get it. because it is undefined. reason is tyming...
+    // ToDo: To change from local storage to redux in the future...
+    // this.props.getProfile(this.props.user);
+    this.props.getProfile();
   }
   render() {
     const { classes, profile } = this.props;
@@ -50,13 +54,12 @@ class Profile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
     profile: state.profile
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getProfile: auth => dispatch(getProfile(auth))
+    getProfile: () => dispatch(getProfile())
   };
 };
 
