@@ -1,5 +1,5 @@
 const initState = {
-  myProfile: []
+  profile: []
 };
 
 const profileReducer = (state = initState, action) => {
@@ -7,7 +7,12 @@ const profileReducer = (state = initState, action) => {
     case "GET_PROFILE_INFO": {
       return {
         ...state,
-        myProfile: action.profile.myProfile
+        displayName: action.profile.displayName,
+        email: action.profile.email,
+        createdAt: action.profile.createdAt,
+        lastLoginAt: action.profile.lastLoginAt,
+        photoURL: action.profile.photoURL,
+        uid: action.profile.uid
       };
     }
     default:

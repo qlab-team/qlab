@@ -40,13 +40,20 @@ class Profile extends React.Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          Profile! => {profile}
+          my name is {profile.displayName}
+          <img src={profile.photoURL} />
         </Grid>
       </Grid>
     );
   }
 }
 
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    profile: state.profile
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     getProfile: () => dispatch(getProfile())
@@ -55,5 +62,5 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   withStyles(styles),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(Profile);
