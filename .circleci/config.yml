@@ -54,10 +54,10 @@ jobs: # a collection of steps
           command: yarn build
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
-          command: yarn deploy
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
       - run: # Deploy Functions to Firebase
           name: Deploy to Firebase
-          command: cd functions && yarn deploy && cd ..
+          command: cd functions && yarn firebase deploy --token "$FIREBASE_TOKEN" --only functions && cd ..
 
 workflows:
   version: 2
