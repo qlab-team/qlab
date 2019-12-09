@@ -30,7 +30,7 @@ jobs: # a collection of steps
           command: yarn test
       - run: # Run Backend Tests
           name: Run Backend Firebase and Cloud Functions Tests
-          command: yarn testFunction
+          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
