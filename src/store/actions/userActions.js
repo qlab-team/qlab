@@ -1,4 +1,4 @@
-const generateUser = (authObject) => {
+const generateUser = authObject => {
   return {
     auth_id: authObject.uid,
     username: authObject.email.split("@")[0],
@@ -8,16 +8,16 @@ const generateUser = (authObject) => {
     created_at: new Date(),
     investments: [],
     last_quiz_done: new Date()
-  }
-}
+  };
+};
 
 const createUser = (auth, usersCollection) => {
-  console.log("Creating User")
+  console.log("Creating User");
   usersCollection
     .add(generateUser(auth))
     .then(() => {
       console.log("Account Created");
-      return
+      return;
     })
     .catch(err => {
       console.log("Error creating account", err);
@@ -32,13 +32,12 @@ export const getUserAndLogin = auth => {
     const getUser = () => {
       usersCollection
         .where("auth_id", "==", auth.uid)
-        .doc('SF');
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
             console.log("No matching documents.");
-            createUser(auth, usersCollection)
-            getUser()
+            createUser(auth, usersCollection);
+            getUser();
             return;
           }
 
@@ -55,15 +54,14 @@ export const getUserAndLogin = auth => {
         .catch(err => {
           console.log("Error getting documents", err);
         });
-    }
-    getUser()
-
+    };
+    getUser();
   };
 };
 
 export const userLogout = authId => {
   return dispatch => {
-    console.log("Logging User Out")
+    console.log("Logging User Out");
     dispatch({
       type: "USER_LOGOUT"
     });

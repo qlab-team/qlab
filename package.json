@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest ./test",
+    "test": "jest",
     "test-with-coverage": "yarn test --coverage",
     "eject": "react-scripts eject",
     "test-nowatch": "react-scripts test --watchAll=false",
