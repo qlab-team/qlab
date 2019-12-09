@@ -108,7 +108,6 @@ function Login(props) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
       console.log("Redirecting to Dashboard");
-      props.getUserAndLogin(auth);
       return <Redirect to="/dashboard" />;
     }
   }
