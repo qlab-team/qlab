@@ -32,6 +32,7 @@ export const getUserAndLogin = auth => {
     const getUser = () => {
       usersCollection
         .where("auth_id", "==", auth.uid)
+        .doc('SF');
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
