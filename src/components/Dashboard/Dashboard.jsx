@@ -126,12 +126,12 @@ const Dashboard = props => {
     if (xs) setOpen(false);
   };
 
-  //Set Props from Redux
+  // set props from redux
   const { auth } = props;
 
-  //If Auth Not Loaded, Don't Worry
+  // if auth not loaded, don't worry
   if (auth.isLoaded) {
-    //If No Auth, Redirect To Front Page
+    // if no auth, redirect
     if (auth.isEmpty) return <Redirect to="/login" />;
   }
 

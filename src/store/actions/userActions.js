@@ -28,7 +28,6 @@ export const getUserAndLogin = auth => {
   return (dispatch, getState, { getFirestore }) => {
     // make async call to database
     const usersCollection = getFirestore().collection("users");
-    console.log(auth);
     const getUser = () => {
       usersCollection
         .where("auth_id", "==", auth.uid)

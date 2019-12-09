@@ -16,20 +16,33 @@ const getLeaderboard = () => {
   };
 };
 
-const addInvestment = auth => {
+const addInvestment = data => {
   return (dispatch, getState, { getFirestore }) => {
-    // make async call to database
-    // const firestore = getFirestore();
-    // firestore
-    //   .collection("users")
-    //   .doc("x")
-    //   .set({})
-    //   .then(function() {
-    //     console.log("Investment successfully added!");
-    //   })
-    //   .catch(function(error) {
-    //     console.error("Error writing document: ", error);
-    //   });
+    const firestore = getFirestore();
+    console.log(data);
+    firestore
+      .collection("users")
+      .where("auth_id", "==", data.uid)
+      .get()
+      .then(res => {
+        console.log(res);
+        const docId = res.docs[0].id;
+        return docId;
+      })
+      .then(docId => {
+        firestore
+          .collection("users")
+          .doc(docId)
+          .update({
+            investments: firestore.FieldValue.arrayUnion({
+              display_name: data.username,
+              date: data.date
+            })
+          })
+          .catch(e => {
+            console.log("err :", e);
+          });
+      });
   };
 };
 

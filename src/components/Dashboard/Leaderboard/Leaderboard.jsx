@@ -6,11 +6,11 @@ import Leaders from "./Leaders";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+// react-router
+import { Redirect } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
-// react-router
-import { Redirect } from "react-router-dom";
 // actions
 import { getLeaderboard } from "../../../store/actions/leaderboardActions";
 
@@ -39,23 +39,20 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Leaderboard = props => {
   const classes = useStyles();
-
   // set props from redux
   const { auth } = props;
-
-  // if auth lot loaded, son't worry
+  // if auth lot loaded, don't worry
   if (auth.isLoaded) {
     // if no auth, redirect to front page
     if (auth.isEmpty) return <Redirect to="/login" />;
   }
-
   props.getLeaderboard();
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Leaders />
+          <Leaders addInvestment />
         </Paper>
       </Grid>
     </Grid>

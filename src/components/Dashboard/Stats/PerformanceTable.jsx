@@ -1,5 +1,11 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// actions
+import { getInvestments } from "../../../store/actions/statsActions";
 // components
 import Title from "../Title";
 // material ui
@@ -12,29 +18,29 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 /////////////// UTILITIES
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-const rows = [
-  createData(0, "16 Nov, 2019", "José", "432", "✅❌❌✅✅", "4 Dec, 2019"),
-  createData(
-    1,
-    "16 Nov, 2019",
-    "Juanito",
-    "43123",
-    "❌❌✅❌✅",
-    "2 Oct, 2019"
-  ),
-  createData(
-    3,
-    "16 Nov, 2019",
-    "Miguelito",
-    "654",
-    "✅✅✅✅✅",
-    "4 Nov, 2019"
-  ),
-  createData(4, "15 Nov, 2019", "Alejandra", "666", "✅❌❌❌❌", "3 Dec, 2019")
-];
+// function createData(id, date, name, shipTo, paymentMethod, amount) {
+//   return { id, date, name, shipTo, paymentMethod, amount };
+// }
+// const rows = [
+//   createData(0, "16 Nov, 2019", "José", "432", "✅❌❌✅✅", "4 Dec, 2019"),
+//   createData(
+//     1,
+//     "16 Nov, 2019",
+//     "Juanito",
+//     "43123",
+//     "❌❌✅❌✅",
+//     "2 Oct, 2019"
+//   ),
+//   createData(
+//     3,
+//     "16 Nov, 2019",
+//     "Miguelito",
+//     "654",
+//     "✅✅✅✅✅",
+//     "4 Nov, 2019"
+//   ),
+//   createData(4, "15 Nov, 2019", "Alejandra", "666", "✅❌❌❌❌", "3 Dec, 2019")
+// ];
 function preventDefault(event) {
   event.preventDefault();
 }
@@ -47,8 +53,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-export default function PerformanceTable() {
+const PerformanceTable = props => {
   const classes = useStyles();
+  // set props from redux
+  const { auth, stats } = props;
+  useEffect(() => {
+    if (auth.isLoaded) {
+      props.getInvestments(auth);
+    }
+    // eslint-disable-next-line
+  }, [auth]);
+
   return (
     <React.Fragment>
       <Title>Your Friends</Title>
@@ -63,13 +78,13 @@ export default function PerformanceTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+          {stats.investments.map((investment, i) => (
+            <TableRow key={i}>
+              <TableCell>{investment.date}</TableCell>
+              <TableCell>{investment.display_name}</TableCell>
+              {/* <TableCell>{row.shipTo}</TableCell> */}
+              {/* <TableCell>{row.paymentMethod}</TableCell> */}
+              {/* <TableCell align="right">{row.amount}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
@@ -81,4 +96,22 @@ export default function PerformanceTable() {
       </div>
     </React.Fragment>
   );
-}
+};
+
+/////////////// REDUX
+const mapStateToProps = state => {
+  return {
+    stats: state.stats,
+    auth: state.firebase.auth
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getInvestments: auth => dispatch(getInvestments(auth))
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  PerformanceTable
+);

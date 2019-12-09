@@ -5,6 +5,8 @@ import Title from "../Title";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
+// actions
+import { addInvestment } from "../../../store/actions/leaderboardActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -55,8 +57,11 @@ const Leaders = props => {
   const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
   const last_updated =
     year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
-  console.log(allUsers, last_updated);
+  // console.log(allUsers, last_updated);
 
+  // set props from redux
+  const { auth } = props;
+  // console.log(auth);
   return (
     <React.Fragment>
       <Title>Leaders</Title>
@@ -91,6 +96,15 @@ const Leaders = props => {
                     onMouseLeave={e => {
                       e.target.innerHTML = row.q_score;
                     }}
+                    onClick={() => {
+                      console.log(auth);
+                      const data = {
+                        username: row.username,
+                        date: new Date().toDateString(),
+                        uid: auth.uid
+                      };
+                      props.addInvestment(data);
+                    }}
                   >
                     {row.q_score}
                   </Button>
@@ -108,9 +122,15 @@ const Leaders = props => {
 /////////////// REDUX
 const mapStateToProps = state => {
   return {
-    leaderboard: state.leaderboard
+    leaderboard: state.leaderboard,
+    auth: state.firebase.auth
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    addInvestment: data => dispatch(addInvestment(data))
   };
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps))(Leaders);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Leaders);
