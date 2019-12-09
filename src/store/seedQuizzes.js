@@ -49,6 +49,30 @@ const quizzes = [
     quiz_length: 3,
     quiz_points: -300,
     quiz_title: "Derek"
+  },
+  {
+    quiz_description: "VIC IS AN ASS",
+    quiz_id: "2",
+    quiz_questions: [
+      {
+        question: "He's a porky-ass son of a gun",
+        answers: ["Yes", "Yes", "Yes", "Yes"],
+        correct_answer: "Yes"
+      },
+      {
+        question: "He laughs giddily when we are doing a good hacky-sack run",
+        answers: ["ass", "ass", "ass", "ass"],
+        correct_answer: "ass"
+      },
+      {
+        question: "He should shut his mouth",
+        answers: ["Yes", "Yes", "Yes", "Yes"],
+        correct_answer: "Yes"
+      }
+    ],
+    quiz_length: 3,
+    quiz_points: -300,
+    quiz_title: "Vic"
   }
 ];
 

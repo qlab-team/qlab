@@ -11,10 +11,10 @@ const styles = theme => ({
     padding: theme.spacing(3),
 },
   container: {
-    marginTop:40,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 100,
     marginBottom: 30,
-    marginRight: 5,
-    marginLeft: 5,
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     background:
