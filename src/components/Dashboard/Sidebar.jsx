@@ -135,15 +135,6 @@ const Sidebar = props => {
   const { auth, user } = props;
   console.log(user);
 
-  //If Auth Not Loaded, Don't Worry
-  if (auth.isLoaded) {
-    //Refill User ID if not there already
-    //  (can probably be replaced by session storage of state)
-    if (!user.userProfile) {
-      props.getUserAndLogin(auth);
-    }
-  }
-
   return (
     <Drawer
       variant="permanent"
