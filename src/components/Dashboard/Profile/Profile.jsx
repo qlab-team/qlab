@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
+// Actions
+import { getProfile } from "../../../store/actions/profileActions";
 // styles
 const styles = theme => ({
   root: {
@@ -28,26 +30,30 @@ const styles = theme => ({
   }
 });
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
+  componentDidMount() {
+    this.props.getProfile();
+  }
   render() {
-    const { classes } = this.props;
+    console.log(this.props);
+    const { classes, profile } = this.props;
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          Profile!
+          Profile! => {profile}
         </Grid>
       </Grid>
     );
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getLeaderboard: () => dispatch(getLeaderboard())
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfile: () => dispatch(getProfile())
+  };
+};
 
-// export default compose(
-//   withStyles(styles),
-//   connect(null, mapDispatchToProps)
-// )(Profile);
+export default compose(
+  withStyles(styles),
+  connect(null, mapDispatchToProps)
+)(Profile);
