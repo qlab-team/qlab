@@ -13,15 +13,18 @@ function preventDefault(event) {
 const useStyles = makeStyles({
   depositContext: {
     flex: 1
+  },
+  points: {
+    fontSize: "6rem"
   }
 });
 
-export default function Deposits() {
+export default function QPoints() {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>qPoints</Title>
-      <Typography component="p" variant="h4">
+      <Typography className={classes.points} component="p" variant="h4">
         9999
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>

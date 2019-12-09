@@ -28,7 +28,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        QLAB
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -50,6 +50,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   appBar: {
+    borderRadius: "0px 0px 20px 0px",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -118,8 +119,8 @@ const Dashboard = props => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawerClose = xs => {
+    if (xs) setOpen(false);
   };
 
   //Set Props from Redux
@@ -177,6 +178,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Dashboard);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Dashboard);

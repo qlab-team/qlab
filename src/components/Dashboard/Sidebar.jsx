@@ -5,19 +5,19 @@ import { compose } from "redux";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./ListItems";
+import { MainListItems, SecondaryListItems } from "./ListItems";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-
 //Placeholder Avatar while account Loads - currently Vic
 import placeholderAvatar from "../../assets/images/carefulwiththataxevic.gif";
-
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
@@ -26,9 +26,14 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  palette: {
+    type: "light"
+  },
   username: {
     margin: 0,
-    marginLeft: "10px"
+    marginLeft: "10px",
+    fontSize: "14px",
+    fontWeight: "bold"
   },
   toolbarIcon: {
     display: "flex",
@@ -70,10 +75,15 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     position: "relative",
+    border: "none",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    borderRadius: "0px 0px 20px 0px",
     whiteSpace: "nowrap",
     width: drawerWidth,
     [theme.breakpoints.down("xs")]: {
-      width: "100vw"
+      width: "101vw",
+      borderRadius: "0px"
     },
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -91,7 +101,7 @@ const useStyles = makeStyles(theme => ({
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up("xs")]: {
-      width: theme.spacing(9)
+      width: "56px"
     }
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -125,17 +135,11 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = props => {
   const classes = useStyles();
-  //Set Props from Redux
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+  // Set Props from Redux
   const { auth, user } = props;
-
-  //If Auth Not Loaded, Don't Worry
-  if (auth.isLoaded) {
-    //Refill User ID if not there already 
-    //  (can probably be replaced by session storage of state)
-    if (!user.userProfile) {
-      props.getUserAndLogin(auth);
-    }
-  }
+  console.log(user);
 
   return (
     <Drawer
@@ -176,9 +180,21 @@ const Sidebar = props => {
         </IconButton>
       </div>
       <Divider />
-      <List>{mainListItems}</List>
+      <List>
+        {mobile ? (
+          <MainListItems handleDrawerClose={props.handleDrawerClose} />
+        ) : (
+          <MainListItems />
+        )}
+      </List>
       <Divider />
-      <List>{secondaryListItems(props)}</List>
+      <List>
+        <SecondaryListItems
+          handleDrawerClose={props.handleDrawerClose}
+          open={props.open}
+          userLogout={userLogout}
+        />
+      </List>
       <Divider />
       {props.open && (
         <Typography
@@ -216,6 +232,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(Sidebar);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Sidebar);
