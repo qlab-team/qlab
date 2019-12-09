@@ -53,6 +53,10 @@ To run a full integration test with all the Cloud Functions and Firebase package
 yarn int
 ```
 
+### Cloud Functions
+
+Due to the (kind of annoying) fact that Google Cloud Platform only supports older versions of Node.
+
 ## The QLAB Team
 
 ### <img src="misc/eriko.png" width="50px"> Eriko [@nouvelle](https://www.github.com/forbesd7)

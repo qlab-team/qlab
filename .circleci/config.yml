@@ -54,7 +54,7 @@ jobs: # a collection of steps
           command: yarn build
       - run: # Deploy to Firebase
           name: Deploy to Firebase
-          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+          command: yarn deploy
 
 workflows:
   version: 2
