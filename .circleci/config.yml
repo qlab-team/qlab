@@ -22,9 +22,15 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && yarn && cd ..
+      - run: # Run FrontEnd Tests
           name: Run Jest Test
           command: yarn test
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunction
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
