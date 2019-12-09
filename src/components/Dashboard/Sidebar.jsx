@@ -141,7 +141,6 @@ const Sidebar = props => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   // Set Props from Redux
   const { auth, user } = props;
-  console.log(user);
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
