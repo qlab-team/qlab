@@ -4,9 +4,9 @@
   font-family: "Aquino";
   src: url("../assets/fonts/Aquino-Demo.ttf") format("truetype");
 }
-/* Fira Family */
+/* Google Fonts */
 @import url("https://fonts.googleapis.com/css?family=Fira+Code|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed&display=swap");
-
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap");
 body,
 html {
   margin: 0;
@@ -18,4 +18,34 @@ html {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* recharts line */
+.recharts-layer,
+.recharts-line path {
+  stroke: lightsalmon;
+  animation-name: chartlinecolor;
+  animation-timing-function: ease-in-out;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+/*  lock icon, Login page */
+.MuiSvgIcon-root path {
+  color: whitesmoke;
+}
+
+@keyframes chartlinecolor {
+  0% {
+    stroke: rgb(255, 179, 87);
+  }
+  30% {
+    stroke: rgb(255, 179, 87);
+  }
+  50% {
+    stroke: greenyellow;
+  }
+  100% {
+    stroke: rgb(255, 179, 87);
+  }
 }
