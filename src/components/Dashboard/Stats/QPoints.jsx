@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     flex: 1
   },
   points: {
-    fontSize: "6rem"
+    fontSize: "5rem"
   }
 });
 
