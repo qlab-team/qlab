@@ -1,6 +1,6 @@
 import React from 'react'
-import { withStyles }  from '@material-ui/core'
-
+import { withStyles, Button, Paper }  from '@material-ui/core'
+import { Link } from "react-router-dom"
 const styles = {
     Confirmation: {
       padding: 20,
@@ -16,7 +16,13 @@ const styles = {
 
 function QuizFinished (props) {
     return (
-        <div>hi</div>
+        <React.Fragment>
+            <Paper>Congratulations! You're a god</Paper>
+            <Link color="inherit" to="/dashboard">
+                <Button variant="contained" color="primary">Dashboard</Button>
+            </Link>
+
+        </React.Fragment>
     )
 }
 

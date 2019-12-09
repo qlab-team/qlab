@@ -49,7 +49,7 @@ export default function Quizzes() {
       },
       {
         quizId: "1",
-        quizTitle: "Derek's An Ass",
+        quizTitle: "Vics An Ass",
         quizDescription: "Totally."
       },
       {
