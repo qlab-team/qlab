@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // css
 import "../style/App.css";
@@ -9,6 +10,7 @@ import QuizMain from "./Quiz/QuizMain";
 // react-router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+/////////////// COMPONENT
 function App() {
   return (
     <Router>
@@ -24,4 +26,5 @@ function App() {
   );
 }
 
+/////////////// EXPORTS
 export default App;

@@ -1,14 +1,12 @@
+/////////////// IMPORTS
 import React from "react";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
-
-//Actions
+// actions
 import { userLogout } from "../../store/actions/userActions";
-
 // react-router
 import { Redirect } from "react-router-dom";
-
 // firebase
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../../config/fbConfig";
@@ -27,10 +25,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
-//Redirect
-// import { Redirect } from "react-router-dom";
-
-// styles
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
     // marginTop: theme.spacing(8),
@@ -65,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   lockOutlinedIcon: {}
 }));
-// firebaseUI config
+/////////////// UTILITIES
 const uiConfig = {
   // popup signin flow vs redirect flow
   signInFlow: "popup",
@@ -82,8 +77,7 @@ const uiConfig = {
       return false;
     }
   }
-};
-// copyright
+}; // firebaseUI config
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -97,7 +91,8 @@ function Copyright() {
   );
 }
 
-function Login(props) {
+/////////////// COMPONENT
+const Login = props => {
   const classes = useStyles();
 
   //Set Props from Redux
@@ -189,8 +184,9 @@ function Login(props) {
       </Box>
     </Container>
   );
-}
+};
 
+/////////////// REDUX
 const mapStateToProps = state => {
   console.log(state);
   return {
@@ -198,11 +194,11 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     userLogout: () => dispatch(userLogout())
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(Login);

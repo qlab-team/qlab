@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Chart from "./Chart";
@@ -8,7 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
-// styles
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -24,6 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 export default function Stats() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);

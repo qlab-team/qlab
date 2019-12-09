@@ -1,4 +1,8 @@
+/////////////// IMPORTS
 import React from "react";
+// components
+import Title from "../Title";
+// material ui
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -6,13 +10,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Title from "../Title";
 
-// Generate Order Data
+/////////////// UTILITIES
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
-
 const rows = [
   createData(0, "16 Nov, 2019", "José", "432", "✅❌❌✅✅", "4 Dec, 2019"),
   createData(
@@ -33,17 +35,18 @@ const rows = [
   ),
   createData(4, "15 Nov, 2019", "Alejandra", "666", "✅❌❌❌❌", "3 Dec, 2019")
 ];
-
 function preventDefault(event) {
   event.preventDefault();
 }
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
   }
 }));
 
+/////////////// COMPONENT
 export default function PerformanceTable() {
   const classes = useStyles();
   return (

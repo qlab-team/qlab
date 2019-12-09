@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Profile from "./Profile/Profile";
@@ -11,6 +12,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
+// actions
+import { userLogout } from "../../store/actions/userActions";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,9 +24,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
-//Actions
-import { userLogout } from "../../store/actions/userActions";
-
+/////////////// UTILITIES
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -37,8 +38,8 @@ function Copyright() {
   );
 }
 
+/////////////// STYLES
 const drawerWidth = 240;
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -113,6 +114,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const Dashboard = props => {
   const classes = useStyles();
 
@@ -167,16 +169,17 @@ const Dashboard = props => {
   );
 };
 
+/////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.firebase.auth
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     userLogout: () => dispatch(userLogout())
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(Dashboard);

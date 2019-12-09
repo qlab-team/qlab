@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // material ui
 import clsx from "clsx";
@@ -8,7 +9,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-// styles
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -35,6 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 export default function Topbar(props) {
   const classes = useStyles();
   return (

@@ -16,4 +16,21 @@ const getLeaderboard = () => {
   };
 };
 
-export { getLeaderboard };
+const addInvestment = auth => {
+  return (dispatch, getState, { getFirestore }) => {
+    // make async call to database
+    // const firestore = getFirestore();
+    // firestore
+    //   .collection("users")
+    //   .doc("x")
+    //   .set({})
+    //   .then(function() {
+    //     console.log("Investment successfully added!");
+    //   })
+    //   .catch(function(error) {
+    //     console.error("Error writing document: ", error);
+    //   });
+  };
+};
+
+export { getLeaderboard, addInvestment };
