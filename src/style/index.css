@@ -21,9 +21,10 @@ code {
 }
 
 /* recharts line */
-.recharts-layer,
 .recharts-line path {
   stroke: lightsalmon;
+  stroke-width: 2px;
+  stroke-linecap: round;
   animation-name: chartlinecolor;
   animation-timing-function: ease-in-out;
   animation-duration: 2s;
