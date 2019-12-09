@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
+import seedQuizzes from "./store/seedQuizzes";
 
 // material ui
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
@@ -65,8 +66,6 @@ const theme = createMuiTheme({
   }
 });
 
-console.log(theme);
-
 const store = createStore(
   rootReducer,
   compose(
@@ -75,6 +74,8 @@ const store = createStore(
     reduxFirestore(fbConfig) // redux bindings for firestore
   )
 );
+
+seedQuizzes();
 
 ReactDOM.render(
   <Provider store={store}>
