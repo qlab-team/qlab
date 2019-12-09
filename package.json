@@ -12,7 +12,9 @@
     "int": "yarn build && firebase serve",
     "login": "firebase login",
     "deploy": "firebase deploy --only hosting",
-    "deployFunctions": "firebase deploy --only functions"
+    "buildFunctions": "yarn --cwd ./functions/ build",
+    "deployFunctions": "firebase deploy --only functions",
+    "testFunctions": "yarn buildFunctions && yarn --cwd ./functions/ test"
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",

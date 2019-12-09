@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Paper } from '@material-ui/core'
+//import { Typography } from '@material-ui/core'
 import QuizAnswers from './QuizAnswers'
 import {LinearProgress} from '@material-ui/core'
 import CheckButton from './CheckButton'
@@ -7,11 +7,25 @@ import { connect } from 'react-redux'
 import {getQuiz} from '../../store/actions/quizActions'
 import AnswerValidator from './AnswerValidator'
 import QuizFinished from './QuizFinished'
+import { withStyles } from "@material-ui/core/styles";
+import {compose } from 'redux'
+
+const styles = {
+    Validator: {
+        backgroundColor: "white",
+        marginBottom: 10,
+    },
+   };
+
 class QuizMain extends Component {
 
     constructor(props) {
+
+        
         super(props);
         this.state = {
+            answersDisabled: false,
+            eraseHighlight: false,
             quizView: "",
             loadedOrNot: false,
             quizLength: "hi",
@@ -28,7 +42,7 @@ class QuizMain extends Component {
     componentDidMount() {
         this.props.getQuiz(this.props.quizId).then( res => {
             console.log(this.props.quiz)
-            this.setState({Quiz: this.props.quiz.quiz_info})
+            this.setState({Quiz: this.props.quiz.quiz_questions})
             this.setState({quizLength: this.props.quiz.quiz_length })
             this.setState({loadedOrNot: true})
         })
@@ -52,8 +66,11 @@ class QuizMain extends Component {
         if(this.state.currentProgress >= 99 - progressAmount) {
             this.setState({quizView: "finished"})
         }
-        console.log(this.state.currentProgress);
-        console.log('quizView:',this.state.quizView)
+      
+    }
+
+    toggleAnswerSelections = () => {
+        this.setState({questionsDisabled: !this.state.questionsDisabled})
     }
 
     addQuizQuestionToEnd = () => {
@@ -63,10 +80,17 @@ class QuizMain extends Component {
         this.setState({Quiz: updatedQuiz})
     }
 
+    eraseAnswerHighlight = () => {
+        this.setState({eraseHighlight: !this.state.eraseHighlight})
+    }
+
 
 
 
     render() {
+
+        const { classes } = this.props;
+
         let answerValidation ="";
         if(this.state.answerConfirmation !== "") {
             answerValidation = <AnswerValidator answerConfirmation ={this.state.answerConfirmation} />
@@ -82,20 +106,23 @@ class QuizMain extends Component {
         } else {
             quizView = <div>
             <div>
-            <Paper>
-              {this.state.Quiz[this.state.currentQuestion].question}
-            </Paper>
+            
 
             <QuizAnswers
+              quizQuestion={this.state.Quiz[this.state.currentQuestion].question}
+              questionsDisabled={this.state.questionsDisabled}
               getCurrentAnswer={this.getCurrentAnswer}
               answers={this.state.Quiz[this.state.currentQuestion].answers}
               correctAnswer={
                 this.state.Quiz[this.state.currentQuestion].correct_answer
               }
+              eraseHighlight={this.state.eraseHighlight}
+              eraseAnswerHighlight={this.eraseAnswerHighlight}
             />
           </div>
           <LinearProgress
             variant="determinate"
+            className={classes.Validator}
             value={this.state.currentProgress}
           />
 
@@ -106,6 +133,8 @@ class QuizMain extends Component {
             updateCurrentQuestion={this.updateCurrentQuestion}
             addQuizQuestionToEnd={this.addQuizQuestionToEnd}
             updateProgressBar={this.updateProgressBar}
+            toggleAnswerSelections={this.toggleAnswerSelections}
+            eraseAnswerHighlight={this.eraseAnswerHighlight}
             />
 
             {answerValidation}
@@ -135,4 +164,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuizMain);
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps)
+  )(QuizMain);

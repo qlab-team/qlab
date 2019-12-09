@@ -1,10 +1,17 @@
 import React from "react";
+import { useEffect } from "react";
 // components
 import QuizCard from "./QuizCard";
 // material ui
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+// actions
+import { getQuizzes } from "../../../store/actions/quizzesActions";
+
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
 // styles
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,56 +28,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Quizzes() {
+function Quizzes(props) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  let state = {
-    // will get Quizzes from database
-    Quizzes: [
-      {
-        quizId: "1",
-        quizTitle: "Mars",
-        quizDescription: "The red planet."
-      },
-      {
-        quizId: "1",
-        quizTitle: "Oxygen",
-        quizDescription: "It's everywhere."
-      },
-      {
-        quizId: "1",
-        quizTitle: "1",
-        quizDescription: "What are whales?"
-      },
-      {
-        quizId: "1",
-        quizTitle: "1",
-        quizDescription: "Land of the rising sun."
-      },
-      {
-        quizId: "1",
-        quizTitle: "Vics An Ass",
-        quizDescription: "Totally."
-      },
-      {
-        quizId: "1",
-        quizTitle: "Astronomy",
-        quizDescription: "Look right up!"
-      }
-    ]
-  };
+  useEffect(() => {
+    console.log("mounted");
+    props.getQuizzes();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <React.Fragment>
       <Grid container spacing={3} wrap="wrap">
-        {state.Quizzes.map(quiz => {
+        {props.quizzes.map(quiz => {
+          // console.log(quiz);
           return (
             <Grid item xs md={4}>
               <Paper className={fixedHeightPaper}>
                 <QuizCard
-                  quizTitle={quiz.quizTitle}
-                  quizId={quiz.quizId}
-                  quizDescription={quiz.quizDescription}
+                  quizTitle={quiz["quiz_title"]}
+                  quizId={quiz["quiz_id"]}
+                  quizDescription={quiz["quiz_description"]}
                 />
               </Paper>
             </Grid>
@@ -80,3 +58,17 @@ export default function Quizzes() {
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    quizzes: state.quizzes
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getQuizzes: () => dispatch(getQuizzes())
+  };
+};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Quizzes);

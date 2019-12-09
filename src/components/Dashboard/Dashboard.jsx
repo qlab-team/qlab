@@ -8,7 +8,7 @@ import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
 // react-router
 import { Route, Switch, Redirect } from "react-router-dom";
-// firebase
+// redux
 import { connect } from "react-redux";
 import { compose } from "redux";
 // material ui
