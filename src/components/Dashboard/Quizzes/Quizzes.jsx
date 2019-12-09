@@ -38,22 +38,22 @@ export default function Quizzes() {
         quizDescription: "It's everywhere."
       },
       {
-        quizId: 3,
-        quizTitle: "Mammals",
+        quizId: "1",
+        quizTitle: "1",
         quizDescription: "What are whales?"
       },
       {
-        quizId: 4,
-        quizTitle: "Japan",
+        quizId: "1",
+        quizTitle: "1",
         quizDescription: "Land of the rising sun."
       },
       {
-        quizId: 5,
-        quizTitle: "Derek's An Ass",
+        quizId: "1",
+        quizTitle: "Vics An Ass",
         quizDescription: "Totally."
       },
       {
-        quizId: 6,
+        quizId: "1",
         quizTitle: "Astronomy",
         quizDescription: "Look right up!"
       }
