@@ -23,6 +23,7 @@ export const didUserLoginYesterday = functions
   .https.onRequest((request, response) => {
     response.send(`
       <h1>QLAB</h1>
+      ;kdngklsn;klsdnhkjdfnbk;dnfblkj
       <p>Hello Tokyo 🗼 from all of us at the QLAB Team!</p>
       <p>Derek 🍆</p>
       <p>Eriko ☕</p>
