@@ -11,8 +11,8 @@
     "test-nowatch": "react-scripts test --watchAll=false",
     "int": "yarn build && firebase serve",
     "login": "firebase login",
-    "deploy": "firebase deploy --token '$FIREBASE_TOKEN' --only hosting",
-    "deployFunctions": "cd functions && yarn deploy && cd .."
+    "deploy": "firebase deploy --only hosting",
+    "deployFunctions": "firebase deploy --only functions"
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",

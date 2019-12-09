@@ -139,6 +139,7 @@ const Sidebar = props => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   // Set Props from Redux
   const { auth, user } = props;
+  console.log(auth);
   console.log(user);
 
   //If Auth Not Loaded, Don't Worry
@@ -182,7 +183,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {user.userProfile ? user.userProfile.username : "...loading"}
+              {auth.displayName ? auth.displayName : "...loading"}
             </Typography>
           </Grid>
         </Grid>
