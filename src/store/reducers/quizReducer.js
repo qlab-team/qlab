@@ -1,6 +1,6 @@
 const initState = {
-  currentQuiz: "1"
-};
+  currentQuiz: '0',
+}
 
 const quizReducer = (state = initState, action) => {
   switch (action.type) {
@@ -10,7 +10,8 @@ const quizReducer = (state = initState, action) => {
     }
 
     case "GET_QUIZ": {
-      state.quizInfo = action.quiz["quiz_info"];
+      state.quizInfo = action.quiz
+      console.log('obj',action.quiz)
       return state;
     }
     default:

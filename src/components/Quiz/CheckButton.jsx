@@ -20,12 +20,13 @@ function CheckButton (props) {
     console.log(props.currentAnswer, props.currentCorrectAnswer)
     let answerConfirmation = "";
     const answerChecker = (e) => {
-
+        props.toggleAnswerSelections()
         if(buttonValue === "NEXT") {
+            props.eraseAnswerHighlight()
             console.log('hey')
             setButtonValue("CHECK")
             props.updateCurrentQuestion();
-            
+            props.getAnswerConfirmation("")
         }
         else if(props.currentAnswer === props.currentCorrectAnswer) {
             setButtonValue("NEXT")
