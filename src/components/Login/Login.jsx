@@ -95,17 +95,14 @@ function Copyright() {
 const Login = props => {
   const classes = useStyles();
 
-  //Set Props from Redux
-  const { auth, user } = props;
+  // Set Props from Redux
+  const { auth } = props;
 
   //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
       console.log("Redirecting to Dashboard");
-      // save profile to local Strage
-      localStorage.auth = JSON.stringify(auth);
-      localStorage.user = JSON.stringify(user);
       return <Redirect to="/dashboard" />;
     }
   }
