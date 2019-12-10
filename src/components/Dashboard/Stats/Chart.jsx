@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// UTILITIES
-function createData(time, amount) {
-  return { time, amount };
+function createData(time, qScore) {
+  return { time, qScore };
 }
 
 const Chart = props => {
@@ -68,7 +68,8 @@ const Chart = props => {
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
-      updateChartData(data.reverse());
+      data.reverse().push(createData(new Date(), user.profile.q_score));
+      updateChartData(data);
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
@@ -114,7 +115,7 @@ const Chart = props => {
           </YAxis>
           <Line
             type="monotone"
-            dataKey="amount"
+            dataKey="qScore"
             stroke={theme.palette.primary.main}
             dot={false}
           />
