@@ -1,14 +1,19 @@
 import React from 'react'
-import { withStyles }  from '@material-ui/core'
+import { withStyles, Typography }  from '@material-ui/core'
 
 const styles = {
    Validator: {
+    color: "white",
+    fontSize: 30
    }
   };
 
 function AnswerValidator (props) {
+    let answerMessage = "";
+    if(props.answerConfirmation === "true") answerMessage="True!"
+    else answerMessage = "False!"
     return (
-        <div className={props.classes.Validator}>{props.answerConfirmation}</div>
+        <Typography className={props.classes.Validator}>{answerMessage}</Typography>
     )
 }
 
