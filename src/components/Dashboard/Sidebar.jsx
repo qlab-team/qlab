@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
 // firebase
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -140,15 +141,16 @@ const Sidebar = props => {
   const classes = useStyles();
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
-  // Set Props from Redux
+
   const { auth, user } = props;
 
-  //If Auth Not Loaded, Don't Worry
-  if (auth.isLoaded) {
-    //If No Auth, Redirect To Front Page
-    if (auth.isEmpty) return <Redirect to="/login" />;
-    if (!user.isLoggedIn) props.getUserAndLogin(auth);
-  }
+  useEffect(() => {
+    if (auth.isLoaded) {
+      if (auth.isEmpty) return <Redirect to="/login" />;
+      props.getUserAndLogin(auth);
+    }
+    // eslint-disable-next-line
+  }, [auth, user]);
 
   return (
     <Drawer

@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 3)
   },
   paper: {
-    maxWidth: 400,
+    maxWidth: 900,
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(2)
   },
@@ -51,7 +51,13 @@ const Profile = props => {
       <div className={classes.root}>
         {auth.isLoaded && (
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={2}>
+            <Grid
+              container
+              wrap="nowrap"
+              spacing={2}
+              alignItems="center"
+              justify="space-between"
+            >
               <Grid item>
                 <Avatar
                   alt="useravatar"
