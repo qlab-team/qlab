@@ -4,14 +4,12 @@ import { useRef, useEffect } from "react";
 
 const styles = theme => ({
   Typography: {
-    //padding: 20,
-    paddingTop:60,
     fontSize: 40,
     [theme.breakpoints.down("xs")]: {
       fontSize: 20,
-      height:40,
-      borderRadius:20,
-      paddingTop: 20,
+      height: 40,
+      borderRadius: 20,
+      paddingTop: 20
     },
     borderRadius: 40,
     height: 150,
@@ -22,7 +20,7 @@ const styles = theme => ({
     "&:hover": {
       cursor: "pointer"
     },
-    wordWrap:'break-word'
+    wordWrap: "break-word"
   },
 
   selected: {
@@ -34,7 +32,7 @@ const styles = theme => ({
     justify: "center",
     alignContent: "center",
     alignItems: "center",
-    wordWrap:'break-word'
+    wordWrap: "break-word"
   }
 });
 
@@ -67,18 +65,15 @@ function QuizAnswer(props) {
         props.getCurrentAnswer(props.answer, props.correctAnswer);
       }}
       className={props.classes.Answer}
+      alignItems="center"
     >
-
-      <Container>
-        <Typography
-          
-          variant="body2"
-          ref={myRef}
-          className={props.classes["Typography"]}
-        >
-          {props.answer}
-        </Typography>
-      </Container>
+      <Typography
+        variant="body2"
+        ref={myRef}
+        className={props.classes["Typography"]}
+      >
+        {props.answer}
+      </Typography>
     </Grid>
   );
 }
