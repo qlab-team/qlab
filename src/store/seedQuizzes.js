@@ -33,7 +33,7 @@ const quizzes = [
       {
         question: "What's water's chemical formula?",
         answers: ["O2", "OH2", "2HO", "H2O"],
-        correct_answer: "H20"
+        correct_answer: "H2O"
       },
       {
         question: "Which of these is not an element?",
