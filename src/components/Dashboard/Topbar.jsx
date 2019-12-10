@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -110,7 +109,7 @@ Fade.propTypes = {
 /////////////// COMPONENT
 const Topbar = props => {
   //Set Props from Redux
-  const { investments, user } = props;
+  const { investments } = props;
 
   //Use Styles
   const classes = useStyles();
