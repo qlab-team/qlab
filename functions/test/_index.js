@@ -82,14 +82,18 @@ describe("QLAB Functions Test", () => {
       //Fake Data
       const collectionParam = "users";
       const docParam = "DEADBEEF";
-      const userObject = {
-        auth_id: "blahblahblah",
-        created_at: user_created,
-        last_quiz_done: last_quiz_done,
-        q_points: 200,
-        q_score: 50,
-        quiz_total: 10,
-        username: "mr_test"
+      const userObject = () => {
+        return {
+          auth_id: "blahblahblah",
+          created_at: user_created,
+          last_quiz_done: {
+            _seconds: last_quiz_done.getTime() / 1000
+          },
+          q_points: 200,
+          q_score: 50,
+          quiz_total: 10,
+          username: "mr_test"
+        };
       };
       //Stubs
       const firestoreStub = sinon.stub();
@@ -113,7 +117,7 @@ describe("QLAB Functions Test", () => {
         data: {
           user_id: "DEADBEEF",
           username: "mr_test",
-          last_quiz_done: last_quiz_done,
+          last_quiz_done: { _seconds: last_quiz_done.getTime() / 1000 },
           payout: true
         }
       };
