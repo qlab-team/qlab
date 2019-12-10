@@ -55,7 +55,7 @@ describe("QLAB Functions Test", () => {
     });
   });
 
-  describe("/didUserQuizYesterday", function() {
+  describe.skip("/didUserQuizYesterday", function() {
     let oldDatabase;
     let date = new Date();
     let year = date.getFullYear();

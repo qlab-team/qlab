@@ -28,6 +28,7 @@ const addInvestment = (data, auth, user) => {
           date: data.investment_made,
           q_score: data.q_score,
           q_points: data.q_points,
+          earnable_points: 100,
           user_id: data.user_id
         })
       })

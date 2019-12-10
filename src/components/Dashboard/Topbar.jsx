@@ -14,6 +14,16 @@ import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is requir
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+//Actions
+import {
+  resolveInvestment,
+  notificationRead
+} from "../../store/actions/investmentActions";
+
+// firebase
+import { connect } from "react-redux";
+import { compose } from "redux";
+
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -97,7 +107,11 @@ Fade.propTypes = {
 };
 
 /////////////// COMPONENT
-export default function Topbar(props) {
+const Topbar = props => {
+  //Set Props from Redux
+  const { investments, user } = props;
+
+  //Use Styles
   const classes = useStyles();
 
   // popper logic
@@ -107,6 +121,12 @@ export default function Topbar(props) {
   };
   const open = Boolean(anchorEl);
   const id = open ? "spring-popper" : undefined;
+
+  if (user.profile.investments) {
+    if (!investments.checked) {
+      props.resolveInvestment(user.profile.investments, user);
+    }
+  }
 
   return (
     <Toolbar
@@ -142,7 +162,12 @@ export default function Topbar(props) {
           style={{ textDecoration: "none", color: "whitesmoke" }}
           to="/dashboard/stats"
         >
-          <Badge max={500} badgeContent={`+500`} color="secondary">
+          <Badge
+            max={500}
+            badgeContent={`+${investments.investmentIncome}`}
+            color="secondary"
+            invisible={!investments.investmentPayoutToday}
+          >
             <TimelineIcon />
           </Badge>
         </Link>
@@ -167,12 +192,35 @@ export default function Topbar(props) {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
-            <div className={classes.paper}>
-              Your investments returned <b>500</b> points today!{" "}
-            </div>
+            {investments.investmentPayoutToday ? (
+              <div className={classes.paper}>
+                Your investments returned{" "}
+                <b>{investments.investmentIncome || 0}</b> points today!{" "}
+              </div>
+            ) : (
+              <div className={classes.paper}>No investment income today. </div>
+            )}
           </Fade>
         )}
       </Popper>
     </Toolbar>
   );
-}
+};
+
+/////////////// REDUX
+const mapStateToProps = (state, ownProps) => {
+  return {
+    investments: state.investments,
+    user: state.user
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    resolveInvestment: (investments, user) =>
+      dispatch(resolveInvestment(investments, user)),
+    notificationRead: () => dispatch(notificationRead())
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Topbar);
