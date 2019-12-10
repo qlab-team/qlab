@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+// import { useEffect } from "react";
 // components
 import Title from "../Title";
 // material ui
@@ -23,18 +24,21 @@ function createData(time, amount) {
   return { time, amount };
 }
 
-const Chart = profile => {
+const Chart = props => {
   const theme = useTheme();
-  const userProfile = profile.profile.profileUser.userProfile;
   const chartData = [];
-  if (userProfile) {
-    Object.keys(userProfile.q_score_history).forEach(hist => {
-      const date = new Date(userProfile.q_score_history[hist].date * 1000);
+
+  const user = JSON.parse(localStorage.user);
+
+  if (user.userProfile) {
+    Object.keys(user.userProfile.q_score_history).forEach(hist => {
+      const date = new Date(user.userProfile.q_score_history[hist].date * 1000);
       const fixDate = date.getMonth() + 1 + "/" + date.getDate();
-      const q_score = userProfile.q_score_history[hist].q_score;
+      const q_score = user.userProfile.q_score_history[hist].q_score;
       chartData.unshift(createData(fixDate, q_score));
     });
   }
+
   console.log(chartData);
   return (
     <React.Fragment>
@@ -74,7 +78,7 @@ const Chart = profile => {
 
 const mapStateToProps = state => {
   return {
-    profile: state.profile
+    profileUser: state.profileUser
   };
 };
 const mapDispatchToProps = dispatch => {
