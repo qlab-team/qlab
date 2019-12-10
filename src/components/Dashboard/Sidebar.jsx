@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // firebase
 import { connect } from "react-redux";
@@ -21,6 +22,7 @@ import { Redirect } from "react-router-dom";
 //Actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
+/////////////// STYLES
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
@@ -133,6 +135,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const Sidebar = props => {
   const classes = useStyles();
   const theme = useTheme();
@@ -228,13 +231,13 @@ const Sidebar = props => {
   );
 };
 
+/////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     auth: state.firebase.auth
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
@@ -242,4 +245,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(Sidebar);

@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import ButtonAppBar from "./ButtonAppBar";
@@ -6,7 +7,8 @@ import Box from "@material-ui/core/Box";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-// styles
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -23,9 +25,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 export default function Landing() {
   const classes = useStyles();
-
   return (
     <React.Fragment>
       <ButtonAppBar />

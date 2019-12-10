@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Title from "../Title";
@@ -6,10 +7,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 
+/////////////// UTILITIES
 function preventDefault(event) {
   event.preventDefault();
 }
 
+/////////////// STYLES
 const useStyles = makeStyles({
   depositContext: {
     flex: 1
@@ -19,6 +22,7 @@ const useStyles = makeStyles({
   }
 });
 
+/////////////// COMPONENT
 export default function QPoints() {
   const classes = useStyles();
   return (
