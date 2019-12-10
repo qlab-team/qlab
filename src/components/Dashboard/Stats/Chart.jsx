@@ -28,12 +28,10 @@ const Chart = profile => {
   const userProfile = profile.profile.profileUser.userProfile;
   const chartData = [];
   if (userProfile) {
-    Object.keys(userProfile.q_score_history[0]).forEach(hist => {
-      const date = new Date(
-        userProfile.q_score_history[0][hist].date.seconds * 1000
-      );
+    Object.keys(userProfile.q_score_history).forEach(hist => {
+      const date = new Date(userProfile.q_score_history[hist].date * 1000);
       const fixDate = date.getMonth() + 1 + "/" + date.getDate();
-      const q_score = userProfile.q_score_history[0][hist].q_score;
+      const q_score = userProfile.q_score_history[hist].q_score;
       chartData.unshift(createData(fixDate, q_score));
     });
   }
@@ -75,7 +73,6 @@ const Chart = profile => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     profile: state.profile
   };
