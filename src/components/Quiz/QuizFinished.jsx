@@ -77,8 +77,8 @@ function QuizFinished(props) {
   console.log(props);
 
   useEffect(() => {
-    //console.log(props)
-    //props.addQuizInfo(props.auth.uid, props.quizPoints)
+    console.log(props);
+    props.addQuizInfo(props.auth.uid, props.quizPoints);
   });
 
   return (
@@ -86,10 +86,14 @@ function QuizFinished(props) {
       <Container className={classes.Container}>
         <Box className={classes.Box}>
           <Typography className={classes.Congratulations}>
-            Congratulations! You got 10 Points!
+            Congratulations! You got 100 Points!
           </Typography>
 
-          <Link className={classes.Button} color="inherit" to="/dashboard">
+          <Link
+            className={classes.Button}
+            color="inherit"
+            to="/dashboard/stats"
+          >
             Dashboard
           </Link>
         </Box>

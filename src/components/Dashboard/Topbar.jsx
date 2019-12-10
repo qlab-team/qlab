@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -121,12 +122,6 @@ const Topbar = props => {
   };
   const open = Boolean(anchorEl);
   const id = open ? "spring-popper" : undefined;
-
-  if (user.profile.investments) {
-    if (!investments.checked) {
-      props.resolveInvestment(user.profile.investments, user);
-    }
-  }
 
   return (
     <Toolbar

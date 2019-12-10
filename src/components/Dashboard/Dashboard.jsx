@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
 // components
 import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
@@ -14,6 +15,10 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
 import { userLogout } from "../../store/actions/userActions";
+import {
+  resolveInvestment,
+  notificationRead
+} from "../../store/actions/investmentActions";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -127,7 +132,19 @@ const Dashboard = props => {
   };
 
   // set props from redux
-  const { auth } = props;
+  const { auth, user, investments } = props;
+
+  useEffect(() => {
+    console.log("useFfect fired", props);
+    if (user.isLoggedIn) {
+      console.log(investments.checked);
+      if (!investments.checked) {
+        console.log("Fired!");
+        props.resolveInvestment(user.profile.investments, user);
+      }
+    }
+    // eslint-disable-next-line
+  }, [user.isLoggedIn]);
 
   // if auth not loaded, don't worry
   if (auth.isLoaded) {
@@ -172,12 +189,17 @@ const Dashboard = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    investments: state.investments,
+    user: state.user
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    userLogout: () => dispatch(userLogout())
+    userLogout: () => dispatch(userLogout()),
+    resolveInvestment: (investments, user) =>
+      dispatch(resolveInvestment(investments, user)),
+    notificationRead: () => dispatch(notificationRead())
   };
 };
 
