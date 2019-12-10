@@ -63,7 +63,7 @@ const PerformanceTable = props => {
       props.getInvestments(auth);
     }
     // eslint-disable-next-line
-  }, [auth, stats]);
+  }, [auth, stats.investments]);
 
   return (
     <React.Fragment>

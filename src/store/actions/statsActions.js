@@ -1,6 +1,5 @@
 const getInvestments = auth => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log(auth);
     // make async call to database
     const firestore = getFirestore();
     firestore
