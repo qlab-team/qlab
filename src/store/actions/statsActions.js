@@ -22,29 +22,37 @@ const getInvestments = auth => {
   };
 };
 
-const removeInvestment = data => {
+const removeInvestment = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
-    console.log("from action", data);
+    const newInvestments = user.userProfile.investments.filter(investment => {
+      return investment.user_id !== data.user_id;
+    });
     firestore
       .collection("users")
-      .where("auth_id", "==", data.uid)
-      .get()
-      .then(res => {
-        console.log(res);
-        const docId = res.docs[0].id;
-        return docId;
+      .doc(user.user_id)
+      .update({
+        investments: newInvestments
       })
-      .then(docId => {
+      .then(() => {
+        console.log("Investment Removed");
         firestore
           .collection("users")
-          .doc(docId)
-          .update({
-            investments: []
+          .where("auth_id", "==", auth.uid)
+          .get()
+          .then(res => {
+            const doc = res.docs[0];
+            return doc.data();
           })
-          .catch(e => {
-            console.log("err :", e);
+          .then(data => {
+            dispatch({
+              type: "GET_INVESTMENTS",
+              investments: data.investments
+            });
           });
+      })
+      .catch(e => {
+        console.log("err :", e);
       });
   };
 };
