@@ -67,7 +67,7 @@ class QuizMain extends Component {
         let progressAmount = (1 / this.state.quizLength) * 100 ;
         console.log(this.state.currentProgress)
         this.setState((prevState) => {
-            return {c: prevState.currentProgress + progressAmount};
+            return {currentProgress: prevState.currentProgress + progressAmount};
           })
         //this.setState(({currentProgress: this.state.currentProgress + progressAmount})
         console.log(this.state.currentProgress)
