@@ -16,34 +16,23 @@ const getLeaderboard = () => {
   };
 };
 
-const addInvestment = data => {
+const addInvestment = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
-    console.log(data);
     firestore
       .collection("users")
-      .where("auth_id", "==", data.uid)
-      .get()
-      .then(res => {
-        console.log(res);
-        const docId = res.docs[0].id;
-        return docId;
+      .doc(user.user_id)
+      .update({
+        investments: firestore.FieldValue.arrayUnion({
+          display_name: data.username,
+          date: data.investment_made,
+          q_score: data.q_score,
+          q_points: data.q_points,
+          user_id: data.user_id
+        })
       })
-      .then(docId => {
-        firestore
-          .collection("users")
-          .doc(docId)
-          .update({
-            investments: firestore.FieldValue.arrayUnion({
-              display_name: data.username,
-              date: data.date,
-              q_score: data.q_score,
-              q_points: data.q_points
-            })
-          })
-          .catch(e => {
-            console.log("err :", e);
-          });
+      .catch(e => {
+        console.log("err :", e);
       });
   };
 };

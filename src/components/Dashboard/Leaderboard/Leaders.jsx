@@ -46,8 +46,14 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Leaders = props => {
   const classes = useStyles();
-  const { leaderboard } = props;
+
+  // set props from redux
+  const { leaderboard, auth, user } = props;
+
+  //Leaderboard
   const allUsers = leaderboard.board;
+
+  //Nice Dates
   const d = new Date(leaderboard.last_updated.seconds * 1000);
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
@@ -57,11 +63,7 @@ const Leaders = props => {
   const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
   const last_updated =
     year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
-  // console.log(allUsers, last_updated);
 
-  // set props from redux
-  const { auth } = props;
-  // console.log(auth);
   return (
     <React.Fragment>
       <Title>Leaders</Title>
@@ -97,15 +99,14 @@ const Leaders = props => {
                       e.target.innerHTML = row.q_score;
                     }}
                     onClick={() => {
-                      console.log(auth);
                       const data = {
                         username: row.username,
-                        date: new Date().toDateString(),
+                        investment_made: new Date(),
                         q_score: row.q_score,
                         q_points: row.q_points,
-                        uid: auth.uid
+                        user_id: row.user_id
                       };
-                      props.addInvestment(data);
+                      props.addInvestment(data, auth, user);
                     }}
                   >
                     {row.q_score}
@@ -125,12 +126,14 @@ const Leaders = props => {
 const mapStateToProps = state => {
   return {
     leaderboard: state.leaderboard,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    addInvestment: data => dispatch(addInvestment(data))
+    addInvestment: (data, auth, user) =>
+      dispatch(addInvestment(data, auth, user))
   };
 };
 

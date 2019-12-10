@@ -9,7 +9,8 @@ const userReducer = (state = initState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        userProfile: action.userProfile
+        userProfile: action.userProfile,
+        user_id: action.user_id
       };
     case "USER_LOGOUT":
       return initState;
