@@ -27,9 +27,6 @@ const useStyles = makeStyles(theme => ({
   bigAvatar: {
     width: "100px",
     height: "100px"
-  },
-  displayName: {
-    fontSize: "52px"
   }
 }));
 
@@ -38,7 +35,8 @@ const Profile = props => {
   const classes = useStyles();
 
   const { user, auth } = props;
-
+  // console.log(user);
+  // console.log(auth);
   // useEffect(() => {
   //   if (user.isLoggedIn) {
   //     console.log(user, auth);
@@ -50,28 +48,38 @@ const Profile = props => {
     user.isLoggedIn && (
       <div className={classes.root}>
         {auth.isLoaded && (
-          <Paper className={classes.paper}>
-            <Grid
-              container
-              wrap="nowrap"
-              spacing={2}
-              alignItems="center"
-              justify="space-between"
-            >
-              <Grid item>
-                <Avatar
-                  alt="useravatar"
-                  src={auth.photoURL}
-                  className={classes.bigAvatar}
-                />
+          <>
+            <Paper className={classes.paper}>
+              <Grid
+                container
+                wrap="nowrap"
+                spacing={2}
+                alignItems="center"
+                justify="space-between"
+              >
+                <Grid item>
+                  <Avatar
+                    alt="useravatar"
+                    src={auth.photoURL}
+                    className={classes.bigAvatar}
+                  />
+                </Grid>
+                <Grid item xs zeroMinWidth>
+                  <Typography component="h2" variant="h3" color="primary">
+                    {auth.displayName}({user.profile.username})
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs>
-                <Typography className={classes.displayName}>
-                  {auth.displayName}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
+            </Paper>
+            <Paper className={classes.paper}>
+              <Typography variant="h5">
+                You have solved {user.profile.quiz_total} quizzes.
+              </Typography>
+              <Typography variant="body1">
+                {user.profile.last_quiz_done.toDate().toDateString()}
+              </Typography>
+            </Paper>
+          </>
         )}
       </div>
     )
