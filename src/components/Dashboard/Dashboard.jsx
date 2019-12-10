@@ -135,11 +135,8 @@ const Dashboard = props => {
   const { auth, user, investments } = props;
 
   useEffect(() => {
-    console.log("useFfect fired", props);
     if (user.isLoggedIn) {
-      console.log(investments.checked);
       if (!investments.checked) {
-        console.log("Fired!");
         props.resolveInvestment(user.profile.investments, user);
       }
     }
