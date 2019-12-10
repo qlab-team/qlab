@@ -27,52 +27,62 @@ const quizzes = [
     quiz_title: "Planets"
   },
   {
-    quiz_description: "Reasons Why Derek Sucks",
+    quiz_description: "What your breakfast is made of.",
     quiz_id: "1",
     quiz_questions: [
       {
-        question: "He's a porky-ass son of a gun",
-        answers: ["Yes", "Yes", "Yes", "Yes"],
-        correct_answer: "Yes"
+        question: "What's water's chemical formula?",
+        answers: ["O2", "OH2", "2HO", "H2O"],
+        correct_answer: "H20"
       },
       {
-        question: "He laughs giddily when we are doing a good hacky-sack run",
-        answers: ["Why", "Oh god", "Fuck, Derek", "WTF"],
-        correct_answer: "Fuck, Derek"
+        question: "Which of these is not an element?",
+        answers: ["Manganese", "Tantalum", "Seaborgium", "Mercurium"],
+        correct_answer: "Mercurium"
       },
       {
-        question: "He should shut his mouth",
-        answers: ["Yes", "Yes", "Yes", "Yes"],
-        correct_answer: "Yes"
+        question: "What's the atomic number of Cobalt?",
+        answers: ["27", "18", "30", "57"],
+        correct_answer: "27"
       }
     ],
     quiz_length: 3,
-    quiz_points: -300,
-    quiz_title: "Derek"
+    quiz_points: 100,
+    quiz_title: "Chemistry"
   },
   {
-    quiz_description: "VIC IS AN ASS",
+    quiz_description: "Rawr.",
     quiz_id: "2",
     quiz_questions: [
       {
-        question: "He's a porky-ass son of a gun",
-        answers: ["Yes", "Yes", "Yes", "Yes"],
+        question: "Are birds descended from dinosaurs?",
+        answers: ["Yes", "No", "It's unknown", `"Squawk"`],
         correct_answer: "Yes"
       },
       {
-        question: "He laughs giddily when we are doing a good hacky-sack run",
-        answers: ["ass", "ass", "ass", "ass"],
-        correct_answer: "ass"
+        question: "What does the T in T-Rex stand for?",
+        answers: [
+          "Tyranisauria",
+          "Tyrantosaurus",
+          "Tyrannosaurus",
+          "Tyransformaurus"
+        ],
+        correct_answer: "Tyrannosaurus"
       },
       {
-        question: "He should shut his mouth",
-        answers: ["Yes", "Yes", "Yes", "Yes"],
+        question: "Did velociraptors have feathers?",
+        answers: [
+          "Yes",
+          "Some kinds did",
+          "No",
+          "Dinosaurs didn't have feathers."
+        ],
         correct_answer: "Yes"
       }
     ],
     quiz_length: 3,
-    quiz_points: -300,
-    quiz_title: "Vic"
+    quiz_points: 100,
+    quiz_title: "Dinosaurs"
   }
 ];
 

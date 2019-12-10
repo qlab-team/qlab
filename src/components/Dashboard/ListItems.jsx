@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // react-router
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
+/////////////// COMPONENTS
 export const MainListItems = props => {
   return (
     <div>
@@ -68,7 +70,6 @@ export const MainListItems = props => {
     </div>
   );
 };
-
 export const SecondaryListItems = props => {
   return (
     <div>

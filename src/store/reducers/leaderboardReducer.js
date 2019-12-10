@@ -12,6 +12,12 @@ const leaderboardReducer = (state = initState, action) => {
         last_updated: action.leaderboard.allUsers.last_updated
       };
     }
+    case "ADD_INVESTMENT": {
+      console.log(action.data);
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }

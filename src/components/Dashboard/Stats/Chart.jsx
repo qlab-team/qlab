@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Title from "../Title";
@@ -13,11 +14,10 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-// generate data
+/////////////// UTILITIES
 function createData(time, amount) {
   return { time, amount };
 }
-
 const data = [
   createData("00:00", 0),
   createData("03:00", 300),
@@ -29,6 +29,7 @@ const data = [
   createData("21:00", 9999)
 ];
 
+/////////////// COMPONENT
 export default function Chart() {
   const theme = useTheme();
 
