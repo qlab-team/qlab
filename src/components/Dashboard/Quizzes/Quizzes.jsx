@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 import { useEffect } from "react";
 // components
@@ -8,11 +9,11 @@ import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // actions
 import { getQuizzes } from "../../../store/actions/quizzesActions";
-
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
-// styles
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -28,11 +29,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Quizzes(props) {
+/////////////// COMPONENT
+const Quizzes = props => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   useEffect(() => {
-    console.log("mounted");
     props.getQuizzes();
     // eslint-disable-next-line
   }, []);
@@ -57,18 +58,19 @@ function Quizzes(props) {
       </Grid>
     </React.Fragment>
   );
-}
+};
 
+/////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
     quizzes: state.quizzes
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     getQuizzes: () => dispatch(getQuizzes())
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(Quizzes);

@@ -1,6 +1,8 @@
+/////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
 // material ui
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -8,10 +10,11 @@ import Typography from "@material-ui/core/Typography";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
-// Actions
+// actions
 import { getProfile } from "../../../store/actions/profileActions";
-// styles
-const styles = theme => ({
+
+/////////////// STYLES
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     overflow: "hidden",
@@ -29,47 +32,51 @@ const styles = theme => ({
   displayName: {
     fontSize: "52px"
   }
-});
+}));
 
-class Profile extends React.Component {
-  componentDidMount() {
-    // Want to pass profile data from state.user(props.user).
-    // But, now it can't get it. because it is undefined. reason is tyming...
-    // ToDo: To change from local storage to redux in the future...
-    // this.props.getProfile(this.props.user);
-    this.props.getProfile();
-  }
-  render() {
-    const { classes, profile } = this.props;
-    return (
-      <div className={classes.root}>
-        {(() => {
-          if (profile.profileAuth.photoURL) {
-            return (
-              <Paper className={classes.paper}>
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid item>
-                    <Avatar
-                      alt="useravatar"
-                      src={profile.profileAuth.photoURL}
-                      className={classes.bigAvatar}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <Typography className={classes.displayName}>
-                      {profile.profileAuth.displayName}
-                    </Typography>
-                  </Grid>
+/////////////// COMPONENT
+const Profile = props => {
+  const classes = useStyles();
+  // Want to pass profile data from state.user(props.user).
+  // But, now it can't get it. because it is undefined. reason is tyming...
+  // ToDo: To change from local storage to redux in the future...
+  // this.props.getProfile(this.props.user);
+  useEffect(() => {
+    props.getProfile();
+    // eslint-disable-next-line
+  }, []);
+
+  const { profile } = props;
+  const userprofile = profile.profileAuth;
+  return (
+    <div className={classes.root}>
+      {(() => {
+        if (userprofile.photoURL) {
+          return (
+            <Paper className={classes.paper}>
+              <Grid container wrap="nowrap" spacing={2}>
+                <Grid item>
+                  <Avatar
+                    alt="useravatar"
+                    src={userprofile.photoURL}
+                    className={classes.bigAvatar}
+                  />
                 </Grid>
-              </Paper>
-            );
-          }
-        })()}
-      </div>
-    );
-  }
-}
+                <Grid item xs>
+                  <Typography className={classes.displayName}>
+                    {userprofile.displayName}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          );
+        }
+      })()}
+    </div>
+  );
+};
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {
     profile: state.profile
@@ -81,7 +88,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
-)(Profile);
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);

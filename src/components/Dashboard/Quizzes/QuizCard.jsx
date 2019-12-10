@@ -1,17 +1,19 @@
+/////////////// IMPORTS
 import React from "react";
+// redux
+import { compose } from "redux";
+import { Typography, Grid } from "@material-ui/core";
+import Title from "../Title";
 // actions
 import { updateQuizInfo } from "../../../store/actions/quizActions";
 // react-router
 import { Link } from "react-router-dom";
 // material ui
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-// redux
-import { compose } from "redux";
-import { Typography, Grid } from "@material-ui/core";
-import Title from "../Title";
-// styles
-const styles = theme => ({
+
+/////////////// STYLES
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
@@ -34,45 +36,43 @@ const styles = theme => ({
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   }
-});
+}));
 
-class QuizCard extends React.Component {
-  loadQuiz = () => {
-    this.props.updateCurrentQuiz(this.props.quizId);
-    console.log(this.props.quizId);
+/////////////// COMPONENT
+const QuizCard = props => {
+  const classes = useStyles();
+  const loadQuiz = () => {
+    console.log(props["quiz_id"]);
+    props.updateCurrentQuiz(props.quizId);
   };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Grid
-        className={classes.root}
-        onMouseEnter={this.loadQuiz}
-        container
-        justify="space-around"
-        direction="column"
+  return (
+    <Grid
+      className={classes.root}
+      onMouseEnter={loadQuiz}
+      container
+      justify="space-around"
+      direction="column"
+    >
+      <Title>{props.quizTitle}</Title>
+      <Typography variant="body2">{props.quizDescription}</Typography>
+      <Link
+        className={classes.button}
+        style={{ textDecoration: "none" }}
+        to="/quiz"
       >
-        <Title>{this.props.quizTitle}</Title>
-        <Typography variant="body2">{this.props.quizDescription}</Typography>
-        <Link
-          className={classes.button}
-          style={{ textDecoration: "none" }}
-          to="/quiz"
-        >
-          Start
-        </Link>
-      </Grid>
-    );
-  }
-}
+        Start
+      </Link>
+    </Grid>
+  );
+};
 
+/////////////// REDUX
 const mapDispatchToProps = dispatch => {
   return {
     updateCurrentQuiz: quiz => dispatch(updateQuizInfo(quiz))
   };
 };
 
-export default compose(
-  withStyles(styles),
-  connect(null, mapDispatchToProps)
-)(QuizCard);
+/////////////// EXPORTS
+export default compose(connect(null, mapDispatchToProps))(QuizCard);

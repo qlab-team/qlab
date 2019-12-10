@@ -1,13 +1,19 @@
-const getLeaderboard = () => {
+const getInvestments = auth => {
   return (dispatch, getState, { getFirestore }) => {
     // make async call to database
     const firestore = getFirestore();
     firestore
-      .get({ collection: "leaderboard", doc: "allUsers" })
-      .then(doc => {
+      .collection("users")
+      .where("auth_id", "==", auth.uid)
+      .get()
+      .then(res => {
+        const doc = res.docs[0];
+        return doc.data();
+      })
+      .then(data => {
         dispatch({
-          type: "GET_LEADERBOARD_INFO",
-          leaderboard: { allUsers: doc.data() }
+          type: "GET_INVESTMENTS",
+          investments: data.investments
         });
       })
       .catch(e => {
@@ -16,10 +22,10 @@ const getLeaderboard = () => {
   };
 };
 
-const addInvestment = data => {
+const removeInvestment = data => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
-    console.log(data);
+    console.log("from action", data);
     firestore
       .collection("users")
       .where("auth_id", "==", data.uid)
@@ -34,12 +40,7 @@ const addInvestment = data => {
           .collection("users")
           .doc(docId)
           .update({
-            investments: firestore.FieldValue.arrayUnion({
-              display_name: data.username,
-              date: data.date,
-              q_score: data.q_score,
-              q_points: data.q_points
-            })
+            investments: []
           })
           .catch(e => {
             console.log("err :", e);
@@ -48,4 +49,4 @@ const addInvestment = data => {
   };
 };
 
-export { getLeaderboard, addInvestment };
+export { getInvestments, removeInvestment };

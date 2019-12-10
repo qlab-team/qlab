@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Title from "../Title";
@@ -11,6 +12,7 @@ import { compose } from "redux";
 // Actions
 import { getProfile } from "../../../store/actions/profileActions";
 
+/////////////// UTILITIES
 function preventDefault(event) {
   event.preventDefault();
 }

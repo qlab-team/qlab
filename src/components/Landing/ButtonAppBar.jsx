@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // react-router
 import { BrowserRouter as Router } from "react-router-dom";
@@ -8,7 +9,8 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-// styles
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -30,9 +32,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 export default function ButtonAppBar() {
   const classes = useStyles();
-
   return (
     <Router>
       <div className={classes.root}>

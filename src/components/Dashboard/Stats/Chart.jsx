@@ -1,3 +1,4 @@
+/////////////// IMPORTS
 import React from "react";
 // components
 import Title from "../Title";
@@ -17,7 +18,7 @@ import { connect } from "react-redux";
 // Actions
 import { getProfile } from "../../../store/actions/profileActions";
 
-// generate data
+/////////////// UTILITIES
 function createData(time, amount) {
   return { time, amount };
 }

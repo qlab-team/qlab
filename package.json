@@ -12,6 +12,7 @@
     "int": "yarn build && firebase serve",
     "login": "firebase login",
     "deploy": "firebase deploy --only hosting",
+    "emulateFunctions": "yarn --cwd ./functions/ emulateFunctions",
     "buildFunctions": "yarn --cwd ./functions/ build",
     "deployFunctions": "firebase deploy --only functions",
     "testFunctions": "yarn buildFunctions && yarn --cwd ./functions/ test"
