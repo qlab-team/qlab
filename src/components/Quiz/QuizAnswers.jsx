@@ -8,10 +8,10 @@ const styles = theme => ({
     padding: theme.spacing(3)
   },
   container: {
-    marginTop: 40,
-    marginBottom: 30,
-    marginRight: 5,
-    marginLeft: 5,
+     marginTop: 60,
+     marginBottom: 30,
+    // marginRight: 5,
+    // marginLeft: 5,
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     background:
@@ -51,7 +51,7 @@ const QuizAnswers = props => {
           {props.quizQuestion}
         </Typography>
 
-        <Grid spacing={3} wrap="wrap" container>
+        <Grid alignItems="center" spacing={3} wrap="wrap" container>
           {props.answers.map((answer, index) => {
             return (
               <QuizAnswer

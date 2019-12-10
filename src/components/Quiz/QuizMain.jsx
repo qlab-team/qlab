@@ -24,6 +24,7 @@ class QuizMain extends Component {
         
         super(props);
         this.state = {
+            userHasSelected: false,
             quizPoints: 10,
             answersDisabled: false,
             eraseHighlight: false,
@@ -60,7 +61,7 @@ class QuizMain extends Component {
 
     updateCurrentQuestion = () => {
         this.setState({currentQuestion: this.state.currentQuestion + 1})
-    }
+    } 
 
     updateProgressBar = () => {
         let progressAmount = (1 / this.state.quizLength) * 100 ;
