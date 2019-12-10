@@ -30,11 +30,16 @@ class QPoints extends React.Component {
   }
   render() {
     const { classes, profile } = this.props;
+    const userProfile = profile.profileUser.userProfile;
     return (
       <React.Fragment>
         <Title>qPoints</Title>
         <Typography className={classes.points} component="p" variant="h4">
-          {profile.q_points}
+          {(() => {
+            if (userProfile) {
+              return userProfile.q_points;
+            }
+          })()}
         </Typography>
         <Typography color="textSecondary" className={classes.depositContext}>
           on {new Date().toDateString()}

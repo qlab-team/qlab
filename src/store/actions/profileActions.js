@@ -13,9 +13,8 @@ const getProfile = auth => {
       .then(doc => {
         dispatch({
           type: "GET_PROFILE_INFO",
-          profile: profileAuth,
-          q_points: profileUser.userProfile.q_points,
-          q_score: profileUser.userProfile.q_score
+          profileAuth: profileAuth,
+          profileUser: profileUser
         });
       })
       .catch(e => {

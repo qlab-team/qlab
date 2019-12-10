@@ -12,32 +12,37 @@ import {
   Label,
   ResponsiveContainer
 } from "recharts";
+// redux
+import { connect } from "react-redux";
+// Actions
+import { getProfile } from "../../../store/actions/profileActions";
 
 // generate data
 function createData(time, amount) {
   return { time, amount };
 }
 
-const data = [
-  createData("00:00", 0),
-  createData("03:00", 300),
-  createData("06:00", 600),
-  createData("09:00", 800),
-  createData("12:00", 1500),
-  createData("15:00", 2000),
-  createData("18:00", 2400),
-  createData("21:00", 9999)
-];
-
-export default function Chart() {
+const Chart = profile => {
   const theme = useTheme();
-
+  const userProfile = profile.profile.profileUser.userProfile;
+  const chartData = [];
+  if (userProfile) {
+    Object.keys(userProfile.q_score_history[0]).forEach(hist => {
+      const date = new Date(
+        userProfile.q_score_history[0][hist].date.seconds * 1000
+      );
+      const fixDate = date.getMonth() + 1 + "/" + date.getDate();
+      const q_score = userProfile.q_score_history[0][hist].q_score;
+      chartData.unshift(createData(fixDate, q_score));
+    });
+  }
+  console.log(chartData);
   return (
     <React.Fragment>
       <Title>qScore</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 16,
             right: 16,
@@ -50,7 +55,10 @@ export default function Chart() {
             <Label
               angle={270}
               position="left"
-              style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
+              style={{
+                textAnchor: "middle",
+                fill: theme.palette.text.primary
+              }}
             ></Label>
           </YAxis>
           <Line
@@ -63,4 +71,18 @@ export default function Chart() {
       </ResponsiveContainer>
     </React.Fragment>
   );
-}
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    profile: state.profile
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfile: () => dispatch(getProfile())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chart);

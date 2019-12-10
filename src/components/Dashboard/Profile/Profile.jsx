@@ -44,20 +44,20 @@ class Profile extends React.Component {
     return (
       <div className={classes.root}>
         {(() => {
-          if (profile.photoURL) {
+          if (profile.profileAuth.photoURL) {
             return (
               <Paper className={classes.paper}>
                 <Grid container wrap="nowrap" spacing={2}>
                   <Grid item>
                     <Avatar
                       alt="useravatar"
-                      src={profile.photoURL}
+                      src={profile.profileAuth.photoURL}
                       className={classes.bigAvatar}
                     />
                   </Grid>
                   <Grid item xs>
                     <Typography className={classes.displayName}>
-                      {profile.displayName}
+                      {profile.profileAuth.displayName}
                     </Typography>
                   </Grid>
                 </Grid>
