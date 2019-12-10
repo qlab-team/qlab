@@ -2,6 +2,12 @@ const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
+
+// CORS Express middleware to enable CORS Requests.
+const cors = require("cors")({
+  origin: true
+});
+
 admin.initializeApp();
 
 // Start writing Firebase Functions
@@ -29,26 +35,30 @@ export const requester = functions
     response.send(JSON.stringify(request));
   });
 
-interface DidUserQuizResponse {
-  user_id: string;
-  username: string;
-  last_quiz_done: Date;
-  payout: Boolean;
-}
+// interface DidUserQuizResponse {
+//   user_id: string;
+//   username: string;
+//   last_quiz_done: Date;
+//   payout: Boolean;
+// }
+
+// { send: (arg0: { data: DidUserQuizResponse }) => void }
 
 export const didUserQuizYesterday = functions
   .region("asia-northeast1")
-  .https.onRequest(
-    async (
-      request: any,
-      response: { send: (arg0: { data: DidUserQuizResponse }) => void }
-    ) => {
+  .https.onRequest((request: any, response: any) => {
+    return cors(request, response, async () => {
       const user_id = request.query.user_id;
-      const snapshot = await admin
-        .firestore()
-        .collection("users")
-        .doc(user_id)
-        .get();
+      let snapshot;
+      try {
+        snapshot = await admin
+          .firestore()
+          .collection("users")
+          .doc(user_id)
+          .get();
+      } catch (error) {
+        console.log(error);
+      }
 
       const now = new Date();
       const data = snapshot.data();
@@ -67,5 +77,5 @@ export const didUserQuizYesterday = functions
       };
 
       response.send(responseObject);
-    }
-  );
+    });
+  });
