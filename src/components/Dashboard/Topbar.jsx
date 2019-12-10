@@ -123,7 +123,9 @@ const Topbar = props => {
   const id = open ? "spring-popper" : undefined;
 
   if (user.profile.investments) {
-    props.resolveInvestment(user.profile.investments, user)
+    if (!investments.checked) {
+      props.resolveInvestment(user.profile.investments, user);
+    }
   }
 
   return (
@@ -160,17 +162,14 @@ const Topbar = props => {
           style={{ textDecoration: "none", color: "whitesmoke" }}
           to="/dashboard/stats"
         >
-          {investments.investmentPayoutToday ? (
-            <Badge
-              max={500}
-              badgeContent={`+${investments.investmentIncome}`}
-              color="secondary"
-            >
-              <TimelineIcon />
-            </Badge>
-          ) : (
-              <TimelineIcon />
-            )}
+          <Badge
+            max={500}
+            badgeContent={`+${investments.investmentIncome}`}
+            color="secondary"
+            invisible={!investments.investmentPayoutToday}
+          >
+            <TimelineIcon />
+          </Badge>
         </Link>
       </IconButton>
       <Popper
@@ -195,14 +194,12 @@ const Topbar = props => {
           <Fade {...TransitionProps}>
             {investments.investmentPayoutToday ? (
               <div className={classes.paper}>
-                Your investments returned <b>{investments.investmentIncome || 0}</b> points today!{" "}
+                Your investments returned{" "}
+                <b>{investments.investmentIncome || 0}</b> points today!{" "}
               </div>
             ) : (
-                <div className={classes.paper}>
-                  No investment income today.{" "}
-                </div>
-              )}
-
+              <div className={classes.paper}>No investment income today. </div>
+            )}
           </Fade>
         )}
       </Popper>

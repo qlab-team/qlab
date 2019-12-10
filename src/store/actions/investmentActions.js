@@ -4,15 +4,14 @@ const didUserQuizYesterday = async id => {
 
   const query = didUserQuizURL + `?user_id=${id}`;
 
-  console.log(query)
   try {
     const response = await fetch(query, {
-      credentials: 'omit',
+      credentials: "omit"
     });
     return response.json();
   } catch (error) {
-    console.log(error)
-    return
+    console.log(error);
+    return;
   }
 };
 
@@ -26,8 +25,8 @@ const updatePoints = async (firestore, user_id, points) => {
     .catch(e => {
       console.log("err :", e);
     });
-  console.log('Points from Investment Added')
-}
+  console.log("Points from Investment Added");
+};
 
 const removeInvestment = async (firestore, user, investment_id) => {
   const newInvestments = user.profile.investments.filter(investment => {
@@ -42,7 +41,7 @@ const removeInvestment = async (firestore, user, investment_id) => {
     .catch(e => {
       console.log("err :", e);
     });
-}
+};
 
 export const resolveInvestment = (investments, user) => {
   return async (dispatch, getState, { getFirestore }) => {
@@ -56,41 +55,41 @@ export const resolveInvestment = (investments, user) => {
         // Check if investment old enough
         if (now - investment.date.toDate() < oneDay) {
           //Investment not Resolved yet, skip it
-          console.log("Not Resolved Yet")
+          console.log("Investment Not Resolved Yet");
           return;
         } else {
-
-          console.log("Attempting to Resolve..")
-          console.log({ investment })
-          const investmentDidQuiz = await didUserQuizYesterday(investment.user_id);
-          if (!investmentDidQuiz) {
+          console.log("Attempting to Resolve Investment..");
+          const response = await didUserQuizYesterday(investment.user_id);
+          if (!response) {
             //Probably an Error
-            return
+            return;
           }
+          const investmentDidQuiz = response.data;
           // If No Payout,
           if (!investmentDidQuiz.payout) {
-            console.log("User Didn't Do Quiz")
+            console.log("User Didn't Do Quiz");
             dispatch({
               type: "RESOLVE_INVESTMENT",
-              investmentIncome: 0,
-              investmentPayout: false
+              income: 0,
+              payout: false
             });
-            removeInvestment(firestore, user, investment.user_id)
+            removeInvestment(firestore, user, investment.user_id);
           } else {
             //If Payout
-            console.log("User Did Do Quiz")
-            updatePoints(firestore, user.user_id, investment.earnable_points)
+            console.log("User Did Do Quiz, Updating Points");
+            updatePoints(firestore, user.user_id, investment.earnable_points);
             dispatch({
               type: "RESOLVE_INVESTMENT",
-              investmentIncome: investment.earnable_points,
-              investmentPayout: true
+              income: investment.earnable_points,
+              payout: true
             });
+            removeInvestment(firestore, user, investment.user_id);
           }
         }
       });
     } else {
-      console.log("No Investments")
-      return
+      console.log("No Investments");
+      return;
     }
 
     // const newInvestments = user.userProfile.investments.filter(investment => {

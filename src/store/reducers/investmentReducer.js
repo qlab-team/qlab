@@ -2,7 +2,8 @@
 
 const initState = {
   investmentIncome: 0,
-  investmentPayoutToday: false
+  investmentPayoutToday: false,
+  checked: false
 };
 
 const investmentReducer = (state = initState, action) => {
@@ -11,7 +12,8 @@ const investmentReducer = (state = initState, action) => {
       return {
         ...state,
         investmentIncome: action.income,
-        investmentPayout: action.payout
+        investmentPayoutToday: action.payout,
+        checked: true
       };
     }
     case "INVESTMENT_NOTIFICATION_READ": {
