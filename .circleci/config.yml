@@ -64,6 +64,9 @@ jobs: # a collection of steps
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+      - run: # Deploy Functions
+          name: Deploy Functions
+          command: yarn buildFunctions & yarn deployFunctions
 
 workflows:
   version: 2

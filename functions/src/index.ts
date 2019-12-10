@@ -23,6 +23,12 @@ export const helloTokyo = functions
     }
   );
 
+export const requester = functions
+  .region("asia-northeast1")
+  .https.onRequest((request: any, response: any) => {
+    response.send(JSON.stringify(request));
+  });
+
 interface DidUserQuizResponse {
   user_id: string;
   username: string;
@@ -45,15 +51,16 @@ export const didUserQuizYesterday = functions
         .get();
 
       const now = new Date();
-      const previousQuiz = snapshot.data.last_quiz_done;
+      const data = snapshot.data();
+      const previousQuiz = data.last_quiz_done;
 
-      const differenceTime = now.getTime() - previousQuiz.getTime();
-      const quizYesterday = differenceTime / (1000 * 3600) < 24;
+      const differenceTime = now.getTime() / 1000 - previousQuiz._seconds;
+      const quizYesterday = differenceTime / 3600 < 24;
 
       const responseObject = {
         data: {
           user_id: user_id,
-          username: snapshot.data.username,
+          username: data.username,
           last_quiz_done: previousQuiz,
           payout: quizYesterday
         }
