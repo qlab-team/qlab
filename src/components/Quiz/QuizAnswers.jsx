@@ -5,7 +5,7 @@ import QuizAnswer from "./QuizAnswer";
 
 const styles = theme => ({
   Grid: {
-    padding: theme.spacing(3)
+    // padding: theme.spacing(3)
   },
   Title: {
     margin: 40,
@@ -34,7 +34,13 @@ const QuizAnswers = props => {
       <Typography className={props.classes.Title}>
         {props.quizQuestion}
       </Typography>
-      <Grid container alignItems="center" spacing={3}>
+      <Grid
+        item
+        container
+        alignItems="center"
+        justify="space-between"
+        spacing={4}
+      >
         {props.answers.map((answer, index) => {
           return (
             <QuizAnswer

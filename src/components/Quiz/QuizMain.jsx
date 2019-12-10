@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import { Typography } from '@material-ui/core'
 import QuizAnswers from "./QuizAnswers";
-import { LinearProgress, Grid } from "@material-ui/core";
+import { LinearProgress, Grid, Container } from "@material-ui/core";
 import CheckButton from "./CheckButton";
 import { connect } from "react-redux";
 import { getQuiz } from "../../store/actions/quizActions";
@@ -20,12 +20,14 @@ const styles = {
     margin: 30
   },
   QuizMain: {
-    minHeight: "100vh",
+    padding: 30,
     background:
       "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
-    color: "white",
-    boxShadow:
-      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+    minHeight: "100vh",
+    color: "white"
+  },
+  progress: {
+    minWidth: "90vw"
   }
 };
 
@@ -115,14 +117,14 @@ class QuizMain extends Component {
       quizView = <div>loading</div>;
     } else {
       quizView = (
-        <Grid
-          className={classes.QuizMain}
-          container
-          direction="column"
-          alignItems="center"
-          justify="space-around"
-        >
-          <Grid item>
+        <React.Fragment>
+          <Grid
+            className={classes.QuizMain}
+            container
+            direction="column"
+            alignItems="center"
+            justify="space-around"
+          >
             <QuizAnswers
               quizQuestion={
                 this.state.Quiz[this.state.currentQuestion].question
@@ -136,31 +138,30 @@ class QuizMain extends Component {
               eraseHighlight={this.state.eraseHighlight}
               eraseAnswerHighlight={this.eraseAnswerHighlight}
             />
-            <LinearProgress
-              variant="determinate"
-              className={classes.Validator}
-              value={this.state.currentProgress}
-            />
-          </Grid>
-          <Grid item>
-            <CheckButton
-              getAnswerConfirmation={this.getAnswerConfirmation}
-              currentAnswer={this.state.currentAnswer}
-              currentCorrectAnswer={this.state.currentCorrectAnswer}
-              updateCurrentQuestion={this.updateCurrentQuestion}
-              addQuizQuestionToEnd={this.addQuizQuestionToEnd}
-              updateProgressBar={this.updateProgressBar}
-              toggleAnswerSelections={this.toggleAnswerSelections}
-              eraseAnswerHighlight={this.eraseAnswerHighlight}
-            />
-          </Grid>
-          <Grid item minHeight={90}>
+
+            <Grid item className={classes.progress}>
+              <LinearProgress
+                variant="determinate"
+                className={classes.Validator}
+                value={this.state.currentProgress}
+              />
+              <CheckButton
+                getAnswerConfirmation={this.getAnswerConfirmation}
+                currentAnswer={this.state.currentAnswer}
+                currentCorrectAnswer={this.state.currentCorrectAnswer}
+                updateCurrentQuestion={this.updateCurrentQuestion}
+                addQuizQuestionToEnd={this.addQuizQuestionToEnd}
+                updateProgressBar={this.updateProgressBar}
+                toggleAnswerSelections={this.toggleAnswerSelections}
+                eraseAnswerHighlight={this.eraseAnswerHighlight}
+              />
+            </Grid>
             {answerValidation}
           </Grid>
-        </Grid>
+        </React.Fragment>
       );
     }
-    return <div>{quizView}</div>;
+    return <React.Fragment>{quizView}</React.Fragment>;
   }
 }
 

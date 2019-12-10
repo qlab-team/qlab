@@ -7,12 +7,20 @@ const styles = theme => ({
     fontSize: 40,
     [theme.breakpoints.down("xs")]: {
       fontSize: 20,
-      height: 40,
-      borderRadius: 20,
-      paddingTop: 20
+      borderRadius: 20
     },
+
+    wordWrap: "break-word"
+  },
+
+  selected: {
+    background: "rgb(92, 27, 249) !important",
+    color: "whitesmoke !important"
+  },
+
+  Answer: {
+    margin: 10,
     borderRadius: 40,
-    height: 150,
     background: "whitesmoke",
     color: "rgb(92, 27, 249)",
     boxShadow:
@@ -20,15 +28,6 @@ const styles = theme => ({
     "&:hover": {
       cursor: "pointer"
     },
-    wordWrap: "break-word"
-  },
-
-  selected: {
-    background: "rgb(92, 27, 249)",
-    color: "whitesmoke"
-  },
-
-  Answer: {
     justify: "center",
     alignContent: "center",
     alignItems: "center",
@@ -54,12 +53,12 @@ function QuizAnswer(props) {
   return (
     <Grid
       item
-      wrap="wrap"
       xs={12}
-      s={6}
-      md={6}
-      lg={6}
-      xl={6}
+      s={5}
+      md={5}
+      lg={5}
+      xl={5}
+      ref={myRef}
       onClick={event => {
         colorChanger(event, props.index);
         props.getCurrentAnswer(props.answer, props.correctAnswer);
@@ -67,11 +66,7 @@ function QuizAnswer(props) {
       className={props.classes.Answer}
       alignItems="center"
     >
-      <Typography
-        variant="body2"
-        ref={myRef}
-        className={props.classes["Typography"]}
-      >
+      <Typography variant="body2" className={props.classes["Typography"]}>
         {props.answer}
       </Typography>
     </Grid>
