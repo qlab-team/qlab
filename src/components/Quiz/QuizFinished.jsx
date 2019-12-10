@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Typography, Container, Box }  from '@material-ui/core'
+import { Typography, Container, Box }  from '@material-ui/core'
 import { Link } from "react-router-dom"
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
