@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 
 const QPoints = props => {
   const classes = useStyles();
-
   const { user } = props;
 
   return (
