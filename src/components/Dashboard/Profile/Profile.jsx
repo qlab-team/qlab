@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
   paper: {
     maxWidth: 900,
     margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    overflow: "auto"
   },
   bigAvatar: {
     width: "100px",
