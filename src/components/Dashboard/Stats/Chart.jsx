@@ -17,8 +17,6 @@ import {
 } from "recharts";
 // redux
 import { connect } from "react-redux";
-// Actions
-import { getProfile } from "../../../store/actions/profileActions";
 
 /////////////// UTILITIES
 function createData(time, amount) {
@@ -33,12 +31,11 @@ const Chart = props => {
 
   useEffect(() => {
     if (user.isLoggedIn) {
-      const data = Object.keys(user.userProfile.q_score_history).map(hist => {
-        const date = new Date(
-          user.userProfile.q_score_history[hist].date * 1000
-        );
+      console.log(user);
+      const data = Object.keys(user.profile.q_score_history).map(hist => {
+        const date = new Date(user.profile.q_score_history[hist].date * 1000);
         const fixDate = date.getMonth() + 1 + "/" + date.getDate();
-        const q_score = user.userProfile.q_score_history[hist].q_score;
+        const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
       updateChartData(data.reverse());
@@ -88,10 +85,5 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    getProfile: () => dispatch(getProfile())
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chart);
+export default connect(mapStateToProps)(Chart);

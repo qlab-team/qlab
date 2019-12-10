@@ -1,6 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import { getProfile } from "../../../store/actions/profileActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -37,56 +36,49 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Profile = props => {
   const classes = useStyles();
-  // Want to pass profile data from state.user(props.user).
-  // But, now it can't get it. because it is undefined. reason is tyming...
-  // ToDo: To change from local storage to redux in the future...
-  // this.props.getProfile(this.props.user);
-  useEffect(() => {
-    props.getProfile();
-    // eslint-disable-next-line
-  }, []);
 
-  const { profile } = props;
-  const userprofile = profile.profileAuth;
+  const { user, auth } = props;
+
+  // useEffect(() => {
+  //   if (user.isLoggedIn) {
+  //     console.log(user, auth);
+  //   }
+  //   // eslint-disable-next-line
+  // }, [user.isLoggedIn]);
+
   return (
-    <div className={classes.root}>
-      {(() => {
-        if (userprofile.photoURL) {
-          return (
-            <Paper className={classes.paper}>
-              <Grid container wrap="nowrap" spacing={2}>
-                <Grid item>
-                  <Avatar
-                    alt="useravatar"
-                    src={userprofile.photoURL}
-                    className={classes.bigAvatar}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <Typography className={classes.displayName}>
-                    {userprofile.displayName}
-                  </Typography>
-                </Grid>
+    user.isLoggedIn && (
+      <div className={classes.root}>
+        {auth.isLoaded && (
+          <Paper className={classes.paper}>
+            <Grid container wrap="nowrap" spacing={2}>
+              <Grid item>
+                <Avatar
+                  alt="useravatar"
+                  src={auth.photoURL}
+                  className={classes.bigAvatar}
+                />
               </Grid>
-            </Paper>
-          );
-        }
-      })()}
-    </div>
+              <Grid item xs>
+                <Typography className={classes.displayName}>
+                  {auth.displayName}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        )}
+      </div>
+    )
   );
 };
 
 /////////////// REDUX
 const mapStateToProps = state => {
   return {
-    profile: state.profile
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    getProfile: () => dispatch(getProfile())
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
+export default compose(connect(mapStateToProps))(Profile);
