@@ -2,6 +2,12 @@ const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
+
+// CORS Express middleware to enable CORS Requests.
+const cors = require("cors")({
+  origin: true
+});
+
 admin.initializeApp();
 
 // Start writing Firebase Functions
@@ -38,34 +44,38 @@ interface DidUserQuizResponse {
 
 export const didUserQuizYesterday = functions
   .region("asia-northeast1")
-  .https.onRequest(
-    async (
-      request: any,
-      response: { send: (arg0: { data: DidUserQuizResponse }) => void }
-    ) => {
-      const user_id = request.query.user_id;
-      const snapshot = await admin
-        .firestore()
-        .collection("users")
-        .doc(user_id)
-        .get();
+  .https.onRequest((request: any, response: any) => {
+    return cors(
+      request,
+      response,
+      async (
+        request: any,
+        response: { send: (arg0: { data: DidUserQuizResponse }) => void }
+      ) => {
+        const user_id = request.query.user_id;
+        const snapshot = await admin
+          .firestore()
+          .collection("users")
+          .doc(user_id)
+          .get();
 
-      const now = new Date();
-      const data = snapshot.data();
-      const previousQuiz = data.last_quiz_done;
+        const now = new Date();
+        const data = snapshot.data();
+        const previousQuiz = data.last_quiz_done;
 
-      const differenceTime = now.getTime() / 1000 - previousQuiz._seconds;
-      const quizYesterday = differenceTime / 3600 < 24;
+        const differenceTime = now.getTime() / 1000 - previousQuiz._seconds;
+        const quizYesterday = differenceTime / 3600 < 24;
 
-      const responseObject = {
-        data: {
-          user_id: user_id,
-          username: data.username,
-          last_quiz_done: previousQuiz,
-          payout: quizYesterday
-        }
-      };
+        const responseObject = {
+          data: {
+            user_id: user_id,
+            username: data.username,
+            last_quiz_done: previousQuiz,
+            payout: quizYesterday
+          }
+        };
 
-      response.send(responseObject);
-    }
-  );
+        response.send(responseObject);
+      }
+    );
+  });
