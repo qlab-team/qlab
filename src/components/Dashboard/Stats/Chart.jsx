@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+// import { useEffect } from "react";
 // components
 import Title from "../Title";
 // material ui
@@ -13,32 +14,38 @@ import {
   Label,
   ResponsiveContainer
 } from "recharts";
+// redux
+import { connect } from "react-redux";
+// Actions
+import { getProfile } from "../../../store/actions/profileActions";
 
 /////////////// UTILITIES
 function createData(time, amount) {
   return { time, amount };
 }
-const data = [
-  createData("00:00", 0),
-  createData("03:00", 300),
-  createData("06:00", 600),
-  createData("09:00", 800),
-  createData("12:00", 1500),
-  createData("15:00", 2000),
-  createData("18:00", 2400),
-  createData("21:00", 9999)
-];
 
-/////////////// COMPONENT
-export default function Chart() {
+const Chart = props => {
   const theme = useTheme();
+  const chartData = [];
 
+  const user = JSON.parse(localStorage.user);
+
+  if (user.userProfile) {
+    Object.keys(user.userProfile.q_score_history).forEach(hist => {
+      const date = new Date(user.userProfile.q_score_history[hist].date * 1000);
+      const fixDate = date.getMonth() + 1 + "/" + date.getDate();
+      const q_score = user.userProfile.q_score_history[hist].q_score;
+      chartData.unshift(createData(fixDate, q_score));
+    });
+  }
+
+  console.log(chartData);
   return (
     <React.Fragment>
       <Title>qScore</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 16,
             right: 16,
@@ -51,7 +58,10 @@ export default function Chart() {
             <Label
               angle={270}
               position="left"
-              style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
+              style={{
+                textAnchor: "middle",
+                fill: theme.palette.text.primary
+              }}
             ></Label>
           </YAxis>
           <Line
@@ -64,4 +74,17 @@ export default function Chart() {
       </ResponsiveContainer>
     </React.Fragment>
   );
-}
+};
+
+const mapStateToProps = state => {
+  return {
+    profileUser: state.profileUser
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfile: () => dispatch(getProfile())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chart);

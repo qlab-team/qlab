@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 const PerformanceTable = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, stats } = props;
+  const { auth, stats, user } = props;
   useEffect(() => {
     if (auth.isLoaded) {
       props.getInvestments(auth);
@@ -81,7 +81,7 @@ const PerformanceTable = props => {
         <TableBody>
           {stats.investments.map((investment, i) => (
             <TableRow key={i}>
-              <TableCell>{investment.date}</TableCell>
+              <TableCell>{investment.date.toDate().toDateString()}</TableCell>
               <TableCell>{investment.display_name}</TableCell>
               <TableCell>{investment.q_points}</TableCell>
               <TableCell align="right">
@@ -96,12 +96,10 @@ const PerformanceTable = props => {
                     e.target.innerHTML = investment.q_score;
                   }}
                   onClick={() => {
-                    console.log(auth);
                     const data = {
-                      username: investment.display_name,
-                      uid: auth.uid
+                      user_id: investment.user_id
                     };
-                    props.removeInvestment(data);
+                    props.removeInvestment(data, auth, user);
                   }}
                 >
                   {investment.q_score}
@@ -125,13 +123,15 @@ const PerformanceTable = props => {
 const mapStateToProps = state => {
   return {
     stats: state.stats,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getInvestments: auth => dispatch(getInvestments(auth)),
-    removeInvestment: data => dispatch(removeInvestment(data))
+    removeInvestment: (data, auth, user) =>
+      dispatch(removeInvestment(data, auth, user))
   };
 };
 

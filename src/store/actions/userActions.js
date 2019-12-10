@@ -7,7 +7,15 @@ const generateUser = authObject => {
     quiz_total: 0,
     created_at: new Date(),
     investments: [],
-    last_quiz_done: new Date()
+    last_quiz_done: new Date(),
+    q_score_history: [
+      { date: 1575817200, q_score: 90 },
+      { date: 1575730800, q_score: 50 },
+      { date: 1575644400, q_score: 80 },
+      { date: 1575558000, q_score: 60 },
+      { date: 1575471600, q_score: 45 },
+      { date: 1575298800, q_score: 35 }
+    ]
   };
 };
 
@@ -47,6 +55,7 @@ export const getUserAndLogin = auth => {
 
           dispatch({
             type: "USER_LOGIN",
+            user_id: snapshot.docs[0].id,
             userProfile: snapshot.docs[0].data()
           });
         })

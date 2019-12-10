@@ -4,11 +4,15 @@ import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Badge from "@material-ui/core/Badge";
+import Popper from "@material-ui/core/Popper";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import TimelineIcon from "@material-ui/icons/Timeline";
 import Typography from "@material-ui/core/Typography";
+import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -34,12 +38,76 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 6,
     fontFamily: "Aquino",
     fontSize: "30px"
+  },
+  paper: {
+    border: "1px solid transparent",
+    minWidth: theme.spacing(9),
+    borderRadius: 50,
+    fontSize: 15,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    color: "whitesmoke",
+    transition: "ease-in-out 0.15s",
+    background: "rgb(92, 27, 249)",
+    "&:hover": {
+      background: "rgb(92, 27, 249)",
+      color: "whitesmoke",
+      cursor: "pointer"
+    },
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+  },
+  popper: {
+    zIndex: "2000 !important",
+    marginRight: theme.spacing(2)
   }
 }));
+
+const Fade = React.forwardRef(function Fade(props, ref) {
+  const { in: open, children, onEnter, onExited, ...other } = props;
+  const style = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: open ? 1 : 0 },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter();
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited();
+      }
+    }
+  });
+  return (
+    <animated.div ref={ref} style={style} {...other}>
+      {children}
+    </animated.div>
+  );
+});
+
+Fade.propTypes = {
+  children: PropTypes.element,
+  in: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func
+};
 
 /////////////// COMPONENT
 export default function Topbar(props) {
   const classes = useStyles();
+
+  // popper logic
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = event => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "spring-popper" : undefined;
+
   return (
     <Toolbar
       className={clsx(classes.toolbar, props.open && classes.dashboardOpen)}
@@ -65,11 +133,46 @@ export default function Topbar(props) {
       >
         {"QLAB"}
       </Typography>
-      <IconButton color="inherit">
-        <Badge badgeContent={4} color="secondary">
-          <NotificationsIcon />
-        </Badge>
+      <IconButton
+        color="inherit"
+        onMouseEnter={handleClick}
+        onMouseLeave={handleClick}
+      >
+        <Link
+          style={{ textDecoration: "none", color: "whitesmoke" }}
+          to="/dashboard/stats"
+        >
+          <Badge max={500} badgeContent={`+500`} color="secondary">
+            <TimelineIcon />
+          </Badge>
+        </Link>
       </IconButton>
+      <Popper
+        className={classes.popper}
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        transition
+        placement="left"
+        disablePortal={false}
+        modifiers={{
+          flip: {
+            enabled: true
+          },
+          preventOverflow: {
+            enabled: true,
+            boundariesElement: "scrollParent"
+          }
+        }}
+      >
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps}>
+            <div className={classes.paper}>
+              Your investments returned <b>500</b> points today!{" "}
+            </div>
+          </Fade>
+        )}
+      </Popper>
     </Toolbar>
   );
 }

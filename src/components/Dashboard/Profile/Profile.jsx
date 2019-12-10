@@ -47,23 +47,24 @@ const Profile = props => {
   }, []);
 
   const { profile } = props;
+  const userprofile = profile.profileAuth;
   return (
     <div className={classes.root}>
       {(() => {
-        if (profile.photoURL) {
+        if (userprofile.photoURL) {
           return (
             <Paper className={classes.paper}>
               <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
                   <Avatar
                     alt="useravatar"
-                    src={profile.photoURL}
+                    src={userprofile.photoURL}
                     className={classes.bigAvatar}
                   />
                 </Grid>
                 <Grid item xs>
                   <Typography className={classes.displayName}>
-                    {profile.displayName}
+                    {userprofile.displayName}
                   </Typography>
                 </Grid>
               </Grid>
