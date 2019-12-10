@@ -122,8 +122,8 @@ const Topbar = props => {
   const open = Boolean(anchorEl);
   const id = open ? "spring-popper" : undefined;
 
-  if (user.userProfile.investments) {
-    props.resolveInvestment(user.userProfile.investments, user)
+  if (user.profile.investments) {
+    props.resolveInvestment(user.profile.investments, user)
   }
 
   return (
@@ -193,9 +193,16 @@ const Topbar = props => {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
-            <div className={classes.paper}>
-              Your investments returned <b>500</b> points today!{" "}
-            </div>
+            {investments.investmentPayoutToday ? (
+              <div className={classes.paper}>
+                Your investments returned <b>{investments.investmentIncome || 0}</b> points today!{" "}
+              </div>
+            ) : (
+                <div className={classes.paper}>
+                  No investment income today.{" "}
+                </div>
+              )}
+
           </Fade>
         )}
       </Popper>

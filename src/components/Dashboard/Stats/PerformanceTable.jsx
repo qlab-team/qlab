@@ -74,7 +74,7 @@ const PerformanceTable = props => {
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>qPoints</TableCell>
-            <TableCell>Earnable Point</TableCell>
+            <TableCell>Earnable Points</TableCell>
             <TableCell align="right">qScore</TableCell>
             {/* <TableCell align="right">Last Login</TableCell> */}
           </TableRow>
