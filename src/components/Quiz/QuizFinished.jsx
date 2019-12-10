@@ -30,7 +30,7 @@ function QuizFinished(props) {
   return (
     <React.Fragment>
       <Paper>Congratulations! You're a god</Paper>
-      <Link color="inherit" to="/dashboard">
+      <Link color="inherit" to="/dashboard/stats">
         <Button
           className={classes.Confirmation}
           variant="contained"
