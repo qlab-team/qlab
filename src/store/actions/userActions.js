@@ -1,36 +1,36 @@
-const generateUser = authObject => {
-  return {
-    auth_id: authObject.uid,
-    username: authObject.email.split("@")[0],
-    q_points: 0,
-    q_score: 0,
-    quiz_total: 0,
-    created_at: new Date(),
-    investments: [],
-    last_quiz_done: new Date(),
-    q_score_history: [
-      { date: 1575817200, q_score: 90 },
-      { date: 1575730800, q_score: 50 },
-      { date: 1575644400, q_score: 80 },
-      { date: 1575558000, q_score: 60 },
-      { date: 1575471600, q_score: 45 },
-      { date: 1575298800, q_score: 35 }
-    ]
-  };
-};
+// const generateUser = authObject => {
+//   return {
+//     auth_id: authObject.uid,
+//     username: authObject.email.split("@")[0],
+//     q_points: 0,
+//     q_score: 0,
+//     quiz_total: 0,
+//     created_at: new Date(),
+//     investments: [],
+//     last_quiz_done: new Date(),
+//     q_score_history: [
+//       { date: 1575817200, q_score: 90 },
+//       { date: 1575730800, q_score: 50 },
+//       { date: 1575644400, q_score: 80 },
+//       { date: 1575558000, q_score: 60 },
+//       { date: 1575471600, q_score: 45 },
+//       { date: 1575298800, q_score: 35 }
+//     ]
+//   };
+// };
 
-const createUser = (auth, usersCollection) => {
-  console.log("Creating User");
-  usersCollection
-    .add(generateUser(auth))
-    .then(() => {
-      console.log("Account Created");
-      return;
-    })
-    .catch(err => {
-      console.log("Error creating account", err);
-    });
-};
+// const createUser = (auth, usersCollection) => {
+//   console.log("Creating User");
+//   usersCollection
+//     .add(generateUser(auth))
+//     .then(() => {
+//       console.log("Account Created");
+//       return;
+//     })
+//     .catch(err => {
+//       console.log("Error creating account", err);
+//     });
+// };
 
 export const getUserAndLogin = auth => {
   return (dispatch, getState, { getFirestore }) => {
@@ -43,8 +43,8 @@ export const getUserAndLogin = auth => {
         .then(snapshot => {
           if (snapshot.empty) {
             console.log("No matching documents.");
-            createUser(auth, usersCollection);
-            getUser();
+            // createUser(auth, usersCollection);
+            // getUser();
             return;
           }
 
