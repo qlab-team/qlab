@@ -24,6 +24,7 @@ class QuizMain extends Component {
         
         super(props);
         this.state = {
+            quizPoints: 10,
             answersDisabled: false,
             eraseHighlight: false,
             quizView: "",
@@ -45,6 +46,7 @@ class QuizMain extends Component {
             this.setState({Quiz: this.props.quiz.quiz_questions})
             this.setState({quizLength: this.props.quiz.quiz_length })
             this.setState({loadedOrNot: true})
+            this.setState({quizPoints: this.props.quiz.quiz_points})
         })
     }
 
@@ -99,7 +101,7 @@ class QuizMain extends Component {
         let quizView;
 
         if(this.state.quizView === "finished") {
-            quizView = <QuizFinished />
+            quizView = <QuizFinished quizPoints={this.state.quizPoints} />
         }
         else if (this.state.loadedOrNot === false) {
             quizView = <div>loading</div>

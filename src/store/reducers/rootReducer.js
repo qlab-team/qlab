@@ -3,7 +3,6 @@ import userReducer from "./userReducer";
 import quizReducer from "./quizReducer";
 import statsReducer from "./statsReducer";
 import leaderboardReducer from "./leaderboardReducer";
-import profileReducer from "./profileReducer";
 import quizzesReducer from "./quizzesReducer";
 import investmentReducer from "./investmentReducer";
 
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   quiz: quizReducer,
   leaderboard: leaderboardReducer,
   investments: investmentReducer,
-  profile: profileReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer
 });

@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
 import Landing from "./Landing/Landing";
 import QuizMain from "./Quiz/QuizMain";
+
 // react-router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
