@@ -21,7 +21,6 @@ function App() {
           <Route path="/login" component={Login}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
           <Route path="/quiz" component={QuizMain}></Route>
-          <Route path="/quizFin" component={QuizFinished}></Route>
           <Route exact path="/" component={Landing}></Route>
         </Switch>
       </div>
