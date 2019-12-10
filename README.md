@@ -61,6 +61,15 @@ Consider using the Node Version Manager: [nvm](https://github.com/nvm-sh/nvm) to
 
 This project specifically uses Node Version `node:10.16.3` for its build and cloud functions.
 
+Also, remember to set up your [Local Emulator](https://firebase.google.com/docs/functions/local-emulator) properly with:
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/key.json"
+```
+
+Local Host URL for a given function will be at: `localhost:5000/qlab-cc/asia-northeast1/didUserQuizYesterday`
+
+
+
 ## The QLAB Team
 
 ### <img src="misc/eriko.png" width="50px"> Eriko [@nouvelle](https://www.github.com/forbesd7)
