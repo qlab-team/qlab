@@ -4,12 +4,14 @@ import { useRef, useEffect } from "react";
 
 const styles = theme => ({
   Typography: {
-    padding: 20,
+    //padding: 20,
+    paddingTop:60,
     fontSize: 40,
     [theme.breakpoints.down("xs")]: {
       fontSize: 20,
       height:40,
       borderRadius:20,
+      paddingTop: 20,
     },
     borderRadius: 40,
     height: 150,

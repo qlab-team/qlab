@@ -9,6 +9,10 @@ import { compose } from 'redux'
   const useStyles = makeStyles(theme => ({
 
     Container: {
+        background:
+        "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+    },
+    Box: {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -38,7 +42,39 @@ import { compose } from 'redux'
 
       CongratsLink : {
           textDecoration: "none"
-      }
+      },
+      Button: {
+        margin: theme.spacing(3),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        borderRadius: 50,
+        fontSize: 20,
+        textTransform: "none",
+        textDecoration: "none !important",
+        padding: theme.spacing(2),
+        color: "rgb(92, 27, 249)",
+        transition: "ease-in-out 0.15s",
+        background: "whitesmoke",
+        "&:hover": {
+          background: "rgb(92, 27, 249)",
+          color: "whitesmoke"
+        },
+        fontFamily: [
+            "'M PLUS Rounded 1c', sans-serif",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            '"Segoe UI"',
+            "Roboto",
+            '"Helvetica Neue"',
+            "Arial",
+            "sans-serif",
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"'
+          ].join(","),
+    }
+
+      
   }));
 function QuizFinished (props) {
     const classes = useStyles();
@@ -51,12 +87,12 @@ function QuizFinished (props) {
 
     return (
         <React.Fragment>
-            <Container>
-                <Box className={classes.Container}>
+            <Container className={classes.Container}>
+                <Box className={classes.Box}>
                 <Typography className={classes.Congratulations}>Congratulations! You got 10 Points!</Typography>
                 
-                <Link className={classes.CongratsLink} color="inherit" to="/dashboard">
-                    <Button className={classes.Confirmation} variant="contained" color="primary">Back to Dashboard</Button>
+                <Link className={classes.Button} color="inherit" to="/dashboard">
+                Dashboard
                 </Link>
                 </Box>
             </Container>
@@ -64,6 +100,7 @@ function QuizFinished (props) {
         </React.Fragment>
     )
 }
+//<Button className={classes.Confirmation} variant="contained" color="primary">Back to Dashboard</Button>
 
 const mapStateToProps = state => {
     return {
