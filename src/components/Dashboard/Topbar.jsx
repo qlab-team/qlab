@@ -109,7 +109,7 @@ Fade.propTypes = {
 /////////////// COMPONENT
 const Topbar = props => {
   //Set Props from Redux
-  const { investments, user } = props;
+  const { investments } = props;
 
   //Use Styles
   const classes = useStyles();
@@ -121,12 +121,6 @@ const Topbar = props => {
   };
   const open = Boolean(anchorEl);
   const id = open ? "spring-popper" : undefined;
-
-  if (user.profile.investments) {
-    if (!investments.checked) {
-      props.resolveInvestment(user.profile.investments, user);
-    }
-  }
 
   return (
     <Toolbar
