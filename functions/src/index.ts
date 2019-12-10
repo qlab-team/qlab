@@ -35,47 +35,47 @@ export const requester = functions
     response.send(JSON.stringify(request));
   });
 
-interface DidUserQuizResponse {
-  user_id: string;
-  username: string;
-  last_quiz_done: Date;
-  payout: Boolean;
-}
+// interface DidUserQuizResponse {
+//   user_id: string;
+//   username: string;
+//   last_quiz_done: Date;
+//   payout: Boolean;
+// }
+
+// { send: (arg0: { data: DidUserQuizResponse }) => void }
 
 export const didUserQuizYesterday = functions
   .region("asia-northeast1")
   .https.onRequest((request: any, response: any) => {
-    return cors(
-      request,
-      response,
-      async (
-        request: any,
-        response: { send: (arg0: { data: DidUserQuizResponse }) => void }
-      ) => {
-        const user_id = request.query.user_id;
-        const snapshot = await admin
+    return cors(request, response, async () => {
+      const user_id = request.query.user_id;
+      let snapshot;
+      try {
+        snapshot = await admin
           .firestore()
           .collection("users")
           .doc(user_id)
           .get();
-
-        const now = new Date();
-        const data = snapshot.data();
-        const previousQuiz = data.last_quiz_done;
-
-        const differenceTime = now.getTime() / 1000 - previousQuiz._seconds;
-        const quizYesterday = differenceTime / 3600 < 24;
-
-        const responseObject = {
-          data: {
-            user_id: user_id,
-            username: data.username,
-            last_quiz_done: previousQuiz,
-            payout: quizYesterday
-          }
-        };
-
-        response.send(responseObject);
+      } catch (error) {
+        console.log(error);
       }
-    );
+
+      const now = new Date();
+      const data = snapshot.data();
+      const previousQuiz = data.last_quiz_done;
+
+      const differenceTime = now.getTime() / 1000 - previousQuiz._seconds;
+      const quizYesterday = differenceTime / 3600 < 24;
+
+      const responseObject = {
+        data: {
+          user_id: user_id,
+          username: data.username,
+          last_quiz_done: previousQuiz,
+          payout: quizYesterday
+        }
+      };
+
+      response.send(responseObject);
+    });
   });
