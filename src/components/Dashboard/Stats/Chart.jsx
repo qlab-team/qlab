@@ -1,5 +1,6 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect, useState } from "react";
 // import { useEffect } from "react";
 // components
 import Title from "../Title";
@@ -26,20 +27,25 @@ function createData(time, amount) {
 
 const Chart = props => {
   const theme = useTheme();
-  const chartData = [];
+  const [chartData, updateChartData] = useState([]);
+  // set props from redux
+  const { user } = props;
 
-  const user = JSON.parse(localStorage.user);
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      const data = Object.keys(user.userProfile.q_score_history).map(hist => {
+        const date = new Date(
+          user.userProfile.q_score_history[hist].date * 1000
+        );
+        const fixDate = date.getMonth() + 1 + "/" + date.getDate();
+        const q_score = user.userProfile.q_score_history[hist].q_score;
+        return createData(fixDate, q_score);
+      });
+      updateChartData(data.reverse());
+    }
+    // eslint-disable-next-line
+  }, [user.isLoggedIn]);
 
-  if (user.userProfile) {
-    Object.keys(user.userProfile.q_score_history).forEach(hist => {
-      const date = new Date(user.userProfile.q_score_history[hist].date * 1000);
-      const fixDate = date.getMonth() + 1 + "/" + date.getDate();
-      const q_score = user.userProfile.q_score_history[hist].q_score;
-      chartData.unshift(createData(fixDate, q_score));
-    });
-  }
-
-  console.log(chartData);
   return (
     <React.Fragment>
       <Title>qScore</Title>
@@ -78,7 +84,8 @@ const Chart = props => {
 
 const mapStateToProps = state => {
   return {
-    profileUser: state.profileUser
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 const mapDispatchToProps = dispatch => {
