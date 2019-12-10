@@ -46,7 +46,6 @@ function QuizAnswer(props) {
   };
 
   useEffect(() => {
-    console.log("updated");
     if (props.index === props.correctSelector) {
       myRef.current.classList.add(props.classes["selected"]);
     } else {
@@ -56,7 +55,6 @@ function QuizAnswer(props) {
   return (
     <Grid
       item
-      wrap="wrap"
       xs={12}
       s={6}
       md={6}

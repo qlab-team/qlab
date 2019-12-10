@@ -17,13 +17,12 @@ const styles = {
 function CheckButton (props) {
     const [buttonValue, setButtonValue] = useState("CHECK");    
 
-    console.log(props.currentAnswer, props.currentCorrectAnswer)
     let answerConfirmation = "";
     const answerChecker = (e) => {
+        //if(props.userHasSelected === false) return;
         props.toggleAnswerSelections()
         if(buttonValue === "NEXT") {
             props.eraseAnswerHighlight()
-            console.log('hey')
             setButtonValue("CHECK")
             props.updateCurrentQuestion();
             props.getAnswerConfirmation("")

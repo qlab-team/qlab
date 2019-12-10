@@ -65,7 +65,12 @@ class QuizMain extends Component {
 
     updateProgressBar = () => {
         let progressAmount = (1 / this.state.quizLength) * 100 ;
-        this.setState({currentProgress: this.state.currentProgress + progressAmount})
+        console.log(this.state.currentProgress)
+        this.setState((prevState) => {
+            return {c: prevState.currentProgress + progressAmount};
+          })
+        //this.setState(({currentProgress: this.state.currentProgress + progressAmount})
+        console.log(this.state.currentProgress)
         if(this.state.currentProgress >= 99 - progressAmount) {
             this.setState({quizView: "finished"})
         }
@@ -74,6 +79,10 @@ class QuizMain extends Component {
 
     toggleAnswerSelections = () => {
         this.setState({questionsDisabled: !this.state.questionsDisabled})
+    }
+
+    updateUserHasSelected = () => {
+        this.setState({userHasSelected: !this.state.userHasSelected})
     }
 
     addQuizQuestionToEnd = () => {
@@ -91,6 +100,7 @@ class QuizMain extends Component {
 
 
     render() {
+        console.log(this.state.currentProgress)
 
         const { classes } = this.props;
 
@@ -112,6 +122,7 @@ class QuizMain extends Component {
             
 
             <QuizAnswers
+              updateUserHasSelected={this.updateUserHasSelected}
               quizQuestion={this.state.Quiz[this.state.currentQuestion].question}
               questionsDisabled={this.state.questionsDisabled}
               getCurrentAnswer={this.getCurrentAnswer}
@@ -130,6 +141,7 @@ class QuizMain extends Component {
           />
 
           <CheckButton
+            userHasSelected={this.state.userHasSelected}
             getAnswerConfirmation={this.getAnswerConfirmation}
             currentAnswer={this.state.currentAnswer}
             currentCorrectAnswer={this.state.currentCorrectAnswer}

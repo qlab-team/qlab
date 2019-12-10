@@ -12,7 +12,6 @@ const getQuiz = quizId => {
       return firestore
         .get({collection: 'quizzes', doc: quizId})
         .then((doc) => {
-          console.log('data',doc.data())
           dispatch({ type: "GET_QUIZ", quiz: doc.data() });
         });
     };
@@ -42,7 +41,6 @@ const addQuizInfo = (authId, quizPoints) => {
           .catch(e => {
             console.log("err :", e);
           });
-          console.log('points updated')
         });
     }
 }
