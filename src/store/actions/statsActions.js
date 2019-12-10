@@ -25,7 +25,7 @@ const getInvestments = auth => {
 const removeInvestment = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
-    const newInvestments = user.userProfile.investments.filter(investment => {
+    const newInvestments = user.profile.investments.filter(investment => {
       return investment.user_id !== data.user_id;
     });
     firestore

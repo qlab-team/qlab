@@ -2,71 +2,56 @@
 import React from "react";
 // components
 import Title from "../Title";
+
 // material ui
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
-// Actions
-import { getProfile } from "../../../store/actions/profileActions";
 
 /////////////// UTILITIES
 function preventDefault(event) {
   event.preventDefault();
 }
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   depositContext: {
     flex: 1
   },
   points: {
     fontSize: "4.5rem"
   }
-});
+}));
 
-class QPoints extends React.Component {
-  componentDidMount() {
-    this.props.getProfile();
-  }
-  render() {
-    const { classes, profile } = this.props;
-    const userProfile = profile.profileUser.userProfile;
-    return (
-      <React.Fragment>
-        <Title>qPoints</Title>
-        <Typography className={classes.points} component="p" variant="h4">
-          {(() => {
-            if (userProfile) {
-              return userProfile.q_points;
-            }
-          })()}
-        </Typography>
-        <Typography color="textSecondary" className={classes.depositContext}>
-          on {new Date().toDateString()}
-        </Typography>
-        <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            Buy goodies
-          </Link>
-        </div>
-      </React.Fragment>
-    );
-  }
-}
+const QPoints = props => {
+  const classes = useStyles();
+  const { user } = props;
+
+  return (
+    <React.Fragment>
+      <Title>qPoints</Title>
+      <Typography className={classes.points} component="p" variant="h4">
+        {user.isLoggedIn && user.profile.q_points}
+      </Typography>
+      <Typography color="textSecondary" className={classes.depositContext}>
+        on {new Date().toDateString()}
+      </Typography>
+      <div>
+        <Link color="primary" href="#" onClick={preventDefault}>
+          Buy goodies
+        </Link>
+      </div>
+    </React.Fragment>
+  );
+};
+
 const mapStateToProps = state => {
   return {
-    profile: state.profile
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    getProfile: () => dispatch(getProfile())
+    auth: state.firebase.auth,
+    user: state.user
   };
 };
 
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
-)(QPoints);
+export default compose(connect(mapStateToProps))(QPoints);

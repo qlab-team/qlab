@@ -1,6 +1,6 @@
 const initState = {
   isLoggedIn: false,
-  userProfile: {}
+  profile: {}
 };
 
 const userReducer = (state = initState, action) => {
@@ -9,7 +9,7 @@ const userReducer = (state = initState, action) => {
       return {
         ...state,
         isLoggedIn: true,
-        userProfile: action.userProfile,
+        profile: action.profile,
         user_id: action.user_id
       };
     case "USER_LOGOUT":

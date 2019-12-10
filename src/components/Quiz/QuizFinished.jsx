@@ -3,8 +3,8 @@ import { Button, Typography, Container, Box }  from '@material-ui/core'
 import { Link } from "react-router-dom"
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { addQuizInfo } from '../../store/actions/quizActions'
-import { compose } from 'redux'
+import { addQuizInfo } from "../../store/actions/quizActions";
+import { compose } from "redux";
 
   const useStyles = makeStyles(theme => ({
 
@@ -96,23 +96,24 @@ function QuizFinished (props) {
                 </Link>
                 </Box>
             </Container>
-
-        </React.Fragment>
+            </React.Fragment>
     )
 }
-//<Button className={classes.Confirmation} variant="contained" color="primary">Back to Dashboard</Button>
 
 const mapStateToProps = state => {
-    return {
-      leaderboard: state.leaderboard,
-      auth: state.firebase.auth
-    };
+  return {
+    leaderboard: state.leaderboard,
+    auth: state.firebase.auth
   };
+};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addQuizInfo: (authId,quizPoints) => dispatch(addQuizInfo(authId,quizPoints))
-    }
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    addQuizInfo: (authId, quizPoints) =>
+      dispatch(addQuizInfo(authId, quizPoints))
+  };
+};
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(QuizFinished);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  QuizFinished
+);
