@@ -109,8 +109,22 @@ const quizzes = [
     quiz_title: "What is soup?"
   },
   {
-    quiz_description: "Only for mavericks",
+    quiz_description: "Surf's up",
     quiz_id: "4",
+    quiz_questions: [
+      {
+        question: "What are whales?",
+        answers: ["Fish", "Fungi", "Mammals", "Insects"],
+        correct_answer: "No"
+      }
+    ],
+    quiz_length: 1,
+    quiz_points: 100,
+    quiz_title: "The Sea"
+  },
+  {
+    quiz_description: "Only for mavericks",
+    quiz_id: "5",
     quiz_questions: [
       {
         question: "What does the T in T-Rex stand for?",
@@ -128,16 +142,16 @@ const quizzes = [
         correct_answer: "No one knows"
       },
       {
-        question: "Which of these is not an element?",
-        answers: ["Manganese", "Tantalum", "Seaborgium", "Mercurium"],
-        correct_answer: "Mercurium"
+        question: "What sound does a Snakecat make?",
+        answers: ["Nyanssss...", "Blarf", "Ssssnya~!", "Whoofsies"],
+        correct_answer: "Ssssnya~!"
       },
       {
         question: "Who is Derek?",
         answers: [
           "Your friend",
           "A boilerplate dude",
-          "A good human being",
+          "A type of fungus",
           "No"
         ],
         correct_answer: "No"
