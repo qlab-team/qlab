@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Container, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { addQuizInfo } from "../../store/actions/quizActions";
+import { addQuizInfo } from "../../../store/actions/quizActions";
 import { compose } from "redux";
-
+import Stars from './Stars'
 const useStyles = makeStyles(theme => ({
   Container: {
     background:
@@ -76,12 +76,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 function QuizFinished(props) {
+
   const classes = useStyles();
-  console.log(props);
 
   useEffect(() => {
     console.log(props);
-    props.addQuizInfo(props.auth.uid, props.quizPoints);
+    //props.addQuizInfo(props.auth.uid, props.quizPoints);
   });
 
   return (
@@ -99,6 +99,12 @@ function QuizFinished(props) {
           >
             Dashboard
           </Link>
+
+          <Typography>What did you think of the quiz?</Typography>
+
+          <Box display="flex">
+          <Stars></Stars>
+          </Box>
         </Box>
       </Container>
     </React.Fragment>
