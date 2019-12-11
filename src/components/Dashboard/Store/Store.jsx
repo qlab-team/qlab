@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
 // components
 import StoreCard from "./StoreCard";
 // actions
