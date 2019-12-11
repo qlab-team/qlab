@@ -7,17 +7,17 @@ const quizzes = [
     quiz_id: "0",
     quiz_questions: [
       {
-        question: "How many Planets in the solar system?",
+        question: "How many planets are there in the Solar System?",
         answers: ["8", "7", "5", "10"],
         correct_answer: "8"
       },
       {
-        question: "Which Planet is the largest in the solar system?",
+        question: "Which is the largest planet?",
         answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
         correct_answer: "Jupiter"
       },
       {
-        question: "Which planet is the closest to the sun?",
+        question: "Which planet is closest to the sun?",
         answers: ["Mars", "Saturn", "Jupiter", "Mercury"],
         correct_answer: "Mercury"
       }
@@ -56,7 +56,7 @@ const quizzes = [
     quiz_questions: [
       {
         question: "Are birds descended from dinosaurs?",
-        answers: ["Yes", "No", "It's unknown", `"Squawk"`],
+        answers: ["Yes", "No", "No one knows", `"Squawk."`],
         correct_answer: "Yes"
       },
       {
@@ -83,6 +83,69 @@ const quizzes = [
     quiz_length: 3,
     quiz_points: 100,
     quiz_title: "Dinosaurs"
+  },
+  {
+    quiz_description: "What makes soup, soup?",
+    quiz_id: "3",
+    quiz_questions: [
+      {
+        question: "Is ketchup soup?",
+        answers: ["No", "No", "No", "No"],
+        correct_answer: "No"
+      },
+      {
+        question: "Is cereal soup?",
+        answers: ["No", "No", "No", "No"],
+        correct_answer: "No"
+      },
+      {
+        question: "What makes soup, soup?",
+        answers: ["It's savoury", "The bowl", "It has stock", "No one knows"],
+        correct_answer: "No one knows"
+      }
+    ],
+    quiz_length: 3,
+    quiz_points: 100,
+    quiz_title: "What is soup?"
+  },
+  {
+    quiz_description: "Only for mavericks",
+    quiz_id: "4",
+    quiz_questions: [
+      {
+        question: "What does the T in T-Rex stand for?",
+        answers: [
+          "Tyranisauria",
+          "Tyrantosaurus",
+          "Tyrannosaurus",
+          "Tyransformaurus"
+        ],
+        correct_answer: "Tyrannosaurus"
+      },
+      {
+        question: "What makes soup, soup?",
+        answers: ["It's savoury", "The bowl", "It has stock", "No one knows"],
+        correct_answer: "No one knows"
+      },
+      {
+        question: "Which of these is not an element?",
+        answers: ["Manganese", "Tantalum", "Seaborgium", "Mercurium"],
+        correct_answer: "Mercurium"
+      },
+      {
+        question: "Who is Derek?",
+        answers: [
+          "Your friend",
+          "A boilerplate dude",
+          "A good human being",
+          "No"
+        ],
+        correct_answer: "No"
+      }
+    ],
+    quiz_length: 4,
+    quiz_points: 999,
+    quiz_title: "The Mother of All Quizzes"
   }
 ];
 

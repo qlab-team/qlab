@@ -86,7 +86,7 @@ function QuizFinished(props) {
       <Container className={classes.Container}>
         <Box className={classes.Box}>
           <Typography className={classes.Congratulations}>
-            Congratulations! You got 100 Points!
+            Congratulations! You got {props.quizPoints} Points!
           </Typography>
 
           <Link
