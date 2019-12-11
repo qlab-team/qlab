@@ -42,7 +42,6 @@ const Quizzes = props => {
     <React.Fragment>
       <Grid container spacing={3} wrap="wrap">
         {props.quizzes.map(quiz => {
-          // console.log(quiz);
           return (
             <Grid item xs md={4}>
               <Paper className={fixedHeightPaper}>
