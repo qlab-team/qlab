@@ -41,8 +41,9 @@ function CheckButton(props) {
   console.log(props.currentAnswer, props.currentCorrectAnswer);
   let answerConfirmation = "";
   const answerChecker = e => {
-    props.toggleAnswerSelections();
+    if(props.userHasSelected === false) return;
     if (buttonValue === "NEXT") {
+      props.resetSelections()
       props.eraseAnswerHighlight();
       console.log("hey");
       setButtonValue("CHECK");

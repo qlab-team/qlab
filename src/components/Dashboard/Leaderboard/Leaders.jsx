@@ -79,8 +79,8 @@ const Leaders = props => {
         <TableBody>
           {
             (allUsers.sort((a, b) => {
-              if (a.q_score < b.q_score) return 1;
-              if (a.q_score > b.q_score) return -1;
+              if (a.q_points < b.q_points) return 1;
+              if (a.q_points > b.q_points) return -1;
               return 0;
             }),
             allUsers.map((row, id) => (
@@ -117,7 +117,14 @@ const Leaders = props => {
           }
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>LastUpdated {last_updated}</div>
+      <div className={classes.seeMore}>
+        LastUpdated{" "}
+        {(() => {
+          if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
+            return last_updated;
+          }
+        })()}
+      </div>
     </React.Fragment>
   );
 };

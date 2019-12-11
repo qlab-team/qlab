@@ -39,11 +39,11 @@ function QuizAnswer(props) {
   const myRef = useRef(null);
 
   const colorChanger = (event, index) => {
+    props.updateUserHasSelected();
     props.updateSelector(index);
   };
 
   useEffect(() => {
-    console.log("updated");
     if (props.index === props.correctSelector) {
       myRef.current.classList.add(props.classes["selected"]);
     } else {

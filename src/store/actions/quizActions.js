@@ -1,27 +1,28 @@
 const updateQuizInfo = quizId => {
-    return {
-        type: "UPDATE_QUIZ_INFO",
-        quizId: quizId
-    }  
-  };
+  return {
+    type: "UPDATE_QUIZ_INFO",
+    quizId: quizId
+  }
+};
 
 const getQuiz = quizId => {
-    return (dispatch, getState, { getFirestore }) => {
-      // make async call to database
-      const firestore = getFirestore();
-      return firestore
-        .get({collection: 'quizzes', doc: quizId})
-        .then((doc) => {
-          console.log('data',doc.data())
-          dispatch({ type: "GET_QUIZ", quiz: doc.data() });
-        });
-    };
+  return (dispatch, getState, { getFirestore }) => {
+    console.log("Get Quiz Called");
+    // make async call to database
+    const firestore = getFirestore();
+    return firestore
+      .get({ collection: 'quizzes', doc: quizId })
+      .then((doc) => {
+        dispatch({ type: "GET_QUIZ", quiz: doc.data() });
+      });
   };
+};
 
 const addQuizInfo = (authId, quizPoints) => {
   return (dispatch, getState, { getFirestore }) => {
+    console.log("Add Quiz Info Called");
     const firestore = getFirestore();
-  
+
     firestore
       .collection("users")
       .where("auth_id", "==", authId)
@@ -42,11 +43,10 @@ const addQuizInfo = (authId, quizPoints) => {
           .catch(e => {
             console.log("err :", e);
           });
-          console.log('points updated')
-        });
-    }
+      });
+  }
 }
 
-  
+
 
 export { addQuizInfo, getQuiz, updateQuizInfo }
