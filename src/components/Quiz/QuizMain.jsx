@@ -124,7 +124,7 @@ class QuizMain extends Component {
     if (this.state.quizView === "finished") {
       quizView = <QuizFinished quizPoints={this.state.quizPoints} />;
     } else if (this.state.loadedOrNot === false) {
-      quizView = <div>loading</div>;
+      quizView = <div></div>;
     } else {
       quizView = (
         <React.Fragment>

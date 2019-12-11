@@ -9,7 +9,10 @@ import { compose } from "redux";
 const useStyles = makeStyles(theme => ({
   Container: {
     background:
-      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
+      "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
+      margin: 0,
+      padding: 0,
+      minWidth: "100vw"
   },
   Box: {
     minHeight: "100vh",
