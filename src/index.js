@@ -47,6 +47,13 @@ const theme = createMuiTheme({
       root: {
         borderBottom: "1px solid rgba(100, 0, 200, 0.2)"
       }
+    },
+    MuiLinearProgress: {
+      barColorPrimary: {
+        background:
+          "linear-gradient(45deg, rgba(101,255,236,1) 0%, rgba(27,249,32,1) 100%)",
+        borderRadius: 50
+      }
     }
   },
   typography: {
