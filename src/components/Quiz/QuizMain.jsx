@@ -99,6 +99,20 @@ class QuizMain extends Component {
     this.setState({ eraseHighlight: !this.state.eraseHighlight });
   };
 
+    updateUserHasSelected = () => {
+        this.setState({userHasSelected: true})
+    }
+
+    resetSelections = () => {
+        this.setState({userHasSelected: false})
+    }
+
+    addQuizQuestionToEnd = () => {
+        let updatedQuiz = this.state.Quiz;
+        const currentQuestion = this.state.Quiz[this.state.currentQuestion]
+        updatedQuiz.push(currentQuestion)
+        this.setState({Quiz: updatedQuiz})
+    }
   render() {
     const { classes } = this.props;
 
@@ -114,7 +128,7 @@ class QuizMain extends Component {
     if (this.state.quizView === "finished") {
       quizView = <QuizFinished quizPoints={this.state.quizPoints} />;
     } else if (this.state.loadedOrNot === false) {
-      quizView = <div>loading</div>;
+      quizView = <div></div>;
     } else {
       quizView = (
         <React.Fragment>
@@ -126,6 +140,7 @@ class QuizMain extends Component {
             justify="space-around"
           >
             <QuizAnswers
+              updateUserHasSelected={this.updateUserHasSelected}
               quizQuestion={
                 this.state.Quiz[this.state.currentQuestion].question
               }
@@ -146,6 +161,7 @@ class QuizMain extends Component {
                 value={this.state.currentProgress}
               />
               <CheckButton
+                resetSelections={this.resetSelections}
                 getAnswerConfirmation={this.getAnswerConfirmation}
                 currentAnswer={this.state.currentAnswer}
                 currentCorrectAnswer={this.state.currentCorrectAnswer}

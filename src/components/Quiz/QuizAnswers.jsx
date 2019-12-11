@@ -20,6 +20,7 @@ const QuizAnswers = props => {
     if (props.questionsDisabled === true) return;
     changeCorrectSelector(index);
   };
+
   const eraseHighlight = props.eraseHighlight;
   useEffect(() => {
     if (eraseHighlight === true) {
@@ -44,6 +45,7 @@ const QuizAnswers = props => {
         {props.answers.map((answer, index) => {
           return (
             <QuizAnswer
+              updateUserHasSelected={props.updateUserHasSelected}
               eraseAnswerHighlight={props.eraseAnswerHighlight}
               updateSelector={updateSelector}
               correctSelector={correctSelector}

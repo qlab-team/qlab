@@ -43,6 +43,7 @@ function CheckButton(props) {
   const answerChecker = e => {
     props.toggleAnswerSelections();
     if (buttonValue === "NEXT") {
+      
       props.eraseAnswerHighlight();
       console.log("hey");
       setButtonValue("CHECK");
