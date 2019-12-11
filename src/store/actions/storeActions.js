@@ -14,37 +14,54 @@ const getStoreItems = () => {
   };
 };
 
-const addBadge = (data, auth, user) => {
+const purchaseItem = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Add Badge Called");
+    console.log(
+      "Add Item Called",
+      `user_qPoints: ${user.profile.q_points} item_price: ${data.itemPrice}`
+    );
     const firestore = getFirestore();
     firestore
       .collection("users")
       .where("auth_id", "==", auth.uid)
       .get()
       .then(collection => {
-        let userHasBadge = false;
-        const badges = collection.docs[0].data().badges;
-        badges.forEach(badge => {
-          if (badge.itemId === data.itemId) userHasBadge = true;
+        // check if user has the item already (avoid duplicates)
+        let userHasItem = false;
+        const items = collection.docs[0].data().items;
+        items.forEach(item => {
+          if (item.itemId === data.itemId) userHasItem = true;
         });
-        if (!userHasBadge) {
+        if (userHasItem) console.log("User already has this item.");
+        // check if user has enough qPoints for this purchase
+        let userHasEnoughQPoints =
+          user.profile.q_points >= data.itemPrice ? true : false;
+        if (!userHasEnoughQPoints)
+          console.log("Not enough qPoints for this purchase.");
+        if (!userHasItem && userHasEnoughQPoints) {
           firestore
             .collection("users")
             .doc(user.user_id)
             .update({
-              badges: firestore.FieldValue.arrayUnion({
+              items: firestore.FieldValue.arrayUnion({
                 purchaseDate: data.purchaseDate,
                 itemName: data.itemName,
-                itemId: data.itemId
-              })
+                itemId: data.itemId,
+                itemPrice: data.itemPrice
+              }),
+              q_points: user.profile.q_points - data.itemPrice
             });
+          console.log(
+            `Purchase complete. qPoints: ${user.profile.q_points -
+              data.itemPrice}`
+          );
         }
       })
+
       .catch(e => {
         console.log("err :", e);
       });
   };
 };
 
-export { getStoreItems, addBadge };
+export { getStoreItems, purchaseItem };

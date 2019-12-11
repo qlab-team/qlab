@@ -103,7 +103,7 @@ const generateUser = (authObject: any) => {
     quiz_total: 0,
     created_at: new Date(),
     investments: [],
-    badges: [],
+    items: [],
     last_quiz_done: new Date(),
     q_score_history: [
       { date: 1575817200, q_score: 90 },
