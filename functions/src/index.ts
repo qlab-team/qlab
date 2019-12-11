@@ -150,3 +150,38 @@ export const updateLeaderboard = functions.firestore.document('users/{userId}').
       console.log("Error creating account", err);
     });
 });
+
+const calculateNewQScore = (user: object) => {
+  //TODO, make this do a thing
+  return 0
+}
+
+export const scheduledFunctionCrontab = functions.pubsub
+  .schedule('every day 00:00')
+  .timeZone('Asia/Tokyo')
+  .onRun((context: any) => {
+    return admin
+      .firestore()
+      .collection("users")
+      .get()
+      .then((users: any) => {
+        console.log("Got All Users");
+        //Update QScore
+        users.docs.forEach((user: any) => {
+          const userData = user.data()
+          const newQScore = calculateNewQScore(userData)
+          admin
+            .firestore()
+            .collection("users")
+            .doc(user.id)
+            .update({
+              q_score: newQScore
+            })
+        });
+        console.log("Updated Q_Scores for All Users");
+
+      })
+      .catch((err: any) => {
+        console.log("Error creating account", err);
+      });
+  });
