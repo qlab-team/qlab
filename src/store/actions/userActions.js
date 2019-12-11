@@ -34,6 +34,7 @@
 
 export const getUserAndLogin = auth => {
   return (dispatch, getState, { getFirestore }) => {
+    console.log("Get User and Login Called");
     // make async call to database
     const usersCollection = getFirestore().collection("users");
     const getUser = () => {
