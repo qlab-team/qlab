@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import { Typography } from '@material-ui/core'
 import QuizAnswers from "./QuizAnswers";
-import { LinearProgress, Grid, Container } from "@material-ui/core";
+import { LinearProgress, Grid } from "@material-ui/core";
 import CheckButton from "./CheckButton";
 import { connect } from "react-redux";
 import { getQuiz } from "../../store/actions/quizActions";
