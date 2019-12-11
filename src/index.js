@@ -82,7 +82,7 @@ const store = createStore(
   )
 );
 
-seedQuizzes();
+// seedQuizzes();
 
 ReactDOM.render(
   <Provider store={store}>
