@@ -4,6 +4,7 @@ import { useEffect } from "react";
 // components
 import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
+import InvestHistory from "./InvestHistory/InvestHistory";
 import Stats from "./Stats/Stats";
 import Store from "./Store/Store";
 import Quizzes from "./Quizzes/Quizzes";
@@ -171,6 +172,10 @@ const Dashboard = props => {
             <Route
               path="/dashboard/leaderboard"
               component={Leaderboard}
+            ></Route>
+            <Route
+              path="/dashboard/InvestHistory"
+              component={InvestHistory}
             ></Route>
             <Route path="/dashboard/stats" component={Stats}></Route>
             <Route path="/dashboard/store" component={Store}></Route>
