@@ -45,6 +45,7 @@ const QuizAnswers = props => {
         {props.answers.map((answer, index) => {
           return (
             <QuizAnswer
+              updateUserHasSelected={props.updateUserHasSelected}
               eraseAnswerHighlight={props.eraseAnswerHighlight}
               updateSelector={updateSelector}
               correctSelector={correctSelector}

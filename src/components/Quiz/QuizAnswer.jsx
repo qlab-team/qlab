@@ -39,6 +39,7 @@ function QuizAnswer(props) {
   const myRef = useRef(null);
 
   const colorChanger = (event, index) => {
+    props.updateUserHasSelected();
     props.updateSelector(index);
   };
 

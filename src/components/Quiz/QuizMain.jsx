@@ -100,7 +100,11 @@ class QuizMain extends Component {
   };
 
     updateUserHasSelected = () => {
-        this.setState({userHasSelected: !this.state.userHasSelected})
+        this.setState({userHasSelected: true})
+    }
+
+    resetSelections = () => {
+        this.setState({userHasSelected: false})
     }
 
     addQuizQuestionToEnd = () => {
@@ -136,6 +140,7 @@ class QuizMain extends Component {
             justify="space-around"
           >
             <QuizAnswers
+              updateUserHasSelected={this.updateUserHasSelected}
               quizQuestion={
                 this.state.Quiz[this.state.currentQuestion].question
               }
@@ -156,6 +161,7 @@ class QuizMain extends Component {
                 value={this.state.currentProgress}
               />
               <CheckButton
+                resetSelections={this.resetSelections}
                 getAnswerConfirmation={this.getAnswerConfirmation}
                 currentAnswer={this.state.currentAnswer}
                 currentCorrectAnswer={this.state.currentCorrectAnswer}
