@@ -161,6 +161,7 @@ class QuizMain extends Component {
                 value={this.state.currentProgress}
               />
               <CheckButton
+                userHasSelected={this.state.userHasSelected}
                 resetSelections={this.resetSelections}
                 getAnswerConfirmation={this.getAnswerConfirmation}
                 currentAnswer={this.state.currentAnswer}
