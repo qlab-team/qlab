@@ -142,7 +142,7 @@ const Sidebar = props => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { auth, user } = props;
+  const { auth } = props;
 
   useEffect(() => {
     if (auth.isLoaded) {
@@ -150,7 +150,7 @@ const Sidebar = props => {
       props.getUserAndLogin(auth);
     }
     // eslint-disable-next-line
-  }, [auth, user]);
+  }, [auth.isLoaded]);
 
   return (
     <Drawer
@@ -199,8 +199,8 @@ const Sidebar = props => {
         {mobile ? (
           <MainListItems handleDrawerClose={props.handleDrawerClose} />
         ) : (
-          <MainListItems />
-        )}
+            <MainListItems />
+          )}
       </List>
       <Divider />
       <List>
