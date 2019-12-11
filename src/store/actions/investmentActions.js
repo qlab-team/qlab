@@ -3,7 +3,7 @@ const didUserQuizYesterday = async id => {
     "https://asia-northeast1-qlab-cc.cloudfunctions.net/didUserQuizYesterday";
 
   const query = didUserQuizURL + `?user_id=${id}`;
-
+  console.log("Did User Quiz Called");
   try {
     const response = await fetch(query, {
       credentials: "omit"
@@ -16,6 +16,7 @@ const didUserQuizYesterday = async id => {
 };
 
 const updatePoints = async (firestore, user_id, points) => {
+  console.log("Add Points Called");
   firestore
     .collection("users")
     .doc(user_id)
@@ -29,6 +30,7 @@ const updatePoints = async (firestore, user_id, points) => {
 };
 
 const removeInvestment = async (firestore, user, investment_id) => {
+  console.log("Remove Investment Called");
   const newInvestments = user.profile.investments.filter(investment => {
     return investment.user_id !== investment_id;
   });
@@ -45,6 +47,7 @@ const removeInvestment = async (firestore, user, investment_id) => {
 
 export const resolveInvestment = (investments, user) => {
   return async (dispatch, getState, { getFirestore }) => {
+    console.log("Resolve Investment Called");
     const firestore = getFirestore();
     const now = new Date();
     const oneDay = 60 * 60 * 24 * 1000;
@@ -125,6 +128,7 @@ export const resolveInvestment = (investments, user) => {
 };
 
 export const notificationRead = () => {
+
   return dispatch => {
     console.log("Investment Notification Read");
     dispatch({
