@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
-import seedQuizzes from "./store/seedQuizzes";
+// import seedQuizzes from "./store/seedQuizzes";
 
 // material ui
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
