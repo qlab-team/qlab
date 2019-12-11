@@ -79,8 +79,8 @@ const Leaders = props => {
         <TableBody>
           {
             (allUsers.sort((a, b) => {
-              if (a.q_score < b.q_score) return 1;
-              if (a.q_score > b.q_score) return -1;
+              if (a.q_points < b.q_points) return 1;
+              if (a.q_points > b.q_points) return -1;
               return 0;
             }),
             allUsers.map((row, id) => (
