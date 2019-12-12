@@ -4,6 +4,7 @@ import quizReducer from "./quizReducer";
 import statsReducer from "./statsReducer";
 import storeReducer from "./storeReducer";
 import leaderboardReducer from "./leaderboardReducer";
+import transactionsReducer from "./transactionsReducer";
 import quizzesReducer from "./quizzesReducer";
 import investmentReducer from "./investmentReducer";
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   quiz: quizReducer,
   store: storeReducer,
   leaderboard: leaderboardReducer,
+  transactions: transactionsReducer,
   investments: investmentReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer

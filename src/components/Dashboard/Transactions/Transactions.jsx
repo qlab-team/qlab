@@ -4,7 +4,7 @@ import React from "react";
 import Title from "../Title";
 // import StoreCard from "./StoreCard";
 // actions
-// import { getStoreItems } from "../../../store/actions/storeActions";
+import { getTransactions } from "../../../store/actions/transactionsActions";
 // material ui
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
@@ -41,19 +41,21 @@ const Transactions = props => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   // props.getStoreItems();
   return (
-    <React.Fragment>
-      <Title>Investment History</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Rank</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">qPoints</TableCell>
-            <TableCell align="right">qScore</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {/* {
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <Title>Investment History</Title>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Rank</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">qPoints</TableCell>
+                <TableCell align="right">qScore</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {/* {
             (allUsers.sort((a, b) => {
               if (a.q_points < b.q_points) return 1;
               if (a.q_points > b.q_points) return -1;
@@ -65,7 +67,7 @@ const Transactions = props => {
                 <TableCell>{row.username}</TableCell>
                 <TableCell align="right">{row.q_points}</TableCell>
                 <TableCell align="right"> */}
-          {/* <Button
+              {/* <Button
                     className={classes.button}
                     style={{ textDecoration: "none" }}
                     onMouseEnter={e => {
@@ -87,21 +89,21 @@ const Transactions = props => {
                   >
                     {row.q_score}
                   </Button> */}
-          {/* </TableCell> */}
-          {/* </TableRow>
+              {/* </TableCell> */}
+              {/* </TableRow>
             )))
           } */}
-        </TableBody>
-      </Table>
-      <div className={classes.seeMore}>
-        LastUpdated{" "}
-        {/* {(() => {
+            </TableBody>
+          </Table>
+          <div className={classes.seeMore}>
+            LastUpdated{" "}
+            {/* {(() => {
           if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
             return last_updated;
           }
         })()} */}
-      </div>
-      {/* {props.storeItems.map(storeItem => {
+          </div>
+          {/* {props.storeItems.map(storeItem => {
           // console.log(quiz);
           return (
             <Grid item xs md={4}>
@@ -116,19 +118,21 @@ const Transactions = props => {
             </Grid>
           );
         })} */}
-    </React.Fragment>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    storeItems: state.store
+    transactions: state.transactions
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    // getStoreItems: () => dispatch(getStoreItems())
+    getTransactions: () => dispatch(getTransactions())
   };
 };
 
