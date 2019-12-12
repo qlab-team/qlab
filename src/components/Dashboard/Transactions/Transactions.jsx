@@ -84,7 +84,7 @@ const Transactions = props => {
     ];
     const d = new Date(timeStamp * 1000);
     const yearFull = d.getFullYear();
-    const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
+    // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
     const monthNum =
       d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
     const monthStr = month[d.getMonth()];
