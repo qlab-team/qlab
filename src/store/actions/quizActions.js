@@ -20,6 +20,8 @@ const addQuizInfo = (authId, quizPoints) => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Add Quiz Info Called");
     const firestore = getFirestore();
+    //state = getState()
+    //console.log(state.user.profile.auth_id); this will be how to get auth_id normally
 
     firestore
       .collection("users")
@@ -45,4 +47,29 @@ const addQuizInfo = (authId, quizPoints) => {
   };
 };
 
-export { addQuizInfo, getQuiz, updateQuizInfo };
+const updateQuizRatingOnDatabase = userQuizRating => {
+  return (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+    const state = getState();
+    const quizId = state.quiz.currentQuiz;
+    const quizRef = firestore.collection("quizzes").doc(quizId);
+    firestore.runTransaction(transaction => {
+      return transaction.get(quizRef).then(res => {
+        const updatedQuizTaken = res.data().times_quiz_taken + 1;
+
+        const currentQuizTotal =
+          res.data().quiz_rating * res.data().times_quiz_taken;
+        const newQuizAvg =
+          (currentQuizTotal + userQuizRating) / updatedQuizTaken;
+        console.log(newQuizAvg);
+
+        transaction.update(quizRef, {
+          times_quiz_taken: updatedQuizTaken,
+          quiz_rating: newQuizAvg
+        });
+      });
+    });
+  };
+};
+
+export { addQuizInfo, getQuiz, updateQuizInfo, updateQuizRatingOnDatabase };
