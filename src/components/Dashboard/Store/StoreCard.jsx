@@ -60,6 +60,9 @@ const StoreCard = props => {
         }}
       >
         {props.itemData.price}
+        <span style={{ opacity: 0.5, "font-size": "smaller" }}>
+          <sup>ℚ</sup>
+        </span>
       </Link>
     </Grid>
   );
@@ -68,7 +71,7 @@ const StoreCard = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    storeItems: state.storeItems
+    storeItems: state.store.items
   };
 };
 const mapDispatchToProps = dispatch => {

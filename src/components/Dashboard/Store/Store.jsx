@@ -33,7 +33,12 @@ const useStyles = makeStyles(theme => ({
 const Store = props => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  props.getStoreItems();
+
+  React.useEffect(() => {
+    props.getStoreItems();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <React.Fragment>
       <Dialog />

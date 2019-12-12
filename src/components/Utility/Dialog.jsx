@@ -12,30 +12,32 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 const AlertDialog = props => {
-  const [setOpen] = React.useState(false);
-  console.log(props);
-  const { auth, user, isDialogOpen, itemData } = props;
-  console.log(isDialogOpen);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  const { auth, user, isDialogOpen, itemData, purchaseError } = props;
   return (
     <div>
       <Dialog
         open={isDialogOpen}
-        onClose={handleClose}
+        onClose={() => {
+          props.openDialog(false);
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {!props.purchaseError ? "Do you want to buy this item?" : "Error"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            {!purchaseError ? (
+              <>
+                {itemData.name} for {itemData.price}
+                <span style={{ opacity: 0.5, "font-size": "smaller" }}>
+                  <sup>ℚ</sup>
+                </span>
+              </>
+            ) : (
+              purchaseError
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -45,23 +47,29 @@ const AlertDialog = props => {
             }}
             color="primary"
           >
-            Disagree
+            <span style={{ fontWeight: "700", color: "white" }}>
+              {!purchaseError && "DISAGREE"}
+            </span>
           </Button>
           <Button
             onClick={() => {
-              const data = {
-                purchaseDate: new Date().toString(),
-                itemName: itemData.name,
-                itemId: itemData.id,
-                itemPrice: itemData.price
-              };
-              props.purchaseItem(data, auth, user);
-              props.openDialog(false);
+              props.openDialog(false, null, purchaseError);
+              if (!purchaseError) {
+                const data = {
+                  purchaseDate: new Date().toString(),
+                  itemName: itemData.name,
+                  itemId: itemData.id,
+                  itemPrice: itemData.price
+                };
+                props.purchaseItem(data, auth, user);
+              }
             }}
             color="primary"
             autoFocus
           >
-            Agree
+            <span style={{ "font-weight": "700", color: "white" }}>
+              {!purchaseError ? "AGREE" : "GO BACK"}
+            </span>
           </Button>
         </DialogActions>
       </Dialog>
@@ -72,9 +80,10 @@ const AlertDialog = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    storeItems: state.storeItems,
+    storeItems: state.store.items,
     isDialogOpen: state.store.isDialogOpen,
     itemData: state.store.itemData,
+    purchaseError: state.store.purchaseError,
     auth: state.firebase.auth,
     user: state.user
   };
@@ -83,7 +92,7 @@ const mapDispatchToProps = dispatch => {
   return {
     purchaseItem: (data, auth, user) =>
       dispatch(purchaseItem(data, auth, user)),
-    openDialog: open => dispatch(openDialog(open))
+    openDialog: (open, data, error) => dispatch(openDialog(open, data, error))
   };
 };
 
