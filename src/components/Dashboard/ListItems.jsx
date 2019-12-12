@@ -46,14 +46,14 @@ export const MainListItems = props => {
       </Link>
       <Link
         style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/InvestHistory"
+        to="/dashboard/Transactions"
         onClick={props.handleDrawerClose}
       >
         <ListItem button>
           <ListItemIcon>
             <FormatListBulletedIcon />
           </ListItemIcon>
-          <ListItemText primary="InvestHistory" />
+          <ListItemText primary="Transactions" />
         </ListItem>
       </Link>
       <Link

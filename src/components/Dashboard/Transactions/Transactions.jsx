@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-const InvestHistory = props => {
+const Transactions = props => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   // props.getStoreItems();
@@ -134,5 +134,5 @@ const mapDispatchToProps = dispatch => {
 
 /////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  InvestHistory
+  Transactions
 );
