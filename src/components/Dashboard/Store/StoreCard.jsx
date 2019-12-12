@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
 // redux
 import { compose } from "redux";
 import { Typography, Grid } from "@material-ui/core";
@@ -9,7 +8,6 @@ import Title from "../Title";
 import { Link } from "react-router-dom";
 // actions
 import { purchaseItem } from "../../../store/actions/storeActions";
-import { getUserAndLogin } from "../../../store/actions/userActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
