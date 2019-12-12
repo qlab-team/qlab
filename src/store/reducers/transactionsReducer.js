@@ -1,15 +1,16 @@
 const initState = {
-  getTransactions: [],
+  investments: [],
   last_updated: ""
 };
 
 const transactionsReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_TRANSACTIONS": {
+      console.log(action);
       return {
-        ...state
-        // board: action.leaderboard.allUsers.board,
-        // last_updated: action.leaderboard.allUsers.last_updated
+        ...state,
+        investments: action.transactions.investments,
+        last_updated: action.transactions.last_updated
       };
     }
     default:

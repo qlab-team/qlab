@@ -1,5 +1,5 @@
 /////////////// IMPORTS
-import React from "react";
+import React, { useEffect } from "react";
 // components
 import Title from "../Title";
 // import StoreCard from "./StoreCard";
@@ -24,14 +24,24 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
+  },
   paper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
   },
   fixedHeight: {
     height: 240
+  },
+  tableRow: {
+    height: "46px"
+  },
+  seeMore: {
+    marginTop: theme.spacing(3)
   }
 }));
 
@@ -39,10 +49,27 @@ const useStyles = makeStyles(theme => ({
 const Transactions = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth } = props;
-  console.log(auth);
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  props.getTransactions(props.auth.uid);
+  const { auth, transactions } = props;
+  useEffect(() => {
+    if (auth.uid) {
+      props.getTransactions(auth.uid);
+    }
+  }, [auth.uid]);
+
+  // last_updated
+  function date_formating(timeStamp, type) {
+    const d = new Date(timeStamp * 1000);
+    const year = d.getFullYear();
+    const month = d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
+    const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
+    const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
+    const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
+    const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
+    if (type === "date") return year + "/" + month + "/" + day;
+    return year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
+  }
+
+  console.log(transactions);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -50,77 +77,63 @@ const Transactions = props => {
           <Title>Investment History</Title>
           <Table size="small">
             <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
+              <TableRow className={classes.tableRow}>
                 <TableCell>Name</TableCell>
-                <TableCell>Earnable Points</TableCell>
-                <TableCell align="right">Invested Date</TableCell>
+                <TableCell>Earnings</TableCell>
+                <TableCell>Cost</TableCell>
+                <TableCell>Profit</TableCell>
+                <TableCell>Invested Start</TableCell>
+                <TableCell>Invested End</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {
-            (allUsers.sort((a, b) => {
-              if (a.q_points < b.q_points) return 1;
-              if (a.q_points > b.q_points) return -1;
-              return 0;
-            }),
-            allUsers.map((row, id) => (
-              <TableRow key={row.user_id}>
-                <TableCell>{id + 1}</TableCell>
-                <TableCell>{row.username}</TableCell>
-                <TableCell align="right">{row.q_points}</TableCell>
-                <TableCell align="right"> */}
-              {/* <Button
-                    className={classes.button}
-                    style={{ textDecoration: "none" }}
-                    onMouseEnter={e => {
-                      e.target.innerHTML = "Invest";
-                    }}
-                    onMouseLeave={e => {
-                      e.target.innerHTML = row.q_score;
-                    }}
-                    // onClick={() => {
-                    //   const data = {
-                    //     username: row.username,
-                    //     investment_made: new Date(),
-                    //     q_score: row.q_score,
-                    //     q_points: row.q_points,
-                    //     user_id: row.user_id
-                    //   };
-                    //   props.addInvestment(data, auth, user);
-                    // }}
-                  >
-                    {row.q_score}
-                  </Button> */}
-              {/* </TableCell> */}
-              {/* </TableRow>
-            )))
-          } */}
+              {
+                (transactions.investments.sort((a, b) => {
+                  if (a.timestamp_start.seconds < b.timestamp_start.seconds)
+                    return 1;
+                  if (a.timestamp_start.seconds > b.timestamp_start.seconds)
+                    return -1;
+                  return 0;
+                }),
+                transactions.investments.map(row => (
+                  <TableRow key={row.user_id} className={classes.tableRow}>
+                    <TableCell>{row.username}</TableCell>
+                    <TableCell align="right">{row.points_earned}</TableCell>
+                    <TableCell align="right">{row.points_cost}</TableCell>
+                    <TableCell align="right">
+                      {row.points_earned - row.points_cost}
+                    </TableCell>
+                    <TableCell>
+                      {date_formating(row.timestamp_start.seconds, "date")}
+                    </TableCell>
+                    <TableCell>
+                      {(() => {
+                        if (row.timestamp_end) {
+                          return date_formating(
+                            row.timestamp_end.seconds,
+                            "date"
+                          );
+                        } else {
+                          return "-";
+                        }
+                      })()}
+                    </TableCell>
+                  </TableRow>
+                )))
+              }
             </TableBody>
           </Table>
           <div className={classes.seeMore}>
             LastUpdated{" "}
-            {/* {(() => {
-          if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
-            return last_updated;
-          }
-        })()} */}
+            {(() => {
+              const last_updated = date_formating(
+                transactions.last_updated.seconds
+              );
+              if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
+                return last_updated;
+              }
+            })()}
           </div>
-          {/* {props.storeItems.map(storeItem => {
-          // console.log(quiz);
-          return (
-            <Grid item xs md={4}>
-              <Paper className={fixedHeightPaper}>
-                <StoreCard
-                  itemName={storeItem.item_name}
-                  itemId={storeItem.item_id}
-                  itemPrice={storeItem.item_price}
-                  itemDescription={storeItem.item_description}
-                />
-              </Paper>
-            </Grid>
-          );
-        })} */}
         </Paper>
       </Grid>
     </Grid>
@@ -130,8 +143,8 @@ const Transactions = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.firebase.auth,
-    transactions: state.transactions
+    transactions: state.transactions,
+    auth: state.firebase.auth
   };
 };
 const mapDispatchToProps = dispatch => {

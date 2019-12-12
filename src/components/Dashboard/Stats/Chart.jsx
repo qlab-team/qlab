@@ -62,7 +62,8 @@ const Chart = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
-        const date = user.profile.q_score_history[hist].date.toDate()
+        console.log(user.profile.q_score_history[hist].date);
+        const date = user.profile.q_score_history[hist].date.toDate();
         const fixDate = date.getMonth() + 1 + "/" + date.getDate();
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
