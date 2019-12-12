@@ -1,7 +1,12 @@
+//Import Functions
+
+import { dexysMidnightRunner } from "./dexysMidnightRunner";
+
 const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
+
 
 // CORS Express middleware to enable CORS Requests.
 const cors = require("cors")({
@@ -9,6 +14,8 @@ const cors = require("cors")({
 });
 
 admin.initializeApp();
+
+
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -133,22 +140,22 @@ const generateAllUsersBoard = (users: any) => {
   };
 };
 
-export const updateLeaderboard = functions.firestore
-  .document("users/{userId}")
-  .onUpdate((change: any, context: any) => {
-    return admin
-      .firestore()
-      .collection("users")
-      .get()
-      .then((users: any) => {
-        console.log("Got Users");
-        admin
-          .firestore()
-          .collection("leaderboard")
-          .doc("allUsers")
-          .update(generateAllUsersBoard(users.docs));
-      })
-      .catch((err: any) => {
-        console.log("Error creating account", err);
-      });
-  });
+export const updateLeaderboard = functions.firestore.document('users/{userId}').onUpdate((change: any, context: any) => {
+  return admin
+    .firestore()
+    .collection("users")
+    .get()
+    .then((users: any) => {
+      console.log("Got Users");
+      admin
+        .firestore()
+        .collection("leaderboard")
+        .doc("allUsers")
+        .update(generateAllUsersBoard(users.docs))
+    })
+    .catch((err: any) => {
+      console.log("Error creating account", err);
+    });
+});
+
+export { dexysMidnightRunner }
