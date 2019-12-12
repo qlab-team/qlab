@@ -98,6 +98,7 @@ const PerformanceTable = props => {
                     e.target.innerHTML = "Remove";
                   }}
                   onMouseLeave={e => {
+                    // TODO: Maybe need to rework this at somepoint, change it into the cron job
                     e.target.innerHTML = leaderboard.board.filter(
                       person => person.user_id === investment.user_id
                     )[0].q_score;
