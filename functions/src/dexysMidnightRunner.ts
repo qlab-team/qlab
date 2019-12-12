@@ -77,7 +77,7 @@ export const dexysMidnightRunner = functions.pubsub
         console.log("Got All Users");
         //Set Up Batch
         // TODO: This only supports max 500 operations, if the users starts to go up, we'll need to reasses
-        let batchQScoreWrite = admin.firestore().batch();
+        const batchQScoreWrite = admin.firestore().batch();
 
         const q_score_map = new Map();
 
@@ -105,48 +105,47 @@ export const dexysMidnightRunner = functions.pubsub
         //Commit Batch of Q_Score Updates
         batchQScoreWrite.commit().then(() => {
           console.log("Updated Q_Scores for All Users");
+        });
 
-          // TODO - 500 limit on this batch again
-          let batchInvestmentWrite = admin.firestore().batch();
+        console.log("Starting Investment Updates");
+        // TODO - 500 limit on this batch again
+        const batchInvestmentWrite = admin.firestore().batch();
 
-          users.docs.forEach((user: any) => {
-            //For Each User Again
-            const userRef = admin
-              .firestore()
-              .collection("users")
-              .doc(user.id);
-            const userData = user.data();
+        users.docs.forEach((user: any) => {
+          //For Each User Again
+          const userRef = admin
+            .firestore()
+            .collection("users")
+            .doc(user.id);
+          const userData = user.data();
 
-            //Set External Investment Total
-            let todaysDividends = 0;
+          //Set External Investment Total
+          let todaysDividends = 0;
 
-            //Build new INvestment Array
-            const newInvestments = userData.investments.map(
-              (investment: any) => {
-                //Where Q Score
-                const investmentQScore = q_score_map.get(investment.user_id);
-                //Earnings Define the Amount Earned
-                const earnings = investmentQScore * 1;
-                //Earnings Added To Rolling Total for the Day
-                todaysDividends += earnings;
-                // Return Investment Object to newInvestment Array with new Points Earned
-                return {
-                  ...investment,
-                  points_earned: investment.points_earned + earnings
-                };
-              }
-            );
-
-            batchInvestmentWrite.update(userRef, {
-              q_points: admin.FieldValue.increment(todaysDividends),
-              investments: newInvestments,
-              earnings_today: todaysDividends
-            });
+          //Build new INvestment Array
+          const newInvestments = userData.investments.map((investment: any) => {
+            //Where Q Score
+            const investmentQScore = q_score_map.get(investment.user_id);
+            //Earnings Define the Amount Earned
+            const earnings = investmentQScore * 1;
+            //Earnings Added To Rolling Total for the Day
+            todaysDividends += earnings;
+            // Return Investment Object to newInvestment Array with new Points Earned
+            return {
+              ...investment,
+              points_earned: investment.points_earned + earnings
+            };
           });
 
-          batchQScoreWrite.commit().then(() => {
-            console.log("Updated Investment Earnings");
+          batchInvestmentWrite.update(userRef, {
+            q_points: userData.q_points + todaysDividends,
+            investments: newInvestments,
+            earnings_today: todaysDividends
           });
+        });
+
+        batchInvestmentWrite.commit().then(() => {
+          console.log("Updated Investment Earnings");
         });
       })
       .catch((err: any) => {
