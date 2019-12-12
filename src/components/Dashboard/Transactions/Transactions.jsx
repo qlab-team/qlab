@@ -38,8 +38,11 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Transactions = props => {
   const classes = useStyles();
+  // set props from redux
+  const { auth } = props;
+  console.log(auth);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  // props.getStoreItems();
+  props.getTransactions(props.auth.uid);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -48,10 +51,10 @@ const Transactions = props => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Rank</TableCell>
+                <TableCell>Date</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell align="right">qPoints</TableCell>
-                <TableCell align="right">qScore</TableCell>
+                <TableCell>Earnable Points</TableCell>
+                <TableCell align="right">Invested Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -127,12 +130,13 @@ const Transactions = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
+    auth: state.firebase.auth,
     transactions: state.transactions
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getTransactions: () => dispatch(getTransactions())
+    getTransactions: authId => dispatch(getTransactions(authId))
   };
 };
 

@@ -2,7 +2,7 @@ const updateQuizInfo = quizId => {
   return {
     type: "UPDATE_QUIZ_INFO",
     quizId: quizId
-  }
+  };
 };
 
 const getQuiz = quizId => {
@@ -10,11 +10,9 @@ const getQuiz = quizId => {
     console.log("Get Quiz Called");
     // make async call to database
     const firestore = getFirestore();
-    return firestore
-      .get({ collection: 'quizzes', doc: quizId })
-      .then((doc) => {
-        dispatch({ type: "GET_QUIZ", quiz: doc.data() });
-      });
+    return firestore.get({ collection: "quizzes", doc: quizId }).then(doc => {
+      dispatch({ type: "GET_QUIZ", quiz: doc.data() });
+    });
   };
 };
 
@@ -44,9 +42,7 @@ const addQuizInfo = (authId, quizPoints) => {
             console.log("err :", e);
           });
       });
-  }
-}
+  };
+};
 
-
-
-export { addQuizInfo, getQuiz, updateQuizInfo }
+export { addQuizInfo, getQuiz, updateQuizInfo };
