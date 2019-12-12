@@ -7,7 +7,7 @@ import Title from "../Title";
 // react-router
 import { Link } from "react-router-dom";
 // actions
-import { purchaseItem } from "../../../store/actions/storeActions";
+import { openDialog } from "../../../store/actions/storeActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const StoreCard = props => {
   const classes = useStyles();
-  const { auth, user } = props;
 
   return (
     <Grid
@@ -51,22 +50,16 @@ const StoreCard = props => {
       justify="space-around"
       direction="column"
     >
-      <Title>{props.itemName}</Title>
-      <Typography variant="body2">{props.itemDescription}</Typography>
+      <Title>{props.itemData.name}</Title>
+      <Typography variant="body2">{props.itemData.description}</Typography>
       <Link
         className={classes.button}
         style={{ textDecoration: "none" }}
         onClick={() => {
-          const data = {
-            purchaseDate: new Date().toString(),
-            itemName: props.itemName,
-            itemId: props.itemId,
-            itemPrice: props.itemPrice
-          };
-          props.purchaseItem(data, auth, user);
+          props.openDialog(true, props.itemData);
         }}
       >
-        {props.itemPrice}
+        {props.itemData.price}
       </Link>
     </Grid>
   );
@@ -75,14 +68,12 @@ const StoreCard = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    storeItems: state.storeItems,
-    auth: state.firebase.auth,
-    user: state.user
+    storeItems: state.storeItems
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    purchaseItem: (data, auth, user) => dispatch(purchaseItem(data, auth, user))
+    openDialog: (open, data) => dispatch(openDialog(open, data))
   };
 };
 

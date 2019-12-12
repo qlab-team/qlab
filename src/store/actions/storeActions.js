@@ -37,7 +37,10 @@ const purchaseItem = (data, auth, user) => {
         let userHasEnoughQPoints =
           user.profile.q_points >= data.itemPrice ? true : false;
         if (!userHasEnoughQPoints)
-          console.log("Not enough qPoints for this purchase.");
+          console.log(
+            "Not enough qPoints for this purchase.",
+            `qPoints: ${user.profile.q_points}, item price: ${data.itemPrice}`
+          );
         if (!userHasItem && userHasEnoughQPoints) {
           firestore
             .collection("users")
@@ -64,4 +67,12 @@ const purchaseItem = (data, auth, user) => {
   };
 };
 
-export { getStoreItems, purchaseItem };
+const openDialog = (open, data) => {
+  return {
+    type: "OPEN_DIALOG",
+    open,
+    data
+  };
+};
+
+export { getStoreItems, purchaseItem, openDialog };

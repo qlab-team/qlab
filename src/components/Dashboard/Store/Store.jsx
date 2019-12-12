@@ -2,6 +2,7 @@
 import React from "react";
 // components
 import StoreCard from "./StoreCard";
+import Dialog from "../../Utility/Dialog";
 // actions
 import { getStoreItems } from "../../../store/actions/storeActions";
 // material ui
@@ -35,6 +36,7 @@ const Store = props => {
   props.getStoreItems();
   return (
     <React.Fragment>
+      <Dialog />
       <Grid container spacing={3} wrap="wrap">
         {props.storeItems.map(storeItem => {
           // console.log(quiz);
@@ -42,10 +44,12 @@ const Store = props => {
             <Grid item xs md={4}>
               <Paper className={fixedHeightPaper}>
                 <StoreCard
-                  itemName={storeItem.item_name}
-                  itemId={storeItem.item_id}
-                  itemPrice={storeItem.item_price}
-                  itemDescription={storeItem.item_description}
+                  itemData={{
+                    name: storeItem.item_name,
+                    id: storeItem.item_id,
+                    price: storeItem.item_price,
+                    description: storeItem.item_description
+                  }}
                 />
               </Paper>
             </Grid>
@@ -59,7 +63,7 @@ const Store = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    storeItems: state.store
+    storeItems: state.store.items
   };
 };
 const mapDispatchToProps = dispatch => {
