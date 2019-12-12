@@ -39,14 +39,18 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Leaderboard = props => {
   const classes = useStyles();
+  React.useEffect(() => {
+    props.getLeaderboard();
+    // eslint-disable-next-line
+  }, []);
   // set props from redux
   const { auth } = props;
+
   // if auth lot loaded, don't worry
   if (auth.isLoaded) {
     // if no auth, redirect to front page
     if (auth.isEmpty) return <Redirect to="/login" />;
   }
-  props.getLeaderboard();
 
   return (
     <Grid container spacing={3}>
