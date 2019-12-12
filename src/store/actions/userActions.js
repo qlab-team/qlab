@@ -83,3 +83,17 @@ export const userLogout = authId => {
 // snapshot.forEach(doc => {
 //   console.log(doc.id, "=>", doc.data());
 // });
+
+export const changeUserName = newUserName => {
+  return (dispatch, getState, { getFirestore }) => {
+    console.log("Changing username");
+    const state = getState()
+    const userAuthId = state.user.profile.auth_id;
+    const usersCollection = getFirestore().collection("users");
+    usersCollection
+    .where("auth_id", "==", userAuthId)
+    .update({
+      username: newUserName
+    })
+}
+}
