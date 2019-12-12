@@ -53,6 +53,7 @@ const StoreCard = props => {
       <Title>{props.itemData.name}</Title>
       <Typography variant="body2">{props.itemData.description}</Typography>
       <Link
+        to="/dashboard/store"
         className={classes.button}
         style={{ textDecoration: "none" }}
         onClick={() => {
@@ -60,7 +61,12 @@ const StoreCard = props => {
         }}
       >
         {props.itemData.price}
-        <span style={{ opacity: 0.5, "font-size": "smaller" }}>
+        <span
+          className="qPointsMark"
+          style={{
+            fontSize: "smaller"
+          }}
+        >
           <sup>ℚ</sup>
         </span>
       </Link>

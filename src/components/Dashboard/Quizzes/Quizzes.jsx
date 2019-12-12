@@ -41,9 +41,9 @@ const Quizzes = props => {
   return (
     <React.Fragment>
       <Grid container spacing={3} wrap="wrap">
-        {props.quizzes.map(quiz => {
+        {props.quizzes.map((quiz, index) => {
           return (
-            <Grid item xs md={4}>
+            <Grid key={index} item xs md={4}>
               <Paper className={fixedHeightPaper}>
                 <QuizCard
                   quizRating={quiz["quiz_rating"]}
