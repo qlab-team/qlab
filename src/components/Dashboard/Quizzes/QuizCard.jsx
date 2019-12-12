@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 const QuizCard = props => {
   const classes = useStyles();
   const loadQuiz = () => {
-    console.log(props["quiz_id"]);
+    console.log(props.quizRating);
     props.updateCurrentQuiz(props.quizId);
   };
 
@@ -63,6 +63,8 @@ const QuizCard = props => {
       >
         Start
       </Link>
+
+      <Typography variant="body2">Rating: {Math.round(props.quizRating *100) / 100}</Typography>
     </Grid>
   );
 };

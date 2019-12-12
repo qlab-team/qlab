@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Container, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { addQuizInfo } from "../../store/actions/quizActions";
+import { addQuizInfo } from "../../../store/actions/quizActions";
 import { compose } from "redux";
-
+import { updateQuizRatingOnDatabase} from "../../../store/actions/quizActions";
+//import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
+import Stars from './Stars'
 const useStyles = makeStyles(theme => ({
   Container: {
     background:
@@ -76,13 +78,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 function QuizFinished(props) {
-  const classes = useStyles();
-  console.log(props);
 
+  const classes = useStyles();
+  const [userRating, updateUserRating] = useState(0)
   useEffect(() => {
-    console.log(props);
+    //console.log(props);
     props.addQuizInfo(props.auth.uid, props.quizPoints);
   });
+
+  const updateQuizState = (rating) => {
+    updateUserRating(rating)
+  }
+  const updateQuizRating = () => {
+    props.updateQuizRatingOnDatabase(userRating)
+    console.log('Updated quiz rating!')
+  }
+
+  // updateQuizScore = (quizScore) => {
+
+  // }
 
   return (
     <React.Fragment>
@@ -96,9 +110,16 @@ function QuizFinished(props) {
             className={classes.Button}
             color="inherit"
             to="/dashboard/stats"
+            onClick={updateQuizRating}
           >
             Dashboard
           </Link>
+
+          <Typography>What did you think of the quiz?</Typography>
+
+          <Box display="flex">
+          <Stars updateQuizState={updateQuizState}></Stars>
+          </Box>
         </Box>
       </Container>
     </React.Fragment>
@@ -115,7 +136,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addQuizInfo: (authId, quizPoints) =>
-      dispatch(addQuizInfo(authId, quizPoints))
+      dispatch(addQuizInfo(authId, quizPoints)),
+
+    updateQuizRatingOnDatabase: (quizRating) => {
+      dispatch(updateQuizRatingOnDatabase(quizRating))
+    }
   };
 };
 

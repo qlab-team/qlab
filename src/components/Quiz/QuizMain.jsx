@@ -6,7 +6,7 @@ import CheckButton from "./CheckButton";
 import { connect } from "react-redux";
 import { getQuiz } from "../../store/actions/quizActions";
 import AnswerValidator from "./AnswerValidator";
-import QuizFinished from "./QuizFinished";
+import QuizFinished from "./quizFinished/QuizFinished";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 
@@ -113,6 +113,7 @@ class QuizMain extends Component {
         updatedQuiz.push(currentQuestion)
         this.setState({Quiz: updatedQuiz})
     }
+
   render() {
     const { classes } = this.props;
 
