@@ -40,9 +40,8 @@ const addInvestment = (data, auth, user) => {
               investments: firestore.FieldValue.arrayUnion({
                 display_name: data.username,
                 date: data.investment_made,
-                q_score: data.q_score,
-                q_points: data.q_points,
-                earnable_points: 100,
+                points_cost: data.q_score * 5,
+                points_earned: 0,
                 user_id: data.user_id
               })
             });
