@@ -69,18 +69,18 @@ const Transactions = props => {
   // date format
   function date_formating(timeStamp, type) {
     const month = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APY",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC"
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
     ];
     const d = new Date(timeStamp * 1000);
     const yearFull = d.getFullYear();
@@ -92,7 +92,7 @@ const Transactions = props => {
     const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
     const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return monthStr + " " + day + " '" + yearTwo;
+    if (type === "date") return monthStr + " " + day + " " + yearFull;
     return (
       yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
     );
