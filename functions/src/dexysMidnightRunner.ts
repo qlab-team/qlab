@@ -19,18 +19,18 @@ const calculateNewQScore = (user: any) => {
 
     const differenceTime = now.getTime() - last_quiz_time;
     //15 Mins for Testing
-    const quizInLastTimePeriod = differenceTime < (15 * timePeriods.min);
+    const quizInLastTimePeriod = differenceTime < (1 * timePeriods.day);
 
     let quizDoneModifier
 
     if (quizInLastTimePeriod) {
-        quizDoneModifier = 1
+        quizDoneModifier = 5
     } else {
-        quizDoneModifier = -1
+        quizDoneModifier = -5
     }
 
-    //Add Random Integer from -1 to 1
-    const randomAddition = Math.floor(Math.random() * 3) - 1;
+    //Add Random Integer from -2 to 2
+    const randomAddition = Math.floor(Math.random() * 5) - 2;
 
     //QScore Calculation
     const newQScore = currentQScore + quizDoneModifier + randomAddition
@@ -68,9 +68,9 @@ const calculateNewQScoreHistoryArray = (user: any, newQScore: number) => {
 
 export const dexysMidnightRunner = functions
     .pubsub
-    // .schedule('every day 00:00') //Every Day for Publishing
+    .schedule('every day 00:00') //Every Day for Publishing
     // .schedule('every 1 hours') //Every Hour For Development
-    .schedule('every 15 mins') //Every 15 Mins For Testing
+    //.schedule('every 15 mins') //Every 15 Mins For Testing
     .timeZone('Asia/Tokyo')
     .onRun((context: any) => {
         return admin
