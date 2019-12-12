@@ -103,6 +103,7 @@ const generateUser = (authObject: any) => {
     quiz_total: 0,
     created_at: new Date(),
     investments: [],
+    badges: [],
     last_quiz_done: new Date(),
     q_score_history: [
       { date: 1575817200, q_score: 90 },
@@ -115,38 +116,39 @@ const generateUser = (authObject: any) => {
   };
 };
 
-
 const generateAllUsersBoard = (users: any) => {
   const board = users.map((user: any) => {
-    const userdata = user.data()
+    const userdata = user.data();
     return {
       username: userdata.username,
       user_id: user.id,
       q_points: userdata.q_points,
       q_score: userdata.q_score
-    }
-  })
+    };
+  });
 
   return {
     board,
     last_updated: new Date()
-  }
-}
+  };
+};
 
-export const updateLeaderboard = functions.firestore.document('users/{userId}').onUpdate((change: any, context: any) => {
-  return admin
-    .firestore()
-    .collection("users")
-    .get()
-    .then((users: any) => {
-      console.log("Got Users");
-      admin
-        .firestore()
-        .collection("leaderboard")
-        .doc("allUsers")
-        .update(generateAllUsersBoard(users.docs))
-    })
-    .catch((err: any) => {
-      console.log("Error creating account", err);
-    });
-});
+export const updateLeaderboard = functions.firestore
+  .document("users/{userId}")
+  .onUpdate((change: any, context: any) => {
+    return admin
+      .firestore()
+      .collection("users")
+      .get()
+      .then((users: any) => {
+        console.log("Got Users");
+        admin
+          .firestore()
+          .collection("leaderboard")
+          .doc("allUsers")
+          .update(generateAllUsersBoard(users.docs));
+      })
+      .catch((err: any) => {
+        console.log("Error creating account", err);
+      });
+  });

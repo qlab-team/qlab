@@ -29,13 +29,6 @@ const QPoints = props => {
   const classes = useStyles();
   const { user } = props;
 
-  // useEffect(() => {
-  //   if (user.isLoggedIn) {
-
-  //   }
-  //   // eslint-disable-next-line
-  // }, [user, user.profile.q_points]);
-
   return (
     <React.Fragment>
       <Title>qPoints</Title>

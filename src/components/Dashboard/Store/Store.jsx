@@ -1,14 +1,13 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
 // components
-import QuizCard from "./QuizCard";
+import StoreCard from "./StoreCard";
+// actions
+import { getStoreItems } from "../../../store/actions/storeActions";
 // material ui
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-// actions
-import { getQuizzes } from "../../../store/actions/quizzesActions";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -30,25 +29,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-const Quizzes = props => {
+const Store = props => {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  useEffect(() => {
-    props.getQuizzes();
-    // eslint-disable-next-line
-  }, []);
-
+  props.getStoreItems();
   return (
     <React.Fragment>
       <Grid container spacing={3} wrap="wrap">
-        {props.quizzes.map(quiz => {
+        {props.storeItems.map(storeItem => {
+          // console.log(quiz);
           return (
             <Grid item xs md={4}>
               <Paper className={fixedHeightPaper}>
-                <QuizCard
-                  quizTitle={quiz["quiz_title"]}
-                  quizId={quiz["quiz_id"]}
-                  quizDescription={quiz["quiz_description"]}
+                <StoreCard
+                  itemName={storeItem.item_name}
+                  itemId={storeItem.item_id}
+                  itemPrice={storeItem.item_price}
+                  itemDescription={storeItem.item_description}
                 />
               </Paper>
             </Grid>
@@ -62,14 +59,14 @@ const Quizzes = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    quizzes: state.quizzes
+    storeItems: state.store
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getQuizzes: () => dispatch(getQuizzes())
+    getStoreItems: () => dispatch(getStoreItems())
   };
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Quizzes);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Store);
