@@ -1,7 +1,12 @@
+//Import Functions
+
+import { dexysMidnightRunner } from "./dexysMidnightRunner";
+
 const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
+
 
 // CORS Express middleware to enable CORS Requests.
 const cors = require("cors")({
@@ -9,6 +14,8 @@ const cors = require("cors")({
 });
 
 admin.initializeApp();
+
+
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -151,37 +158,4 @@ export const updateLeaderboard = functions.firestore.document('users/{userId}').
     });
 });
 
-const calculateNewQScore = (user: object) => {
-  //TODO, make this do a thing
-  return 0
-}
-
-export const scheduledFunctionCrontab = functions.pubsub
-  .schedule('every day 00:00')
-  .timeZone('Asia/Tokyo')
-  .onRun((context: any) => {
-    return admin
-      .firestore()
-      .collection("users")
-      .get()
-      .then((users: any) => {
-        console.log("Got All Users");
-        //Update QScore
-        users.docs.forEach((user: any) => {
-          const userData = user.data()
-          const newQScore = calculateNewQScore(userData)
-          admin
-            .firestore()
-            .collection("users")
-            .doc(user.id)
-            .update({
-              q_score: newQScore
-            })
-        });
-        console.log("Updated Q_Scores for All Users");
-
-      })
-      .catch((err: any) => {
-        console.log("Error creating account", err);
-      });
-  });
+export { dexysMidnightRunner }
