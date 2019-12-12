@@ -1,7 +1,7 @@
 /////////////// IMPORTS
 import React from "react";
 import { useEffect } from "react";
-// firebase
+// redux
 import { connect } from "react-redux";
 import { compose } from "redux";
 // material ui
@@ -20,7 +20,7 @@ import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
 // react-router
 import { Redirect } from "react-router-dom";
-//Actions
+// actions
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 /////////////// STYLES
@@ -199,8 +199,8 @@ const Sidebar = props => {
         {mobile ? (
           <MainListItems handleDrawerClose={props.handleDrawerClose} />
         ) : (
-            <MainListItems />
-          )}
+          <MainListItems />
+        )}
       </List>
       <Divider />
       <List>

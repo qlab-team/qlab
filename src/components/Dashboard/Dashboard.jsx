@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Stats from "./Stats/Stats";
+import Store from "./Store/Store";
 import Quizzes from "./Quizzes/Quizzes";
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
@@ -172,6 +173,7 @@ const Dashboard = props => {
               component={Leaderboard}
             ></Route>
             <Route path="/dashboard/stats" component={Stats}></Route>
+            <Route path="/dashboard/store" component={Store}></Route>
             <Route path="/dashboard/quizzes" component={Quizzes}></Route>
           </Switch>
           <Box pt={4}>

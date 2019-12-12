@@ -23,17 +23,32 @@ const addInvestment = (data, auth, user) => {
     const firestore = getFirestore();
     firestore
       .collection("users")
-      .doc(user.user_id)
-      .update({
-        investments: firestore.FieldValue.arrayUnion({
-          display_name: data.username,
-          date: data.investment_made,
-          q_score: data.q_score,
-          q_points: data.q_points,
-          earnable_points: 100,
-          user_id: data.user_id
-        })
+      .where("auth_id", "==", auth.uid)
+      .get()
+      .then(collection => {
+        let userHasInvestment = false;
+        const investments = collection.docs[0].data().investments;
+        investments.forEach(investment => {
+          if (investment.display_name === data.username)
+            userHasInvestment = true;
+        });
+        if (!userHasInvestment) {
+          firestore
+            .collection("users")
+            .doc(user.user_id)
+            .update({
+              investments: firestore.FieldValue.arrayUnion({
+                display_name: data.username,
+                date: data.investment_made,
+                q_score: data.q_score,
+                q_points: data.q_points,
+                earnable_points: 100,
+                user_id: data.user_id
+              })
+            });
+        }
       })
+
       .catch(e => {
         console.log("err :", e);
       });
