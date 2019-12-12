@@ -56,17 +56,36 @@ const Transactions = props => {
     }
   }, [auth.uid]);
 
-  // last_updated
+  // date format
   function date_formating(timeStamp, type) {
+    const month = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APY",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC"
+    ];
     const d = new Date(timeStamp * 1000);
-    const year = d.getFullYear();
-    const month = d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
+    const yearFull = d.getFullYear();
+    const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
+    const monthNum =
+      d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
+    const monthStr = month[d.getMonth()];
     const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
     const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
     const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return year + "/" + month + "/" + day;
-    return year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
+    if (type === "date") return monthStr + " " + day + " '" + yearTwo;
+    return (
+      yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
+    );
   }
 
   console.log(transactions);
@@ -74,7 +93,7 @@ const Transactions = props => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Title>Investment History</Title>
+          <Title>Transaction History</Title>
           <Table size="small">
             <TableHead>
               <TableRow className={classes.tableRow}>
@@ -100,9 +119,18 @@ const Transactions = props => {
                     <TableCell>{row.username}</TableCell>
                     <TableCell align="right">{row.points_earned}</TableCell>
                     <TableCell align="right">{row.points_cost}</TableCell>
-                    <TableCell align="right">
-                      {row.points_earned - row.points_cost}
-                    </TableCell>
+                    {(() => {
+                      const profit = row.points_earned - row.points_cost;
+                      if (profit < 0) {
+                        return (
+                          <TableCell align="right" color="red">
+                            {profit}
+                          </TableCell>
+                        );
+                      } else {
+                        return <TableCell align="right">{profit}</TableCell>;
+                      }
+                    })()}
                     <TableCell>
                       {date_formating(row.timestamp_start.seconds, "date")}
                     </TableCell>
