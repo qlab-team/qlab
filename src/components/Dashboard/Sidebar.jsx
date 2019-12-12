@@ -199,8 +199,8 @@ const Sidebar = props => {
         {mobile ? (
           <MainListItems handleDrawerClose={props.handleDrawerClose} />
         ) : (
-            <MainListItems />
-          )}
+          <MainListItems />
+        )}
       </List>
       <Divider />
       <List>

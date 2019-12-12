@@ -1,5 +1,9 @@
 /////////////// IMPORTS
 import React from "react";
+import { useEffect } from "react";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
 // components
 import Chart from "./Chart";
 import QPoints from "./QPoints.jsx";
@@ -9,6 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
+// actions
+import { getUserAndLogin } from "../../../store/actions/userActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -27,8 +33,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-export default function Stats() {
+const Stats = props => {
   const classes = useStyles();
+  const { auth } = props;
+
+  useEffect(() => {
+    if (auth.isLoaded) {
+      props.getUserAndLogin(auth);
+    }
+    // eslint-disable-next-line
+  }, [auth.isLoaded]);
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <Grid container spacing={3}>
@@ -52,4 +67,20 @@ export default function Stats() {
       </Grid>
     </Grid>
   );
-}
+};
+
+/////////////// REDUX
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user,
+    auth: state.firebase.auth
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth))
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Stats);
