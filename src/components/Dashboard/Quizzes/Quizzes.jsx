@@ -46,6 +46,7 @@ const Quizzes = props => {
             <Grid item xs md={4}>
               <Paper className={fixedHeightPaper}>
                 <QuizCard
+                  quizRating={quiz["quiz_rating"]}
                   quizTitle={quiz["quiz_title"]}
                   quizId={quiz["quiz_id"]}
                   quizDescription={quiz["quiz_description"]}
@@ -62,7 +63,8 @@ const Quizzes = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    quizzes: state.quizzes
+    quizzes: state.quizzes,
+    quiz: state.quiz
   };
 };
 const mapDispatchToProps = dispatch => {

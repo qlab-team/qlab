@@ -58,7 +58,7 @@ const updateQuizRatingOnDatabase = (userQuizRating) => {
     firestore.runTransaction( transaction => {
 
       return transaction.get(quizRef).then( res => {
-        const updatedQuizTaken = res.data().times_quiz_taken + 1
+        const updatedQuizTaken = res.data().times_quiz_taken  + 1
 
         const currentQuizTotal = res.data().quiz_rating * res.data().times_quiz_taken
         const newQuizAvg = (currentQuizTotal + userQuizRating) / updatedQuizTaken
