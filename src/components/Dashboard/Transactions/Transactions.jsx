@@ -6,9 +6,9 @@ import Title from "../Title";
 // actions
 import { getTransactions } from "../../../store/actions/transactionsActions";
 // material ui
-import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -40,6 +40,14 @@ const useStyles = makeStyles(theme => ({
   tableRow: {
     height: "46px"
   },
+  negativeBox: {
+    color: "#e91e63",
+    background: "whitesmoke",
+    display: "inline",
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+    borderRadius: 10
+  },
   seeMore: {
     marginTop: theme.spacing(3)
   }
@@ -50,11 +58,13 @@ const Transactions = props => {
   const classes = useStyles();
   // set props from redux
   const { auth, transactions } = props;
+
   useEffect(() => {
-    if (auth.uid) {
+    if (auth.isLoaded) {
       props.getTransactions(auth.uid);
     }
-  }, [auth.uid]);
+    // eslint-disable-next-line
+  }, [auth.isLoaded]);
 
   // date format
   function date_formating(timeStamp, type) {
@@ -88,7 +98,6 @@ const Transactions = props => {
     );
   }
 
-  console.log(transactions);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -123,12 +132,17 @@ const Transactions = props => {
                       const profit = row.points_earned - row.points_cost;
                       if (profit < 0) {
                         return (
-                          <TableCell align="right" color="red">
-                            {profit}
+                          <TableCell align="right">
+                            <Box
+                              component="div"
+                              className={classes.negativeBox}
+                            >
+                              {profit}
+                            </Box>
                           </TableCell>
                         );
                       } else {
-                        return <TableCell align="right">{profit}</TableCell>;
+                        return <TableCell align="center">{profit}</TableCell>;
                       }
                     })()}
                     <TableCell>

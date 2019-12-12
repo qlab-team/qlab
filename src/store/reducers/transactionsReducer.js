@@ -6,7 +6,6 @@ const initState = {
 const transactionsReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_TRANSACTIONS": {
-      console.log(action);
       return {
         ...state,
         investments: action.transactions.investments,
