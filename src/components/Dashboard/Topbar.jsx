@@ -15,10 +15,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 //Actions
-import {
-  resolveInvestment,
-  notificationRead
-} from "../../store/actions/investmentActions";
+import { notificationRead } from "../../store/actions/investmentActions";
 
 // firebase
 import { connect } from "react-redux";
@@ -210,8 +207,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    resolveInvestment: (investments, user) =>
-      dispatch(resolveInvestment(investments, user)),
     notificationRead: () => dispatch(notificationRead())
   };
 };

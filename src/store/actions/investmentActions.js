@@ -29,7 +29,7 @@ const updatePoints = async (firestore, user_id, points) => {
   console.log("Points from Investment Added");
 };
 
-const removeInvestment = async (firestore, user, investment_id) => {
+const removeInvestmentOld = async (firestore, user, investment_id) => {
   console.log("Remove Investment Called");
   const newInvestments = user.profile.investments.filter(investment => {
     return investment.user_id !== investment_id;
@@ -76,7 +76,7 @@ export const resolveInvestment = (investments, user) => {
               income: 0,
               payout: false
             });
-            removeInvestment(firestore, user, investment.user_id);
+            removeInvestmentOld(firestore, user, investment.user_id);
           } else {
             //If Payout
             console.log("User Did Do Quiz, Updating Points");
@@ -86,7 +86,7 @@ export const resolveInvestment = (investments, user) => {
               income: investment.earnable_points,
               payout: true
             });
-            removeInvestment(firestore, user, investment.user_id);
+            removeInvestmentOld(firestore, user, investment.user_id);
           }
         }
       });
@@ -94,41 +94,108 @@ export const resolveInvestment = (investments, user) => {
       console.log("No Investments");
       return;
     }
+  };
+};
 
-    // const newInvestments = user.userProfile.investments.filter(investment => {
-    //   return investment.user_id !== investments.user_id;
-    // });
-    // firestore
-    //   .collection("users")
-    //   .doc(user.user_id)
-    //   .update({
-    //     investments: newInvestments
-    //   })
-    //   .then(() => {
-    //     console.log("Investment Removed");
-    //     firestore
-    //       .collection("users")
-    //       .doc(user.user_id)
-    //       .get()
-    //       .then(res => {
-    //         const doc = res.docs[0];
-    //         return doc.data();
-    //       })
-    //       .then(data => {
-    //         dispatch({
-    //           type: "GET_INVESTMENTS",
-    //           investments: data.investments
-    //         });
-    //       });
-    //   })
-    //   .catch(e => {
-    //     console.log("err :", e);
-    //   });
+export const addInvestment = (data, auth, user) => {
+  return (dispatch, getState, { getFirestore }) => {
+    console.log("Add Investment Called");
+    const firestore = getFirestore();
+    firestore
+      .collection("users")
+      .where("auth_id", "==", auth.uid)
+      .get()
+      .then(collection => {
+        let userHasInvestment = false;
+        const investments = collection.docs[0].data().investments;
+        investments.forEach(investment => {
+          if (investment.display_name === data.username)
+            userHasInvestment = true;
+        });
+        if (!userHasInvestment) {
+          firestore
+            .collection("users")
+            .doc(user.user_id)
+            .update({
+              investments: firestore.FieldValue.arrayUnion({
+                display_name: data.username,
+                date: data.investment_made,
+                points_cost: data.q_score * 5,
+                points_earned: 0,
+                user_id: data.user_id
+              })
+            });
+        }
+      })
+
+      .catch(e => {
+        console.log("err :", e);
+      });
+  };
+};
+
+export const getInvestments = auth => {
+  return (dispatch, getState, { getFirestore }) => {
+    // make async call to database
+    console.log("Get Investments for Stats Called");
+    const firestore = getFirestore();
+    firestore
+      .collection("users")
+      .where("auth_id", "==", auth.uid)
+      .get()
+      .then(res => {
+        const doc = res.docs[0];
+        return doc.data();
+      })
+      .then(data => {
+        dispatch({
+          type: "GET_INVESTMENTS",
+          investments: data.investments
+        });
+      })
+      .catch(e => {
+        console.log("err :", e);
+      });
+  };
+};
+
+export const removeInvestment = (data, auth, user) => {
+  return (dispatch, getState, { getFirestore }) => {
+    console.log("Remove Investment Called");
+    const firestore = getFirestore();
+    const newInvestments = user.profile.investments.filter(investment => {
+      return investment.user_id !== data.user_id;
+    });
+    firestore
+      .collection("users")
+      .doc(user.user_id)
+      .update({
+        investments: newInvestments
+      })
+      .then(() => {
+        console.log("Investment Removed");
+        firestore
+          .collection("users")
+          .where("auth_id", "==", auth.uid)
+          .get()
+          .then(res => {
+            const doc = res.docs[0];
+            return doc.data();
+          })
+          .then(data => {
+            dispatch({
+              type: "GET_INVESTMENTS",
+              investments: data.investments
+            });
+          });
+      })
+      .catch(e => {
+        console.log("err :", e);
+      });
   };
 };
 
 export const notificationRead = () => {
-
   return dispatch => {
     console.log("Investment Notification Read");
     dispatch({

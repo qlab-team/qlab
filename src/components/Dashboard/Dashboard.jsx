@@ -138,7 +138,8 @@ const Dashboard = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       if (!investments.checked) {
-        props.resolveInvestment(user.profile.investments, user);
+        console.log("Nah Mate");
+        //props.resolveInvestment(user.profile.investments, user);
       }
     }
     // eslint-disable-next-line
