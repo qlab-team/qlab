@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { addQuizInfo } from "../../../store/actions/quizActions";
 import { compose } from "redux";
+import { updateQuizRatingOnDatabase} from "../../../store/actions/quizActions";
+//import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
 import Stars from './Stars'
 const useStyles = makeStyles(theme => ({
   Container: {
@@ -78,11 +80,23 @@ const useStyles = makeStyles(theme => ({
 function QuizFinished(props) {
 
   const classes = useStyles();
-
+  const [userRating, updateUserRating] = useState(0)
   useEffect(() => {
-    console.log(props);
-    //props.addQuizInfo(props.auth.uid, props.quizPoints);
+    //console.log(props);
+    props.addQuizInfo(props.auth.uid, props.quizPoints);
   });
+
+  const updateQuizState = (rating) => {
+    updateUserRating(rating)
+  }
+  const updateQuizRating = () => {
+    props.updateQuizRatingOnDatabase(userRating)
+    console.log('Updated quiz rating!')
+  }
+
+  // updateQuizScore = (quizScore) => {
+
+  // }
 
   return (
     <React.Fragment>
@@ -96,6 +110,7 @@ function QuizFinished(props) {
             className={classes.Button}
             color="inherit"
             to="/dashboard/stats"
+            onClick={updateQuizRating}
           >
             Dashboard
           </Link>
@@ -103,7 +118,7 @@ function QuizFinished(props) {
           <Typography>What did you think of the quiz?</Typography>
 
           <Box display="flex">
-          <Stars></Stars>
+          <Stars updateQuizState={updateQuizState}></Stars>
           </Box>
         </Box>
       </Container>
@@ -121,7 +136,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addQuizInfo: (authId, quizPoints) =>
-      dispatch(addQuizInfo(authId, quizPoints))
+      dispatch(addQuizInfo(authId, quizPoints)),
+
+    updateQuizRatingOnDatabase: (quizRating) => {
+      dispatch(updateQuizRatingOnDatabase(quizRating))
+    }
   };
 };
 

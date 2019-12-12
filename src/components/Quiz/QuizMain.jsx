@@ -113,6 +113,7 @@ class QuizMain extends Component {
         updatedQuiz.push(currentQuestion)
         this.setState({Quiz: updatedQuiz})
     }
+
   render() {
     const { classes } = this.props;
 

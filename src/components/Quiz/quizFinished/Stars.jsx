@@ -1,25 +1,22 @@
 import React, {Fragment, useState } from "react";
-import { makeStyles, } from "@material-ui/core";
 import Ratings from 'react-ratings-declarative';
-import Star from './Star'
-const useStyles = makeStyles(theme => ({
-    Star: {
-    color: "white",
-    height: 50,
-    "&:hover": {
-        cursor: "pointer"
-      },
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//     Star: {
+//     color: "white",
+//     height: 50,
+//     "&:hover": {
+//         cursor: "pointer"
+//       },
+//   }
+// }));
 
 function Stars(props) {
-    const classes = useStyles();
-    const [starAmount] = useState([1,2,3,4,5])
+    //const classes = useStyles();
     const [userRating, changeUserRating] = useState(0)
 
     const updateUserRating = (rating) => {
-      console.log('uo');
       changeUserRating(rating)
+      props.updateQuizState(rating)
     }
   return (
       <Fragment>
