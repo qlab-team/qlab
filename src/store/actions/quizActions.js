@@ -40,6 +40,7 @@ const addQuizInfo = quizPoints => {
           .collection("transaction_history")
           .doc(user_id)
           .update({
+            last_updated: now,
             quiz_history: firestore.FieldValue.arrayUnion({
               date: now,
               quiz_id: quiz_info.quiz_id,
