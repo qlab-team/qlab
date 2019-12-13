@@ -127,7 +127,7 @@ const TransactionHistory = props => {
                     {row.points_earned}
                     <span
                       className="qPointsMark"
-                      style={{ "font-size": "smaller" }}
+                      style={{ fontSize: "smaller" }}
                     >
                       <sup>ℚ</sup>
                     </span>
@@ -136,7 +136,7 @@ const TransactionHistory = props => {
                     {row.points_cost}
                     <span
                       className="qPointsMark"
-                      style={{ "font-size": "smaller" }}
+                      style={{ fontSize: "smaller" }}
                     >
                       <sup>ℚ</sup>
                     </span>
@@ -160,7 +160,7 @@ const TransactionHistory = props => {
                         {profit}
                         <span
                           className="qPointsMark"
-                          style={{ "font-size": "smaller" }}
+                          style={{ fontSize: "smaller" }}
                         >
                           ℚ
                         </span>
@@ -212,6 +212,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  TransactionHistory
-);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(TransactionHistory);
