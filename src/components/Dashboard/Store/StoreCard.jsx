@@ -6,7 +6,7 @@ import { Typography, Grid } from "@material-ui/core";
 // react-router
 import { Link } from "react-router-dom";
 // actions
-import { openDialog } from "../../../store/actions/storeActions";
+import { openDialog } from "../../../store/actions/dialogActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"; // redux
