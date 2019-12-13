@@ -72,8 +72,18 @@ const Leaders = props => {
           <TableRow>
             <TableCell>Rank</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell align="right">qPoints</TableCell>
-            <TableCell align="right">qScore</TableCell>
+            <TableCell align="right">
+              <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+                ℚ
+              </span>
+              Points
+            </TableCell>
+            <TableCell align="right">
+              <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+                ℚ
+              </span>
+              Score
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
