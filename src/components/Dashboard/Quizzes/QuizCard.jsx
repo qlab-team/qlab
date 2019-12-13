@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
+  rating: {
+    userSelect: "none"
+  },
   button: {
     margin: theme.spacing(3),
     marginTop: theme.spacing(1),
@@ -42,8 +45,14 @@ const useStyles = makeStyles(theme => ({
 const QuizCard = props => {
   const classes = useStyles();
   const loadQuiz = () => {
-    console.log(props.quizRating);
     props.updateCurrentQuiz(props.quizId);
+  };
+
+  const starParse = (n = Math.ceil((props.quizRating * 100) / 100)) => {
+    if (!n) return "🍑";
+    let stars = [];
+    for (let i = 0; i <= n - 1; i++) stars.push("⭐️");
+    return stars;
   };
 
   return (
@@ -64,7 +73,9 @@ const QuizCard = props => {
         Start
       </Link>
 
-      <Typography variant="body2">Rating: {Math.round(props.quizRating *100) / 100}</Typography>
+      <Typography className={classes.rating} variant="body2">
+        {starParse()}
+      </Typography>
     </Grid>
   );
 };

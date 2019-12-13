@@ -5,16 +5,16 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { addQuizInfo } from "../../../store/actions/quizActions";
 import { compose } from "redux";
-import { updateQuizRatingOnDatabase} from "../../../store/actions/quizActions";
+import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
 //import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
-import Stars from './Stars'
+import Stars from "./Stars";
 const useStyles = makeStyles(theme => ({
   Container: {
     background:
       "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
-      margin: 0,
-      padding: 0,
-      minWidth: "100vw"
+    margin: 0,
+    padding: 0,
+    minWidth: "100vw"
   },
   Box: {
     minHeight: "100vh",
@@ -40,7 +40,10 @@ const useStyles = makeStyles(theme => ({
   Congratulations: {
     fontSize: 40
   },
-
+  Rate: {
+    margin: "30px 0 20px 0",
+    fontSize: 30
+  },
   MessagePaper: {},
 
   CongratsLink: {
@@ -78,21 +81,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 function QuizFinished(props) {
-
   const classes = useStyles();
-  const [userRating, updateUserRating] = useState(0)
+  const [userRating, updateUserRating] = useState(0);
   useEffect(() => {
     //console.log(props);
     props.addQuizInfo(props.auth.uid, props.quizPoints);
   });
 
-  const updateQuizState = (rating) => {
-    updateUserRating(rating)
-  }
+  const updateQuizState = rating => {
+    updateUserRating(rating);
+  };
   const updateQuizRating = () => {
-    props.updateQuizRatingOnDatabase(userRating)
-    console.log('Updated quiz rating!')
-  }
+    props.updateQuizRatingOnDatabase(userRating);
+    console.log("Updated quiz rating!");
+  };
 
   // updateQuizScore = (quizScore) => {
 
@@ -103,23 +105,32 @@ function QuizFinished(props) {
       <Container className={classes.Container}>
         <Box className={classes.Box}>
           <Typography className={classes.Congratulations}>
-            Congratulations! You got {props.quizPoints} Points!
+            Congratulations! You earned {props.quizPoints}
+            <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+              <sup>ℚ</sup>
+            </span>
+            !
           </Typography>
 
+          <Typography className={classes.Rate}>
+            <span
+              style={{ "font-size": "smaller", color: "rgb(229, 209, 241)" }}
+            >
+              What did you think of this quiz?
+            </span>
+          </Typography>
+
+          <Box display="flex">
+            <Stars updateQuizState={updateQuizState}></Stars>
+          </Box>
           <Link
             className={classes.Button}
             color="inherit"
             to="/dashboard/stats"
             onClick={updateQuizRating}
           >
-            Dashboard
+            Go back to dashboard
           </Link>
-
-          <Typography>What did you think of the quiz?</Typography>
-
-          <Box display="flex">
-          <Stars updateQuizState={updateQuizState}></Stars>
-          </Box>
         </Box>
       </Container>
     </React.Fragment>
@@ -138,8 +149,8 @@ const mapDispatchToProps = dispatch => {
     addQuizInfo: (authId, quizPoints) =>
       dispatch(addQuizInfo(authId, quizPoints)),
 
-    updateQuizRatingOnDatabase: (quizRating) => {
-      dispatch(updateQuizRatingOnDatabase(quizRating))
+    updateQuizRatingOnDatabase: quizRating => {
+      dispatch(updateQuizRatingOnDatabase(quizRating));
     }
   };
 };

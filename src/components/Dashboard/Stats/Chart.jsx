@@ -62,7 +62,6 @@ const Chart = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
-        console.log(user.profile.q_score_history[hist].date);
         const date = user.profile.q_score_history[hist].date.toDate();
         const fixDate = date.getMonth() + 1 + "/" + date.getDate();
         const q_score = user.profile.q_score_history[hist].q_score;
@@ -88,6 +87,7 @@ const Chart = props => {
             e.target.innerHTML = user.profile.q_score;
           }}
         >
+          <></>
           {user.profile.q_score}
         </Button>
       </Title>

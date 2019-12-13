@@ -31,7 +31,7 @@ const AlertDialog = props => {
             {!purchaseError ? (
               <>
                 {itemData.name} for {itemData.price}
-                <span style={{ opacity: 0.5, "font-size": "smaller" }}>
+                <span style={{ opacity: 0.5, fontSize: "smaller" }}>
                   <sup>ℚ</sup>
                 </span>
               </>
@@ -67,7 +67,7 @@ const AlertDialog = props => {
             color="primary"
             autoFocus
           >
-            <span style={{ "font-weight": "700", color: "white" }}>
+            <span style={{ fontWeight: "700", color: "white" }}>
               {!purchaseError ? "AGREE" : "GO BACK"}
             </span>
           </Button>
