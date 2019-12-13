@@ -133,7 +133,8 @@ export const dexysMidnightRunner = functions.pubsub
             // Return Investment Object to newInvestment Array with new Points Earned
             return {
               ...investment,
-              points_earned: investment.points_earned + earnings
+              points_earned: investment.points_earned + earnings,
+              q_score: investmentQScore
             };
           });
 
