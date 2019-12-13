@@ -125,18 +125,48 @@ const Transactions = props => {
                 transactions.investments.map(row => (
                   <TableRow key={row.user_id} className={classes.tableRow}>
                     <TableCell>{row.username}</TableCell>
-                    <TableCell align="left">{row.points_earned}</TableCell>
-                    <TableCell align="left">{row.points_cost}</TableCell>
+                    <TableCell align="left">
+                      {row.points_earned}
+                      <span
+                        className="qPointsMark"
+                        style={{ "font-size": "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </TableCell>
+                    <TableCell align="left">
+                      {row.points_cost}
+                      <span
+                        className="qPointsMark"
+                        style={{ "font-size": "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </TableCell>
                     {(() => {
                       const profit = row.points_earned - row.points_cost;
                       return profit < 0 ? (
                         <TableCell align="left">
                           <Box component="div" className={classes.negativeBox}>
                             {profit}
+                            <span
+                              className="qPointsMark"
+                              style={{ "font-size": "smaller" }}
+                            >
+                              <sup>ℚ</sup>
+                            </span>
                           </Box>
                         </TableCell>
                       ) : (
-                        <TableCell align="left">{profit}</TableCell>
+                        <TableCell align="left">
+                          {profit}
+                          <span
+                            className="qPointsMark"
+                            style={{ "font-size": "smaller" }}
+                          >
+                            ℚ
+                          </span>
+                        </TableCell>
                       );
                     })()}
                     <TableCell>

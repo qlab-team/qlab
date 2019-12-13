@@ -75,7 +75,7 @@ const PerformanceTable = props => {
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Cost</TableCell>
-            <TableCell>ℚ Earnings</TableCell>
+            <TableCell>Earnings</TableCell>
             <TableCell align="right">Current qScore</TableCell>
             {/* <TableCell align="right">Last Login</TableCell> */}
           </TableRow>
@@ -85,8 +85,24 @@ const PerformanceTable = props => {
             <TableRow key={i}>
               <TableCell>{investment.date.toDate().toDateString()}</TableCell>
               <TableCell>{investment.display_name}</TableCell>
-              <TableCell>{investment.points_cost}</TableCell>
-              <TableCell>{investment.points_earned}</TableCell>
+              <TableCell>
+                {investment.points_cost}
+                <span
+                  className="qPointsMark"
+                  style={{ "font-size": "smaller" }}
+                >
+                  <sup>ℚ</sup>
+                </span>
+              </TableCell>
+              <TableCell>
+                {investment.points_earned}
+                <span
+                  className="qPointsMark"
+                  style={{ "font-size": "smaller" }}
+                >
+                  <sup>ℚ</sup>
+                </span>
+              </TableCell>
               <TableCell align="right">
                 <Button
                   className={classes.button}
