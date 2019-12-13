@@ -31,6 +31,18 @@ code {
   animation-iteration-count: infinite;
 }
 
+.qPointsMark {
+  /* animation-name: qPointsGlow; */
+  color: rgb(224, 190, 243);
+  animation-timing-function: ease-in-out;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.widget {
+  transform: translate(13.5px, 0px);
+}
+
 /*  lock icon, Login page */
 .MuiSvgIcon-root path {
   color: whitesmoke;
@@ -48,5 +60,23 @@ code {
   }
   100% {
     stroke: rgb(255, 179, 87);
+  }
+}
+
+@keyframes qPointsGlow {
+  0% {
+    color: rgb(224, 190, 243);
+  }
+  30% {
+    color: rgb(224, 190, 243);
+  }
+  50% {
+    color: rgb(255, 221, 111);
+  }
+  80% {
+    color: rgb(255, 215, 86);
+  }
+  100% {
+    color: rgb(224, 190, 243);
   }
 }

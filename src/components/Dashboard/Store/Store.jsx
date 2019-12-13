@@ -43,10 +43,10 @@ const Store = props => {
     <React.Fragment>
       <Dialog />
       <Grid container spacing={3} wrap="wrap">
-        {props.storeItems.map(storeItem => {
+        {props.storeItems.map((storeItem, index) => {
           // console.log(quiz);
           return (
-            <Grid item xs md={4}>
+            <Grid key={index} item xs md={3}>
               <Paper className={fixedHeightPaper}>
                 <StoreCard
                   itemData={{
