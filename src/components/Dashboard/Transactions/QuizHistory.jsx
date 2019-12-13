@@ -5,7 +5,6 @@ import Title from "../Title";
 // material ui
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -53,7 +52,6 @@ const QuizHistory = props => {
   const classes = useStyles();
   // set props from redux
   const { transactions } = props;
-  console.log(transactions);
 
   // date format
   function date_formating(timeStamp, type) {
@@ -94,79 +92,34 @@ const QuizHistory = props => {
         <Table size="small">
           <TableHead>
             <TableRow className={classes.tableRow}>
-              <TableCell>Name</TableCell>
-              <TableCell>Earnings</TableCell>
-              <TableCell>Cost</TableCell>
-              <TableCell>Profit</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Earned</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.transaction_history ? (
-              (transactions.transaction_history.sort((a, b) => {
-                if (a.timestamp_start.seconds < b.timestamp_start.seconds)
-                  return 1;
-                if (a.timestamp_start.seconds > b.timestamp_start.seconds)
-                  return -1;
+            {transactions.quiz_history ? (
+              (transactions.quiz_history.sort((a, b) => {
+                if (a.date.seconds < b.date.seconds) return 1;
+                if (a.date.seconds > b.date.seconds) return -1;
                 return 0;
               }),
-              transactions.transaction_history.map(row => (
-                <TableRow key={row.user_id} className={classes.tableRow}>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell align="left">
-                    {row.points_earned}
-                    <span
-                      className="qPointsMark"
-                      style={{ "font-size": "smaller" }}
-                    >
-                      <sup>ℚ</sup>
-                    </span>
-                  </TableCell>
-                  <TableCell align="left">
-                    {row.points_cost}
-                    <span
-                      className="qPointsMark"
-                      style={{ "font-size": "smaller" }}
-                    >
-                      <sup>ℚ</sup>
-                    </span>
-                  </TableCell>
-                  {(() => {
-                    const profit = row.points_earned - row.points_cost;
-                    return profit < 0 ? (
-                      <TableCell align="left">
-                        <Box component="div" className={classes.negativeBox}>
-                          {profit}
-                          <span
-                            className="qPointsMark"
-                            style={{ "font-size": "smaller" }}
-                          >
-                            <sup>ℚ</sup>
-                          </span>
-                        </Box>
-                      </TableCell>
-                    ) : (
-                      <TableCell align="left">
-                        {profit}
-                        <span
-                          className="qPointsMark"
-                          style={{ "font-size": "smaller" }}
-                        >
-                          ℚ
-                        </span>
-                      </TableCell>
-                    );
-                  })()}
+              transactions.quiz_history.map((quiz, id) => (
+                <TableRow key={id} className={classes.tableRow}>
                   <TableCell>
-                    {row.timestamp_start
-                      ? date_formating(row.timestamp_start.seconds, "date")
+                    {quiz.date
+                      ? date_formating(quiz.date.seconds, "date")
                       : "Null"}
                   </TableCell>
-                  <TableCell>
-                    {row.timestamp_end
-                      ? date_formating(row.timestamp_end.seconds, "date")
-                      : "Ongoing"}
+                  <TableCell>{quiz.quiz_title}</TableCell>
+                  <TableCell align="left">
+                    {quiz.points_earned}
+                    <span
+                      className="qPointsMark"
+                      style={{ fontSize: "smaller" }}
+                    >
+                      <sup>ℚ</sup>
+                    </span>
                   </TableCell>
                 </TableRow>
               )))

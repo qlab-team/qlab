@@ -15,7 +15,7 @@ import { compose } from "redux";
 /////////////// COMPONENT
 const Transactions = props => {
   // set props from redux
-  const { auth, transactions } = props;
+  const { auth } = props;
 
   useEffect(() => {
     if (auth.isLoaded) {
@@ -27,13 +27,13 @@ const Transactions = props => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <TransactionHistory transactions={transactions} />
+        <TransactionHistory />
       </Grid>
       <Grid item xs={12}>
         <PurchaseHistory />
       </Grid>
       <Grid item xs={12}>
-        <QuizHistory transactions={transactions} />
+        <QuizHistory />
       </Grid>
     </Grid>
   );
@@ -42,7 +42,6 @@ const Transactions = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    transactions: state.transactions,
     auth: state.firebase.auth
   };
 };

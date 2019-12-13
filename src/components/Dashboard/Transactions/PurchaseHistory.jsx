@@ -53,7 +53,6 @@ const PurchaseHistory = props => {
   const classes = useStyles();
   // set props from redux
   const { user } = props;
-  console.log(user);
   // date format
   function date_formating(timeStamp, type) {
     const month = [

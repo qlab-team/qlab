@@ -139,7 +139,7 @@ const TransactionHistory = props => {
                           {profit}
                           <span
                             className="qPointsMark"
-                            style={{ "font-size": "smaller" }}
+                            style={{ fontSize: "smaller" }}
                           >
                             <sup>ℚ</sup>
                           </span>
@@ -150,7 +150,7 @@ const TransactionHistory = props => {
                         {profit}
                         <span
                           className="qPointsMark"
-                          style={{ "font-size": "smaller" }}
+                          style={{ fontSize: "smaller" }}
                         >
                           ℚ
                         </span>
