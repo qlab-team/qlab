@@ -6,7 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // actions
-import { openDialog, purchaseItem } from "../../store/actions/storeActions";
+import { purchaseItem } from "../../store/actions/storeActions";
+import { openDialog } from "../../store/actions/dialogActions";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -81,9 +82,9 @@ const AlertDialog = props => {
 const mapStateToProps = (state, ownProps) => {
   return {
     storeItems: state.store.items,
-    isDialogOpen: state.store.isDialogOpen,
-    itemData: state.store.itemData,
-    purchaseError: state.store.purchaseError,
+    isDialogOpen: state.dialog.isDialogOpen,
+    itemData: state.dialog.itemData,
+    purchaseError: state.dialog.purchaseError,
     auth: state.firebase.auth,
     user: state.user
   };

@@ -23,7 +23,8 @@ export const addInvestment = (data, auth, user) => {
                 date: data.investment_made,
                 points_cost: data.q_score * 5,
                 points_earned: 0,
-                user_id: data.user_id
+                user_id: data.user_id,
+                q_score: data.q_score
               })
             });
         }
@@ -64,30 +65,45 @@ export const removeInvestment = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Remove Investment Called");
     const firestore = getFirestore();
-    const newInvestments = user.profile.investments.filter(investment => {
-      return investment.user_id !== data.user_id;
-    });
+    let newInvestments = [];
+    // get current investments and filter them
     firestore
       .collection("users")
-      .doc(user.user_id)
-      .update({
-        investments: newInvestments
+      .where("auth_id", "==", auth.uid)
+      .get()
+      // filter the investments
+      .then(res => {
+        const docData = res.docs[0].data();
+        const currInvestments = docData.investments;
+        newInvestments = currInvestments.filter(investment => {
+          return investment.user_id !== data.user_id;
+        });
+        return newInvestments;
       })
-      .then(() => {
-        console.log("Investment Removed");
+      .then(newInvestments => {
+        // update the investments with removed version
         firestore
           .collection("users")
-          .where("auth_id", "==", auth.uid)
-          .get()
-          .then(res => {
-            const doc = res.docs[0];
-            return doc.data();
+          .doc(user.user_id)
+          .update({
+            investments: newInvestments
           })
-          .then(data => {
-            dispatch({
-              type: "GET_INVESTMENTS",
-              investments: data.investments
-            });
+          .then(() => {
+            console.log("Investment Removed");
+            firestore
+              .collection("users")
+              .where("auth_id", "==", auth.uid)
+              .get()
+              .then(res => {
+                const doc = res.docs[0];
+                return doc.data();
+              })
+              .then(data => {
+                dispatch({
+                  type: "GET_INVESTMENTS",
+                  investments: newInvestments
+                });
+              });
           });
       })
       .catch(e => {
