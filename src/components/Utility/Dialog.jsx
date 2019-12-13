@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 const AlertDialog = props => {
-  const { auth, user, isDialogOpen, dialogData, error } = props;
+  const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
   return (
     <div>
       <Dialog
@@ -30,10 +30,12 @@ const AlertDialog = props => {
           <DialogContentText id="alert-dialog-description">
             {!error ? (
               <>
-                {dialogData.name} for {dialogData.price}
-                <span style={{ opacity: 0.5, fontSize: "smaller" }}>
-                  <sup>ℚ</sup>
-                </span>
+                {dialogData.msg}
+                {qAtTheEnd && (
+                  <span style={{ opacity: 0.5, fontSize: "smaller" }}>
+                    <sup>ℚ</sup>
+                  </span>
+                )}
               </>
             ) : (
               error
