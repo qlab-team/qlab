@@ -8,7 +8,8 @@ import { compose } from "redux";
 import {
   getInvestments,
   removeInvestment
-} from "../../../store/actions/statsActions";
+} from "../../../store/actions/investmentActions";
+
 // components
 import Title from "../Title";
 // material ui
@@ -57,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 const PerformanceTable = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, stats, user } = props;
+  const { auth, investments, user } = props;
   useEffect(() => {
     if (auth.isLoaded) {
       props.getInvestments(auth);
@@ -73,21 +74,36 @@ const PerformanceTable = props => {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>qPoints</TableCell>
-            <TableCell>Earnable Points</TableCell>
-            <TableCell align="right">qScore</TableCell>
+            <TableCell>Cost</TableCell>
+            <TableCell>Earnings</TableCell>
+            <TableCell align="right">Current qScore</TableCell>
             {/* <TableCell align="right">Last Login</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {stats.investments.map((investment, i) => (
+          {investments.investments.map((investment, i) => (
             <TableRow key={i}>
               <TableCell>{investment.date.toDate().toDateString()}</TableCell>
               <TableCell>{investment.display_name}</TableCell>
-              <TableCell>{investment.q_points}</TableCell>
-              <TableCell>{investment.earnable_points}</TableCell>
+              <TableCell>
+                {investment.points_cost}
+                <span
+                  className="qPointsMark"
+                  style={{ "font-size": "smaller" }}
+                >
+                  <sup>ℚ</sup>
+                </span>
+              </TableCell>
+              <TableCell>
+                {investment.points_earned}
+                <span
+                  className="qPointsMark"
+                  style={{ "font-size": "smaller" }}
+                >
+                  <sup>ℚ</sup>
+                </span>
+              </TableCell>
               <TableCell align="right">
-                {" "}
                 <Button
                   className={classes.button}
                   style={{ textDecoration: "none" }}
@@ -125,9 +141,10 @@ const PerformanceTable = props => {
 /////////////// REDUX
 const mapStateToProps = state => {
   return {
-    stats: state.stats,
+    investments: state.investments,
     auth: state.firebase.auth,
-    user: state.user
+    user: state.user,
+    leaderboard: state.leaderboard
   };
 };
 const mapDispatchToProps = dispatch => {

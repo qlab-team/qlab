@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   button: {
     minWidth: theme.spacing(9),
     borderRadius: 50,
-    fontSize: 10,
+    fontSize: 14,
     textTransform: "none",
     textDecoration: "none !important",
     padding: theme.spacing(1),
@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
     transition: "ease-in-out 0.15s",
     background: "whitesmoke",
     "&:hover": {
-      background: "rgb(92, 27, 249)",
-      color: "whitesmoke",
+      background: "whitesmoke",
+      color: "rgb(92, 27, 249)",
       cursor: "pointer"
     },
     boxShadow:
@@ -67,7 +67,7 @@ const Chart = props => {
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
-      data.reverse().push(createData(new Date(), user.profile.q_score));
+      data.reverse().push(createData("Today", user.profile.q_score));
       updateChartData(data);
     }
     // eslint-disable-next-line
@@ -103,7 +103,7 @@ const Chart = props => {
           }}
         >
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
+          <YAxis width={25} stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
               position="left"
