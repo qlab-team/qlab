@@ -2,7 +2,6 @@
 import React from "react";
 // components
 import Title from "../Title";
-// import StoreCard from "./StoreCard";
 // material ui
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +13,6 @@ import TableRow from "@material-ui/core/TableRow";
 
 // redux
 import { connect } from "react-redux";
-import { compose } from "redux";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -55,7 +53,6 @@ const PurchaseHistory = props => {
   const classes = useStyles();
   // set props from redux
   const { user } = props;
-  console.log(user);
   // date format
   function date_formating(timeStamp, type) {
     const month = [
@@ -134,8 +131,7 @@ const PurchaseHistory = props => {
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user,
-    auth: state.firebase.auth
+    user: state.user
   };
 };
-export default compose(connect(mapStateToProps))(PurchaseHistory);
+export default connect(mapStateToProps)(PurchaseHistory);
