@@ -80,6 +80,8 @@ const QuizHistory = props => {
     const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
     if (type === "date") return monthStr + " " + day + " " + yearFull;
+    if (type === "datetime")
+      return monthStr + " " + day + " " + yearFull + " - " + hour + ":" + min;
     return (
       yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
     );
@@ -108,7 +110,7 @@ const QuizHistory = props => {
                 <TableRow key={id} className={classes.tableRow}>
                   <TableCell>
                     {quiz.date
-                      ? date_formating(quiz.date.seconds, "date")
+                      ? date_formating(quiz.date.seconds, "datetime")
                       : "Null"}
                   </TableCell>
                   <TableCell>{quiz.quiz_title}</TableCell>

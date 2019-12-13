@@ -54,6 +54,8 @@ const TransactionHistory = props => {
   // set props from redux
   const { transactions } = props;
 
+  console.log(transactions);
+
   // date format
   function date_formating(timeStamp, type) {
     const month = [
@@ -102,15 +104,15 @@ const TransactionHistory = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.transaction_history ? (
-              (transactions.transaction_history.sort((a, b) => {
+            {transactions.investment_history ? (
+              (transactions.investment_history.sort((a, b) => {
                 if (a.timestamp_start.seconds < b.timestamp_start.seconds)
                   return 1;
                 if (a.timestamp_start.seconds > b.timestamp_start.seconds)
                   return -1;
                 return 0;
               }),
-              transactions.transaction_history.map(row => (
+              transactions.investment_history.map(row => (
                 <TableRow key={row.user_id} className={classes.tableRow}>
                   <TableCell>{row.username}</TableCell>
                   <TableCell align="left">
