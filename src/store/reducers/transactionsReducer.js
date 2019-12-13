@@ -1,5 +1,6 @@
 const initState = {
-  investments: [],
+  investment_history: [],
+  quiz_history: [],
   last_updated: ""
 };
 
