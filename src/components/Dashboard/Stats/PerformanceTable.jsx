@@ -5,11 +5,8 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import {
-  getInvestments,
-  removeInvestment
-} from "../../../store/actions/investmentActions";
-
+import { getInvestments } from "../../../store/actions/investmentActions";
+import { openDialog } from "../../../store/actions/dialogActions";
 // components
 import Title from "../Title";
 // material ui
@@ -58,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 const PerformanceTable = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, investments, user } = props;
+  const { auth, investments } = props;
   useEffect(() => {
     if (auth.isLoaded) {
       props.getInvestments(auth);
@@ -109,16 +106,19 @@ const PerformanceTable = props => {
                   }}
                   onClick={() => {
                     const data = {
-                      user_id: investment.user_id
+                      user_id: investment.user_id,
+                      msg: {
+                        title: "Remove investment",
+                        body: `Are you sure you want to remove ${investment.display_name}?`
+                      }
                     };
-                    props.removeInvestment(data, auth, user);
+                    props.openDialog(true, data);
                   }}
                 >
                   {investment.q_score}
                   <></>
                 </Button>
               </TableCell>
-              {/* <TableCell align="right">{}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
@@ -144,8 +144,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getInvestments: auth => dispatch(getInvestments(auth)),
-    removeInvestment: (data, auth, user) =>
-      dispatch(removeInvestment(data, auth, user))
+    openDialog: (open, data) => dispatch(openDialog(open, data))
   };
 };
 

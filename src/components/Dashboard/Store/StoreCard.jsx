@@ -73,7 +73,10 @@ const StoreCard = props => {
         onClick={() => {
           props.openDialog(true, {
             ...itemData,
-            msg: `${itemData.name} for ${itemData.price}`,
+            msg: {
+              title: "Do you want to buy this item?",
+              body: `${itemData.name} for ${itemData.price}`
+            },
             date: new Date().toString()
           });
         }}

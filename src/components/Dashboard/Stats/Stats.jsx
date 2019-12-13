@@ -16,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 // actions
 import { getUserAndLogin } from "../../../store/actions/userActions";
+import { removeInvestment } from "../../../store/actions/investmentActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -48,7 +49,7 @@ const Stats = props => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <React.Fragment>
-      <Dialog />
+      <Dialog dialogCallback={props.removeInvestment} />
       <Grid container spacing={3}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>
@@ -83,7 +84,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     // openDialog: (open, data) => dispatch(openDialog(open, data)),
-    getUserAndLogin: auth => dispatch(getUserAndLogin(auth))
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
+    removeInvestment: (data, auth, user) =>
+      dispatch(removeInvestment(data, auth, user))
   };
 };
 

@@ -4,8 +4,10 @@ import React from "react";
 import StoreCard from "./StoreCard";
 import Dialog from "../../Utility/Dialog";
 // actions
-import { getStoreItems } from "../../../store/actions/storeActions";
-import { purchaseItem } from "../../../store/actions/storeActions";
+import {
+  getStoreItems,
+  purchaseItem
+} from "../../../store/actions/storeActions";
 // material ui
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";

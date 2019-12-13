@@ -24,13 +24,13 @@ const AlertDialog = props => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {!error ? "Do you want to buy this item?" : "Error"}
+          {!error && dialogData.msg ? dialogData.msg.title : "Error"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {!error ? (
+            {!error && dialogData ? (
               <>
-                {dialogData.msg}
+                {dialogData.msg && dialogData.msg.body}
                 {qAtTheEnd && (
                   <span style={{ opacity: 0.5, fontSize: "smaller" }}>
                     <sup>ℚ</sup>
@@ -57,7 +57,7 @@ const AlertDialog = props => {
             onClick={() => {
               props.openDialog(false, null, error);
               if (!error) {
-                props.dialogCallback(props.dialogData, auth, user);
+                props.dialogCallback(dialogData, auth, user);
               }
             }}
             color="primary"
