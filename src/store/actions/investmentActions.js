@@ -41,6 +41,9 @@ export const getInvestments = auth => {
     // make async call to database
     console.log("Get Investments for Stats Called");
     const firestore = getFirestore();
+    const state = getState();
+    const user_id = state.user.user_id;
+    if (!user_id) return;
     firestore
       .collection("users")
       .where("auth_id", "==", auth.uid)

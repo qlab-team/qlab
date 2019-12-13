@@ -13,7 +13,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 const AlertDialog = props => {
-  const { auth, user, isDialogOpen, itemData, purchaseError } = props;
+  const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
+  console.log(dialogData);
   return (
     <div>
       <Dialog
@@ -25,19 +26,21 @@ const AlertDialog = props => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {!props.purchaseError ? "Do you want to buy this item?" : "Error"}
+          {!error && dialogData ? dialogData.msg.title : "Error"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {!purchaseError ? (
+            {!error && dialogData ? (
               <>
-                {itemData.name} for {itemData.price}
-                <span style={{ opacity: 0.5, fontSize: "smaller" }}>
-                  <sup>ℚ</sup>
-                </span>
+                {dialogData.msg && dialogData.msg.body}
+                {qAtTheEnd && (
+                  <span style={{ opacity: 0.5, fontSize: "smaller" }}>
+                    <sup>ℚ</sup>
+                  </span>
+                )}
               </>
             ) : (
-              purchaseError
+              error
             )}
           </DialogContentText>
         </DialogContent>
@@ -49,27 +52,21 @@ const AlertDialog = props => {
             color="primary"
           >
             <span style={{ fontWeight: "700", color: "white" }}>
-              {!purchaseError && "DISAGREE"}
+              {!error && "DISAGREE"}
             </span>
           </Button>
           <Button
             onClick={() => {
-              props.openDialog(false, null, purchaseError);
-              if (!purchaseError) {
-                const data = {
-                  purchaseDate: new Date().toString(),
-                  itemName: itemData.name,
-                  itemId: itemData.id,
-                  itemPrice: itemData.price
-                };
-                props.purchaseItem(data, auth, user);
+              props.openDialog(false, null, error);
+              if (!error) {
+                props.dialogCallback(dialogData, auth, user);
               }
             }}
             color="primary"
             autoFocus
           >
             <span style={{ fontWeight: "700", color: "white" }}>
-              {!purchaseError ? "AGREE" : "GO BACK"}
+              {!error ? "AGREE" : "GO BACK"}
             </span>
           </Button>
         </DialogActions>
