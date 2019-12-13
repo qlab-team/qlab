@@ -80,13 +80,15 @@ const useStyles = makeStyles(theme => ({
     ].join(",")
   }
 }));
-function QuizFinished(props) {
+const QuizFinished = props => {
   const classes = useStyles();
   const [userRating, updateUserRating] = useState(0);
+
   useEffect(() => {
     //console.log(props);
-    props.addQuizInfo(props.auth.uid, props.quizPoints);
-  });
+    props.addQuizInfo(props.quizPoints);
+    // eslint-disable-next-line
+  }, []);
 
   const updateQuizState = rating => {
     updateUserRating(rating);
@@ -106,16 +108,14 @@ function QuizFinished(props) {
         <Box className={classes.Box}>
           <Typography className={classes.Congratulations}>
             Congratulations! You earned {props.quizPoints}
-            <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+            <span className="qPointsMark" style={{ fontSize: "smaller" }}>
               <sup>ℚ</sup>
             </span>
             !
           </Typography>
 
           <Typography className={classes.Rate}>
-            <span
-              style={{ "font-size": "smaller", color: "rgb(229, 209, 241)" }}
-            >
+            <span style={{ fontSize: "smaller", color: "rgb(229, 209, 241)" }}>
               What did you think of this quiz?
             </span>
           </Typography>
@@ -135,13 +135,10 @@ function QuizFinished(props) {
       </Container>
     </React.Fragment>
   );
-}
+};
 
 const mapStateToProps = state => {
-  return {
-    leaderboard: state.leaderboard,
-    auth: state.firebase.auth
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {

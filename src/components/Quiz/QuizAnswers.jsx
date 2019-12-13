@@ -39,7 +39,7 @@ const QuizAnswers = props => {
         item
         container
         alignItems="center"
-        justify="space-between"
+        justify="space-around"
         spacing={4}
       >
         {props.answers.map((answer, index) => {

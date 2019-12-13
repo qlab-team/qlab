@@ -13,7 +13,6 @@ import { compose } from "redux";
 
 const AlertDialog = props => {
   const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
-  console.log(dialogData);
   return (
     <div>
       <Dialog

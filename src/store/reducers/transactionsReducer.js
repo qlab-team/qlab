@@ -1,5 +1,6 @@
 const initState = {
-  investments: [],
+  investment_history: [],
+  quiz_history: [],
   last_updated: ""
 };
 
@@ -8,7 +9,8 @@ const transactionsReducer = (state = initState, action) => {
     case "GET_TRANSACTIONS": {
       return {
         ...state,
-        investments: action.transactions.investments,
+        investment_history: action.transactions.investment_history,
+        quiz_history: action.transactions.quiz_history,
         last_updated: action.transactions.last_updated
       };
     }

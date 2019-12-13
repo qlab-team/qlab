@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // components
 import Chart from "./Chart";
-import QPoints from "./QPoints.jsx";
 import Dialog from "../../Utility/Dialog";
+import QPoints from "./QPoints.jsx";
 import PerformanceTable from "./PerformanceTable";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
