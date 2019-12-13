@@ -4,7 +4,7 @@ import { useEffect } from "react";
 // components
 import Profile from "./Profile/Profile";
 import Leaderboard from "./Leaderboard/Leaderboard";
-import { Transactions } from "./Transactions/Transactions";
+import Transactions from "./Transactions/Transactions";
 import Stats from "./Stats/Stats";
 import Store from "./Store/Store";
 import Quizzes from "./Quizzes/Quizzes";

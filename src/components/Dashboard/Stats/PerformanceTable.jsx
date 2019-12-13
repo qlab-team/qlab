@@ -87,19 +87,13 @@ const PerformanceTable = props => {
               <TableCell>{investment.display_name}</TableCell>
               <TableCell>
                 {investment.points_cost}
-                <span
-                  className="qPointsMark"
-                  style={{ "font-size": "smaller" }}
-                >
+                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
                   <sup>ℚ</sup>
                 </span>
               </TableCell>
               <TableCell>
                 {investment.points_earned}
-                <span
-                  className="qPointsMark"
-                  style={{ "font-size": "smaller" }}
-                >
+                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
                   <sup>ℚ</sup>
                 </span>
               </TableCell>
