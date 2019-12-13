@@ -42,7 +42,7 @@ const Store = props => {
 
   return (
     <React.Fragment>
-      <Dialog dialogCallback={props.purchaseItem} />
+      <Dialog dialogCallback={props.purchaseItem} qAtTheEnd={true} />
       <Grid container spacing={3} wrap="wrap">
         {props.storeItems.map((storeItem, index) => {
           return (

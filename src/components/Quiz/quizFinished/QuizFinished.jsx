@@ -108,16 +108,14 @@ const QuizFinished = props => {
         <Box className={classes.Box}>
           <Typography className={classes.Congratulations}>
             Congratulations! You earned {props.quizPoints}
-            <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+            <span className="qPointsMark" style={{ fontSize: "smaller" }}>
               <sup>ℚ</sup>
             </span>
             !
           </Typography>
 
           <Typography className={classes.Rate}>
-            <span
-              style={{ "font-size": "smaller", color: "rgb(229, 209, 241)" }}
-            >
+            <span style={{ fontSize: "smaller", color: "rgb(229, 209, 241)" }}>
               What did you think of this quiz?
             </span>
           </Typography>

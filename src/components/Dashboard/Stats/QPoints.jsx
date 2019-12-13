@@ -32,7 +32,7 @@ const QPoints = props => {
   return (
     <React.Fragment>
       <Title>
-        <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
           ℚ
         </span>
         Points

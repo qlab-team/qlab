@@ -43,6 +43,8 @@ const useStyles = makeStyles(theme => ({
 const StoreCard = props => {
   const classes = useStyles();
 
+  const { itemData } = props;
+
   return (
     <Grid
       className={classes.root}
@@ -58,18 +60,22 @@ const StoreCard = props => {
         color="primary"
         gutterBottom
       >
-        {props.itemData.name}
+        {itemData.name}
       </Typography>
       <ShoppingCartIcon fontSize="large" />
       <Typography className={classes.description} variant="body2">
-        {props.itemData.description}
+        {itemData.description}
       </Typography>
       <Link
         to="/dashboard/store"
         className={classes.button}
         style={{ textDecoration: "none" }}
         onClick={() => {
-          props.openDialog(true, props.itemData);
+          props.openDialog(true, {
+            ...itemData,
+            msg: `${itemData.name} for ${itemData.price}`,
+            date: new Date().toString()
+          });
         }}
       >
         {props.itemData.price}
