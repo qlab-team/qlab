@@ -6,7 +6,7 @@ import Title from "../Title";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import { addInvestment } from "../../../store/actions/leaderboardActions";
+import { addInvestment } from "../../../store/actions/investmentActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
