@@ -39,7 +39,11 @@ const QuizAnswers = props => {
         item
         container
         alignItems="center"
+<<<<<<< Updated upstream
         justify="space-between"
+=======
+        justify="space-around"
+>>>>>>> Stashed changes
         spacing={4}
       >
         {props.answers.map((answer, index) => {
