@@ -9,6 +9,7 @@ const getItems = () => {
       .doc(userId)
       .get()
       .then(res => {
+        console.log("ITEEEEMS", res.data());
         dispatch({
           type: "GET_ITEMS",
           items: res.data().items

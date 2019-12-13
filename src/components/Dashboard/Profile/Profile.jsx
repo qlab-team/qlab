@@ -103,7 +103,7 @@ const Profile = props => {
     if (curUserItems !== "") {
       changeUserItemsArr(
         curUserItems.map(item => {
-          return <Badges badgeName={item.itemName} />;
+          return <Badges badgeName={item.item_name} />;
         })
       );
     }
