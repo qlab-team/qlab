@@ -87,7 +87,8 @@ const QuizFinished = props => {
   useEffect(() => {
     //console.log(props);
     props.addQuizInfo(props.quizPoints);
-  }, [props, props.quizPoints]);
+    // eslint-disable-next-line
+  }, []);
 
   const updateQuizState = rating => {
     updateUserRating(rating);
