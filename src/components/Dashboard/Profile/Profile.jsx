@@ -23,11 +23,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     overflow: "hidden",
-    padding: theme.spacing(0, 3)
+    
   },
   paper: {
-    maxWidth: 900,
-    margin: `${theme.spacing(1)}px auto`,
+    maxWidth: 400,
     padding: theme.spacing(2),
     overflow: "auto"
   },
@@ -119,16 +118,14 @@ const Profile = props => {
   }
   return (
     user.isLoggedIn && (
-      <div className={classes.root}>
+      <div>
         {auth.isLoaded && (
           <>
             <Paper className={classes.paper}>
               <Grid
                 container
                 wrap="nowrap"
-                spacing={2}
-                alignItems="center"
-                justify="space-between"
+                
               >
                 <Grid item>
                   <Avatar
@@ -138,8 +135,12 @@ const Profile = props => {
                   />
                 </Grid>
                 <Grid item xs zeroMinWidth>
-                  <Typography component="h2" variant="h3" color="primary">
-                    {auth.displayName}({user.profile.username})
+                  <Typography color="primary">
+                    {user.profile.username}
+                  </Typography>
+
+                  <Typography color="primary">
+                  You have solved {user.profile.quiz_total} quizzes.
                   </Typography>
                 </Grid>
               </Grid>
