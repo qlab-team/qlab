@@ -32,9 +32,14 @@ const useStyles = makeStyles(theme => ({
   },
   bigAvatar: {
     width: "100px",
-    height: "100px"
+    height: "100px",
+    [theme.breakpoints.down("xs")]: {
+      width: 50,
+      height: 50
+    }
   },
   changeUserName: {
+    fontSize: 10,
     "&:hover": {
       cursor: "pointer"
     }
@@ -43,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   button: {
     paddingRight: 10,
     borderRadius: 50,
-    fontSize: 15,
+    fontSize: 10,
     textTransform: "none",
     textDecoration: "none !important",
     transition: "ease-in-out 0.15s",
@@ -56,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
     [theme.breakpoints.down("xs")]: {
-      fontSize: 20,
+      fontSize: 10,
       borderRadius: 20,
       marginTop: 10
     }
@@ -66,7 +71,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("xs")]: {
       marginLeft: 0
     },
-    marginTop: 10
+    marginTop: 0,
+    fontSize: 11
   },
 
   gridContainer: {
