@@ -129,7 +129,7 @@ const Transactions = props => {
                       {row.points_earned}
                       <span
                         className="qPointsMark"
-                        style={{ "font-size": "smaller" }}
+                        style={{ fontSize: "smaller" }}
                       >
                         <sup>ℚ</sup>
                       </span>
@@ -138,7 +138,7 @@ const Transactions = props => {
                       {row.points_cost}
                       <span
                         className="qPointsMark"
-                        style={{ "font-size": "smaller" }}
+                        style={{ fontSize: "smaller" }}
                       >
                         <sup>ℚ</sup>
                       </span>
@@ -151,7 +151,7 @@ const Transactions = props => {
                             {profit}
                             <span
                               className="qPointsMark"
-                              style={{ "font-size": "smaller" }}
+                              style={{ fontSize: "smaller" }}
                             >
                               <sup>ℚ</sup>
                             </span>
@@ -162,7 +162,7 @@ const Transactions = props => {
                           {profit}
                           <span
                             className="qPointsMark"
-                            style={{ "font-size": "smaller" }}
+                            style={{ fontSize: "smaller" }}
                           >
                             ℚ
                           </span>
