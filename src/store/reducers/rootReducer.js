@@ -6,6 +6,7 @@ import leaderboardReducer from "./leaderboardReducer";
 import transactionsReducer from "./transactionsReducer";
 import quizzesReducer from "./quizzesReducer";
 import investmentReducer from "./investmentReducer";
+import profileReducer from "./profileReducer";
 
 //Redux
 import { combineReducers } from "redux";
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   leaderboard: leaderboardReducer,
   transactions: transactionsReducer,
   investments: investmentReducer,
+  profile: profileReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer
 });
