@@ -49,10 +49,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-const TransactionHistory = props => {
+const QuizHistory = props => {
   const classes = useStyles();
   // set props from redux
   const { transactions } = props;
+  console.log(transactions);
 
   // date format
   function date_formating(timeStamp, type) {
@@ -89,7 +90,7 @@ const TransactionHistory = props => {
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
-        <Title>Transaction History</Title>
+        <Title>Quiz History</Title>
         <Table size="small">
           <TableHead>
             <TableRow className={classes.tableRow}>
@@ -198,4 +199,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 /////////////// EXPORTS
-export default connect(mapStateToProps)(TransactionHistory);
+export default connect(mapStateToProps)(QuizHistory);
