@@ -35,13 +35,7 @@ const QuizAnswers = props => {
       <Typography className={props.classes.Title}>
         {props.quizQuestion}
       </Typography>
-      <Grid
-        item
-        container
-        alignItems="center"
-        justify="space-between"
-        spacing={4}
-      >
+      <Grid item container alignItems="flex-start" spacing={4}>
         {props.answers.map((answer, index) => {
           return (
             <QuizAnswer
