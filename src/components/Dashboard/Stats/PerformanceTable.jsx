@@ -9,7 +9,6 @@ import {
   getInvestments,
   removeInvestment
 } from "../../../store/actions/investmentActions";
-import { getLeaderboard } from "../../../store/actions/leaderboardActions";
 
 // components
 import Title from "../Title";
@@ -59,11 +58,10 @@ const useStyles = makeStyles(theme => ({
 const PerformanceTable = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, investments, user, leaderboard } = props;
+  const { auth, investments, user } = props;
   useEffect(() => {
     if (auth.isLoaded) {
       props.getInvestments(auth);
-      props.getLeaderboard();
     }
     // eslint-disable-next-line
   }, [auth.isLoaded]);
@@ -77,8 +75,8 @@ const PerformanceTable = props => {
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Cost</TableCell>
-            <TableCell>Earnings</TableCell>
-            <TableCell align="right">qScore</TableCell>
+            <TableCell>ℚ Earnings</TableCell>
+            <TableCell align="right">Current qScore</TableCell>
             {/* <TableCell align="right">Last Login</TableCell> */}
           </TableRow>
         </TableHead>
@@ -90,7 +88,6 @@ const PerformanceTable = props => {
               <TableCell>{investment.points_cost}</TableCell>
               <TableCell>{investment.points_earned}</TableCell>
               <TableCell align="right">
-                {" "}
                 <Button
                   className={classes.button}
                   style={{ textDecoration: "none" }}
@@ -98,10 +95,7 @@ const PerformanceTable = props => {
                     e.target.innerHTML = "Remove";
                   }}
                   onMouseLeave={e => {
-                    // TODO: Maybe need to rework this at somepoint, change it into the cron job
-                    e.target.innerHTML = leaderboard.board.filter(
-                      person => person.user_id === investment.user_id
-                    )[0].q_score;
+                    e.target.innerHTML = investment.q_score;
                   }}
                   onClick={() => {
                     const data = {
@@ -140,8 +134,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getInvestments: auth => dispatch(getInvestments(auth)),
     removeInvestment: (data, auth, user) =>
-      dispatch(removeInvestment(data, auth, user)),
-    getLeaderboard: () => dispatch(getLeaderboard())
+      dispatch(removeInvestment(data, auth, user))
   };
 };
 
