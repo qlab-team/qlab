@@ -81,8 +81,6 @@ const store = createStore(
   )
 );
 
-// seedQuizzes();
-
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>

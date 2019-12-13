@@ -80,13 +80,15 @@ const useStyles = makeStyles(theme => ({
     ].join(",")
   }
 }));
-function QuizFinished(props) {
+const QuizFinished = props => {
   const classes = useStyles();
   const [userRating, updateUserRating] = useState(0);
+
   useEffect(() => {
     //console.log(props);
-    props.addQuizInfo(props.auth.uid, props.quizPoints);
-  });
+    props.addQuizInfo(props.quizPoints);
+    // eslint-disable-next-line
+  }, []);
 
   const updateQuizState = rating => {
     updateUserRating(rating);
@@ -133,13 +135,10 @@ function QuizFinished(props) {
       </Container>
     </React.Fragment>
   );
-}
+};
 
 const mapStateToProps = state => {
-  return {
-    leaderboard: state.leaderboard,
-    auth: state.firebase.auth
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
