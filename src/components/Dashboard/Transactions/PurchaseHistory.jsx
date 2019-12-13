@@ -1,10 +1,8 @@
 /////////////// IMPORTS
-import React, { useEffect } from "react";
+import React from "react";
 // components
 import Title from "../Title";
 // import StoreCard from "./StoreCard";
-// actions
-import { getTransactions } from "../../../store/actions/transactionsActions";
 // material ui
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
