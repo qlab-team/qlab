@@ -10,6 +10,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import StoreIcon from "@material-ui/icons/Store";
 import LayersIcon from "@material-ui/icons/Layers";
@@ -41,6 +42,18 @@ export const MainListItems = props => {
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary="Leaderboard" />
+        </ListItem>
+      </Link>
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/Transactions"
+        onClick={props.handleDrawerClose}
+      >
+        <ListItem button>
+          <ListItemIcon>
+            <FormatListBulletedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Transactions" />
         </ListItem>
       </Link>
       <Link
