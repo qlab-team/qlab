@@ -105,6 +105,7 @@ const PerformanceTable = props => {
                   }}
                 >
                   {investment.q_score}
+                  <></>
                 </Button>
               </TableCell>
               {/* <TableCell align="right">{}</TableCell> */}

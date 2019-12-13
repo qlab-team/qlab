@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   points: {
-    fontSize: "4.5rem"
+    fontSize: "4rem"
   }
 }));
 
@@ -34,7 +34,7 @@ const QPoints = props => {
       <Title>qPoints</Title>
       <Typography className={classes.points} component="p" variant="h4">
         {user.isLoggedIn && user.profile.q_points}
-        <span style={{ opacity: 0.5, "font-size": "smaller" }}>
+        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
           <sup>ℚ</sup>
         </span>
       </Typography>

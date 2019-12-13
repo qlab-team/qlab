@@ -8,7 +8,6 @@ const getQuizzes = quizId => {
       .get()
       .then(collection => {
         let quizzes = collection.docs.map(doc => {
-          console.log(doc.data());
           return doc.data();
         });
         dispatch({ type: "GET_QUIZZES", quizzes });
