@@ -4,7 +4,6 @@ import { dexysMidnightRunner } from "./dexysMidnightRunner";
 import { generateNewUser } from "./accountCreationActions";
 
 const functions = require("firebase-functions");
-
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
 
@@ -86,16 +85,28 @@ export const didUserQuizYesterday = functions
   });
 
 const generateAllUsersBoard = (users: any) => {
+  const highestScoreUser = { id: "", score: 0 };
+
   const board = users.map((user: any) => {
-    const userdata = user.data();
+    const userData = user.data();
+
+    //if user has highest score grab and store their id
+    if (userData.q_points > highestScoreUser.score) {
+      highestScoreUser.id = user.id;
+      highestScoreUser.score = userData.q_points;
+    }
+
     return {
-      username: userdata.username,
+      username: userData.username,
       user_id: user.id,
-      q_points: userdata.q_points,
-      q_score: userdata.q_score
+      q_points: userData.q_points,
+      q_score: userData.q_score
     };
   });
 
+  //call function to give the user an achievement
+  giveHighestScoreUserAchievement(highestScoreUser.id);
+  console.log("function called....");
   return {
     board,
     last_updated: new Date()
@@ -121,6 +132,20 @@ export const updateLeaderboard = functions.firestore
         console.log("Error creating account", err);
       });
   });
+
+const giveHighestScoreUserAchievement = (userId: string) => {
+  console.log("beginning of function");
+  admin
+    .firestore()
+    .collection("users")
+    .doc(userId)
+    .update({
+      achievements: admin.firestore.FieldValue.arrayUnion({
+        achievement_name: "Reached the top of the leaderboard!"
+      })
+    });
+  console.log("achievement set");
+};
 
 // Pass Along Functions
 export { dexysMidnightRunner, generateNewUser };
