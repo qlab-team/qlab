@@ -2,6 +2,7 @@
 import userReducer from "./userReducer";
 import quizReducer from "./quizReducer";
 import storeReducer from "./storeReducer";
+import dialogReducer from "./dialogReducer";
 import leaderboardReducer from "./leaderboardReducer";
 import transactionsReducer from "./transactionsReducer";
 import quizzesReducer from "./quizzesReducer";
@@ -15,6 +16,7 @@ import { firebaseReducer } from "react-redux-firebase";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  dialog: dialogReducer,
   quizzes: quizzesReducer,
   quiz: quizReducer,
   store: storeReducer,

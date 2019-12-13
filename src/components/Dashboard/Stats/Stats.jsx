@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // components
 import Chart from "./Chart";
+import Dialog from "../../Utility/Dialog";
 import QPoints from "./QPoints.jsx";
 import PerformanceTable from "./PerformanceTable";
 // material ui
@@ -46,26 +47,29 @@ const Stats = props => {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
-    <Grid container spacing={3}>
-      {/* Chart */}
-      <Grid item xs={12} md={8} lg={9}>
-        <Paper className={fixedHeightPaper}>
-          <Chart />
-        </Paper>
+    <React.Fragment>
+      <Dialog />
+      <Grid container spacing={3}>
+        {/* Chart */}
+        <Grid item xs={12} md={8} lg={9}>
+          <Paper className={fixedHeightPaper}>
+            <Chart />
+          </Paper>
+        </Grid>
+        {/* QPoints */}
+        <Grid item xs={12} md={4} lg={3}>
+          <Paper className={fixedHeightPaper}>
+            <QPoints />
+          </Paper>
+        </Grid>
+        {/* PerformanceTable */}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <PerformanceTable />
+          </Paper>
+        </Grid>
       </Grid>
-      {/* QPoints */}
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper className={fixedHeightPaper}>
-          <QPoints />
-        </Paper>
-      </Grid>
-      {/* PerformanceTable */}
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <PerformanceTable />
-        </Paper>
-      </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 
@@ -78,6 +82,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
+    // openDialog: (open, data) => dispatch(openDialog(open, data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth))
   };
 };

@@ -112,15 +112,15 @@ const TransactionHistory = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {
-              (transactions.investments.sort((a, b) => {
+            {transactions.transaction_history ? (
+              (transactions.transaction_history.sort((a, b) => {
                 if (a.timestamp_start.seconds < b.timestamp_start.seconds)
                   return 1;
                 if (a.timestamp_start.seconds > b.timestamp_start.seconds)
                   return -1;
                 return 0;
               }),
-              transactions.investments.map(row => (
+              transactions.transaction_history.map(row => (
                 <TableRow key={row.user_id} className={classes.tableRow}>
                   <TableCell>{row.username}</TableCell>
                   <TableCell align="left">
@@ -179,7 +179,9 @@ const TransactionHistory = props => {
                   </TableCell>
                 </TableRow>
               )))
-            }
+            ) : (
+              <TableRow />
+            )}
           </TableBody>
         </Table>
         <div className={classes.seeMore}>
