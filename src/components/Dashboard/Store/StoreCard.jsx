@@ -3,13 +3,13 @@ import React from "react";
 // redux
 import { compose } from "redux";
 import { Typography, Grid } from "@material-ui/core";
-import Title from "../Title";
 // react-router
 import { Link } from "react-router-dom";
 // actions
 import { openDialog } from "../../../store/actions/storeActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"; // redux
 import { connect } from "react-redux";
 
 /////////////// STYLES
@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   button: {
+    minWidth: "120px",
     margin: theme.spacing(3),
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -45,13 +46,24 @@ const StoreCard = props => {
   return (
     <Grid
       className={classes.root}
-      // onMouseEnter={loadQuiz}
       container
+      alignItems="center"
       justify="space-around"
       direction="column"
     >
-      <Title>{props.itemData.name}</Title>
-      <Typography variant="body2">{props.itemData.description}</Typography>
+      <Typography
+        className={classes.title}
+        component="h2"
+        variant="h6"
+        color="primary"
+        gutterBottom
+      >
+        {props.itemData.name}
+      </Typography>
+      <ShoppingCartIcon fontSize="large" />
+      <Typography className={classes.description} variant="body2">
+        {props.itemData.description}
+      </Typography>
       <Link
         to="/dashboard/store"
         className={classes.button}
