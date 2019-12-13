@@ -59,33 +59,18 @@ const PurchaseHistory = props => {
   // set props from redux
   const { auth, user } = props;
   console.log(user);
+  console.log(user.profile.items);
   // date format
-  function date_formating(timeStamp, type) {
-    const month = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
+  function date_formating(timeStamp) {
     const d = new Date(timeStamp * 1000);
     const yearFull = d.getFullYear();
     // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
     const monthNum =
       d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
-    const monthStr = month[d.getMonth()];
     const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
     const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
     const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return monthStr + " " + day + " " + yearFull;
     return (
       yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
     );
@@ -105,61 +90,29 @@ const PurchaseHistory = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {
-                // (transactions.investments.sort((a, b) => {
-                //   if (a.timestamp_start.seconds < b.timestamp_start.seconds)
-                //     return 1;
-                //   if (a.timestamp_start.seconds > b.timestamp_start.seconds)
-                //     return -1;
-                //   return 0;
-                // }),
-                // transactions.investments.map(row => (
-                //   <TableRow key={row.user_id} className={classes.tableRow}>
-                //     <TableCell>{row.username}</TableCell>
-                //     <TableCell align="right">{row.points_earned}</TableCell>
-                //     <TableCell align="right">{row.points_cost}</TableCell>
-                //     {(() => {
-                //       const profit = row.points_earned - row.points_cost;
-                //       if (profit < 0) {
-                //         return (
-                //           <TableCell align="right">
-                //             <Box
-                //               component="div"
-                //               className={classes.negativeBox}
-                //             >
-                //               {profit}
-                //             </Box>
-                //           </TableCell>
-                //         );
-                //       } else {
-                //         return <TableCell align="center">{profit}</TableCell>;
-                //       }
-                //     })()}
-                //     <TableCell>
-                //       {/* {date_formating(row.timestamp_start.seconds, "date")} */}
-                //     </TableCell>
-                //     <TableCell>
-                //       {/* {(() => {
-                //         if (row.timestamp_end) {
-                //           return date_formating(
-                //             row.timestamp_end.seconds,
-                //             "date"
-                //           );
-                //         } else {
-                //           return "-";
-                //         }
-                //       })()} */}
-                //     </TableCell>
-                //   </TableRow>
-                // )))
-              }
+              {user.profile.items ? (
+                (user.profile.items.sort((a, b) => {
+                  if (a.purchaseDate < b.purchaseDate) return 1;
+                  if (a.purchaseDate > b.purchaseDate) return -1;
+                  return 0;
+                }),
+                user.profile.items.map(item => (
+                  <TableRow key={item.itemId} className={classes.tableRow}>
+                    <TableCell>{item.purchaseDate}</TableCell>
+                    <TableCell>{item.itemName}</TableCell>
+                    <TableCell align="right">{item.itemPrice}</TableCell>
+                  </TableRow>
+                )))
+              ) : (
+                <TableRow />
+              )}
             </TableBody>
           </Table>
           <div className={classes.seeMore}>
             LastUpdated{" "}
             {/* {(() => {
               const last_updated = date_formating(
-                transactions.last_updated.seconds
+                item.last_updated.seconds
               );
               if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
                 return last_updated;
