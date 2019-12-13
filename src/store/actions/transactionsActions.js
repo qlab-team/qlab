@@ -1,7 +1,7 @@
 const getTransactions = authId => {
   return (dispatch, getState, { getFirestore }) => {
-    // make async call to database
     console.log("Get getTransactions Called");
+    // make async call to database
     const firestore = getFirestore();
 
     firestore

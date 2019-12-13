@@ -54,8 +54,6 @@ const TransactionHistory = props => {
   // set props from redux
   const { transactions } = props;
 
-  // console.log(transactions);
-
   // date format
   function date_formating(timeStamp, type) {
     const month = [

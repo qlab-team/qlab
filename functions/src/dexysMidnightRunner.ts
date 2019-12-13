@@ -154,6 +154,6 @@ export const dexysMidnightRunner = functions.pubsub
         });
       })
       .catch((err: any) => {
-        console.log("COME ON EILEEN!", err);
+        console.log("COME ON, EILEEN!", err);
       });
   });
