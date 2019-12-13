@@ -31,6 +31,7 @@ const generateUser = (authObject: any) => {
     last_quiz_done: new Date(),
     quizzes_done_today: 0,
     q_score_history: [],
+    achievements: [],
     earnings_today: 0
   };
 };
