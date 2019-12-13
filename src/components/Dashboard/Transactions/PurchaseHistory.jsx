@@ -106,15 +106,15 @@ const PurchaseHistory = props => {
                   return 0;
                 }),
                 user.profile.items.map(item => (
-                  <TableRow key={item.itemId} className={classes.tableRow}>
+                  <TableRow key={item.item_id} className={classes.tableRow}>
                     <TableCell>
                       {date_formating(
-                        Date.parse(item.purchaseDate) / 1000,
+                        Date.parse(item.purchase_date) / 1000,
                         "date"
                       )}
                     </TableCell>
-                    <TableCell>{item.itemName}</TableCell>
-                    <TableCell align="right">{item.itemPrice}</TableCell>
+                    <TableCell>{item.item_name}</TableCell>
+                    <TableCell align="right">{item.item_price}</TableCell>
                   </TableRow>
                 )))
               ) : (
