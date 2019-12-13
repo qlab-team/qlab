@@ -122,21 +122,25 @@ export const dexysMidnightRunner = functions.pubsub
           //Set External Investment Total
           let todaysDividends = 0;
 
-          //Build new INvestment Array
-          const newInvestments = userData.investments.map((investment: any) => {
-            //Where Q Score
-            const investmentQScore = q_score_map.get(investment.user_id);
-            //Earnings Define the Amount Earned
-            const earnings = investmentQScore * 1;
-            //Earnings Added To Rolling Total for the Day
-            todaysDividends += earnings;
-            // Return Investment Object to newInvestment Array with new Points Earned
-            return {
-              ...investment,
-              points_earned: investment.points_earned + earnings,
-              q_score: investmentQScore
-            };
-          });
+          let newInvestments = [];
+
+          if (userData.investments.length > 0) {
+            //Build new INvestment Array
+            newInvestments = userData.investments.map((investment: any) => {
+              //Where Q Score
+              const investmentQScore = q_score_map.get(investment.user_id);
+              //Earnings Define the Amount Earned
+              const earnings = investmentQScore * 1;
+              //Earnings Added To Rolling Total for the Day
+              todaysDividends += earnings;
+              // Return Investment Object to newInvestment Array with new Points Earned
+              return {
+                ...investment,
+                points_earned: investment.points_earned + earnings,
+                q_score: investmentQScore
+              };
+            });
+          }
 
           batchInvestmentWrite.update(userRef, {
             q_points: userData.q_points + todaysDividends,

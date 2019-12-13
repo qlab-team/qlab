@@ -16,33 +16,38 @@ const getQuiz = quizId => {
   };
 };
 
-const addQuizInfo = (authId, quizPoints) => {
+const addQuizInfo = quizPoints => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Add Quiz Info Called");
+    const state = getState();
+    const quiz_info = state.quiz.quizInfo;
+    const user_id = state.user.user_id;
     const firestore = getFirestore();
-    //state = getState()
-    //console.log(state.user.profile.auth_id); this will be how to get auth_id normally
-
+    const now = new Date();
     firestore
       .collection("users")
-      .where("auth_id", "==", authId)
-      .get()
-      .then(res => {
-        const docId = res.docs[0].id;
-        return docId;
+      .doc(user_id)
+      .update({
+        q_points: firestore.FieldValue.increment(quizPoints),
+        last_quiz_done: now,
+        quiz_total: firestore.FieldValue.increment(1),
+        quizzes_done_today: firestore.FieldValue.increment(1)
       })
-      .then(docId => {
+      .then(() => {
         firestore
-          .collection("users")
-          .doc(docId)
+          .collection("transaction_history")
+          .doc(user_id)
           .update({
-            q_points: firestore.FieldValue.increment(quizPoints),
-            last_quiz_done: new Date(),
-            quiz_total: firestore.FieldValue.increment(1)
-          })
-          .catch(e => {
-            console.log("err :", e);
+            quiz_history: firestore.FieldValue.arrayUnion({
+              date: now,
+              quiz_id: quiz_info.quiz_id,
+              quiz_title: quiz_info.quiz_title,
+              points_earned: quizPoints
+            })
           });
+      })
+      .catch(e => {
+        console.log("Could Not Update Quiz Info:", e);
       });
   };
 };
@@ -61,7 +66,6 @@ const updateQuizRatingOnDatabase = userQuizRating => {
           res.data().quiz_rating * res.data().times_quiz_taken;
         const newQuizAvg =
           (currentQuizTotal + userQuizRating) / updatedQuizTaken;
-        console.log(newQuizAvg);
 
         transaction.update(quizRef, {
           times_quiz_taken: updatedQuizTaken,

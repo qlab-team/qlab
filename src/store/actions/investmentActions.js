@@ -2,13 +2,15 @@ export const addInvestment = (data, auth, user) => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Add Investment Called");
     const firestore = getFirestore();
+    const state = getState();
+    const user_id = state.user.user_id;
     firestore
       .collection("users")
-      .where("auth_id", "==", auth.uid)
+      .doc(user_id)
       .get()
-      .then(collection => {
+      .then(document => {
         let userHasInvestment = false;
-        const investments = collection.docs[0].data().investments;
+        const investments = document.data().investments;
         investments.forEach(investment => {
           if (investment.display_name === data.username)
             userHasInvestment = true;
@@ -16,7 +18,7 @@ export const addInvestment = (data, auth, user) => {
         if (!userHasInvestment) {
           firestore
             .collection("users")
-            .doc(user.user_id)
+            .doc(user_id)
             .update({
               investments: firestore.FieldValue.arrayUnion({
                 display_name: data.username,
@@ -29,7 +31,6 @@ export const addInvestment = (data, auth, user) => {
             });
         }
       })
-
       .catch(e => {
         console.log("err :", e);
       });
@@ -41,12 +42,13 @@ export const getInvestments = auth => {
     // make async call to database
     console.log("Get Investments for Stats Called");
     const firestore = getFirestore();
+    const state = getState();
+    const user_id = state.user.user_id;
     firestore
       .collection("users")
-      .where("auth_id", "==", auth.uid)
+      .doc(user_id)
       .get()
-      .then(res => {
-        const doc = res.docs[0];
+      .then(doc => {
         return doc.data();
       })
       .then(data => {
@@ -61,19 +63,21 @@ export const getInvestments = auth => {
   };
 };
 
-export const removeInvestment = (data, auth, user) => {
+export const removeInvestment = (data, auth) => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Remove Investment Called");
     const firestore = getFirestore();
+    const state = getState();
+    const user_id = state.user.user_id;
     let newInvestments = [];
     // get current investments and filter them
     firestore
       .collection("users")
-      .where("auth_id", "==", auth.uid)
+      .doc(user_id)
       .get()
       // filter the investments
-      .then(res => {
-        const docData = res.docs[0].data();
+      .then(doc => {
+        const docData = doc.data();
         const currInvestments = docData.investments;
         newInvestments = currInvestments.filter(investment => {
           return investment.user_id !== data.user_id;
@@ -84,26 +88,15 @@ export const removeInvestment = (data, auth, user) => {
         // update the investments with removed version
         firestore
           .collection("users")
-          .doc(user.user_id)
+          .doc(user_id)
           .update({
             investments: newInvestments
           })
           .then(() => {
-            console.log("Investment Removed");
-            firestore
-              .collection("users")
-              .where("auth_id", "==", auth.uid)
-              .get()
-              .then(res => {
-                const doc = res.docs[0];
-                return doc.data();
-              })
-              .then(data => {
-                dispatch({
-                  type: "GET_INVESTMENTS",
-                  investments: newInvestments
-                });
-              });
+            dispatch({
+              type: "GET_INVESTMENTS",
+              investments: newInvestments
+            });
           });
       })
       .catch(e => {
