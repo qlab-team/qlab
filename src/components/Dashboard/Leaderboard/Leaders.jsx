@@ -6,7 +6,7 @@ import Title from "../Title";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import { addInvestment } from "../../../store/actions/leaderboardActions";
+import { addInvestment } from "../../../store/actions/investmentActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -72,8 +72,18 @@ const Leaders = props => {
           <TableRow>
             <TableCell>Rank</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell align="right">qPoints</TableCell>
-            <TableCell align="right">qScore</TableCell>
+            <TableCell align="right">
+              <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+                ℚ
+              </span>
+              Points
+            </TableCell>
+            <TableCell align="right">
+              <span className="qPointsMark" style={{ "font-size": "smaller" }}>
+                ℚ
+              </span>
+              Score
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

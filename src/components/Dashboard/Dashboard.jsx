@@ -17,10 +17,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
 import { userLogout } from "../../store/actions/userActions";
-import {
-  resolveInvestment,
-  notificationRead
-} from "../../store/actions/investmentActions";
+import { notificationRead } from "../../store/actions/investmentActions";
 // material ui
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -139,7 +136,7 @@ const Dashboard = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       if (!investments.checked) {
-        props.resolveInvestment(user.profile.investments, user);
+        console.log("Nah Mate");
       }
     }
     // eslint-disable-next-line
@@ -201,8 +198,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     userLogout: () => dispatch(userLogout()),
-    resolveInvestment: (investments, user) =>
-      dispatch(resolveInvestment(investments, user)),
     notificationRead: () => dispatch(notificationRead())
   };
 };

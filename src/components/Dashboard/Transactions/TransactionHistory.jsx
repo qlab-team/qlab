@@ -40,12 +40,11 @@ const useStyles = makeStyles(theme => ({
     height: "46px"
   },
   negativeBox: {
-    color: "#e91e63",
-    background: "whitesmoke",
+    color: "whitesmoke",
+    background: "#e91e63",
     display: "inline",
     padding: theme.spacing(1),
-    margin: theme.spacing(1),
-    borderRadius: 10
+    borderRadius: 50
   },
   seeMore: {
     marginTop: theme.spacing(3)
@@ -108,8 +107,8 @@ const TransactionHistory = props => {
               <TableCell>Earnings</TableCell>
               <TableCell>Cost</TableCell>
               <TableCell>Profit</TableCell>
-              <TableCell>Invested Start</TableCell>
-              <TableCell>Invested End</TableCell>
+              <TableCell>Start Date</TableCell>
+              <TableCell>End Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -124,36 +123,59 @@ const TransactionHistory = props => {
               transactions.investments.map(row => (
                 <TableRow key={row.user_id} className={classes.tableRow}>
                   <TableCell>{row.username}</TableCell>
-                  <TableCell align="right">{row.points_earned}</TableCell>
-                  <TableCell align="right">{row.points_cost}</TableCell>
+                  <TableCell align="left">
+                    {row.points_earned}
+                    <span
+                      className="qPointsMark"
+                      style={{ "font-size": "smaller" }}
+                    >
+                      <sup>ℚ</sup>
+                    </span>
+                  </TableCell>
+                  <TableCell align="left">
+                    {row.points_cost}
+                    <span
+                      className="qPointsMark"
+                      style={{ "font-size": "smaller" }}
+                    >
+                      <sup>ℚ</sup>
+                    </span>
+                  </TableCell>
                   {(() => {
                     const profit = row.points_earned - row.points_cost;
-                    if (profit < 0) {
-                      return (
-                        <TableCell align="right">
-                          <Box component="div" className={classes.negativeBox}>
-                            {profit}
-                          </Box>
-                        </TableCell>
-                      );
-                    } else {
-                      return <TableCell align="center">{profit}</TableCell>;
-                    }
+                    return profit < 0 ? (
+                      <TableCell align="left">
+                        <Box component="div" className={classes.negativeBox}>
+                          {profit}
+                          <span
+                            className="qPointsMark"
+                            style={{ "font-size": "smaller" }}
+                          >
+                            <sup>ℚ</sup>
+                          </span>
+                        </Box>
+                      </TableCell>
+                    ) : (
+                      <TableCell align="left">
+                        {profit}
+                        <span
+                          className="qPointsMark"
+                          style={{ "font-size": "smaller" }}
+                        >
+                          ℚ
+                        </span>
+                      </TableCell>
+                    );
                   })()}
                   <TableCell>
-                    {date_formating(row.timestamp_start.seconds, "date")}
+                    {row.timestamp_start
+                      ? date_formating(row.timestamp_start.seconds, "date")
+                      : "Null"}
                   </TableCell>
                   <TableCell>
-                    {(() => {
-                      if (row.timestamp_end) {
-                        return date_formating(
-                          row.timestamp_end.seconds,
-                          "date"
-                        );
-                      } else {
-                        return "-";
-                      }
-                    })()}
+                    {row.timestamp_end
+                      ? date_formating(row.timestamp_end.seconds, "date")
+                      : "Ongoing"}
                   </TableCell>
                 </TableRow>
               )))
