@@ -16,11 +16,12 @@ const getStoreItems = () => {
 };
 
 const purchaseItem = (data, auth, user) => {
+  console.log(data);
   return (dispatch, getState, { getFirestore }) => {
     console.log("Purchase Item Called");
     console.log(
       "Add Item Called",
-      `user_qPoints: ${user.profile.q_points} item_price: ${data.itemPrice}`
+      `user_qPoints: ${user.profile.q_points} item_price: ${data.price}`
     );
     const firestore = getFirestore();
     firestore
@@ -30,16 +31,16 @@ const purchaseItem = (data, auth, user) => {
       .then(collection => {
         // check if user has enough qPoints for this purchase
         let userHasEnoughQPoints =
-          user.profile.q_points >= data.itemPrice ? true : false;
+          user.profile.q_points >= data.price ? true : false;
         if (!userHasEnoughQPoints) {
           console.log(
             "Not enough qPoints for this purchase.",
-            `qPoints: ${user.profile.q_points}, item price: ${data.itemPrice}`
+            `qPoints: ${user.profile.q_points}, item price: ${data.price}`
           );
           dispatch({
             type: "OPEN_DIALOG",
             open: true,
-            data: null,
+            data,
             error: "You dont have enough qPoints for this purchase."
           });
         }
@@ -47,14 +48,14 @@ const purchaseItem = (data, auth, user) => {
         let userHasItem = false;
         const items = collection.docs[0].data().items;
         items.forEach(item => {
-          if (item.itemId === data.itemId) userHasItem = true;
+          if (item.item_id === data.id) userHasItem = true;
         });
         if (userHasItem) {
           console.log("User already has this item.");
           dispatch({
             type: "OPEN_DIALOG",
             open: true,
-            data: null,
+            data,
             error: "You already have this item."
           });
         }
@@ -64,16 +65,15 @@ const purchaseItem = (data, auth, user) => {
             .doc(user.user_id)
             .update({
               items: firestore.FieldValue.arrayUnion({
-                purchaseDate: data.purchaseDate,
-                itemName: data.itemName,
-                itemId: data.itemId,
-                itemPrice: data.itemPrice
+                purchase_date: data.date,
+                item_name: data.name,
+                item_id: data.id,
+                item_price: data.price
               }),
-              q_points: user.profile.q_points - data.itemPrice
+              q_points: user.profile.q_points - data.price
             });
           console.log(
-            `Purchase complete. qPoints: ${user.profile.q_points -
-              data.itemPrice}`
+            `Purchase complete. qPoints: ${user.profile.q_points - data.price}`
           );
         }
       })

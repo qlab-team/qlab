@@ -6,7 +6,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // actions
-import { purchaseItem } from "../../store/actions/storeActions";
 import { openDialog } from "../../store/actions/dialogActions";
 // redux
 import { connect } from "react-redux";
@@ -26,7 +25,7 @@ const AlertDialog = props => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {!error && dialogData ? dialogData.msg.title : "Error"}
+          {!error && dialogData.msg ? dialogData.msg.title : "Error"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -80,16 +79,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     storeItems: state.store.items,
     isDialogOpen: state.dialog.isDialogOpen,
-    itemData: state.dialog.itemData,
-    purchaseError: state.dialog.purchaseError,
+    dialogData: state.dialog.data,
+    error: state.dialog.error,
     auth: state.firebase.auth,
     user: state.user
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    purchaseItem: (data, auth, user) =>
-      dispatch(purchaseItem(data, auth, user)),
     openDialog: (open, data, error) => dispatch(openDialog(open, data, error))
   };
 };
