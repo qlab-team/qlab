@@ -8,7 +8,6 @@ import { getTransactions } from "../../../store/actions/transactionsActions";
 // material ui
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -57,20 +56,35 @@ const useStyles = makeStyles(theme => ({
 const PurchaseHistory = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, user } = props;
+  const { user } = props;
   console.log(user);
-  console.log(user.profile.items);
   // date format
-  function date_formating(timeStamp) {
+  function date_formating(timeStamp, type) {
+    const month = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
     const d = new Date(timeStamp * 1000);
     const yearFull = d.getFullYear();
     // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
     const monthNum =
       d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
+    const monthStr = month[d.getMonth()];
     const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
     const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
     const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
     const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
+    if (type === "date") return monthStr + " " + day + " " + yearFull;
     return (
       yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
     );
@@ -92,13 +106,18 @@ const PurchaseHistory = props => {
             <TableBody>
               {user.profile.items ? (
                 (user.profile.items.sort((a, b) => {
-                  if (a.purchaseDate < b.purchaseDate) return 1;
-                  if (a.purchaseDate > b.purchaseDate) return -1;
+                  if (a.purchaseDate < b.purchaseDate) return -1;
+                  if (a.purchaseDate > b.purchaseDate) return 1;
                   return 0;
                 }),
                 user.profile.items.map(item => (
                   <TableRow key={item.itemId} className={classes.tableRow}>
-                    <TableCell>{item.purchaseDate}</TableCell>
+                    <TableCell>
+                      {date_formating(
+                        Date.parse(item.purchaseDate) / 1000,
+                        "date"
+                      )}
+                    </TableCell>
                     <TableCell>{item.itemName}</TableCell>
                     <TableCell align="right">{item.itemPrice}</TableCell>
                   </TableRow>
@@ -108,17 +127,6 @@ const PurchaseHistory = props => {
               )}
             </TableBody>
           </Table>
-          <div className={classes.seeMore}>
-            LastUpdated{" "}
-            {/* {(() => {
-              const last_updated = date_formating(
-                item.last_updated.seconds
-              );
-              if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
-                return last_updated;
-              }
-            })()} */}
-          </div>
         </Paper>
       </Grid>
     </Grid>
@@ -132,12 +140,4 @@ const mapStateToProps = (state, ownProps) => {
     auth: state.firebase.auth
   };
 };
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getTransactions: authId => dispatch(getTransactions(authId))
-//   };
-// };
-
-/////////////// EXPORTS
-// export default compose(connect(mapStateToProps, mapDispatchToProps))(
 export default compose(connect(mapStateToProps))(PurchaseHistory);
