@@ -5,6 +5,7 @@ import StoreCard from "./StoreCard";
 import Dialog from "../../Utility/Dialog";
 // actions
 import { getStoreItems } from "../../../store/actions/storeActions";
+import { purchaseItem } from "../../../store/actions/storeActions";
 // material ui
 import clsx from "clsx";
 import { Grid, Paper } from "@material-ui/core";
@@ -41,7 +42,7 @@ const Store = props => {
 
   return (
     <React.Fragment>
-      <Dialog />
+      <Dialog dialogCallback={props.purchaseItem} />
       <Grid container spacing={3} wrap="wrap">
         {props.storeItems.map((storeItem, index) => {
           return (
@@ -72,7 +73,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getStoreItems: () => dispatch(getStoreItems())
+    getStoreItems: () => dispatch(getStoreItems()),
+    purchaseItem: (data, auth, user) => dispatch(purchaseItem(data, auth, user))
   };
 };
 

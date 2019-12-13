@@ -1,7 +1,7 @@
 const initState = {
   isDialogOpen: false,
-  itemData: {},
-  purchaseError: ""
+  data: {},
+  error: ""
 };
 
 const dialogReducer = (state = initState, action) => {
@@ -10,8 +10,8 @@ const dialogReducer = (state = initState, action) => {
       return {
         ...state,
         isDialogOpen: action.open,
-        itemData: action.data ? { ...action.data } : { ...state.itemData },
-        purchaseError: action.error
+        data: action.data ? { ...action.data } : { ...state.itemData },
+        error: action.error
       };
     }
     default:
