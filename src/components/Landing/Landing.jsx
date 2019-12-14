@@ -1,48 +1,20 @@
-/////////////// IMPORTS
-import React from "react";
-// components
-import ButtonAppBar from "./ButtonAppBar";
-import TitleAndStartButton from "./TitleAndStartButton";
-import Box from "@material-ui/core/Box";
-// material ui
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import React, { useRef } from "react";
+import { useFrame } from "react-three-fiber";
 
-/////////////// STYLES
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  title: {
-    fontSize: 100,
-    color: "white",
-    textShadow: "15px 15px 0px #C275FF",
-    marginBottom: 6,
-    fontFamily: "Aquino"
-  },
-  button: {
-    flexGrow: 1
-  }
-}));
-
-/////////////// COMPONENT
-export default function Landing() {
-  const classes = useStyles();
+const Landing = () => {
+  const ref = useRef();
+  useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01));
   return (
-    <React.Fragment>
-      <ButtonAppBar />
-      <Container display="flex">
-        <Box
-          minHeight="100vh"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="space-around"
-          className={classes.root}
-        >
-          <TitleAndStartButton />
-        </Box>
-      </Container>
-    </React.Fragment>
+    <mesh
+      ref={ref}
+      onClick={e => console.log("click")}
+      onPointerOver={e => console.log("hover")}
+      onPointerOut={e => console.log("unhover")}
+    >
+      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+      <meshNormalMaterial attach="material" />
+    </mesh>
   );
-}
+};
+
+export default Landing;
