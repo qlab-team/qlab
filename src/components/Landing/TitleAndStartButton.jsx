@@ -9,13 +9,13 @@ import { Link } from "react-router-dom";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
-  root: {},
   title: {
     fontSize: 130,
     color: "white",
     textShadow: "7px 7px 0px #C275FF",
     marginBottom: 6,
-    fontFamily: "Aquino"
+    fontFamily: "Aquino",
+    opacity: 0
   },
   tagline: {
     fontSize: 30,
