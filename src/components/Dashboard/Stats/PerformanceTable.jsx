@@ -18,6 +18,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 /////////////// UTILITIES
 function preventDefault(event) {
@@ -48,6 +51,13 @@ const useStyles = makeStyles(theme => ({
     },
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+  },
+  row: {
+    display: "flex",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -81,7 +91,19 @@ const PerformanceTable = props => {
           {investments.investments.map((investment, i) => (
             <TableRow key={i}>
               <TableCell>{investment.date.toDate().toDateString()}</TableCell>
-              <TableCell>{investment.display_name}</TableCell>
+              <TableCell>
+                {
+                  <Grid container wrap="nowrap" className={classes.row}>
+                    <Avatar
+                      alt="useravatar"
+                      src={investment.photoURL}
+                      className={classes.avatar}
+                    />
+                    <Typography>{investment.display_name}</Typography>
+                  </Grid>
+                }
+              </TableCell>
+              {/* <TableCell>{investment.display_name}</TableCell> */}
               <TableCell>
                 {investment.points_cost}
                 <span className="qPointsMark" style={{ fontSize: "smaller" }}>
