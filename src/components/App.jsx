@@ -1,7 +1,5 @@
 /////////////// IMPORTS
 import React from "react";
-// css
-import "../style/App.css";
 // components
 import Dashboard from "./Dashboard/Dashboard";
 import Login from "./Login/Login";
