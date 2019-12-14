@@ -22,7 +22,6 @@ const addQuizInfo = quizPoints => {
     const state = getState();
     const quiz_info = state.quiz.quizInfo;
     const user_id = state.user.user_id;
-    console.log(user_id);
     const firestore = getFirestore();
     const now = new Date();
     firestore
@@ -35,7 +34,6 @@ const addQuizInfo = quizPoints => {
         quizzes_done_today: firestore.FieldValue.increment(1)
       })
       .then(() => {
-        console.log(user_id);
         firestore
           .collection("transaction_history")
           .doc(user_id)
@@ -57,6 +55,7 @@ const addQuizInfo = quizPoints => {
 
 const updateQuizRatingOnDatabase = userQuizRating => {
   return (dispatch, getState, { getFirestore }) => {
+    console.log("Update Quiz Rating Called");
     const firestore = getFirestore();
     const state = getState();
     const quizId = state.quiz.currentQuiz;

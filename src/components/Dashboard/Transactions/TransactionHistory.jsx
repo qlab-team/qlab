@@ -37,9 +37,18 @@ const useStyles = makeStyles(theme => ({
     height: "46px"
   },
   negativeBox: {
+    display: "flex",
+    justifyContent: "center",
     color: "whitesmoke",
     background: "#e91e63",
-    display: "inline",
+    padding: theme.spacing(1),
+    borderRadius: 50
+  },
+  positiveBox: {
+    display: "flex",
+    justifyContent: "center",
+    color: "whitesmoke",
+    background: "#00cc03",
     padding: theme.spacing(1),
     borderRadius: 50
   },
@@ -53,8 +62,6 @@ const TransactionHistory = props => {
   const classes = useStyles();
   // set props from redux
   const { transactions } = props;
-
-  // console.log(transactions);
 
   // date format
   function date_formating(timeStamp, type) {
@@ -141,7 +148,11 @@ const TransactionHistory = props => {
                           {profit}
                           <span
                             className="qPointsMark"
-                            style={{ fontSize: "smaller" }}
+                            style={{
+                              fontSize: "smaller",
+                              color: "white",
+                              opacity: 0.5
+                            }}
                           >
                             <sup>ℚ</sup>
                           </span>
@@ -149,13 +160,19 @@ const TransactionHistory = props => {
                       </TableCell>
                     ) : (
                       <TableCell align="left">
-                        {profit}
-                        <span
-                          className="qPointsMark"
-                          style={{ fontSize: "smaller" }}
-                        >
-                          ℚ
-                        </span>
+                        <Box component="div" className={classes.positiveBox}>
+                          +{profit}
+                          <span
+                            className="qPointsMark"
+                            style={{
+                              fontSize: "smaller",
+                              color: "white",
+                              opacity: 0.5
+                            }}
+                          >
+                            <sup>ℚ</sup>
+                          </span>
+                        </Box>
                       </TableCell>
                     );
                   })()}
@@ -177,15 +194,17 @@ const TransactionHistory = props => {
           </TableBody>
         </Table>
         <div className={classes.seeMore}>
-          LastUpdated{" "}
-          {(() => {
-            const last_updated = date_formating(
-              transactions.last_updated.seconds
-            );
-            if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
-              return last_updated;
-            }
-          })()}
+          <span style={{ opacity: "0.4" }}>
+            Last Updated{" "}
+            {(() => {
+              const last_updated = date_formating(
+                transactions.last_updated.seconds
+              );
+              if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
+                return last_updated;
+              }
+            })()}
+          </span>
         </div>
       </Paper>
     </React.Fragment>

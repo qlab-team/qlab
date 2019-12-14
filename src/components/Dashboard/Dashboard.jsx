@@ -136,7 +136,7 @@ const Dashboard = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       if (!investments.checked) {
-        console.log("Nah Mate");
+        console.log("Nah, mate. Investments not yet checked.");
       }
     }
     // eslint-disable-next-line

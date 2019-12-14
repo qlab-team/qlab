@@ -7,7 +7,6 @@ const initState = {
 const dialogReducer = (state = initState, action) => {
   switch (action.type) {
     case "OPEN_DIALOG": {
-      console.log(action.data);
       return {
         ...state,
         isDialogOpen: action.open,

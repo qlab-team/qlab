@@ -85,7 +85,6 @@ const QuizFinished = props => {
   const [userRating, updateUserRating] = useState(0);
 
   useEffect(() => {
-    //console.log(props);
     props.addQuizInfo(props.quizPoints);
     // eslint-disable-next-line
   }, []);
@@ -95,7 +94,6 @@ const QuizFinished = props => {
   };
   const updateQuizRating = () => {
     props.updateQuizRatingOnDatabase(userRating);
-    console.log("Updated quiz rating!");
   };
 
   // updateQuizScore = (quizScore) => {
