@@ -9,7 +9,12 @@ import { Link } from "react-router-dom";
 import { openDialog } from "../../../store/actions/dialogActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"; // redux
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.svg";
+import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
+import { ReactComponent as CafeLatteBadge } from "../../../assets/cafe-latte-icon.svg";
+import { ReactComponent as PhantomPizzaBadge } from "../../../assets/phantom-pizza-icon.svg";
+// redux
 import { connect } from "react-redux";
 
 /////////////// STYLES
@@ -62,7 +67,20 @@ const StoreCard = props => {
       >
         {itemData.name}
       </Typography>
-      <ShoppingCartIcon fontSize="large" />
+      {(() => {
+        switch (itemData.name) {
+          case "Snake Cat Badge":
+            return <SnakeCatBadge width="60%" height="30%" />;
+          case "Derek Badge":
+            return <DerekBadge width="60%" height="30%" />;
+          case "Café Latte Badge":
+            return <CafeLatteBadge width="60%" height="30%" />;
+          case "Phantom Pizza Badge":
+            return <PhantomPizzaBadge width="60%" height="30%" />;
+          default:
+            return <ShoppingCartIcon fontSize="large" />;
+        }
+      })()}
       <Typography className={classes.description} variant="body2">
         {itemData.description}
       </Typography>
