@@ -80,11 +80,7 @@ export const userLogout = authId => {
 
 export const changeUserName = newUserName => {
   return (dispatch, getState, { getFirestore }) => {
-<<<<<<< HEAD
-    console.log("Changing username");
-=======
     console.log("Change Username Called");
->>>>>>> master
     const state = getState();
     const userAuthId = state.user.profile.auth_id;
     const usersCollection = getFirestore().collection("users");
