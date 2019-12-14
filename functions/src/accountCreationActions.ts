@@ -21,6 +21,7 @@ export const generateNewUser = functions.auth.user().onCreate((auth: any) => {
 const generateUser = (authObject: any) => {
   return {
     auth_id: authObject.uid,
+    photoURL: authObject.photoURL,
     username: authObject.email.split("@")[0],
     q_points: 0,
     q_score: 0,
