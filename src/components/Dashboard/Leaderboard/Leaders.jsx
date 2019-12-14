@@ -135,7 +135,8 @@ const Leaders = props => {
                         investment_made: new Date(),
                         q_score: row.q_score,
                         q_points: row.q_points,
-                        user_id: row.user_id
+                        user_id: row.user_id,
+                        photoURL: row.photoURL
                       };
                       props.addInvestment(data, auth, user);
                     }}

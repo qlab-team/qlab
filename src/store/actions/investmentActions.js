@@ -37,7 +37,8 @@ export const addInvestment = (data, auth, user) => {
           points_cost,
           points_earned: 0,
           user_id: data.user_id,
-          q_score: data.q_score
+          q_score: data.q_score,
+          photoURL: data.photoURL
         };
 
         // Add to User
@@ -56,7 +57,8 @@ export const addInvestment = (data, auth, user) => {
           points_earned: 0,
           timestamp_start: data.investment_made,
           username: data.username,
-          user_id: data.user_id
+          user_id: data.user_id,
+          photoURL: data.photoURL
         };
 
         // Update in History
