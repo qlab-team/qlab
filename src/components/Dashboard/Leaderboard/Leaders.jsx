@@ -9,6 +9,9 @@ import { compose } from "redux";
 import { addInvestment } from "../../../store/actions/investmentActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,6 +21,13 @@ import Button from "@material-ui/core/Button";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
+  row: {
+    display: "flex",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1)
+  },
   seeMore: {
     marginTop: theme.spacing(3)
   },
@@ -49,7 +59,7 @@ const Leaders = props => {
 
   // set props from redux
   const { leaderboard, auth, user } = props;
-
+  console.log(leaderboard);
   //Leaderboard
   const allUsers = leaderboard.board;
 
@@ -96,7 +106,18 @@ const Leaders = props => {
             allUsers.map((row, id) => (
               <TableRow key={row.user_id}>
                 <TableCell>{id + 1}</TableCell>
-                <TableCell>{row.username}</TableCell>
+                <TableCell>
+                  {
+                    <Grid container wrap="nowrap" className={classes.row}>
+                      <Avatar
+                        alt="useravatar"
+                        src={row.photoURL}
+                        className={classes.avatar}
+                      />
+                      <Typography>{row.username}</Typography>
+                    </Grid>
+                  }
+                </TableCell>
                 <TableCell align="right">{row.q_points}</TableCell>
                 <TableCell align="right">
                   <Button

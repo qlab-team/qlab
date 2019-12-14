@@ -57,7 +57,8 @@ export const getUserAndLogin = auth => {
           dispatch({
             type: "USER_LOGIN",
             user_id: snapshot.docs[0].id,
-            profile: snapshot.docs[0].data()
+            profile: snapshot.docs[0].data(),
+            photoURL: auth.photoURL
           });
         })
         .catch(err => {
@@ -87,13 +88,11 @@ export const userLogout = authId => {
 export const changeUserName = newUserName => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Changing username");
-    const state = getState()
+    const state = getState();
     const userAuthId = state.user.profile.auth_id;
     const usersCollection = getFirestore().collection("users");
-    usersCollection
-    .where("auth_id", "==", userAuthId)
-    .update({
+    usersCollection.where("auth_id", "==", userAuthId).update({
       username: newUserName
-    })
-}
-}
+    });
+  };
+};
