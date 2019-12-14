@@ -131,15 +131,17 @@ const QuizHistory = props => {
           </TableBody>
         </Table>
         <div className={classes.seeMore}>
-          LastUpdated{" "}
-          {(() => {
-            const last_updated = date_formating(
-              transactions.last_updated.seconds
-            );
-            if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
-              return last_updated;
-            }
-          })()}
+          <span style={{ opacity: "0.4" }}>
+            Last Updated{" "}
+            {(() => {
+              const last_updated = date_formating(
+                transactions.last_updated.seconds
+              );
+              if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
+                return last_updated;
+              }
+            })()}
+          </span>
         </div>
       </Paper>
     </React.Fragment>

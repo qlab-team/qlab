@@ -123,7 +123,6 @@ describe("QLAB Functions Test", () => {
       };
       const res = {
         send: body => {
-          // console.log({ body });
           assert.deepEqual(body, expectedResponse);
           done();
         }

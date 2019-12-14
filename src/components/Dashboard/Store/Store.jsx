@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column"
   },
   fixedHeight: {
-    height: 300
+    height: 400
   }
 }));
 
@@ -48,7 +48,7 @@ const Store = props => {
       <Grid container spacing={3} wrap="wrap">
         {props.storeItems.map((storeItem, index) => {
           return (
-            <Grid key={index} item xs md={4}>
+            <Grid key={index} item xs md={3}>
               <Paper className={fixedHeightPaper}>
                 <StoreCard
                   itemData={{

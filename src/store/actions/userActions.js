@@ -50,7 +50,7 @@ export const getUserAndLogin = auth => {
           }
 
           if (snapshot.size !== 1) {
-            console.log("There should only be one user with this ID");
+            console.log("There should only be one user with this id.");
             return;
           }
 
@@ -71,23 +71,20 @@ export const getUserAndLogin = auth => {
 
 export const userLogout = authId => {
   return dispatch => {
-    console.log("Logging User Out");
+    console.log("User Logout Called");
     dispatch({
       type: "USER_LOGOUT"
     });
   };
 };
 
-// console.log(snapshot.docs);
-// console.log(snapshot.size);
-
-// snapshot.forEach(doc => {
-//   console.log(doc.id, "=>", doc.data());
-// });
-
 export const changeUserName = newUserName => {
   return (dispatch, getState, { getFirestore }) => {
+<<<<<<< HEAD
     console.log("Changing username");
+=======
+    console.log("Change Username Called");
+>>>>>>> master
     const state = getState();
     const userAuthId = state.user.profile.auth_id;
     const usersCollection = getFirestore().collection("users");

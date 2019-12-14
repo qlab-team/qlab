@@ -8,7 +8,7 @@ export const addInvestment = (data, auth, user) => {
     const points_cost = data.q_score * 5;
     //Cancel Out if Investment Is in Oneself
     if (data.user_id === user_id) {
-      console.log("You cannot invest in yourself");
+      console.log("You cannot invest in yourself.");
       return;
     }
     firestore
@@ -128,7 +128,6 @@ export const removeInvestment = (toBeRemoved, auth) => {
       })
       .then(newInvestments => {
         // update the investments with the new array
-        console.log("Removing Investments");
         return firestore
           .collection("users")
           .doc(user_id)
@@ -137,6 +136,7 @@ export const removeInvestment = (toBeRemoved, auth) => {
           });
       })
       .then(() => {
+        console.log("Investment removed.");
         //Update State
         dispatch({
           type: "GET_INVESTMENTS",
@@ -180,7 +180,7 @@ export const removeInvestment = (toBeRemoved, auth) => {
 
 export const notificationRead = () => {
   return dispatch => {
-    console.log("Investment Notification Read");
+    console.log("Investment Notification Called");
     dispatch({
       type: "INVESTMENT_NOTIFICATION_READ"
     });

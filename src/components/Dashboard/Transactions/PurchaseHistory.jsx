@@ -95,7 +95,7 @@ const PurchaseHistory = props => {
               <TableRow className={classes.tableRow}>
                 <TableCell>Date</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Price</TableCell>
+                <TableCell align="left">Price</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -114,7 +114,15 @@ const PurchaseHistory = props => {
                       )}
                     </TableCell>
                     <TableCell>{item.item_name}</TableCell>
-                    <TableCell align="right">{item.item_price}</TableCell>
+                    <TableCell align="left">
+                      {item.item_price}
+                      <span
+                        className="qPointsMark"
+                        style={{ fontSize: "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </TableCell>
                   </TableRow>
                 )))
               ) : (

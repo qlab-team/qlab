@@ -150,12 +150,14 @@ const Leaders = props => {
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        LastUpdated{" "}
-        {(() => {
-          if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
-            return last_updated;
-          }
-        })()}
+        <span style={{ opacity: "0.4" }}>
+          Last Updated{" "}
+          {(() => {
+            if (last_updated !== "NaN/NaN/NaN NaN:NaN:NaN") {
+              return last_updated;
+            }
+          })()}
+        </span>
       </div>
     </React.Fragment>
   );
