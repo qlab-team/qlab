@@ -11,6 +11,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 // redux
 import { connect } from "react-redux";
@@ -45,6 +48,13 @@ const useStyles = makeStyles(theme => ({
   },
   seeMore: {
     marginTop: theme.spacing(3)
+  },
+  row: {
+    display: "flex",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -114,7 +124,19 @@ const TransactionHistory = props => {
               }),
               transactions.investment_history.map(row => (
                 <TableRow key={row.user_id} className={classes.tableRow}>
-                  <TableCell>{row.username}</TableCell>
+                  <TableCell>
+                    {
+                      <Grid container wrap="nowrap" className={classes.row}>
+                        <Avatar
+                          alt="useravatar"
+                          src={row.photoURL}
+                          className={classes.avatar}
+                        />
+                        <Typography>{row.username}</Typography>
+                      </Grid>
+                    }
+                  </TableCell>
+                  {/* <TableCell>{row.username}</TableCell> */}
                   <TableCell align="left">
                     {row.points_earned}
                     <span
