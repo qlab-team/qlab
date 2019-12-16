@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Achievements from "./Achievements";
-import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 // redux
 import { connect } from "react-redux";
@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
       height: 50
     }
   },
+  userName: {
+    fontSize: 50,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 25
+    }
+  },
   changeUserName: {
     fontSize: 10,
     "&:hover": {
@@ -49,8 +55,9 @@ const useStyles = makeStyles(theme => ({
   },
 
   button: {
-    paddingRight: 10,
-    borderRadius: 50,
+    // paddingRight: 10,
+    // borderRadius: 50,
+    marginLeft: 5,
     fontSize: 10,
     textTransform: "none",
     textDecoration: "none !important",
@@ -65,7 +72,7 @@ const useStyles = makeStyles(theme => ({
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
     [theme.breakpoints.down("xs")]: {
       fontSize: 10,
-      borderRadius: 20,
+      // borderRadius: 20,
       marginTop: 10
     }
   },
@@ -87,10 +94,11 @@ const useStyles = makeStyles(theme => ({
 const Profile = props => {
   const classes = useStyles();
   const [userInputField, changeUserInputField] = useState("");
-  //const [userInput, changeUserInput] = useState("");
+  const [userInput, changeUserInput] = useState("");
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
   const { user, auth, userItems } = props;
+
   useEffect(() => {
     if (user.isLoggedIn) {
       props.getItems();
@@ -119,23 +127,29 @@ const Profile = props => {
     }
 
     const updateUserInput = event => {
-      //event.preventDefault();
-      //let userInp = event.target.value;
-      //changeUserInput("hey");
+      console.log(event.target.value);
+      changeUserInput(event.target.value);
+      changeUserInput("he");
     };
 
     const changeUserNameOnDatabase = event => {
       event.preventDefault();
+      console.log(userInput);
     };
 
     changeUserInputField(
       <form onSubmit={changeUserNameOnDatabase}>
-        <Input onChange={e => updateUserInput(e)} className={classes.input} />
+        <TextField
+          onChange={e => updateUserInput(e)}
+          className={classes.input}
+        />
         <Button
+          size="small"
           type="submit"
           className={classes.button}
           color="primary"
           variant="contained"
+          onClick={changeUserNameOnDatabase}
         >
           Submit
         </Button>
@@ -157,7 +171,7 @@ const Profile = props => {
                   />
                 </Grid>
                 <Grid item xs zeroMinWidth>
-                  <Typography color="primary">
+                  <Typography className={classes.userName} color="primary">
                     {user.profile.username}
                   </Typography>
 
@@ -247,4 +261,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Profile);

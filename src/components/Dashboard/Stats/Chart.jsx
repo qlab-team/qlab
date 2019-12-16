@@ -1,7 +1,7 @@
 /////////////// IMPORTS
-import React from "react";
+import React, { PureComponent } from "react";
 import { useEffect, useState } from "react";
-// import { useEffect } from "react";
+import moment from "moment";
 // components
 import Title from "../Title";
 // material ui
@@ -15,7 +15,9 @@ import {
   XAxis,
   YAxis,
   Label,
-  ResponsiveContainer
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid
 } from "recharts";
 // redux
 import { connect } from "react-redux";
@@ -49,7 +51,27 @@ const useStyles = makeStyles(theme => ({
 
 /////////////// UTILITIES
 function createData(time, qScore) {
-  return { time, qScore };
+  return { time, ℚScore: qScore };
+}
+
+class CustomizedLabel extends PureComponent {
+  render() {
+    const { x, y, value } = this.props;
+
+    return (
+      <text
+        x={x}
+        y={y}
+        dy={-4}
+        dx={5}
+        fill={"white"}
+        fontSize={9}
+        textAnchor="right"
+      >
+        {value}
+      </text>
+    );
+  }
 }
 
 const Chart = props => {
@@ -63,11 +85,12 @@ const Chart = props => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
         const date = user.profile.q_score_history[hist].date.toDate();
-        const fixDate = date.getMonth() + 1 + "/" + date.getDate();
+        const fixDate = moment(date).format("lll");
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
       data.reverse().push(createData("Today", user.profile.q_score));
+      console.log(data);
       updateChartData(data);
     }
     // eslint-disable-next-line
@@ -76,7 +99,10 @@ const Chart = props => {
   return (
     <React.Fragment>
       <Title>
-        qScore{" "}
+        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+          ℚ
+        </span>
+        Score{" "}
         <Button
           className={classes.button}
           style={{ textDecoration: "none" }}
@@ -102,8 +128,19 @@ const Chart = props => {
             left: 24
           }}
         >
+          <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis width={25} stroke={theme.palette.text.secondary}>
+          <Tooltip
+            viewBox={{
+              x: 0,
+              y: 0,
+              width: 400,
+              height: 400,
+              borderRadius: "5px"
+            }}
+            labelStyle={{ fontSize: "10px", color: "violet" }}
+          />
+          <YAxis width={15} stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
               position="left"
@@ -114,8 +151,9 @@ const Chart = props => {
             ></Label>
           </YAxis>
           <Line
+            label={<CustomizedLabel />}
             type="monotone"
-            dataKey="qScore"
+            dataKey="ℚScore"
             stroke={theme.palette.primary.main}
             dot={false}
           />

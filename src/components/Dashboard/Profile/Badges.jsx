@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Tooltip } from "@material-ui/core";
 //ASSETS
 import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.svg";
 import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
@@ -14,13 +14,29 @@ const Badges = props => {
         {(() => {
           switch (props.badgeName) {
             case "Snake Cat Badge":
-              return <SnakeCatBadge width="60%" height="60%" />;
+              return (
+                <Tooltip title={props.badgeName}>
+                  <SnakeCatBadge width="60%" height="60%" />
+                </Tooltip>
+              );
             case "Derek Badge":
-              return <DerekBadge width="60%" height="60%" />;
+              return (
+                <Tooltip title={props.badgeName}>
+                  <DerekBadge width="60%" height="60%" />
+                </Tooltip>
+              );
             case "Café Latte Badge":
-              return <CafeLatteBadge width="60%" height="60%" />;
+              return (
+                <Tooltip title={props.badgeName}>
+                  <CafeLatteBadge width="60%" height="60%" />
+                </Tooltip>
+              );
             case "Phantom Pizza Badge":
-              return <PhantomPizzaBadge width="60%" height="60%" />;
+              return (
+                <Tooltip title={props.badgeName}>
+                  <PhantomPizzaBadge width="60%" height="60%" />
+                </Tooltip>
+              );
             default:
               return <ShoppingCartIcon fontSize="large" />;
           }
