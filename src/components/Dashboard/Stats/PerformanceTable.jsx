@@ -32,6 +32,11 @@ const useStyles = makeStyles(theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
   },
+  typography: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px"
+    }
+  },
   button: {
     minWidth: theme.spacing(9),
     borderRadius: 50,
@@ -57,7 +62,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   avatar: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    width: 20,
+    height: 20
   }
 }));
 
@@ -90,31 +97,40 @@ const PerformanceTable = props => {
         <TableBody>
           {investments.investments.map((investment, i) => (
             <TableRow key={i}>
-              <TableCell>{investment.date.toDate().toDateString()}</TableCell>
+              <TableCell>
+                <Typography className={classes.typography}>
+                  {investment.date.toDate().toLocaleDateString("en-US")}
+                </Typography>
+              </TableCell>
               <TableCell>
                 {
                   <Grid container wrap="nowrap" className={classes.row}>
+                    <Typography className={classes.typography}>
+                      {investment.display_name}
+                    </Typography>
                     <Avatar
                       alt="useravatar"
                       src={investment.photoURL}
                       className={classes.avatar}
                     />
-                    <Typography>{investment.display_name}</Typography>
                   </Grid>
                 }
               </TableCell>
-              {/* <TableCell>{investment.display_name}</TableCell> */}
               <TableCell>
-                {investment.points_cost}
-                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-                  <sup>ℚ</sup>
-                </span>
+                <Typography className={classes.typography}>
+                  {investment.points_cost}
+                  <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+                    <sup>ℚ</sup>
+                  </span>
+                </Typography>
               </TableCell>
               <TableCell>
-                {investment.points_earned}
-                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-                  <sup>ℚ</sup>
-                </span>
+                <Typography className={classes.typography}>
+                  {investment.points_earned}
+                  <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+                    <sup>ℚ</sup>
+                  </span>
+                </Typography>
               </TableCell>
               <TableCell align="right">
                 <Button
