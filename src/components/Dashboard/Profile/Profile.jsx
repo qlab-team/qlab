@@ -91,6 +91,7 @@ const Profile = props => {
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
   const { user, auth, userItems } = props;
+
   useEffect(() => {
     if (user.isLoggedIn) {
       props.getItems();
@@ -247,4 +248,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Profile);
