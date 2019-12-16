@@ -6,7 +6,6 @@ import { compose } from "redux";
 // components
 import Title from "../Title";
 // material ui
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -16,11 +15,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
-/////////////// UTILITIES
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({

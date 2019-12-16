@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React from "react";
-import { useEffect } from "react";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
