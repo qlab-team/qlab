@@ -10,7 +10,8 @@ const userReducer = (state = initState, action) => {
         ...state,
         isLoggedIn: true,
         profile: action.profile,
-        user_id: action.user_id
+        user_id: action.user_id,
+        photoURL: action.photoURL
       };
     case "USER_LOGOUT":
       return initState;

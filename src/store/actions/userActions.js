@@ -57,7 +57,8 @@ export const getUserAndLogin = auth => {
           dispatch({
             type: "USER_LOGIN",
             user_id: snapshot.docs[0].id,
-            profile: snapshot.docs[0].data()
+            profile: snapshot.docs[0].data(),
+            photoURL: auth.photoURL
           });
         })
         .catch(err => {
