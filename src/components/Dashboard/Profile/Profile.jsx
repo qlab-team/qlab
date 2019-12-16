@@ -7,10 +7,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-
+import Achievements from "./Achievements";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -28,7 +27,11 @@ const useStyles = makeStyles(theme => ({
   paper: {
     maxWidth: "100vw",
     padding: theme.spacing(2),
-    overflow: "auto"
+    overflow: "auto",
+    marginBottom: 30
+  },
+  title: {
+    marginBottom: 10
   },
   bigAvatar: {
     width: "100px",
@@ -102,8 +105,8 @@ const Profile = props => {
     }
     if (curUserItems !== "") {
       changeUserItemsArr(
-        curUserItems.map(item => {
-          return <Badges badgeName={item.item_name} />;
+        curUserItems.map((item, index) => {
+          return <Badges badgeName={item.item_name} key={index} />;
         })
       );
     }
@@ -183,10 +186,15 @@ const Profile = props => {
 
             <Paper className={classes.paper}>
               <Grid container justify="center">
-                <Grid item xs={12}>
-                  <Typography variant="h5">Achievements</Typography>
+                <Grid className={classes.title} item xs={12}>
+                  <Typography variant="h5">Badges</Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  container
+                  flexDirection="column"
+                  alignItems="center"
+                  justify="space-around"
+                >
                   {userItemsArr}
                 </Grid>
               </Grid>
@@ -195,7 +203,23 @@ const Profile = props => {
             <Paper className={classes.paper}>
               <Grid container justify="center">
                 <Grid item>
-                  <Typography variant="h5">Badges</Typography>
+                  <Typography variant="h5">Achievements</Typography>
+                </Grid>
+
+                <Grid
+                  container
+                  flexDirection="column"
+                  alignItems="center"
+                  justify="space-around"
+                >
+                  {user.profile.achievements.map((achievement, index) => {
+                    return (
+                      <Achievements
+                        achievementName={achievement.achievement_name}
+                        key={index}
+                      />
+                    );
+                  })}
                 </Grid>
               </Grid>
             </Paper>
