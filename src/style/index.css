@@ -73,6 +73,11 @@ code {
   color: whitesmoke;
 }
 
+/* chart tooltip */
+.recharts-default-tooltip {
+  border-radius: 10px;
+}
+
 @keyframes chartlinecolor {
   0% {
     stroke: rgb(255, 179, 87);
