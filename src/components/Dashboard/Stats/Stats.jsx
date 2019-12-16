@@ -9,13 +9,17 @@ import Chart from "./Chart";
 import Dialog from "../../Utility/Dialog";
 import QPoints from "./QPoints.jsx";
 import PerformanceTable from "./PerformanceTable";
+import InvestorsTable from "./InvestorsTable";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 // actions
-import { getUserAndLogin } from "../../../store/actions/userActions";
+import {
+  getUserAndLogin,
+  getUserData
+} from "../../../store/actions/userActions";
 import { removeInvestment } from "../../../store/actions/investmentActions";
 
 /////////////// STYLES
@@ -37,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Stats = props => {
   const classes = useStyles();
-  const { auth } = props;
+  const { auth, user } = props;
 
   useEffect(() => {
     if (auth.isLoaded) {
@@ -45,6 +49,13 @@ const Stats = props => {
     }
     // eslint-disable-next-line
   }, [auth.isLoaded]);
+
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      props.getUserData();
+    }
+    // eslint-disable-next-line
+  }, [user.isLoggedIn]);
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
@@ -69,6 +80,12 @@ const Stats = props => {
             <PerformanceTable />
           </Paper>
         </Grid>
+        {/*  Investors Table */}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <InvestorsTable />
+          </Paper>
+        </Grid>
       </Grid>
     </React.Fragment>
   );
@@ -76,6 +93,7 @@ const Stats = props => {
 
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
   return {
     user: state.user,
     auth: state.firebase.auth
@@ -85,6 +103,7 @@ const mapDispatchToProps = dispatch => {
   return {
     // openDialog: (open, data) => dispatch(openDialog(open, data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
+    getUserData: () => dispatch(getUserData()),
     removeInvestment: (data, auth, user) =>
       dispatch(removeInvestment(data, auth, user))
   };
