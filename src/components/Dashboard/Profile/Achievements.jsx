@@ -3,7 +3,6 @@ import { Tooltip, Grid } from "@material-ui/core";
 import { ReactComponent as Trophy } from "../../../assets/trophy.svg";
 import { ReactComponent as Gavin } from "../../../assets/gavin-awman.svg";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-
 const Achievements = props => {
   return (
     <Fragment>
