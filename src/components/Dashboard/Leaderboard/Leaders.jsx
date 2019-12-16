@@ -25,8 +25,15 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center"
   },
+  typography: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px"
+    }
+  },
   avatar: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    width: 20,
+    height: 20
   },
   seeMore: {
     marginTop: theme.spacing(3)
@@ -64,15 +71,9 @@ const Leaders = props => {
   const allUsers = leaderboard.board;
 
   //Nice Dates
-  const d = new Date(leaderboard.last_updated.seconds * 1000);
-  const year = d.getFullYear();
-  const month = d.getMonth() + 1;
-  const day = d.getDate();
-  const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-  const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-  const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-  const last_updated =
-    year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
+  const last_updated = new Date(
+    leaderboard.last_updated.seconds * 1000
+  ).toLocaleDateString("en-US", { dateStyle: "long" });
 
   return (
     <React.Fragment>
@@ -109,16 +110,22 @@ const Leaders = props => {
                 <TableCell>
                   {
                     <Grid container wrap="nowrap" className={classes.row}>
+                      <Typography className={classes.typography}>
+                        {row.username}
+                      </Typography>
                       <Avatar
                         alt="useravatar"
                         src={row.photoURL}
                         className={classes.avatar}
                       />
-                      <Typography>{row.username}</Typography>
                     </Grid>
                   }
                 </TableCell>
-                <TableCell align="right">{row.q_points}</TableCell>
+                <TableCell align="right">
+                  <Typography className={classes.typography}>
+                    {row.q_points}
+                  </Typography>
+                </TableCell>
                 <TableCell align="right">
                   <Button
                     className={classes.button}
@@ -141,7 +148,9 @@ const Leaders = props => {
                       props.addInvestment(data, auth, user);
                     }}
                   >
-                    {row.q_score}
+                    <Typography className={classes.typography}>
+                      {row.q_score}
+                    </Typography>
                   </Button>
                 </TableCell>
               </TableRow>

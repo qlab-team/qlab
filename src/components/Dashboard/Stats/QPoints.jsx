@@ -44,7 +44,7 @@ const QPoints = props => {
         </span>
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on {new Date().toDateString()}
+        on {new Date().toLocaleDateString("en-US")}
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>

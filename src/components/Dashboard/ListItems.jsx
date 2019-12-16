@@ -22,14 +22,27 @@ export const MainListItems = props => {
     <div>
       <Link
         style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/profile"
+        to="/dashboard/quizzes"
         onClick={props.handleDrawerClose}
       >
         <ListItem button>
           <ListItemIcon>
-            <DashboardIcon />
+            <LayersIcon />
           </ListItemIcon>
-          <ListItemText primary="Profile" />
+
+          <ListItemText primary="Quizzes" />
+        </ListItem>
+      </Link>
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/dashboard/stats"
+        onClick={props.handleDrawerClose}
+      >
+        <ListItem button>
+          <ListItemIcon>
+            <BarChartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Stats" />
         </ListItem>
       </Link>
       <Link
@@ -58,18 +71,6 @@ export const MainListItems = props => {
       </Link>
       <Link
         style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/stats"
-        onClick={props.handleDrawerClose}
-      >
-        <ListItem button>
-          <ListItemIcon>
-            <BarChartIcon />
-          </ListItemIcon>
-          <ListItemText primary="Stats" />
-        </ListItem>
-      </Link>
-      <Link
-        style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/store"
         onClick={props.handleDrawerClose}
       >
@@ -82,15 +83,14 @@ export const MainListItems = props => {
       </Link>
       <Link
         style={{ textDecoration: "none", color: "white" }}
-        to="/dashboard/quizzes"
+        to="/dashboard/profile"
         onClick={props.handleDrawerClose}
       >
         <ListItem button>
           <ListItemIcon>
-            <LayersIcon />
+            <DashboardIcon />
           </ListItemIcon>
-
-          <ListItemText primary="Quizzes" />
+          <ListItemText primary="Profile" />
         </ListItem>
       </Link>
     </div>
