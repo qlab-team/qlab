@@ -100,8 +100,7 @@ export const getUserData = () => {
 
     if (!user_id) return;
     usersCollection
-      // .doc(user_id)
-      .doc("SQzKtzonCPT5Sh8OUyU2")
+      .doc(user_id)
       .collection("invested_in_me")
       .get()
       .then(collection => {
