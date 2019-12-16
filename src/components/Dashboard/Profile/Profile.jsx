@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
 import changeUserName from "../../../store/reducers/userReducer";
+import { getUserAndLogin } from "../../../store/actions/userActions";
 import { getItems } from "../../../store/actions/profileActions";
 import Badges from "./Badges";
 
@@ -98,7 +99,6 @@ const Profile = props => {
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
   const { user, auth, userItems } = props;
-  const [userAchievements] = useState(user.profile.achievements);
 
   useEffect(() => {
     if (user.isLoggedIn) {
@@ -107,9 +107,15 @@ const Profile = props => {
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
 
+  useEffect(() => {
+    if (auth.isLoaded) props.getUserAndLogin(auth);
+    // eslint-disable-next-line
+  }, [auth.isLoaded]);
+
   //need to refactor this for one useeffect maybe? not sure if best practice or not.
   useEffect(() => {
     if (userItems) {
+      props.getItems();
       changeCurUserItems(userItems);
     }
     if (curUserItems !== "") {
@@ -119,7 +125,8 @@ const Profile = props => {
         })
       );
     }
-  }, [userItems, curUserItems, userAchievements]);
+    // eslint-disable-next-line
+  }, [userItems]);
 
   const showUserNameInputField = () => {
     if (userInputField !== "") {
@@ -257,14 +264,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     changeUserName: newUserName => dispatch(changeUserName(newUserName)),
+    getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     getItems: () => dispatch(getItems())
   };
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(Profile);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);

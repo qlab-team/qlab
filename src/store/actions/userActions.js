@@ -92,7 +92,7 @@ export const changeUserName = newUserName => {
 
 export const getUserData = () => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get User data Called");
+    console.log("Get User Data Called");
     // make async call to database
     const state = getState();
     const user_id = state.user.user_id;
