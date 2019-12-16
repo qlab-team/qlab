@@ -73,10 +73,10 @@ code {
   color: whitesmoke;
 }
 
-/* chart date labels */
-/* .recharts-cartesian-axis-tick-value tspan {
-  font-size: 9px;
-} */
+/* chart tooltip */
+.recharts-default-tooltip {
+  border-radius: 10px;
+}
 
 @keyframes chartlinecolor {
   0% {

@@ -15,6 +15,7 @@ import {
   XAxis,
   YAxis,
   Label,
+  Tooltip,
   ResponsiveContainer,
   CartesianGrid
 } from "recharts";
@@ -50,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 /////////////// UTILITIES
 function createData(time, qScore) {
-  return { time, qScore };
+  return { time, ℚScore: qScore };
 }
 
 class CustomizedLabel extends PureComponent {
@@ -84,11 +85,12 @@ const Chart = props => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
         const date = user.profile.q_score_history[hist].date.toDate();
-        const fixDate = moment(date).format("ll");
+        const fixDate = moment(date).format("lll");
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
       data.reverse().push(createData("Today", user.profile.q_score));
+      console.log(data);
       updateChartData(data);
     }
     // eslint-disable-next-line
@@ -97,7 +99,10 @@ const Chart = props => {
   return (
     <React.Fragment>
       <Title>
-        qScore{" "}
+        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+          ℚ
+        </span>
+        Score{" "}
         <Button
           className={classes.button}
           style={{ textDecoration: "none" }}
@@ -124,8 +129,17 @@ const Chart = props => {
           }}
         >
           <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
-
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
+          <Tooltip
+            viewBox={{
+              x: 0,
+              y: 0,
+              width: 400,
+              height: 400,
+              borderRadius: "5px"
+            }}
+            labelStyle={{ fontSize: "10px", color: "violet" }}
+          />
           <YAxis width={15} stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
@@ -139,7 +153,7 @@ const Chart = props => {
           <Line
             label={<CustomizedLabel />}
             type="monotone"
-            dataKey="qScore"
+            dataKey="ℚScore"
             stroke={theme.palette.primary.main}
             dot={false}
           />
