@@ -138,7 +138,6 @@ export const updateLeaderboard = functions.firestore
   });
 
 const giveHighestScoreUserAchievement = (userId: string) => {
-  console.log("beginning of function");
   admin
     .firestore()
     .collection("users")
