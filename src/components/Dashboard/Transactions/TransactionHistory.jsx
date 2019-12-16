@@ -23,6 +23,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  typography: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px"
+    }
+  },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
@@ -37,7 +42,8 @@ const useStyles = makeStyles(theme => ({
     height: 240
   },
   tableRow: {
-    height: "46px"
+    height: "46px",
+    fontSize: 8
   },
   negativeBox: {
     display: "flex",
@@ -63,7 +69,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   avatar: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    width: 20,
+    height: 20
   }
 }));
 
@@ -75,34 +83,9 @@ const TransactionHistory = props => {
 
   // date format
   function date_formating(timeStamp, type) {
-    const month = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    const d = new Date(timeStamp * 1000);
-    const yearFull = d.getFullYear();
-    // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
-    const monthNum =
-      d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
-    const monthStr = month[d.getMonth()];
-    const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
-    const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-    const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-    const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return monthStr + " " + day + " " + yearFull;
-    return (
-      yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
-    );
+    return new Date(timeStamp * 1000).toLocaleDateString("en-US", {
+      dateStyle: "long"
+    });
   }
 
   return (
@@ -116,8 +99,8 @@ const TransactionHistory = props => {
               <TableCell>Earnings</TableCell>
               <TableCell>Cost</TableCell>
               <TableCell>Profit</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
+              <TableCell>Start</TableCell>
+              <TableCell>End</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -134,79 +117,92 @@ const TransactionHistory = props => {
                   <TableCell>
                     {
                       <Grid container wrap="nowrap" className={classes.row}>
+                        <Typography className={classes.typography}>
+                          {row.username}
+                        </Typography>
                         <Avatar
                           alt="useravatar"
                           src={row.photoURL}
                           className={classes.avatar}
                         />
-                        <Typography>{row.username}</Typography>
                       </Grid>
                     }
                   </TableCell>
-                  {/* <TableCell>{row.username}</TableCell> */}
                   <TableCell align="left">
-                    {row.points_earned}
-                    <span
-                      className="qPointsMark"
-                      style={{ fontSize: "smaller" }}
-                    >
-                      <sup>ℚ</sup>
-                    </span>
+                    <Typography className={classes.typography}>
+                      {row.points_earned}
+                      <span
+                        className="qPointsMark"
+                        style={{ fontSize: "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </Typography>
                   </TableCell>
                   <TableCell align="left">
-                    {row.points_cost}
-                    <span
-                      className="qPointsMark"
-                      style={{ fontSize: "smaller" }}
-                    >
-                      <sup>ℚ</sup>
-                    </span>
+                    <Typography className={classes.typography}>
+                      {row.points_cost}
+                      <span
+                        className="qPointsMark"
+                        style={{ fontSize: "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </Typography>
                   </TableCell>
                   {(() => {
                     const profit = row.points_earned - row.points_cost;
                     return profit < 0 ? (
                       <TableCell align="left">
                         <Box component="div" className={classes.negativeBox}>
-                          {profit}
-                          <span
-                            className="qPointsMark"
-                            style={{
-                              fontSize: "smaller",
-                              color: "white",
-                              opacity: 0.5
-                            }}
-                          >
-                            <sup>ℚ</sup>
-                          </span>
+                          <Typography className={classes.typography}>
+                            {profit}
+                            <span
+                              className="qPointsMark"
+                              style={{
+                                fontSize: "smaller",
+                                color: "white",
+                                opacity: 0.5
+                              }}
+                            >
+                              <sup>ℚ</sup>
+                            </span>
+                          </Typography>
                         </Box>
                       </TableCell>
                     ) : (
                       <TableCell align="left">
                         <Box component="div" className={classes.positiveBox}>
-                          +{profit}
-                          <span
-                            className="qPointsMark"
-                            style={{
-                              fontSize: "smaller",
-                              color: "white",
-                              opacity: 0.5
-                            }}
-                          >
-                            <sup>ℚ</sup>
-                          </span>
+                          <Typography className={classes.typography}>
+                            +{profit}
+                            <span
+                              className="qPointsMark"
+                              style={{
+                                fontSize: "smaller",
+                                color: "white",
+                                opacity: 0.5
+                              }}
+                            >
+                              <sup>ℚ</sup>
+                            </span>
+                          </Typography>
                         </Box>
                       </TableCell>
                     );
                   })()}
                   <TableCell>
-                    {row.timestamp_start
-                      ? date_formating(row.timestamp_start.seconds, "date")
-                      : "Null"}
+                    <Typography className={classes.typography}>
+                      {row.timestamp_start
+                        ? date_formating(row.timestamp_start.seconds, "date")
+                        : "Null"}
+                    </Typography>
                   </TableCell>
                   <TableCell>
-                    {row.timestamp_end
-                      ? date_formating(row.timestamp_end.seconds, "date")
-                      : "Ongoing"}
+                    <Typography className={classes.typography}>
+                      {row.timestamp_end
+                        ? date_formating(row.timestamp_end.seconds, "date")
+                        : "Ongoing"}
+                    </Typography>
                   </TableCell>
                 </TableRow>
               )))

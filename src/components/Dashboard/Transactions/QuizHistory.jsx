@@ -5,6 +5,7 @@ import Title from "../Title";
 // material ui
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,6 +19,11 @@ import { connect } from "react-redux";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+  },
+  typography: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px"
+    }
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -54,37 +60,10 @@ const QuizHistory = props => {
   const { transactions } = props;
 
   // date format
-  function date_formating(timeStamp, type) {
-    const month = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    const d = new Date(timeStamp * 1000);
-    const yearFull = d.getFullYear();
-    // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
-    const monthNum =
-      d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
-    const monthStr = month[d.getMonth()];
-    const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
-    const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-    const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-    const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return monthStr + " " + day + " " + yearFull;
-    if (type === "datetime")
-      return monthStr + " " + day + " " + yearFull + " - " + hour + ":" + min;
-    return (
-      yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
-    );
+  function date_formating(timeStamp) {
+    return new Date(timeStamp * 1000).toLocaleDateString("en-US", {
+      dateStyle: "long"
+    });
   }
 
   return (
@@ -109,19 +88,27 @@ const QuizHistory = props => {
               transactions.quiz_history.map((quiz, id) => (
                 <TableRow key={id} className={classes.tableRow}>
                   <TableCell>
-                    {quiz.date
-                      ? date_formating(quiz.date.seconds, "datetime")
-                      : "Null"}
+                    <Typography className={classes.typography}>
+                      {quiz.date
+                        ? date_formating(quiz.date.seconds, "datetime")
+                        : "Null"}
+                    </Typography>
                   </TableCell>
-                  <TableCell>{quiz.quiz_title}</TableCell>
+                  <TableCell>
+                    <Typography className={classes.typography}>
+                      {quiz.quiz_title}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="left">
-                    {quiz.points_earned}
-                    <span
-                      className="qPointsMark"
-                      style={{ fontSize: "smaller" }}
-                    >
-                      <sup>ℚ</sup>
-                    </span>
+                    <Typography className={classes.typography}>
+                      {quiz.points_earned}
+                      <span
+                        className="qPointsMark"
+                        style={{ fontSize: "smaller" }}
+                      >
+                        <sup>ℚ</sup>
+                      </span>
+                    </Typography>
                   </TableCell>
                 </TableRow>
               )))
