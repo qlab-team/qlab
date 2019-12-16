@@ -24,6 +24,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^7.5.0",
     "material-ui-image": "^3.2.2",
+    "moment": "^2.24.0",
     "opentype.js": "^1.1.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
