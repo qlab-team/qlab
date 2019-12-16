@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import { getInvestments } from "../../../store/actions/investmentActions";
 import { openDialog } from "../../../store/actions/dialogActions";
 // components
 import Title from "../Title";
@@ -72,13 +71,7 @@ const useStyles = makeStyles(theme => ({
 const PerformanceTable = props => {
   const classes = useStyles();
   // set props from redux
-  const { auth, investments } = props;
-  useEffect(() => {
-    if (auth.isLoaded) {
-      props.getInvestments(auth);
-    }
-    // eslint-disable-next-line
-  }, [auth.isLoaded]);
+  const { investments } = props;
 
   return (
     <React.Fragment>
@@ -174,14 +167,12 @@ const PerformanceTable = props => {
 const mapStateToProps = state => {
   return {
     investments: state.investments,
-    auth: state.firebase.auth,
     user: state.user,
     leaderboard: state.leaderboard
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getInvestments: auth => dispatch(getInvestments(auth)),
     openDialog: (open, data) => dispatch(openDialog(open, data))
   };
 };

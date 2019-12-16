@@ -92,11 +92,6 @@ const InvestorsTable = props => {
             : ""}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Discover more investments
-        </Link>
-      </div>
     </React.Fragment>
   );
 };

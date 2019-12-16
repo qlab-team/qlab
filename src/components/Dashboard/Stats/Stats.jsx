@@ -20,6 +20,7 @@ import {
   getUserAndLogin,
   getUserData
 } from "../../../store/actions/userActions";
+import { getInvestments } from "../../../store/actions/investmentActions";
 import { removeInvestment } from "../../../store/actions/investmentActions";
 
 /////////////// STYLES
@@ -46,6 +47,7 @@ const Stats = props => {
   useEffect(() => {
     if (auth.isLoaded) {
       props.getUserAndLogin(auth);
+      props.getInvestments(auth);
     }
     // eslint-disable-next-line
   }, [auth.isLoaded]);
@@ -93,7 +95,6 @@ const Stats = props => {
 
 /////////////// REDUX
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   return {
     user: state.user,
     auth: state.firebase.auth
@@ -104,6 +105,7 @@ const mapDispatchToProps = dispatch => {
     // openDialog: (open, data) => dispatch(openDialog(open, data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     getUserData: () => dispatch(getUserData()),
+    getInvestments: auth => dispatch(getInvestments(auth)),
     removeInvestment: (data, auth, user) =>
       dispatch(removeInvestment(data, auth, user))
   };
