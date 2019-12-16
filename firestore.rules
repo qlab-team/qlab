@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+		//Database is Locked Down by Default
+    match /{document=**} {
+      allow read, write, create, update, delete: if false;
+    }
+
+    //Exception for Following Tables where Table Name is...
+    match /{collectionName}/{documents=**} {
+      allow read, update: if collectionName == 'quizzes';
+      allow read: if collectionName == 'leaderboard';
+      allow read: if collectionName == 'store';
+    }
+
+    //Exception for Users Table where auth_id is met
+    match /users/{user} {
+    	allow read: if request.auth.uid == resource.data.auth_id;
+      allow create: if request.auth.uid == request.resource.data.auth_id;
+      allow update, delete: if request.auth.uid == request.resource.data.auth_id;
+      
+      function user_auth() {
+            return get(/databases/$(database)/documents/users/$(user)).data
+      }
+      
+      match /invested_in_me/{investor} {
+        allow read: if request.auth.uid == user_auth().auth_id;
+    	}
+    }
+    
+    //Exception for Transaction History where auth_id is met
+    match /transaction_history/{documents=**} {
+    // allow read, update: if true
+    	allow read, update: if request.auth.uid == resource.data.auth_id;
+    	allow create: if request.auth.uid == request.resource.data.auth_id;
+    	allow delete: if request.auth.uid == request.resource.data.auth_id;
+    }
+    
+  }
+}
+
+
+

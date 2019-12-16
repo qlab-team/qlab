@@ -25,7 +25,7 @@ jobs: # a collection of steps
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && yarn && cd ..
-   # - run: # Run FrontEnd Tests // disabled for now—react-three-fiber is messing w tests -vic
+      # - run: # Run FrontEnd Tests // disabled for now—react-three-fiber is messing w tests -vic
       #     name: Run Jest Test
       #     command: yarn test
       - run: # Run Backend Tests
@@ -67,6 +67,9 @@ jobs: # a collection of steps
       - run: # Deploy Functions
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions
+      - run: # Deploy Rules
+          name: Deploy Rules
+          command: yarn deployRules
 
 workflows:
   version: 2
