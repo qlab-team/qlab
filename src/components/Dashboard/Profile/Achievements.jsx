@@ -15,7 +15,7 @@ const Achievements = props => {
                   <Trophy width="60%" height="60%" />
                 </Tooltip>
               );
-            case "Reached the ...bottom of the leaderboard!":
+            case "Reached the... bottom of the leaderboard!":
               return (
                 <Tooltip title={props.achievementName}>
                   <Gavin width="60%" height="60%" />
