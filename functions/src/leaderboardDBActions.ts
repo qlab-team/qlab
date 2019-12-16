@@ -43,7 +43,7 @@ const generateAllUsersBoard = (users: any) => {
 
   giveUserAchievement(
     lowestScoreUser.id,
-    "Reached the ...bottom of the leaderboard!"
+    "Reached the... bottom of the leaderboard!"
   );
 
   console.log("function called....");
