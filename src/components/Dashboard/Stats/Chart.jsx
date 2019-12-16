@@ -1,7 +1,7 @@
 /////////////// IMPORTS
-import React from "react";
+import React, { PureComponent } from "react";
 import { useEffect, useState } from "react";
-// import { useEffect } from "react";
+import moment from "moment";
 // components
 import Title from "../Title";
 // material ui
@@ -15,7 +15,8 @@ import {
   XAxis,
   YAxis,
   Label,
-  ResponsiveContainer
+  ResponsiveContainer,
+  CartesianGrid
 } from "recharts";
 // redux
 import { connect } from "react-redux";
@@ -52,6 +53,26 @@ function createData(time, qScore) {
   return { time, qScore };
 }
 
+class CustomizedLabel extends PureComponent {
+  render() {
+    const { x, y, value } = this.props;
+
+    return (
+      <text
+        x={x}
+        y={y}
+        dy={-4}
+        dx={5}
+        fill={"white"}
+        fontSize={9}
+        textAnchor="right"
+      >
+        {value}
+      </text>
+    );
+  }
+}
+
 const Chart = props => {
   const classes = useStyles();
   const theme = useTheme();
@@ -63,7 +84,7 @@ const Chart = props => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
         const date = user.profile.q_score_history[hist].date.toDate();
-        const fixDate = date.getMonth() + 1 + "/" + date.getDate();
+        const fixDate = moment(date).format("ll");
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(fixDate, q_score);
       });
@@ -102,8 +123,10 @@ const Chart = props => {
             left: 24
           }}
         >
+          <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
+
           <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
-          <YAxis width={25} stroke={theme.palette.text.secondary}>
+          <YAxis width={15} stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
               position="left"
@@ -114,6 +137,7 @@ const Chart = props => {
             ></Label>
           </YAxis>
           <Line
+            label={<CustomizedLabel />}
             type="monotone"
             dataKey="qScore"
             stroke={theme.palette.primary.main}

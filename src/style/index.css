@@ -73,6 +73,11 @@ code {
   color: whitesmoke;
 }
 
+/* chart date labels */
+/* .recharts-cartesian-axis-tick-value tspan {
+  font-size: 9px;
+} */
+
 @keyframes chartlinecolor {
   0% {
     stroke: rgb(255, 179, 87);
