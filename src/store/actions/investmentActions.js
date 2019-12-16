@@ -6,11 +6,20 @@ export const addInvestment = (data, auth, user) => {
     const user_id = state.user.user_id;
 
     const points_cost = data.q_score * 5;
+
     //Cancel Out if Investment Is in Oneself
     if (data.user_id === user_id) {
       console.log("You cannot invest in yourself.");
       return;
     }
+
+    //Cancel Out if you don't have enough money to buy the investment
+    const currentPoints = state.user.q_points;
+    if (points_cost > currentPoints) {
+      console.log("You don't have enough money for this investment.");
+      return;
+    }
+
     firestore
       .collection("users")
       .doc(user_id)
@@ -18,17 +27,20 @@ export const addInvestment = (data, auth, user) => {
       .then(document => {
         const investments = document.data().investments;
 
-        let allowed = true;
+        //Cancel Out if There are Already Two Investments
+        if (investments.length >= 2) {
+          console.log("You already have two investments!");
+          return;
+        }
 
         //Cancel Out if Investment Already Exists
-        investments.forEach(investment => {
+        for (let invInd = 0; invInd < investments.length; invInd++) {
+          const investment = investments[invInd];
           if (investment.user_id === data.user_id) {
             console.log("You already have this investment!");
-            allowed = false;
+            return;
           }
-        });
-
-        if (!allowed) return;
+        }
 
         // New Investment Object
         const newInvestmentObject = {
@@ -46,7 +58,8 @@ export const addInvestment = (data, auth, user) => {
           .collection("users")
           .doc(user_id)
           .update({
-            investments: firestore.FieldValue.arrayUnion(newInvestmentObject)
+            investments: firestore.FieldValue.arrayUnion(newInvestmentObject),
+            q_points: firestore.FieldValue.increment(-points_cost)
           });
         console.log("New Investment Created!");
 
