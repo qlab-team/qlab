@@ -1,6 +1,8 @@
 const initState = {
   isLoggedIn: false,
-  profile: {}
+  profile: {},
+  user_id: "",
+  investors: []
 };
 
 const userReducer = (state = initState, action) => {
@@ -15,6 +17,11 @@ const userReducer = (state = initState, action) => {
       };
     case "USER_LOGOUT":
       return initState;
+    case "GET_INVESTORS":
+      return {
+        ...state,
+        investors: action.investors
+      };
     default:
       return state;
   }

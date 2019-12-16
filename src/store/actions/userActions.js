@@ -89,3 +89,29 @@ export const changeUserName = newUserName => {
     });
   };
 };
+
+export const getUserData = () => {
+  return (dispatch, getState, { getFirestore }) => {
+    console.log("Get User data Called");
+    // make async call to database
+    const state = getState();
+    const user_id = state.user.user_id;
+    const usersCollection = getFirestore().collection("users");
+
+    if (!user_id) return;
+    usersCollection
+      // .doc(user_id)
+      .doc("SQzKtzonCPT5Sh8OUyU2")
+      .collection("invested_in_me")
+      .get()
+      .then(collection => {
+        let investors = collection.docs.map(doc => {
+          return doc.data();
+        });
+        dispatch({ type: "GET_INVESTORS", investors });
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
+  };
+};
