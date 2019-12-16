@@ -98,6 +98,7 @@ const Profile = props => {
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
   const { user, auth, userItems } = props;
+  const [userAchievements] = useState(user.profile.achievements);
 
   useEffect(() => {
     if (user.isLoggedIn) {
@@ -118,7 +119,7 @@ const Profile = props => {
         })
       );
     }
-  }, [userItems, curUserItems]);
+  }, [userItems, curUserItems, userAchievements]);
 
   const showUserNameInputField = () => {
     if (userInputField !== "") {
