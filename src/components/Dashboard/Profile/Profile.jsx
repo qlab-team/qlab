@@ -7,10 +7,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-
+import Achievements from "./Achievements";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -95,7 +94,6 @@ const Profile = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       props.getItems();
-      console.log(props.user);
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
@@ -107,8 +105,8 @@ const Profile = props => {
     }
     if (curUserItems !== "") {
       changeUserItemsArr(
-        curUserItems.map(item => {
-          return <Badges badgeName={item.item_name} />;
+        curUserItems.map((item, index) => {
+          return <Badges badgeName={item.item_name} key={index} />;
         })
       );
     }
@@ -206,6 +204,22 @@ const Profile = props => {
               <Grid container justify="center">
                 <Grid item>
                   <Typography variant="h5">Achievements</Typography>
+                </Grid>
+
+                <Grid
+                  container
+                  flexDirection="column"
+                  alignItems="center"
+                  justify="space-around"
+                >
+                  {user.profile.achievements.map((achievement, index) => {
+                    return (
+                      <Achievements
+                        achievementName={achievement.achievement_name}
+                        key={index}
+                      />
+                    );
+                  })}
                 </Grid>
               </Grid>
             </Paper>
