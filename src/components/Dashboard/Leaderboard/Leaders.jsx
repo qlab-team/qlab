@@ -148,9 +148,7 @@ const Leaders = props => {
                       props.addInvestment(data, auth, user);
                     }}
                   >
-                    <Typography className={classes.typography}>
-                      {row.q_score}
-                    </Typography>
+                    {row.q_score}
                   </Button>
                 </TableCell>
               </TableRow>
