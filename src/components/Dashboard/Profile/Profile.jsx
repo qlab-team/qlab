@@ -28,7 +28,11 @@ const useStyles = makeStyles(theme => ({
   paper: {
     maxWidth: "100vw",
     padding: theme.spacing(2),
-    overflow: "auto"
+    overflow: "auto",
+    marginBottom: 30
+  },
+  title: {
+    marginBottom: 10
   },
   bigAvatar: {
     width: "100px",
@@ -91,6 +95,7 @@ const Profile = props => {
   useEffect(() => {
     if (user.isLoggedIn) {
       props.getItems();
+      console.log(props.user);
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
@@ -183,10 +188,15 @@ const Profile = props => {
 
             <Paper className={classes.paper}>
               <Grid container justify="center">
-                <Grid item xs={12}>
-                  <Typography variant="h5">Achievements</Typography>
+                <Grid className={classes.title} item xs={12}>
+                  <Typography variant="h5">Badges</Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  container
+                  flexDirection="column"
+                  alignItems="center"
+                  justify="space-around"
+                >
                   {userItemsArr}
                 </Grid>
               </Grid>
@@ -195,7 +205,7 @@ const Profile = props => {
             <Paper className={classes.paper}>
               <Grid container justify="center">
                 <Grid item>
-                  <Typography variant="h5">Badges</Typography>
+                  <Typography variant="h5">Achievements</Typography>
                 </Grid>
               </Grid>
             </Paper>
