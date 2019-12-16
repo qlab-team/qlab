@@ -6,6 +6,7 @@ import Title from "../Title";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+import Typography from "@material-ui/core/Typography";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -18,6 +19,11 @@ import { connect } from "react-redux";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
+  },
+  typography: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px"
+    }
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -55,34 +61,9 @@ const PurchaseHistory = props => {
   const { user } = props;
   // date format
   function date_formating(timeStamp, type) {
-    const month = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    const d = new Date(timeStamp * 1000);
-    const yearFull = d.getFullYear();
-    // const yearTwo = d.getYear() > 100 ? d.getYear() - 100 : d.getYear();
-    const monthNum =
-      d.getMonth() < 9 ? "0" + d.getMonth() + 1 : d.getMonth() + 1;
-    const monthStr = month[d.getMonth()];
-    const day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
-    const hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-    const min = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-    const sec = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    if (type === "date") return monthStr + " " + day + " " + yearFull;
-    return (
-      yearFull + "/" + monthNum + "/" + day + " " + hour + ":" + min + ":" + sec
-    );
+    return new Date(timeStamp * 1000).toLocaleDateString("en-US", {
+      dateStyle: "long"
+    });
   }
 
   return (
@@ -108,20 +89,28 @@ const PurchaseHistory = props => {
                 user.profile.items.map(item => (
                   <TableRow key={item.item_id} className={classes.tableRow}>
                     <TableCell>
-                      {date_formating(
-                        Date.parse(item.purchase_date) / 1000,
-                        "date"
-                      )}
+                      <Typography className={classes.typography}>
+                        {date_formating(
+                          Date.parse(item.purchase_date) / 1000,
+                          "date"
+                        )}
+                      </Typography>
                     </TableCell>
-                    <TableCell>{item.item_name}</TableCell>
+                    <TableCell>
+                      <Typography className={classes.typography}>
+                        {item.item_name}
+                      </Typography>
+                    </TableCell>
                     <TableCell align="left">
-                      {item.item_price}
-                      <span
-                        className="qPointsMark"
-                        style={{ fontSize: "smaller" }}
-                      >
-                        <sup>ℚ</sup>
-                      </span>
+                      <Typography className={classes.typography}>
+                        {item.item_price}
+                        <span
+                          className="qPointsMark"
+                          style={{ fontSize: "smaller" }}
+                        >
+                          <sup>ℚ</sup>
+                        </span>
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 )))

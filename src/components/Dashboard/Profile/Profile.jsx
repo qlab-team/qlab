@@ -180,7 +180,7 @@ const Profile = props => {
                 You have solved {user.profile.quiz_total} quizzes.
               </Typography>
               <Typography variant="body1">
-                {user.profile.last_quiz_done.toDate().toDateString()}
+                {user.profile.last_quiz_done.toDate().toLocaleDateString("en-US")}
               </Typography>
             </Paper> */}
 
@@ -247,9 +247,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(Profile);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
