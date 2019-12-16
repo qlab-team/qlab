@@ -13,6 +13,7 @@ export const whoInvestedInYou = functions.firestore
     const investmentsAfter = afterDoc.investments;
 
     const investor_user_id = change.before.id;
+    const investor_photo = afterDoc.photoURL;
 
     if (investmentsBefore.length === investmentsAfter.length) {
       //No Changes, Do Nothing
@@ -68,7 +69,8 @@ export const whoInvestedInYou = functions.firestore
       const invested_in_me_object = {
         timestamp_start: new Date(),
         username: beforeDoc.username,
-        user_id: investor_user_id
+        user_id: investor_user_id,
+        photoURL: investor_photo
       };
 
       return admin
