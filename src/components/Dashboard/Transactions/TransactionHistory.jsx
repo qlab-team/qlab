@@ -126,8 +126,8 @@ const TransactionHistory = props => {
               }),
               transactions.investment_history
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(row => (
-                  <TableRow key={row.user_id} className={classes.tableRow}>
+                .map((row, id) => (
+                  <TableRow key={id} className={classes.tableRow}>
                     <TableCell>
                       {
                         <Grid container wrap="nowrap" className={classes.row}>

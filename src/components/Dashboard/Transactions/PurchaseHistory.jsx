@@ -100,8 +100,8 @@ const PurchaseHistory = props => {
                 }),
                 user.profile.items
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(item => (
-                    <TableRow key={item.item_id} className={classes.tableRow}>
+                  .map((item, id) => (
+                    <TableRow key={id} className={classes.tableRow}>
                       <TableCell>
                         <Typography className={classes.typography}>
                           {date_formating(
