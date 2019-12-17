@@ -145,7 +145,7 @@ const Dashboard = props => {
   // if auth not loaded, don't worry
   if (auth.isLoaded) {
     // if no auth, redirect
-    if (auth.isEmpty) return <Redirect to="/login" />;
+    if (auth.isEmpty) return <Redirect to="/" />;
   }
 
   return (
