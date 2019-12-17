@@ -11,6 +11,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from "@material-ui/core/TablePagination";
 
 // redux
 import { connect } from "react-redux";
@@ -57,6 +58,17 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const PurchaseHistory = props => {
   const classes = useStyles();
+  // for pagination
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   // set props from redux
   const { user } = props;
   // date format
@@ -86,39 +98,52 @@ const PurchaseHistory = props => {
                   if (a.purchaseDate > b.purchaseDate) return 1;
                   return 0;
                 }),
-                user.profile.items.map(item => (
-                  <TableRow key={item.item_id} className={classes.tableRow}>
-                    <TableCell>
-                      <Typography className={classes.typography}>
-                        {date_formating(
-                          Date.parse(item.purchase_date) / 1000,
-                          "date"
-                        )}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography className={classes.typography}>
-                        {item.item_name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography className={classes.typography}>
-                        {item.item_price}
-                        <span
-                          className="qPointsMark"
-                          style={{ fontSize: "smaller" }}
-                        >
-                          <sup>ℚ</sup>
-                        </span>
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
-                )))
+                user.profile.items
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(item => (
+                    <TableRow key={item.item_id} className={classes.tableRow}>
+                      <TableCell>
+                        <Typography className={classes.typography}>
+                          {date_formating(
+                            Date.parse(item.purchase_date) / 1000,
+                            "date"
+                          )}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography className={classes.typography}>
+                          {item.item_name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography className={classes.typography}>
+                          {item.item_price}
+                          <span
+                            className="qPointsMark"
+                            style={{
+                              fontSize: "smaller"
+                            }}
+                          >
+                            <sup>ℚ</sup>
+                          </span>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  )))
               ) : (
                 <TableRow />
               )}
             </TableBody>
           </Table>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
+            component="div"
+            count={user.profile.items ? user.profile.items.length : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         </Paper>
       </Grid>
     </Grid>

@@ -14,6 +14,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import TablePagination from "@material-ui/core/TablePagination";
 
 // redux
 import { connect } from "react-redux";
@@ -78,6 +79,17 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const TransactionHistory = props => {
   const classes = useStyles();
+  // for pagination
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   // set props from redux
   const { transactions } = props;
 
@@ -112,105 +124,116 @@ const TransactionHistory = props => {
                   return -1;
                 return 0;
               }),
-              transactions.investment_history.map(row => (
-                <TableRow key={row.user_id} className={classes.tableRow}>
-                  <TableCell>
-                    {
-                      <Grid container wrap="nowrap" className={classes.row}>
-                        <Typography className={classes.typography}>
-                          {row.username}
-                        </Typography>
-                        <Avatar
-                          alt="useravatar"
-                          src={row.photoURL}
-                          className={classes.avatar}
-                        />
-                      </Grid>
-                    }
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography className={classes.typography}>
-                      {row.points_earned}
-                      <span
-                        className="qPointsMark"
-                        style={{ fontSize: "smaller" }}
-                      >
-                        <sup>ℚ</sup>
-                      </span>
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography className={classes.typography}>
-                      {row.points_cost}
-                      <span
-                        className="qPointsMark"
-                        style={{ fontSize: "smaller" }}
-                      >
-                        <sup>ℚ</sup>
-                      </span>
-                    </Typography>
-                  </TableCell>
-                  {(() => {
-                    const profit = row.points_earned - row.points_cost;
-                    return profit < 0 ? (
-                      <TableCell align="left">
-                        <Box component="div" className={classes.negativeBox}>
+              transactions.investment_history
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(row => (
+                  <TableRow key={row.user_id} className={classes.tableRow}>
+                    <TableCell>
+                      {
+                        <Grid container wrap="nowrap" className={classes.row}>
                           <Typography className={classes.typography}>
-                            {profit}
-                            <span
-                              className="qPointsMark"
-                              style={{
-                                fontSize: "smaller",
-                                color: "white",
-                                opacity: 0.5
-                              }}
-                            >
-                              <sup>ℚ</sup>
-                            </span>
+                            {row.username}
                           </Typography>
-                        </Box>
-                      </TableCell>
-                    ) : (
-                      <TableCell align="left">
-                        <Box component="div" className={classes.positiveBox}>
-                          <Typography className={classes.typography}>
-                            +{profit}
-                            <span
-                              className="qPointsMark"
-                              style={{
-                                fontSize: "smaller",
-                                color: "white",
-                                opacity: 0.5
-                              }}
-                            >
-                              <sup>ℚ</sup>
-                            </span>
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                    );
-                  })()}
-                  <TableCell>
-                    <Typography className={classes.typography}>
-                      {row.timestamp_start
-                        ? date_formating(row.timestamp_start.seconds, "date")
-                        : "Null"}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography className={classes.typography}>
-                      {row.timestamp_end
-                        ? date_formating(row.timestamp_end.seconds, "date")
-                        : "Ongoing"}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )))
+                          <Avatar
+                            alt="useravatar"
+                            src={row.photoURL}
+                            className={classes.avatar}
+                          />
+                        </Grid>
+                      }
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography className={classes.typography}>
+                        {row.points_earned}
+                        <span
+                          className="qPointsMark"
+                          style={{ fontSize: "smaller" }}
+                        >
+                          <sup>ℚ</sup>
+                        </span>
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography className={classes.typography}>
+                        {row.points_cost}
+                        <span
+                          className="qPointsMark"
+                          style={{ fontSize: "smaller" }}
+                        >
+                          <sup>ℚ</sup>
+                        </span>
+                      </Typography>
+                    </TableCell>
+                    {(() => {
+                      const profit = row.points_earned - row.points_cost;
+                      return profit < 0 ? (
+                        <TableCell align="left">
+                          <Box component="div" className={classes.negativeBox}>
+                            <Typography className={classes.typography}>
+                              {profit}
+                              <span
+                                className="qPointsMark"
+                                style={{
+                                  fontSize: "smaller",
+                                  color: "white",
+                                  opacity: 0.5
+                                }}
+                              >
+                                <sup>ℚ</sup>
+                              </span>
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                      ) : (
+                        <TableCell align="left">
+                          <Box component="div" className={classes.positiveBox}>
+                            <Typography className={classes.typography}>
+                              +{profit}
+                              <span
+                                className="qPointsMark"
+                                style={{
+                                  fontSize: "smaller",
+                                  color: "white",
+                                  opacity: 0.5
+                                }}
+                              >
+                                <sup>ℚ</sup>
+                              </span>
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                      );
+                    })()}
+                    <TableCell>
+                      <Typography className={classes.typography}>
+                        {row.timestamp_start
+                          ? date_formating(row.timestamp_start.seconds, "date")
+                          : "Null"}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography className={classes.typography}>
+                        {row.timestamp_end
+                          ? date_formating(row.timestamp_end.seconds, "date")
+                          : "Ongoing"}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                )))
             ) : (
               <TableRow />
             )}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 15]}
+          component="div"
+          count={transactions.investment_history.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
         <div className={classes.seeMore}>
           <span style={{ opacity: "0.4" }}>
             Last Updated{" "}
