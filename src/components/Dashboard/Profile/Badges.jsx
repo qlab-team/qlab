@@ -5,6 +5,10 @@ import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.s
 import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
 import { ReactComponent as CafeLatteBadge } from "../../../assets/cafe-latte-icon.svg";
 import { ReactComponent as PhantomPizzaBadge } from "../../../assets/phantom-pizza-icon.svg";
+import { ReactComponent as CabinBadge } from "../../../assets/cabin.svg";
+import { ReactComponent as CameraBadge } from "../../../assets/camera.svg";
+import { ReactComponent as SunBadge } from "../../../assets/sunny.svg";
+import { ReactComponent as CellPhoneBadge } from "../../../assets/cellphone.svg";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const Badges = props => {
@@ -35,6 +39,30 @@ const Badges = props => {
               return (
                 <Tooltip title={props.badgeName}>
                   <PhantomPizzaBadge width="60%" height="60%" />
+                </Tooltip>
+              );
+            case "Cabin Badge":
+              return (
+                <Tooltip title={props.badgeName}>
+                  <CabinBadge width="60%" height="60%" />
+                </Tooltip>
+              );
+            case "Cell Phone Badge":
+              return (
+                <Tooltip title={props.badgeName}>
+                  <CellPhoneBadge width="60%" height="60%" />
+                </Tooltip>
+              );
+            case "Sun Badge":
+              return (
+                <Tooltip title={props.badgeName}>
+                  <SunBadge width="60%" height="60%" />
+                </Tooltip>
+              );
+            case "Camera Badge":
+              return (
+                <Tooltip title={props.badgeName}>
+                  <CameraBadge width="60%" height="60%" />
                 </Tooltip>
               );
             default:
