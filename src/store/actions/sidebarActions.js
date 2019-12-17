@@ -3,7 +3,7 @@ const setBadgeInvisible = data => {
   return {
     type: "SET_BADGE_INVISIBLE",
     profile: data.profile,
-    stats: data.stats || true
+    stats: data.stats
   };
 };
 

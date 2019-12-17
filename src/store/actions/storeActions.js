@@ -75,9 +75,7 @@ const purchaseItem = (data, auth, user) => {
               console.log("Show New Badge Called");
               dispatch({
                 type: "SET_BADGE_INVISIBLE",
-                data: {
-                  profile: false
-                }
+                profile: false
               });
             });
           console.log(

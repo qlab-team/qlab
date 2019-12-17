@@ -51,11 +51,20 @@ const MainListItems = props => {
       <Link
         style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/stats"
-        onClick={props.handleDrawerClose}
+        onClick={() => {
+          // props.handleDrawerClose();
+          props.setBadgeInvisible({ stats: true });
+        }}
       >
         <ListItem button>
           <ListItemIcon>
             <BarChartIcon />
+            <Badge
+              max={500}
+              badgeContent={`NEW`}
+              color="secondary"
+              invisible={props.sidebar.badgesInvisible.stats}
+            ></Badge>
           </ListItemIcon>
           <ListItemText primary="Stats" />
         </ListItem>

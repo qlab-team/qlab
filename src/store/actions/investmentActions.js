@@ -85,6 +85,13 @@ export const addInvestment = (data, auth, user) => {
           });
         console.log("Investment History Object Created!");
       })
+      .then(() => {
+        console.log("Show New Badge Called");
+        dispatch({
+          type: "SET_BADGE_INVISIBLE",
+          stats: false
+        });
+      })
       .catch(e => {
         console.log("err :", e);
       });
