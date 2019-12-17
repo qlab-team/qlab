@@ -66,7 +66,6 @@ const Leaders = props => {
 
   // set props from redux
   const { leaderboard, auth, user } = props;
-  console.log(leaderboard);
   //Leaderboard
   const allUsers = leaderboard.board;
 

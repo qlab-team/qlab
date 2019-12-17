@@ -135,14 +135,12 @@ const Profile = props => {
     }
 
     const updateUserInput = event => {
-      console.log(event.target.value);
       changeUserInput(event.target.value);
       changeUserInput("he");
     };
 
     const changeUserNameOnDatabase = event => {
       event.preventDefault();
-      console.log(userInput);
     };
 
     changeUserInputField(

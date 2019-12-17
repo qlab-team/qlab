@@ -8,7 +8,6 @@ const initState = {
 const sidebarReducer = (state = initState, action) => {
   switch (action.type) {
     case "SET_BADGE_INVISIBLE": {
-      console.log(action);
       return {
         ...state,
         badgesInvisible: {

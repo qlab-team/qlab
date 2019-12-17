@@ -79,7 +79,8 @@ const purchaseItem = (data, auth, user) => {
               });
             });
           console.log(
-            `Purchase complete. qPoints: ${user.profile.q_points - data.price}`
+            `Purchase complete. Remaining qPoints: ${user.profile.q_points -
+              data.price}`
           );
         }
       })
