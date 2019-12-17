@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -31,7 +30,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 6
   },
   button: {
-    flexGrow: 1,
     background:
       "linear-gradient(45deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
     borderRadius: 50,
@@ -89,11 +87,9 @@ const TileAndStartButton = props => {
       <Typography className={classes.tagline} variant="h2">
         Where effort's the currency.
       </Typography>
-      <Link style={{ textDecoration: "none" }}>
-        <Button className={classes.button} onClick={googleLogin}>
-          Sign in with Google
-        </Button>
-      </Link>
+      <Button className={classes.button} onClick={googleLogin}>
+        Sign in with Google
+      </Button>
     </Box>
   );
 };
