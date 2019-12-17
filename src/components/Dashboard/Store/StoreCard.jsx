@@ -14,6 +14,10 @@ import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.s
 import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
 import { ReactComponent as CafeLatteBadge } from "../../../assets/cafe-latte-icon.svg";
 import { ReactComponent as PhantomPizzaBadge } from "../../../assets/phantom-pizza-icon.svg";
+import { ReactComponent as CabinBadge } from "../../../assets/cabin.svg";
+import { ReactComponent as CameraBadge } from "../../../assets/camera.svg";
+import { ReactComponent as SunBadge } from "../../../assets/sunny.svg";
+import { ReactComponent as CellPhoneBadge } from "../../../assets/cellphone.svg";
 // redux
 import { connect } from "react-redux";
 
@@ -77,6 +81,14 @@ const StoreCard = props => {
             return <CafeLatteBadge width="60%" height="30%" />;
           case "Phantom Pizza Badge":
             return <PhantomPizzaBadge width="60%" height="30%" />;
+          case "Cabin Badge":
+            return <CabinBadge width="60%" height="30%" />;
+          case "Camera Badge":
+            return <CameraBadge width="60%" height="30%" />;
+          case "Sun Badge":
+            return <SunBadge width="60%" height="30%" />;
+          case "Cell Phone Badge":
+            return <CellPhoneBadge width="60%" height="30%" />;
           default:
             return <ShoppingCartIcon fontSize="large" />;
         }
@@ -126,4 +138,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(StoreCard);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(StoreCard);
