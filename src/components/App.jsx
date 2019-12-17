@@ -9,6 +9,7 @@ import TitleAndStartButton from "./Landing/TitleAndStartButton";
 import QuizMain from "./Quiz/QuizMain";
 import QuizFinished from "./Quiz//quizFinished/QuizFinished";
 import ButtonAppBar from "../components/Landing/ButtonAppBar";
+import About from "../components/Landing/About";
 // react-router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // react-three-fiber
@@ -38,6 +39,7 @@ function App() {
           <Route path="/dashboard" component={Dashboard}></Route>
           <Route path="/quiz" component={QuizMain}></Route>
           <Route path="/quizFin" component={QuizFinished}></Route>
+          <Route path="/about" component={About}></Route>
           <Route exact path="/">
             <ButtonAppBar />
             {/* REACT THREE FIBER SCENE START */}

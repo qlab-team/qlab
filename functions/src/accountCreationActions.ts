@@ -24,7 +24,7 @@ const generateUser = (authObject: any) => {
     photoURL: authObject.photoURL,
     username: authObject.email.split("@")[0],
     q_points: 200,
-    q_score: 0,
+    q_score: 50,
     quiz_total: 0,
     created_at: new Date(),
     investments: [],

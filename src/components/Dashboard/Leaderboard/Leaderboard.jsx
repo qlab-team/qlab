@@ -49,7 +49,7 @@ const Leaderboard = props => {
   // if auth lot loaded, don't worry
   if (auth.isLoaded) {
     // if no auth, redirect to front page
-    if (auth.isEmpty) return <Redirect to="/login" />;
+    if (auth.isEmpty) return <Redirect to="/" />;
   }
 
   return (

@@ -146,7 +146,7 @@ const Sidebar = props => {
 
   useEffect(() => {
     if (auth.isLoaded) {
-      if (auth.isEmpty) return <Redirect to="/login" />;
+      if (auth.isEmpty) return <Redirect to="/" />;
       props.getUserAndLogin(auth);
     }
     // eslint-disable-next-line
