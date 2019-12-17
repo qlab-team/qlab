@@ -92,7 +92,7 @@ export const changeUserName = newUserName => {
 
 export const getUserData = () => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get User data Called");
+    console.log("Get User Data Called");
     // make async call to database
     const state = getState();
     const user_id = state.user.user_id;
@@ -100,8 +100,7 @@ export const getUserData = () => {
 
     if (!user_id) return;
     usersCollection
-      // .doc(user_id)
-      .doc("SQzKtzonCPT5Sh8OUyU2")
+      .doc(user_id)
       .collection("invested_in_me")
       .get()
       .then(collection => {

@@ -96,20 +96,14 @@ export const getInvestments = auth => {
     // make async call to database
     console.log("Get Investments for Stats Called");
     const firestore = getFirestore();
-    const state = getState();
-    const user_id = state.user.user_id;
-    if (!user_id) return;
     firestore
       .collection("users")
-      .doc(user_id)
+      .where("auth_id", "==", auth.uid)
       .get()
-      .then(doc => {
-        return doc.data();
-      })
       .then(data => {
         dispatch({
           type: "GET_INVESTMENTS",
-          investments: data.investments
+          investments: data.docs[0].data().investments
         });
       })
       .catch(e => {
