@@ -1,11 +1,17 @@
 /////////////// IMPORTS
 import React from "react";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// react-router
+import { Redirect } from "react-router-dom";
+// firebase
+import firebase from "../../config/fbConfig";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -24,7 +30,6 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 6
   },
   button: {
-    flexGrow: 1,
     background:
       "linear-gradient(45deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)",
     borderRadius: 50,
@@ -39,8 +44,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// COMPONENT
-export default function TileAndStartButton() {
+const TileAndStartButton = props => {
   const classes = useStyles();
+
+  // Set Props from Redux
+  const { auth } = props;
+
+  //If Auth Not Loaded, Don't Worry
+  if (auth.isLoaded) {
+    //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
+    if (!auth.isEmpty) {
+      console.log("Redirecting to Dashboard");
+      return <Redirect to="/dashboard/stats" />;
+    }
+  }
+
+  const googleLogin = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(obj => {
+        return <Redirect to="/dashboard/stats" />;
+      })
+      .catch(error => {
+        console.log("err :", error);
+      });
+  };
+
   return (
     <Box
       height={300}
@@ -56,9 +87,19 @@ export default function TileAndStartButton() {
       <Typography className={classes.tagline} variant="h2">
         Where effort's the currency.
       </Typography>
-      <Link style={{ textDecoration: "none" }} to="/login">
-        <Button className={classes.button}>Start</Button>
-      </Link>
+      <Button className={classes.button} onClick={googleLogin}>
+        Sign in with Google
+      </Button>
     </Box>
   );
-}
+};
+
+/////////////// REDUX
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps))(TileAndStartButton);
