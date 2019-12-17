@@ -13,11 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
-//Actions
+// actions
 import { notificationRead } from "../../store/actions/investmentActions";
-
-// firebase
+// redux
 import { connect } from "react-redux";
 import { compose } from "redux";
 
