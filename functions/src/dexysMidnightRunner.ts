@@ -145,7 +145,8 @@ export const dexysMidnightRunner = functions.pubsub
           batchInvestmentWrite.update(userRef, {
             q_points: userData.q_points + todaysDividends,
             investments: newInvestments,
-            earnings_today: todaysDividends
+            earnings_today: todaysDividends,
+            quizzes_done_today: 0
           });
         });
 
