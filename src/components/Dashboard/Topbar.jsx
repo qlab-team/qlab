@@ -104,7 +104,6 @@ Fade.propTypes = {
 /////////////// COMPONENT
 const Topbar = props => {
   //Set Props from Redux
-  const { investments } = props;
 
   //Use Styles
   const classes = useStyles();
