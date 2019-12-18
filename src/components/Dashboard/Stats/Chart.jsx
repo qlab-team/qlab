@@ -90,7 +90,6 @@ const Chart = props => {
         return createData(fixDate, q_score);
       });
       data.reverse().push(createData("Today", user.profile.q_score));
-      console.log(data);
       updateChartData(data);
     }
     // eslint-disable-next-line

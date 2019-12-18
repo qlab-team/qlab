@@ -15,19 +15,35 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import StoreIcon from "@material-ui/icons/Store";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+// badges
+import Badge from "@material-ui/core/Badge";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// actions
+import { setBadgeInvisible } from "../../store/actions/sidebarActions";
 
 /////////////// COMPONENTS
-export const MainListItems = props => {
+const MainListItems = props => {
   return (
     <div>
       <Link
         style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/profile"
-        onClick={props.handleDrawerClose}
+        onClick={() => {
+          // props.handleDrawerClose();
+          props.setBadgeInvisible({ profile: true });
+        }}
       >
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
+            <Badge
+              max={500}
+              badgeContent={`NEW`}
+              color="secondary"
+              invisible={props.sidebar.badgesInvisible.profile}
+            ></Badge>
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
@@ -35,11 +51,20 @@ export const MainListItems = props => {
       <Link
         style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/stats"
-        onClick={props.handleDrawerClose}
+        onClick={() => {
+          // props.handleDrawerClose();
+          props.setBadgeInvisible({ stats: true });
+        }}
       >
         <ListItem button>
           <ListItemIcon>
             <BarChartIcon />
+            <Badge
+              max={500}
+              badgeContent={`NEW`}
+              color="secondary"
+              invisible={props.sidebar.badgesInvisible.stats}
+            ></Badge>
           </ListItemIcon>
           <ListItemText primary="Stats" />
         </ListItem>
@@ -96,6 +121,7 @@ export const MainListItems = props => {
     </div>
   );
 };
+
 export const SecondaryListItems = props => {
   return (
     <div>
@@ -117,3 +143,22 @@ export const SecondaryListItems = props => {
     </div>
   );
 };
+
+/////////////// REDUX
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user,
+    auth: state.firebase.auth,
+    sidebar: state.sidebar
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setBadgeInvisible: data => dispatch(setBadgeInvisible(data))
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  MainListItems
+);

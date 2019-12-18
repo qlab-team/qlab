@@ -2,6 +2,7 @@
 import React from "react";
 // components
 import Leaders from "./Leaders";
+import Dialog from "../../Utility/Dialog";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -13,6 +14,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
 import { getLeaderboard } from "../../../store/actions/leaderboardActions";
+import { addInvestment } from "../../../store/actions/investmentActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -53,13 +55,16 @@ const Leaderboard = props => {
   }
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <Leaders addInvestment />
-        </Paper>
+    <React.Fragment>
+      <Dialog dialogCallback={props.addInvestment} />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Leaders addInvestment />
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 
@@ -71,7 +76,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getLeaderboard: () => dispatch(getLeaderboard())
+    getLeaderboard: () => dispatch(getLeaderboard()),
+    addInvestment: (data, auth, user) =>
+      dispatch(addInvestment(data, auth, user))
   };
 };
 

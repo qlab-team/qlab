@@ -70,9 +70,17 @@ const purchaseItem = (data, auth, user) => {
                 item_price: data.price
               }),
               q_points: user.profile.q_points - data.price
+            })
+            .then(() => {
+              console.log("Show New Badge Called");
+              dispatch({
+                type: "SET_BADGE_INVISIBLE",
+                profile: false
+              });
             });
           console.log(
-            `Purchase complete. qPoints: ${user.profile.q_points - data.price}`
+            `Purchase complete. Remaining qPoints: ${user.profile.q_points -
+              data.price}`
           );
         }
       })
