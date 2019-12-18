@@ -1,6 +1,6 @@
 version: 2.0 # use CircleCI 2.0
 jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+  init: # Set Up Everything
     working_directory: ~/repository # our name of the directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
@@ -22,51 +22,39 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: # Install Packages for Functions
-          name: Install Dependencies for Hosting
-          command: cd functions && yarn && cd ..
+
+  build_test_static: # runs not using Workflows must have a `build` job as entry point
+    steps: # a collection of executable commands
       # - run: # Run FrontEnd Tests // disabled for now—react-three-fiber is messing w tests -vic
       #     name: Run Jest Test
       #     command: yarn test
-      - run: # Run Backend Tests
-          name: Run Backend Firebase and Cloud Functions Tests
-          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
-  deploy: # deploy script
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - run: # Update Yarn if required
-          name: update yarn
-          command: "sudo yarn upgrade"
-      - restore_cache: # special step to restore the dependency cache
-          name: Restore Yarn Package Cache for Hosting
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
-          name: Install Dependencies for Hosting
-          command: yarn install --frozen-lockfile
-      - save_cache: # special step to save the dependency cache
-          name: Save Yarn Package Cache for Hosting
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+
+  build_test_functions: # runs not using Workflows must have a `build` job as entry point
+    steps: # a collection of executable commands
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
-          command: cd functions && yarn && cd ..
-      - run: # Build the Project
-          name: react-build
-          command: yarn build
+          command: cd functions && npm install && cd ..
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunctions
+
+  deploy_static:
+    steps:
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+
+  deploy_functions:
+    steps:
       - run: # Deploy Functions
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions
+
+  deploy_rules:
+    steps:
       - run: # Deploy Rules
           name: Deploy Rules
           command: yarn deployRules
@@ -75,10 +63,30 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build # perform this first
-      - deploy: # perform second
+      - init # Set Up the Project
+      - build_test_static:
           requires:
-            - build
+            - init
+      - build_test_functions:
+          requires:
+            - init
+      - deploy_static:
+          requires:
+            - build_test_static
+            - init
+          filters: # only for the master branch
+            branches:
+              only: master
+      - deploy_functions:
+          requires:
+            - build_test_functions
+            - init
+          filters: # only for the master branch
+            branches:
+              only: master
+      - deploy_rules:
+          requires:
+            - init
           filters: # only for the master branch
             branches:
               only: master
