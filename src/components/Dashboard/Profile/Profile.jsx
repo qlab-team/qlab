@@ -108,10 +108,10 @@ const Profile = props => {
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
 
-  useEffect(() => {
-    if (auth.isLoaded) props.getUserAndLogin(auth);
-    // eslint-disable-next-line
-  }, [auth.isLoaded]);
+  // useEffect(() => {
+  //   if (auth.isLoaded) props.getUserAndLogin(auth);
+  //   // eslint-disable-next-line
+  // }, [auth.isLoaded]);
 
   //need to refactor this for one useeffect maybe? not sure if best practice or not.
   useEffect(() => {
@@ -269,4 +269,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Profile);
