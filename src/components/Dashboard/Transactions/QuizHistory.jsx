@@ -11,6 +11,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from "@material-ui/core/TablePagination";
 
 // redux
 import { connect } from "react-redux";
@@ -56,6 +57,17 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const QuizHistory = props => {
   const classes = useStyles();
+  // for pagination
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   // set props from redux
   const { transactions } = props;
 
@@ -85,38 +97,49 @@ const QuizHistory = props => {
                 if (a.date.seconds > b.date.seconds) return -1;
                 return 0;
               }),
-              transactions.quiz_history.map((quiz, id) => (
-                <TableRow key={id} className={classes.tableRow}>
-                  <TableCell>
-                    <Typography className={classes.typography}>
-                      {quiz.date
-                        ? date_formating(quiz.date.seconds, "datetime")
-                        : "Null"}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography className={classes.typography}>
-                      {quiz.quiz_title}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography className={classes.typography}>
-                      {quiz.points_earned}
-                      <span
-                        className="qPointsMark"
-                        style={{ fontSize: "smaller" }}
-                      >
-                        <sup>ℚ</sup>
-                      </span>
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )))
+              transactions.quiz_history
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((quiz, id) => (
+                  <TableRow key={id} className={classes.tableRow}>
+                    <TableCell>
+                      <Typography className={classes.typography}>
+                        {quiz.date
+                          ? date_formating(quiz.date.seconds, "datetime")
+                          : "Null"}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography className={classes.typography}>
+                        {quiz.quiz_title}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography className={classes.typography}>
+                        {quiz.points_earned}
+                        <span
+                          className="qPointsMark"
+                          style={{ fontSize: "smaller" }}
+                        >
+                          <sup>ℚ</sup>
+                        </span>
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                )))
             ) : (
               <TableRow />
             )}
           </TableBody>
         </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 15]}
+          component="div"
+          count={transactions.quiz_history.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
         <div className={classes.seeMore}>
           <span style={{ opacity: "0.4" }}>
             Last Updated{" "}
