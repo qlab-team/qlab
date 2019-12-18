@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { MainListItems, SecondaryListItems } from "./ListItems";
+import MainListItems, { SecondaryListItems } from "./ListItems";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
