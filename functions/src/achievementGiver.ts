@@ -10,18 +10,6 @@ export const userBadgeChecker = functions.firestore
     const userPointAmount = userData.q_points;
     if (userBadgeAmount === 8) {
       giveUserAchievement(userId, "Bought all the badges!");
-      // return admin
-      //   .firestore()
-      //   .collection("users")
-      //   .doc(userId)
-      //   .update({
-      //     achievements: admin.firestore.FieldValue.arrayUnion({
-      //       achievement_name: "Bought all the badges!"
-      //     })
-      //   })
-      //   .then(() => {
-      //     console.log("achievement given!");
-      //   });
     }
     if (userPointAmount >= 1000) {
       giveUserAchievement(userId, "Got 1000 points!");
@@ -30,7 +18,7 @@ export const userBadgeChecker = functions.firestore
     if (userPointAmount >= 5000) {
       giveUserAchievement(userId, "Got 5000 points!");
     }
-    return "achievement given yo.";
+    return "Achievements set.";
   });
 
 const giveUserAchievement = (userId: string, achievement: string) => {

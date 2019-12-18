@@ -14,55 +14,55 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 const Badges = props => {
   return (
     <Fragment>
-      <Grid item xs={2}>
+      <Grid item xs={3}>
         {(() => {
           switch (props.badgeName) {
             case "Snake Cat Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <SnakeCatBadge width="60%" height="60%" />
+                  <SnakeCatBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Derek Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <DerekBadge width="60%" height="60%" />
+                  <DerekBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Café Latte Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <CafeLatteBadge width="60%" height="60%" />
+                  <CafeLatteBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Phantom Pizza Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <PhantomPizzaBadge width="60%" height="60%" />
+                  <PhantomPizzaBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Cabin Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <CabinBadge width="60%" height="60%" />
+                  <CabinBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Cell Phone Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <CellPhoneBadge width="60%" height="60%" />
+                  <CellPhoneBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Sun Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <SunBadge width="60%" height="60%" />
+                  <SunBadge width="45%" height="45%" />
                 </Tooltip>
               );
             case "Camera Badge":
               return (
                 <Tooltip title={props.badgeName}>
-                  <CameraBadge width="60%" height="60%" />
+                  <CameraBadge width="45%" height="45%" />
                 </Tooltip>
               );
             default:
