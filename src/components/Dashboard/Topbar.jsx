@@ -117,6 +117,17 @@ const Topbar = props => {
   const open = Boolean(anchorEl);
   const id = open ? "spring-popper" : undefined;
 
+  const { user } = props;
+  const [earningsToday, setEarningsToday] = React.useState(0);
+
+  React.useEffect(() => {
+    if (user.isLoggedIn) {
+      console.log("EARNINGS TODAY:", user.profile.earnings_today);
+      setEarningsToday(user.profile.earnings_today);
+    }
+    // eslint-disable-next-line
+  }, [user.isLoggedIn]);
+
   return (
     <Toolbar
       className={clsx(classes.toolbar, props.open && classes.dashboardOpen)}
@@ -152,10 +163,10 @@ const Topbar = props => {
           to="/dashboard/stats"
         >
           <Badge
-            max={500}
-            badgeContent={`+${investments.investmentIncome}`}
+            // max={500}
+            badgeContent={`+${user.profile.earnings_today}`}
             color="secondary"
-            invisible={!investments.investmentPayoutToday}
+            invisible={!earningsToday > 0}
           >
             <TimelineIcon />
           </Badge>
@@ -181,10 +192,10 @@ const Topbar = props => {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
-            {investments.investmentPayoutToday ? (
+            {user.profile.earnings_today ? (
               <div className={classes.paper}>
                 Your investments returned{" "}
-                <b>{investments.investmentIncome || 0}</b> points today!{" "}
+                <b>{user.profile.earnings_today || 0}</b> points today!{" "}
               </div>
             ) : (
               <div className={classes.paper}>No investment income today. </div>
@@ -200,6 +211,7 @@ const Topbar = props => {
 const mapStateToProps = (state, ownProps) => {
   return {
     investments: state.investments,
+    auth: state.firebase.auth,
     user: state.user
   };
 };
