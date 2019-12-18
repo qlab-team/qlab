@@ -1,7 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-export const userStatsChecker = functions.firestore
+export const userBadgeChecker = functions.firestore
   .document("users/{userId}")
   .onUpdate((change: any, context: any) => {
     const userData = change.after.data();
@@ -26,25 +26,26 @@ export const userStatsChecker = functions.firestore
     }
   });
 
-// const checkUserPoints = functions.firestore
-// .document("users/{userId}")
-// .onUpdate((change: any, context: any) => {
-//     return admin
-//       .firestore()
-//       .collection("users")
-//       .get()
-//       .then((users: any) => {
-//         const
-//         admin
-//           .firestore()
-//           .collection("leaderboard")
-//           .doc("allUsers")
-//           .update();
-//       })
-//       .catch((err: any) => {
-//         console.log("Error creating account", err);
-//       });
-// })
+const checkUserPoints = functions.firestore
+  .document("users/{userId}")
+  .onUpdate((change: any, context: any) => {
+    return admin
+      .firestore()
+      .collection("users")
+      .get()
+      .then((users: any) => {
+        admin
+          .firestore()
+          .collection("leaderboard")
+          .doc("allUsers")
+          .update();
+      })
+      .catch((err: any) => {
+        console.log("Error creating account", err);
+      });
+  });
+
+// const UpdateAchievements = (users: any) => {}
 
 //if user has highest score grab and store their id
 // if (userData.q_points > highestScoreUser.score) {

@@ -4,7 +4,7 @@ import { dexysMidnightRunner } from "./dexysMidnightRunner";
 import { generateNewUser } from "./accountCreationActions";
 import { updateLeaderboard } from "./leaderboardDBActions";
 import { whoInvestedInYou } from "./investmentDBActions";
-import { userStatsChecker } from "./achievementGiver";
+import { userBadgeChecker } from "./achievementGiver";
 
 const functions = require("firebase-functions");
 // The Firebase Admin SDK to access the Firebase Realtime Database.
@@ -23,7 +23,7 @@ export {
   generateNewUser,
   updateLeaderboard,
   whoInvestedInYou,
-  userStatsChecker
+  userBadgeChecker
 };
 
 // Start writing Firebase Functions
