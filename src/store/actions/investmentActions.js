@@ -10,13 +10,28 @@ export const addInvestment = (data, auth, user) => {
     //Cancel Out if Investment Is in Oneself
     if (data.user_id === user_id) {
       console.log("You cannot invest in yourself.");
+      dispatch({
+        type: "OPEN_DIALOG",
+        open: true,
+        data,
+        error: "You cannot invest in yourself."
+      });
       return;
     }
 
     //Cancel Out if you don't have enough money to buy the investment
-    const currentPoints = state.user.q_points;
+    const currentPoints = state.user.profile.q_points;
     if (points_cost > currentPoints) {
-      console.log("You don't have enough money for this investment.");
+      console.log(
+        "You don't have enough money for this investment.",
+        `Cost: ${points_cost} current qPoints: ${currentPoints}`
+      );
+      dispatch({
+        type: "OPEN_DIALOG",
+        open: true,
+        data,
+        error: "You don't have enough money for this investment."
+      });
       return;
     }
 
@@ -30,6 +45,12 @@ export const addInvestment = (data, auth, user) => {
         //Cancel Out if There are Already Two Investments
         if (investments.length >= 2) {
           console.log("You already have two investments!");
+          dispatch({
+            type: "OPEN_DIALOG",
+            open: true,
+            data,
+            error: "You already have two investments!"
+          });
           return;
         }
 
@@ -38,6 +59,12 @@ export const addInvestment = (data, auth, user) => {
           const investment = investments[invInd];
           if (investment.user_id === data.user_id) {
             console.log("You already have this investment!");
+            dispatch({
+              type: "OPEN_DIALOG",
+              open: true,
+              data,
+              error: "You already have this investment!"
+            });
             return;
           }
         }

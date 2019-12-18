@@ -95,6 +95,7 @@ const useStyles = makeStyles(theme => ({
 const Profile = props => {
   const classes = useStyles();
   const [userInputField, changeUserInputField] = useState("");
+  // eslint-disable-next-line
   const [userInput, changeUserInput] = useState("");
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");

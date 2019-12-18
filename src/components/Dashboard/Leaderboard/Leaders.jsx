@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
 import { addInvestment } from "../../../store/actions/investmentActions";
+import { openDialog } from "../../../store/actions/dialogActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -65,7 +66,7 @@ const Leaders = props => {
   const classes = useStyles();
 
   // set props from redux
-  const { leaderboard, auth, user } = props;
+  const { leaderboard } = props;
   //Leaderboard
   const allUsers = leaderboard.board;
 
@@ -136,7 +137,7 @@ const Leaders = props => {
                       e.target.innerHTML = row.q_score;
                     }}
                     onClick={() => {
-                      const data = {
+                      const investmentData = {
                         username: row.username,
                         investment_made: new Date(),
                         q_score: row.q_score,
@@ -144,7 +145,16 @@ const Leaders = props => {
                         user_id: row.user_id,
                         photoURL: row.photoURL
                       };
-                      props.addInvestment(data, auth, user);
+                      props.openDialog(true, {
+                        ...investmentData,
+                        msg: {
+                          title: `Do you want to make this investment?`,
+                          body: `${
+                            investmentData.username
+                          }? for ${investmentData.q_score * 5}`
+                        },
+                        date: new Date().toString()
+                      });
                     }}
                   >
                     {row.q_score}
@@ -180,7 +190,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addInvestment: (data, auth, user) =>
-      dispatch(addInvestment(data, auth, user))
+      dispatch(addInvestment(data, auth, user)),
+    openDialog: (open, data, error) => dispatch(openDialog(open, data, error))
   };
 };
 
