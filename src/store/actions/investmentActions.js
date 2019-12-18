@@ -42,6 +42,13 @@ export const addInvestment = (data, auth, user) => {
           }
         }
 
+        // show badge in stats list item
+        console.log("Set Badge Invisible Called: false");
+        dispatch({
+          type: "SET_BADGE_INVISIBLE",
+          stats: false
+        });
+
         // New Investment Object
         const newInvestmentObject = {
           display_name: data.username,
@@ -84,13 +91,6 @@ export const addInvestment = (data, auth, user) => {
             )
           });
         console.log("Investment History Object Created!");
-      })
-      .then(() => {
-        console.log("Show New Badge Called");
-        dispatch({
-          type: "SET_BADGE_INVISIBLE",
-          stats: false
-        });
       })
       .catch(e => {
         console.log("err :", e);
