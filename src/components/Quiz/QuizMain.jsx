@@ -54,7 +54,6 @@ class QuizMain extends Component {
 
   componentDidMount() {
     this.props.getQuiz(this.props.quizId).then(res => {
-      console.log(this.props.quiz);
       this.setState({ Quiz: this.props.quiz.quiz_questions });
       this.setState({ quizLength: this.props.quiz.quiz_length });
       this.setState({ loadedOrNot: true });
@@ -99,20 +98,20 @@ class QuizMain extends Component {
     this.setState({ eraseHighlight: !this.state.eraseHighlight });
   };
 
-    updateUserHasSelected = () => {
-        this.setState({userHasSelected: true})
-    }
+  updateUserHasSelected = () => {
+    this.setState({ userHasSelected: true });
+  };
 
-    resetSelections = () => {
-        this.setState({userHasSelected: false})
-    }
+  resetSelections = () => {
+    this.setState({ userHasSelected: false });
+  };
 
-    addQuizQuestionToEnd = () => {
-        let updatedQuiz = this.state.Quiz;
-        const currentQuestion = this.state.Quiz[this.state.currentQuestion]
-        updatedQuiz.push(currentQuestion)
-        this.setState({Quiz: updatedQuiz})
-    }
+  addQuizQuestionToEnd = () => {
+    let updatedQuiz = this.state.Quiz;
+    const currentQuestion = this.state.Quiz[this.state.currentQuestion];
+    updatedQuiz.push(currentQuestion);
+    this.setState({ Quiz: updatedQuiz });
+  };
 
   render() {
     const { classes } = this.props;
