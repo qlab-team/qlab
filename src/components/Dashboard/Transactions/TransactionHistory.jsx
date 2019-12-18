@@ -76,6 +76,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// SORTING
+function sortDate(arr) {
+  const ongoing = [];
+  const finished = [];
+
+  // sort by timestamp_start
+  arr.sort((a, b) => {
+    if (a.timestamp_start.seconds < b.timestamp_start.seconds) return 1;
+    if (a.timestamp_start.seconds > b.timestamp_start.seconds) return -1;
+    return 0;
+  });
+
+  // separate ongoing or not
+  arr.forEach(row =>
+    !row.timestamp_end ? ongoing.push(row) : finished.push(row)
+  );
+
+  return ongoing.concat(finished);
+}
+
 /////////////// COMPONENT
 const TransactionHistory = props => {
   const classes = useStyles();
@@ -117,14 +137,7 @@ const TransactionHistory = props => {
           </TableHead>
           <TableBody>
             {transactions.investment_history ? (
-              (transactions.investment_history.sort((a, b) => {
-                if (a.timestamp_start.seconds < b.timestamp_start.seconds)
-                  return 1;
-                if (a.timestamp_start.seconds > b.timestamp_start.seconds)
-                  return -1;
-                return 0;
-              }),
-              transactions.investment_history
+              sortDate(transactions.investment_history)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, id) => (
                   <TableRow key={id} className={classes.tableRow}>
@@ -219,7 +232,7 @@ const TransactionHistory = props => {
                       </Typography>
                     </TableCell>
                   </TableRow>
-                )))
+                ))
             ) : (
               <TableRow />
             )}
