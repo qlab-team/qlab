@@ -146,9 +146,9 @@ const Leaders = props => {
                         ...investmentData,
                         msg: {
                           title: `Do you want to make this investment?`,
-                          body: `${
+                          body: `In ${
                             investmentData.username
-                          }? for ${investmentData.q_score * 5}`
+                          } for ${investmentData.q_score * 5} ℚPoints`
                         },
                         date: new Date().toString()
                       });
