@@ -1,6 +1,13 @@
+/////////////// IMPORTS
 import React, { Fragment, useState } from "react";
-import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+// components
 import QuestionAndAnswers from "./QuestionAndAnswers";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// material ui
+import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -20,8 +27,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const About = () => {
+const About = props => {
   const classes = useStyles();
+  // set props from redux
+  const { auth } = props;
+
   const [questionsAndAnswers] = useState([
     {
       question: "What is QLAB?",
@@ -59,15 +69,28 @@ const About = () => {
         "An achievement is something you get for completing a specific task in QLAB. These can be seen from your profile. One example is getting a trophy for getting to the top of the leaderboard."
     }
   ]);
+  const isLogin = () => {
+    // if auth not loaded, don't worry
+    if (auth.isLoaded) {
+      // if no auth, redirect
+      if (auth.isEmpty) {
+        props.history.push("/");
+        return;
+      }
+    }
+    props.history.push("/dashboard/stats");
+  };
   return (
     <Fragment>
       <Paper className={classes.paper}>
+        <Button onClick={isLogin}>Back</Button>
         <Typography className={classes.title}>FAQ</Typography>
 
         <Grid container>
-          {questionsAndAnswers.map(qAndA => {
+          {questionsAndAnswers.map((qAndA, index) => {
             return (
               <QuestionAndAnswers
+                key={index}
                 question={qAndA.question}
                 answer={qAndA.answer}
               />
@@ -79,4 +102,12 @@ const About = () => {
   );
 };
 
-export default About;
+/////////////// REDUX
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps))(About);
