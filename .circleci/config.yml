@@ -41,23 +41,29 @@ jobs: # a collection of steps
           name: Run Backend Firebase and Cloud Functions Tests
           command: yarn testFunctions
 
-  deploy_static:
+  deploy_static_dev:
     steps:
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
 
-  deploy_functions:
+  deploy_functions_dev:
     steps:
       - run: # Deploy Functions
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions
 
-  deploy_rules:
+  deploy_rules_dev:
     steps:
       - run: # Deploy Rules
           name: Deploy Rules
           command: yarn deployRules
+
+  deploy_prod:
+    steps:
+      - run:
+          name: Deploy to Production
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" -P production
 
 workflows:
   version: 2
@@ -70,23 +76,31 @@ workflows:
       - build_test_functions:
           requires:
             - init
-      - deploy_static:
+      - deploy_static_dev:
           requires:
             - build_test_static
             - init
-          filters: # only for the master branch
+          filters:
             branches:
               only: master
-      - deploy_functions:
+      - deploy_functions_dev:
           requires:
             - build_test_functions
-            - init
-          filters: # only for the master branch
+          filters:
             branches:
               only: master
-      - deploy_rules:
+      - deploy_rules_dev:
           requires:
             - init
-          filters: # only for the master branch
+          filters:
             branches:
               only: master
+      - prod_hold_for_approval:
+          type: approval
+          requires:
+            - deploy_static_dev
+            - deploy_functions_dev
+            - deploy_rules_dev
+      - deploy_prod:
+          requires:
+            - prod_hold_for_approval

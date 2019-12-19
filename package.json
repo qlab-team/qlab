@@ -20,7 +20,8 @@
     "deployFunctions": "firebase deploy --only functions",
     "testFunctions": "yarn buildFunctions && yarn --cwd ./functions/ test",
     "deployRules": "firebase deploy --only firestore:rules",
-    "addQuiz": "node ./quiz_seeder/seed_quiz.js"
+    "addQuiz": "node ./quiz_seeder/seed_quiz.js",
+    "deployProd": "export APP_VERSION='PROD' && yarn build"
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",
