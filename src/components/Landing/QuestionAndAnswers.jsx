@@ -1,6 +1,9 @@
+/////////////// IMPORT
 import React from "react";
+// material ui
 import { Grid, Typography, makeStyles } from "@material-ui/core";
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   answer: {
     marginTop: 15,
@@ -15,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const QuestionAndAnswers = props => {
   const classes = useStyles();
   return (
@@ -26,4 +30,5 @@ const QuestionAndAnswers = props => {
   );
 };
 
+/////////////// EXPORTS
 export default QuestionAndAnswers;

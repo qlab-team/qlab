@@ -69,7 +69,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const PerformanceTable = props => {
   const classes = useStyles();
-  // set props from redux
   const { investments } = props;
 
   return (

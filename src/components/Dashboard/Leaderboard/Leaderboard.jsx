@@ -45,12 +45,10 @@ const Leaderboard = props => {
     props.getLeaderboard();
     // eslint-disable-next-line
   }, []);
-  // set props from redux
+
   const { auth } = props;
 
-  // if auth lot loaded, don't worry
   if (auth.isLoaded) {
-    // if no auth, redirect to front page
     if (auth.isEmpty) return <Redirect to="/" />;
   }
 

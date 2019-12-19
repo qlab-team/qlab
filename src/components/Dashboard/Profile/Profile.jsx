@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React, { useState, useEffect } from "react";
-// import { useEffect } from "react";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -276,7 +275,6 @@ const mapStateToProps = state => {
     userAchievements: state.user.profile.achievements
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     changeUserName: newUserName => dispatch(changeUserName(newUserName)),
