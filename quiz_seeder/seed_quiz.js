@@ -1,6 +1,6 @@
-const firebase = require("./fbConfig");
+//const firebase = require("./fbConfig");
 const quiz = require("./newquiz");
-const db = firebase.firestore();
+//const db = firebase.firestore();
 
 // Require firebase-admin so we can stub out some of its methods.
 const admin = require("firebase-admin");
@@ -8,6 +8,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 const generate_quiz_object = quiz_id => {
+  quiz_id = quiz_id.toString();
   return {
     quiz_description: quiz["quiz_description"],
     quiz_id,
