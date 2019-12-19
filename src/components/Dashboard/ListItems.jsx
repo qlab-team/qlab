@@ -15,6 +15,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import StoreIcon from "@material-ui/icons/Store";
 import LayersIcon from "@material-ui/icons/Layers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HelpIcon from "@material-ui/icons/Help";
 // badges
 import Badge from "@material-ui/core/Badge";
 // redux
@@ -114,8 +115,19 @@ const MainListItems = props => {
           <ListItemIcon>
             <LayersIcon />
           </ListItemIcon>
-
           <ListItemText primary="Quizzes" />
+        </ListItem>
+      </Link>
+      <Link
+        style={{ textDecoration: "none", color: "white" }}
+        to="/about"
+        onClick={props.handleDrawerClose}
+      >
+        <ListItem button>
+          <ListItemIcon>
+            <HelpIcon />
+          </ListItemIcon>
+          <ListItemText primary="About" />
         </ListItem>
       </Link>
     </div>
