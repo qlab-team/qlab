@@ -133,7 +133,6 @@ const MainListItems = props => {
     </div>
   );
 };
-
 export const SecondaryListItems = props => {
   return (
     <div>

@@ -1,6 +1,9 @@
+/////////////// IMPORTS
 import React, { useRef } from "react";
+// react three fiber
 import { useFrame } from "react-three-fiber";
 
+/////////////// COMPONENT
 const Landing = () => {
   const ref = useRef();
   useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01));
@@ -17,4 +20,5 @@ const Landing = () => {
   );
 };
 
+/////////////// EXPORTS
 export default Landing;

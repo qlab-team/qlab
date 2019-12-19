@@ -1,13 +1,20 @@
+/////////////// COMPONENT
 import React, { useEffect, useState } from "react";
-import { Typography, Container, Box } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import { addQuizInfo } from "../../../store/actions/quizActions";
-import { compose } from "redux";
-import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
-//import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
+// components
 import Stars from "./Stars";
+// react router dom
+import { Link } from "react-router-dom";
+// react-redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// material ui
+import { Typography, Container, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+// actions
+import { addQuizInfo } from "../../../store/actions/quizActions";
+import { updateQuizRatingOnDatabase } from "../../../store/actions/quizActions";
+
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   Container: {
     background:
@@ -80,6 +87,8 @@ const useStyles = makeStyles(theme => ({
     ].join(",")
   }
 }));
+
+/////////////// COMPONENT
 const QuizFinished = props => {
   const classes = useStyles();
   const [userRating, updateUserRating] = useState(0);
@@ -95,10 +104,6 @@ const QuizFinished = props => {
   const updateQuizRating = () => {
     props.updateQuizRatingOnDatabase(userRating);
   };
-
-  // updateQuizScore = (quizScore) => {
-
-  // }
 
   return (
     <React.Fragment>
@@ -135,10 +140,10 @@ const QuizFinished = props => {
   );
 };
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {};
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     addQuizInfo: (authId, quizPoints) =>
@@ -150,6 +155,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
   QuizFinished
 );

@@ -65,12 +65,9 @@ const useStyles = makeStyles(theme => ({
 const Leaders = props => {
   const classes = useStyles();
 
-  // set props from redux
   const { leaderboard } = props;
-  //Leaderboard
   const allUsers = leaderboard.board;
 
-  //Nice Dates
   const last_updated = new Date(
     leaderboard.last_updated.seconds * 1000
   ).toLocaleDateString("en-US", { dateStyle: "long" });

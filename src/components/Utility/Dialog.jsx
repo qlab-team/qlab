@@ -1,4 +1,6 @@
+/////////////// IMPORTS
 import React from "react";
+// material ui
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -11,6 +13,7 @@ import { openDialog } from "../../store/actions/dialogActions";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
+/////////////// COMPONENT
 const AlertDialog = props => {
   const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
   return (

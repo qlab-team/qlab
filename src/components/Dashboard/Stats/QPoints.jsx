@@ -2,7 +2,6 @@
 import React from "react";
 // components
 import Title from "../Title";
-
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -16,6 +15,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   depositContext: {
     flex: 1
@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const QPoints = props => {
   const classes = useStyles();
   const { user } = props;
@@ -55,6 +56,7 @@ const QPoints = props => {
   );
 };
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
@@ -62,4 +64,5 @@ const mapStateToProps = state => {
   };
 };
 
+/////////////// EXPORTS
 export default compose(connect(mapStateToProps))(QPoints);

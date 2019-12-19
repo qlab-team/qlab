@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const About = props => {
   const classes = useStyles();
   // set props from redux

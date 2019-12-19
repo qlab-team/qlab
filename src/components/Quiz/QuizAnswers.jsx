@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+/////////////// IMPORTS
+import React, { useEffect, useState } from "react";
+//  material ui
 import { Grid, withStyles, Typography } from "@material-ui/core";
-import { useState } from "react";
+// components
 import QuizAnswer from "./QuizAnswer";
 
+/////////////// STYLES
 const styles = theme => ({
   Grid: {
     // padding: theme.spacing(3)
@@ -13,6 +16,8 @@ const styles = theme => ({
     fontSize: 40
   }
 });
+
+/////////////// COMPONENTS
 const QuizAnswers = props => {
   const [correctSelector, changeCorrectSelector] = useState("");
 
@@ -62,4 +67,5 @@ const QuizAnswers = props => {
   );
 };
 
+/////////////// EXPORTS
 export default withStyles(styles)(QuizAnswers);

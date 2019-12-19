@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const InvestorsTable = props => {
   const classes = useStyles();
-  // set props from redux
   const { user } = props;
 
   return (

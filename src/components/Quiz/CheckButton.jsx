@@ -1,6 +1,9 @@
+/////////////// IMPORTS
 import React, { useState } from "react";
+// material ui
 import { Button, withStyles } from "@material-ui/core";
 
+/////////////// STYLES
 const styles = {
   Confirmation: {
     padding: 20,
@@ -73,4 +76,5 @@ function CheckButton(props) {
   );
 }
 
+/////////////// EXPORTS
 export default withStyles(styles)(CheckButton);

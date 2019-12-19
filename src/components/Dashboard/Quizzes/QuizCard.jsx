@@ -49,7 +49,7 @@ const QuizCard = props => {
   };
 
   const starParse = (n = Math.ceil((props.quizRating * 100) / 100)) => {
-    if (!n) return "🍑";
+    if (!n) return "✨";
     let stars = [];
     for (let i = 0; i <= n - 1; i++) stars.push("⭐️");
     return stars;
