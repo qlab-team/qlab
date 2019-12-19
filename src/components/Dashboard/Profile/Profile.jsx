@@ -1,6 +1,5 @@
 /////////////// IMPORTS
 import React, { useState, useEffect } from "react";
-// import { useEffect } from "react";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -108,12 +107,6 @@ const Profile = props => {
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
 
-  // useEffect(() => {
-  //   if (auth.isLoaded) props.getUserAndLogin(auth);
-  //   // eslint-disable-next-line
-  // }, [auth.isLoaded]);
-
-  //need to refactor this for one useeffect maybe? not sure if best practice or not.
   useEffect(() => {
     if (userItems) {
       props.getItems();
@@ -259,7 +252,6 @@ const mapStateToProps = state => {
     userItems: state.profile.items
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     changeUserName: newUserName => dispatch(changeUserName(newUserName)),
@@ -269,9 +261,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(Profile);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);

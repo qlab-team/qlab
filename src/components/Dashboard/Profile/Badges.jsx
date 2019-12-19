@@ -1,6 +1,8 @@
+/////////////// IMPORTS
 import React, { Fragment } from "react";
+// material ui
 import { Grid, Tooltip } from "@material-ui/core";
-//ASSETS
+// svgs
 import { ReactComponent as SnakeCatBadge } from "../../../assets/svgs/snakecat-icon.svg";
 import { ReactComponent as DerekBadge } from "../../../assets/svgs/derek-icon.svg";
 import { ReactComponent as CafeLatteBadge } from "../../../assets/svgs/cafe-latte-icon.svg";
@@ -11,6 +13,7 @@ import { ReactComponent as SunBadge } from "../../../assets/svgs/sunny.svg";
 import { ReactComponent as CellPhoneBadge } from "../../../assets/svgs/cellphone.svg";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
+/////////////// IMPORTS
 const Badges = props => {
   return (
     <Fragment>
@@ -74,4 +77,5 @@ const Badges = props => {
   );
 };
 
+/////////////// EXPORTS
 export default Badges;

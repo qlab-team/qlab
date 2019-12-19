@@ -102,7 +102,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    // openDialog: (open, data) => dispatch(openDialog(open, data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     getUserData: () => dispatch(getUserData()),
     getInvestments: auth => dispatch(getInvestments(auth)),

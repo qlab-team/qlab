@@ -10,6 +10,9 @@ import { openDialog } from "../../../store/actions/dialogActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+// redux
+import { connect } from "react-redux";
+// svgs
 import { ReactComponent as SnakeCatBadge } from "../../../assets/svgs/snakecat-icon.svg";
 import { ReactComponent as DerekBadge } from "../../../assets/svgs/derek-icon.svg";
 import { ReactComponent as CafeLatteBadge } from "../../../assets/svgs/cafe-latte-icon.svg";
@@ -18,8 +21,6 @@ import { ReactComponent as CabinBadge } from "../../../assets/svgs/cabin.svg";
 import { ReactComponent as CameraBadge } from "../../../assets/svgs/camera.svg";
 import { ReactComponent as SunBadge } from "../../../assets/svgs/sunny.svg";
 import { ReactComponent as CellPhoneBadge } from "../../../assets/svgs/cellphone.svg";
-// redux
-import { connect } from "react-redux";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
