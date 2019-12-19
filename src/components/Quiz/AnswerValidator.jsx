@@ -1,6 +1,8 @@
+/////////////// IMPORTS
 import React from "react";
 import { withStyles, Typography } from "@material-ui/core";
 
+/////////////// STYLES
 const styles = {
   Validator: {
     color: "white",
@@ -8,6 +10,7 @@ const styles = {
   }
 };
 
+/////////////// COMPONENT
 function AnswerValidator(props) {
   let answerMessage = "";
   if (props.answerConfirmation === "true") answerMessage = "True!";
@@ -17,4 +20,5 @@ function AnswerValidator(props) {
   );
 }
 
+/////////////// EXPORTS
 export default withStyles(styles)(AnswerValidator);

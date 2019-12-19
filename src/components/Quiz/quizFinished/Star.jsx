@@ -1,7 +1,9 @@
-import React, { Fragment, useState } from "react";
-import { makeStyles } from "@material-ui/core";
+/////////////// IMPORTS
+import React, { Fragment } from "react";
+// react ratings
 import Ratings from "react-ratings-declarative";
 
+/////////////// COMPONENT
 function Star(props) {
   return (
     <Fragment>
@@ -10,4 +12,5 @@ function Star(props) {
   );
 }
 
+/////////////// EXPORTS
 export default Star;

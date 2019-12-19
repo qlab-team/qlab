@@ -10,16 +10,17 @@ import { openDialog } from "../../../store/actions/dialogActions";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.svg";
-import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
-import { ReactComponent as CafeLatteBadge } from "../../../assets/cafe-latte-icon.svg";
-import { ReactComponent as PhantomPizzaBadge } from "../../../assets/phantom-pizza-icon.svg";
-import { ReactComponent as CabinBadge } from "../../../assets/cabin.svg";
-import { ReactComponent as CameraBadge } from "../../../assets/camera.svg";
-import { ReactComponent as SunBadge } from "../../../assets/sunny.svg";
-import { ReactComponent as CellPhoneBadge } from "../../../assets/cellphone.svg";
 // redux
 import { connect } from "react-redux";
+// svgs
+import { ReactComponent as SnakeCatBadge } from "../../../assets/svgs/snakecat-icon.svg";
+import { ReactComponent as DerekBadge } from "../../../assets/svgs/derek-icon.svg";
+import { ReactComponent as CafeLatteBadge } from "../../../assets/svgs/cafe-latte-icon.svg";
+import { ReactComponent as PhantomPizzaBadge } from "../../../assets/svgs/phantom-pizza-icon.svg";
+import { ReactComponent as CabinBadge } from "../../../assets/svgs/cabin.svg";
+import { ReactComponent as CameraBadge } from "../../../assets/svgs/camera.svg";
+import { ReactComponent as SunBadge } from "../../../assets/svgs/sunny.svg";
+import { ReactComponent as CellPhoneBadge } from "../../../assets/svgs/cellphone.svg";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -138,9 +139,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(StoreCard);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(StoreCard);

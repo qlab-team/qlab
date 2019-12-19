@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// UTILITIES
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
   const style = useSpring({
@@ -93,7 +94,6 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     </animated.div>
   );
 });
-
 Fade.propTypes = {
   children: PropTypes.element,
   in: PropTypes.bool,
@@ -103,12 +103,9 @@ Fade.propTypes = {
 
 /////////////// COMPONENT
 const Topbar = props => {
-  //Set Props from Redux
-
-  //Use Styles
   const classes = useStyles();
 
-  // popper logic
+  // popper
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);

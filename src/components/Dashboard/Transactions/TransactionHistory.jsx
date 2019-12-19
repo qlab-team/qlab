@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// SORTING
+/////////////// UTILITY
 function sortDate(arr) {
   const ongoing = [];
   const finished = [];

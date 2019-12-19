@@ -1,7 +1,9 @@
+/////////////// IMPORTS
 import React, { Fragment, useState } from "react";
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import QuestionAndAnswers from "./QuestionAndAnswers";
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
     paper: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// COMPONENT
 const About = () => {
   const classes = useStyles();
   const [questionsAndAnswers] = useState([
@@ -79,4 +82,5 @@ const About = () => {
   );
 };
 
+/////////////// EXPORTS
 export default About;

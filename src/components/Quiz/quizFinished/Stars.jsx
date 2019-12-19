@@ -1,17 +1,10 @@
+/////////////// IMPORTS
 import React, { Fragment, useState } from "react";
+// react ratings
 import Ratings from "react-ratings-declarative";
-// const useStyles = makeStyles(theme => ({
-//     Star: {
-//     color: "white",
-//     height: 50,
-//     "&:hover": {
-//         cursor: "pointer"
-//       },
-//   }
-// }));
 
+/////////////// COMPONENT
 function Stars(props) {
-  //const classes = useStyles();
   const [userRating, changeUserRating] = useState(0);
 
   const updateUserRating = rating => {
@@ -46,4 +39,5 @@ function Stars(props) {
   );
 }
 
+/////////////// EXPORTS
 export default Stars;

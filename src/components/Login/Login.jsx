@@ -60,7 +60,9 @@ const useStyles = makeStyles(theme => ({
   },
   lockOutlinedIcon: {}
 }));
+
 /////////////// UTILITIES
+// firebaseUI config
 const uiConfig = {
   // popup signin flow vs redirect flow
   signInFlow: "popup",
@@ -77,7 +79,8 @@ const uiConfig = {
       return false;
     }
   }
-}; // firebaseUI config
+};
+// copyright
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">

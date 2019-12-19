@@ -1,8 +1,10 @@
+/////////////// IMPORTS
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import QuizAnswers from "./QuizAnswers";
 import { connect } from "react-redux";
 
+/////////////// COMPONENT
 class QuizMain extends Component {
   constructor(props) {
     super(props);
@@ -50,8 +52,9 @@ class QuizMain extends Component {
   }
 }
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuizMain);
+export default connect(mapStateToProps)(QuizMain);
