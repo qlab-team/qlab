@@ -13,26 +13,20 @@ import Button from "@material-ui/core/Button";
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
-    paper: {
-      maxWidth: "100vw",
-      padding: theme.spacing(2),
-      overflow: "auto",
-      marginTop: 30,
-      marginLeft: 30,
-      marginRight: 30,
-      borderRadius: 0
-    }
+    padding: theme.spacing(2),
+    borderRadius: 0
   },
   title: {
     fontSize: 50,
     marginBottom: 30
   },
   button: {
-    minWidth: theme.spacing(9),
+    minWidth: theme.spacing(13),
     borderRadius: 50,
-    fontSize: 10,
+    fontSize: 20,
     textTransform: "none",
     textDecoration: "none !important",
+    marginTop: 15,
     padding: theme.spacing(1),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
