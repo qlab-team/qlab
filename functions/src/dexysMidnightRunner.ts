@@ -101,6 +101,8 @@ const investmentUpdates = (users: any, q_score_map: any) => {
   // TODO - 500 limit on this batch again
   const batchInvestmentWrite = admin.firestore().batch();
 
+  const historyChanges: any[] = [];
+
   users.docs.forEach((user: any) => {
     //For Each User Again
 
@@ -125,14 +127,16 @@ const investmentUpdates = (users: any, q_score_map: any) => {
         const investmentQScore = q_score_map.get(investment.user_id);
         //Earnings Define the Amount Earned
         const earnings = investmentQScore * 1;
+        const newTotalEarnings = investment.points_earned + earnings;
+
         //Earnings Added To Rolling Total for the Day
         todaysDividends += earnings;
 
-        user_history_earnings_changes.set(investment.user_id, earnings);
+        user_history_earnings_changes.set(investment.user_id, newTotalEarnings);
         // Return Investment Object to newInvestment Array with new Points Earned
         return {
           ...investment,
-          points_earned: investment.points_earned + earnings,
+          points_earned: newTotalEarnings,
           q_score: investmentQScore
         };
       });
@@ -140,23 +144,31 @@ const investmentUpdates = (users: any, q_score_map: any) => {
       newInvestments = [];
     }
 
-    updateHistoryTable(
-      user.id,
-      user_history_earnings_changes,
-      batchInvestmentWrite
-    ).then(() => {
-      batchInvestmentWrite.update(userRef, {
-        q_points: userData.q_points + todaysDividends,
-        investments: newInvestments,
-        earnings_today: todaysDividends,
-        quizzes_done_today: 0
-      });
+    historyChanges.push(
+      updateHistoryTable(
+        user.id,
+        user_history_earnings_changes,
+        batchInvestmentWrite
+      )
+    );
+
+    batchInvestmentWrite.update(userRef, {
+      q_points: userData.q_points + todaysDividends,
+      investments: newInvestments,
+      earnings_today: todaysDividends,
+      quizzes_done_today: 0
     });
   });
 
-  batchInvestmentWrite.commit().then(() => {
-    console.log("Updated Investment Earnings");
-  });
+  console.log("About to commit Earnings");
+  // console.log(historyChanges);
+  return Promise.all(historyChanges)
+    .then(() => {
+      batchInvestmentWrite.commit();
+    })
+    .catch((err: any) => {
+      console.log("Error Committing Investment Batch", err);
+    });
 };
 
 const updateHistoryTable = (
@@ -191,8 +203,12 @@ const updateHistoryTable = (
     })
     .then((new_investment_history: any) => {
       batch.update(userHistoryRef, {
-        investments: new_investment_history
+        investment_history: new_investment_history,
+        last_updated: new Date()
       });
+    })
+    .catch((err: any) => {
+      console.log("Error Updating History Table", err);
     });
 };
 
@@ -209,7 +225,14 @@ export const dexysMidnightRunner = functions.pubsub
       .then((users: any) => {
         console.log("Got All Users");
         const q_score_map = q_score_updates(users);
-        investmentUpdates(users, q_score_map);
+        return { q_score_map, users };
+      })
+      .then((result: any) => {
+        console.log("Updated QScores");
+        return investmentUpdates(result.users, result.q_score_map);
+      })
+      .then(() => {
+        console.log("Updated Investments");
       })
       .catch((err: any) => {
         console.log("COME ON, EILEEN!", err);
