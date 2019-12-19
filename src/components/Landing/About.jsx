@@ -18,7 +18,17 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: 50,
-    marginBottom: 30
+    marginBottom: 30,
+    display: "inline-block"
+  },
+  logo: {
+    flexGrow: 1,
+    color: "white",
+    textShadow: "2px 2px 0px #C275FF",
+    marginLeft: 10,
+    fontFamily: "Aquino",
+    fontSize: 50,
+    display: "inline-block"
   },
   button: {
     minWidth: theme.spacing(13),
@@ -105,8 +115,8 @@ const About = props => {
             Back
           </Button>
         </Toolbar>
-        <Typography className={classes.title}>FAQ</Typography>
-
+        <Typography className={classes.title}>About</Typography>
+        <Typography className={classes.logo}>QLAB</Typography>
         <Grid container>
           {questionsAndAnswers.map((qAndA, index) => {
             return (
