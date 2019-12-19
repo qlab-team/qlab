@@ -11,7 +11,8 @@ const getItems = () => {
       .then(res => {
         dispatch({
           type: "GET_ITEMS",
-          items: res.data().items
+          items: res.data().items,
+          achievements: res.data().achievements
         });
       });
   };

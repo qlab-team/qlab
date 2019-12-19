@@ -8,7 +8,8 @@ const profileReducer = (state = initState, action) => {
       //state.currentQuiz = action.quizId;
       return {
         ...state,
-        items: action.items
+        items: action.items,
+        achievements: action.achievements
       };
     }
     default:
