@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
 import { Grid, Tooltip } from "@material-ui/core";
 //ASSETS
-import { ReactComponent as SnakeCatBadge } from "../../../assets/snakecat-icon.svg";
-import { ReactComponent as DerekBadge } from "../../../assets/derek-icon.svg";
-import { ReactComponent as CafeLatteBadge } from "../../../assets/cafe-latte-icon.svg";
-import { ReactComponent as PhantomPizzaBadge } from "../../../assets/phantom-pizza-icon.svg";
-import { ReactComponent as CabinBadge } from "../../../assets/cabin.svg";
-import { ReactComponent as CameraBadge } from "../../../assets/camera.svg";
-import { ReactComponent as SunBadge } from "../../../assets/sunny.svg";
-import { ReactComponent as CellPhoneBadge } from "../../../assets/cellphone.svg";
+import { ReactComponent as SnakeCatBadge } from "../../../assets/svgs/snakecat-icon.svg";
+import { ReactComponent as DerekBadge } from "../../../assets/svgs/derek-icon.svg";
+import { ReactComponent as CafeLatteBadge } from "../../../assets/svgs/cafe-latte-icon.svg";
+import { ReactComponent as PhantomPizzaBadge } from "../../../assets/svgs/phantom-pizza-icon.svg";
+import { ReactComponent as CabinBadge } from "../../../assets/svgs/cabin.svg";
+import { ReactComponent as CameraBadge } from "../../../assets/svgs/camera.svg";
+import { ReactComponent as SunBadge } from "../../../assets/svgs/sunny.svg";
+import { ReactComponent as CellPhoneBadge } from "../../../assets/svgs/cellphone.svg";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const Badges = props => {

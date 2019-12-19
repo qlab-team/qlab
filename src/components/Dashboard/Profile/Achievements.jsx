@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { Tooltip, Grid } from "@material-ui/core";
-import { ReactComponent as Trophy } from "../../../assets/trophy.svg";
-import { ReactComponent as Gavin } from "../../../assets/gavin-awman.svg";
-import { ReactComponent as MasterBadge } from "../../../assets/master-key.svg";
-import { ReactComponent as OneK } from "../../../assets/Q1000ICON.svg";
-import { ReactComponent as FiveK } from "../../../assets/Q5000ICON.svg";
+import { ReactComponent as Trophy } from "../../../assets/svgs/trophy.svg";
+import { ReactComponent as Gavin } from "../../../assets/svgs/gavin-awman.svg";
+import { ReactComponent as MasterBadge } from "../../../assets/svgs/master-key.svg";
+import { ReactComponent as OneK } from "../../../assets/svgs/Q1000ICON.svg";
+import { ReactComponent as FiveK } from "../../../assets/svgs/Q5000ICON.svg";
 
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 const Achievements = props => {
