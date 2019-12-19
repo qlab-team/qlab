@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 /////////////// UTILITIES
 function createData(time, qScore) {
-  return { time, ℚScore: qScore };
+  return { time, eScore: qScore };
 }
 
 class CustomizedLabel extends PureComponent {
@@ -99,7 +99,7 @@ const Chart = props => {
     <React.Fragment>
       <Title>
         <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-          ℚ
+          <sup>e</sup>
         </span>
         Score{" "}
         <Button
@@ -152,7 +152,7 @@ const Chart = props => {
           <Line
             label={<CustomizedLabel />}
             type="monotone"
-            dataKey="ℚScore"
+            dataKey="eScore"
             stroke={theme.palette.primary.main}
             dot={false}
           />

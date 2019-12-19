@@ -91,7 +91,7 @@ const Leaders = props => {
             </TableCell>
             <TableCell align="right">
               <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-                ℚ
+                <sup>e</sup>
               </span>
               Score
             </TableCell>

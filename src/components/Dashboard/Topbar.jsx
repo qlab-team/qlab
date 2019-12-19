@@ -194,7 +194,11 @@ const Topbar = props => {
             {user.profile.earnings_today ? (
               <div className={classes.paper}>
                 Your investments returned{" "}
-                <b>{user.profile.earnings_today || 0}</b> points today!{" "}
+                <b>{user.profile.earnings_today || 0}</b>{" "}
+                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+                  ℚ
+                </span>
+                Points today!{" "}
               </div>
             ) : (
               <div className={classes.paper}>No investment income today. </div>

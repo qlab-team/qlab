@@ -8,6 +8,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 const generate_quiz_object = quiz_id => {
+  quiz_id = quiz_id.toString();
   return {
     quiz_description: quiz["quiz_description"],
     quiz_id,
