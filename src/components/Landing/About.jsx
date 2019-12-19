@@ -7,8 +7,10 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 // material ui
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
     paper: {
@@ -24,6 +26,26 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: 50,
     marginBottom: 30
+  },
+  button: {
+    minWidth: theme.spacing(9),
+    borderRadius: 50,
+    fontSize: 10,
+    textTransform: "none",
+    textDecoration: "none !important",
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    color: "rgb(92, 27, 249)",
+    transition: "ease-in-out 0.15s",
+    background: "whitesmoke",
+    "&:hover": {
+      background: "rgb(92, 27, 249)",
+      color: "whitesmoke",
+      cursor: "pointer"
+    },
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   }
 }));
 
@@ -83,7 +105,11 @@ const About = props => {
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Button onClick={isLogin}>Back</Button>
+        <Toolbar>
+          <Button onClick={isLogin} className={classes.button}>
+            Back
+          </Button>
+        </Toolbar>
         <Typography className={classes.title}>FAQ</Typography>
 
         <Grid container>
