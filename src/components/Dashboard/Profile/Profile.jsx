@@ -96,16 +96,25 @@ const Profile = props => {
   const [userInputField, changeUserInputField] = useState("");
   // eslint-disable-next-line
   const [userInput, changeUserInput] = useState("");
+
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
-  const { user, auth, userItems } = props;
+
+  const [curUserAchievements, changeCurUserAchievements] = useState("");
+  const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
+
+  const { user, auth, userItems, userAchievements, getItems } = props;
+  // useEffect(() => {
+  //   if (user.isLoggedIn) {
+  //     props.getItems();
+  //   }
+  //   // eslint-disable-next-line
+  // }, [user.isLoggedIn]);
 
   useEffect(() => {
-    if (user.isLoggedIn) {
-      props.getItems();
-    }
+    if (auth.isLoaded) props.getUserAndLogin(auth);
     // eslint-disable-next-line
-  }, [user.isLoggedIn]);
+  }, [auth.isLoaded]);
 
   useEffect(() => {
     if (userItems) {
@@ -120,7 +129,26 @@ const Profile = props => {
       );
     }
     // eslint-disable-next-line
-  }, [userItems]);
+  }, [userItems, curUserItems, getItems]);
+
+  useEffect(() => {
+    if (userAchievements) {
+      getItems();
+      changeCurUserAchievements(userAchievements);
+    }
+    if (curUserAchievements !== "") {
+      changeCurUserAchievementsArr(
+        curUserAchievements.map((achievement, index) => {
+          return (
+            <Achievements
+              achievementName={achievement.achievement_name}
+              key={index}
+            />
+          );
+        })
+      );
+    }
+  }, [userAchievements, curUserAchievements, getItems]);
 
   const showUserNameInputField = () => {
     if (userInputField !== "") {
@@ -226,14 +254,7 @@ const Profile = props => {
                   alignItems="center"
                   justify="space-around"
                 >
-                  {user.profile.achievements.map((achievement, index) => {
-                    return (
-                      <Achievements
-                        achievementName={achievement.achievement_name}
-                        key={index}
-                      />
-                    );
-                  })}
+                  {curUserAchievementsArr}
                 </Grid>
               </Grid>
             </Paper>
@@ -249,7 +270,9 @@ const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
     user: state.user,
-    userItems: state.profile.items
+    test: state,
+    userItems: state.user.profile.items,
+    userAchievements: state.user.profile.achievements
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -261,4 +284,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Profile);
