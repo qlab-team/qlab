@@ -62,6 +62,12 @@ jobs: # a collection of steps
   deploy_prod:
     steps:
       - run:
+          name: SED In New Config
+          command: sed -i 's/"DEV"/"PROD"/g' ./src/config/fbConfig.js
+      - run:
+          name: Rebuild to Prod Version
+          command: yarn build
+      - run:
           name: Deploy to Production
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" -P production
 

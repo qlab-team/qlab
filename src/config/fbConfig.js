@@ -24,7 +24,9 @@ const dev_config = {
   measurementId: "G-HDGRZHMZDV"
 };
 
-const config = process.env.APP_VERSION === "PROD" ? prod_config : dev_config;
+const appVersion = "DEV";
+
+const config = appVersion === "PROD" ? prod_config : dev_config;
 // const config = prod_config;
 firebase.initializeApp(config);
 console.log(process.env);
