@@ -5,28 +5,21 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 const calculateNewQScore = (user: any) => {
-  const now = new Date();
   const currentQScore = user.q_score;
-  const last_quiz_time = user.last_quiz_done.toDate().getTime();
+  const quizzes_done_today = user.quizzes_done_today;
 
-  const timePeriods = {
-    day: 86400000,
-    hour: 3600000,
-    min: 60000,
-    sec: 1000
-  };
+  //This calc gives a Max Loss of 10 and Max Gain of 10
+  const quizDoneModifier = Math.round(
+    Math.pow(0.8, quizzes_done_today) * -20 + 10
+  );
 
-  const differenceTime = now.getTime() - last_quiz_time;
-  //15 Mins for Testing
-  const quizInLastTimePeriod = differenceTime < 1 * timePeriods.day;
-
-  let quizDoneModifier;
-
-  if (quizInLastTimePeriod) {
-    quizDoneModifier = 5;
-  } else {
-    quizDoneModifier = -5;
-  }
+  //Examples:
+  // 0 => -10
+  // 1 => -6
+  // 3 => 0
+  // 6 => 5
+  // 10 => 8
+  // 100 => 10
 
   //Add Random Integer from -2 to 2
   const randomAddition = Math.floor(Math.random() * 5) - 2;
@@ -84,7 +77,8 @@ const q_score_updates = (users: any) => {
     //Add Update QScore and History to Batch Operation
     batchQScoreWrite.update(userRef, {
       q_score: newQScore,
-      q_score_history: newHistory
+      q_score_history: newHistory,
+      quizzes_done_today: 0
     });
   });
 
@@ -155,8 +149,7 @@ const investmentUpdates = (users: any, q_score_map: any) => {
     batchInvestmentWrite.update(userRef, {
       q_points: userData.q_points + todaysDividends,
       investments: newInvestments,
-      earnings_today: todaysDividends,
-      quizzes_done_today: 0
+      earnings_today: todaysDividends
     });
   });
 
