@@ -130,7 +130,12 @@ const Chart = props => {
           }}
         >
           <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
-          <XAxis dataKey="time" scale="time" tickFormatter={formatXAxis} />
+          <XAxis
+            dataKey="time"
+            scale="time"
+            tickFormatter={formatXAxis}
+            stroke={theme.palette.text.secondary}
+          />
           <Tooltip
             viewBox={{
               x: 0,
