@@ -84,15 +84,18 @@ const Chart = props => {
     if (user.isLoggedIn) {
       const data = Object.keys(user.profile.q_score_history).map(hist => {
         const date = user.profile.q_score_history[hist].date.toDate();
-        const fixDate = moment(date).format("lll");
         const q_score = user.profile.q_score_history[hist].q_score;
-        return createData(fixDate, q_score);
+        return createData(date.getTime(), q_score);
       });
-      data.reverse().push(createData("Today", user.profile.q_score));
+      data.reverse();
       updateChartData(data);
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
+
+  function formatXAxis(tickItem) {
+    return moment(tickItem).format("MMM Do YYYY");
+  }
 
   return (
     <React.Fragment>
@@ -121,13 +124,13 @@ const Chart = props => {
           data={chartData}
           margin={{
             top: 16,
-            right: 16,
-            bottom: 0,
+            right: 24,
+            bottom: 16,
             left: 24
           }}
         >
           <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
+          <XAxis dataKey="time" scale="time" tickFormatter={formatXAxis} />
           <Tooltip
             viewBox={{
               x: 0,
@@ -137,6 +140,7 @@ const Chart = props => {
               borderRadius: "5px"
             }}
             labelStyle={{ fontSize: "10px", color: "violet" }}
+            labelFormatter={formatXAxis}
           />
           <YAxis width={15} stroke={theme.palette.text.secondary}>
             <Label
