@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Achievements from "./Achievements";
-import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 // redux
 import { connect } from "react-redux";
@@ -95,7 +95,8 @@ const Profile = props => {
   const classes = useStyles();
   const [userInputField, changeUserInputField] = useState("");
   // eslint-disable-next-line
-  const [userInput, changeUserInput] = useState("");
+  const [userInput, changeUserInput] = useState("hello");
+  const [name, setName] = React.useState("Composed TextField");
 
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
@@ -104,17 +105,14 @@ const Profile = props => {
   const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
 
   const { user, auth, userItems, userAchievements, getItems } = props;
-  // useEffect(() => {
-  //   if (user.isLoggedIn) {
-  //     props.getItems();
-  //   }
-  //   // eslint-disable-next-line
-  // }, [user.isLoggedIn]);
 
+  //Make sure user is logged in before getting info
   useEffect(() => {
     if (auth.isLoaded) props.getUserAndLogin(auth);
     // eslint-disable-next-line
   }, [auth.isLoaded]);
+
+  //Load new badges if they've changed
 
   useEffect(() => {
     if (userItems) {
@@ -131,6 +129,7 @@ const Profile = props => {
     // eslint-disable-next-line
   }, [userItems, curUserItems, getItems]);
 
+  //Load new achievements if they've changed
   useEffect(() => {
     if (userAchievements) {
       getItems();
@@ -157,18 +156,21 @@ const Profile = props => {
     }
 
     const updateUserInput = event => {
+      console.log(event.target.value);
+      console.log(userInput);
       changeUserInput(event.target.value);
-      changeUserInput("he");
     };
 
     const changeUserNameOnDatabase = event => {
       event.preventDefault();
+      console.log(name);
     };
 
     changeUserInputField(
       <form onSubmit={changeUserNameOnDatabase}>
-        <TextField
-          onChange={e => updateUserInput(e)}
+        <Input
+          value={userInput}
+          onChange={updateUserInput}
           className={classes.input}
         />
         <Button
