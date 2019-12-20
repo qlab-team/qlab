@@ -17,6 +17,9 @@ import { compose } from "redux";
 /////////////// COMPONENT
 const AlertDialog = props => {
   const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
+
+  let username = "";
+
   return (
     <div>
       <Dialog
@@ -48,7 +51,12 @@ const AlertDialog = props => {
             </DialogContentText>
           ) : (
             // THIS IS YOUR INPUT COMPONENT
-            <TextField />
+            <TextField
+              onChange={e => {
+                username = e.target.value;
+                console.log(username);
+              }}
+            />
           )}
         </DialogContent>
         <DialogActions>
@@ -66,7 +74,11 @@ const AlertDialog = props => {
             onClick={() => {
               props.openDialog(false, null, error);
               if (!error) {
-                props.dialogCallback(dialogData, auth, user);
+                props.dialogCallback(
+                  { ...dialogData, newUsername: username },
+                  auth,
+                  user
+                );
               }
             }}
             color="primary"
