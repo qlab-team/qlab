@@ -1,27 +1,64 @@
+/////////////// IMPORTS
 import React, { Fragment, useState } from "react";
-import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+// components
 import QuestionAndAnswers from "./QuestionAndAnswers";
+// redux
+import { connect } from "react-redux";
+import { compose } from "redux";
+// material ui
+import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
 
+/////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
-    paper: {
-      maxWidth: "100vw",
-      padding: theme.spacing(2),
-      overflow: "auto",
-      marginTop: 30,
-      marginLeft: 30,
-      marginRight: 30,
-      borderRadius: 0
-    }
+    padding: theme.spacing(2),
+    borderRadius: 0
   },
   title: {
     fontSize: 50,
-    marginBottom: 30
+    marginBottom: 30,
+    display: "inline-block"
+  },
+  logo: {
+    flexGrow: 1,
+    color: "white",
+    textShadow: "2px 2px 0px #C275FF",
+    marginLeft: 10,
+    fontFamily: "Aquino",
+    fontSize: 50,
+    display: "inline-block"
+  },
+  button: {
+    minWidth: theme.spacing(13),
+    borderRadius: 50,
+    fontSize: 20,
+    textTransform: "none",
+    textDecoration: "none !important",
+    marginTop: 15,
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    color: "rgb(92, 27, 249)",
+    transition: "ease-in-out 0.15s",
+    background: "whitesmoke",
+    "&:hover": {
+      background: "rgb(92, 27, 249)",
+      color: "whitesmoke",
+      cursor: "pointer"
+    },
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   }
 }));
 
-const About = () => {
+/////////////// COMPONENT
+const About = props => {
   const classes = useStyles();
+  // set props from redux
+  const { auth } = props;
+
   const [questionsAndAnswers] = useState([
     {
       question: "What is QLAB?",
@@ -59,15 +96,32 @@ const About = () => {
         "An achievement is something you get for completing a specific task in QLAB. These can be seen from your profile. One example is getting a trophy for getting to the top of the leaderboard."
     }
   ]);
+  const isLogin = () => {
+    // if auth not loaded, don't worry
+    if (auth.isLoaded) {
+      // if no auth, redirect
+      if (auth.isEmpty) {
+        props.history.push("/");
+        return;
+      }
+    }
+    props.history.push("/dashboard/stats");
+  };
   return (
     <Fragment>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>FAQ</Typography>
-
+        <Toolbar>
+          <Button onClick={isLogin} className={classes.button}>
+            Back
+          </Button>
+        </Toolbar>
+        <Typography className={classes.title}>About</Typography>
+        <Typography className={classes.logo}>QLAB</Typography>
         <Grid container>
-          {questionsAndAnswers.map(qAndA => {
+          {questionsAndAnswers.map((qAndA, index) => {
             return (
               <QuestionAndAnswers
+                key={index}
                 question={qAndA.question}
                 answer={qAndA.answer}
               />
@@ -79,4 +133,12 @@ const About = () => {
   );
 };
 
-export default About;
+/////////////// REDUX
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+
+/////////////// EXPORTS
+export default compose(connect(mapStateToProps))(About);

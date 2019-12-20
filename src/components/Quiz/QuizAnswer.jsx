@@ -1,7 +1,9 @@
-import React from "react";
+/////////////// IMPORTS
+import React, { useRef, useEffect } from "react";
+// material ui
 import { Grid, Typography, withStyles } from "@material-ui/core";
-import { useRef, useEffect } from "react";
 
+/////////////// STYLES
 const styles = theme => ({
   Typography: {
     fontSize: 40,
@@ -35,6 +37,7 @@ const styles = theme => ({
   }
 });
 
+/////////////// COMPONENT
 function QuizAnswer(props) {
   const myRef = useRef(null);
 
@@ -73,7 +76,5 @@ function QuizAnswer(props) {
   );
 }
 
+/////////////// EXPORTS
 export default withStyles(styles)(QuizAnswer);
-
-// event.target.classList.add(props.classes["selected"])
-//ref={refContainer}

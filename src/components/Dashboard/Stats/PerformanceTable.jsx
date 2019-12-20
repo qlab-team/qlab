@@ -69,7 +69,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const PerformanceTable = props => {
   const classes = useStyles();
-  // set props from redux
   const { investments } = props;
 
   return (
@@ -82,7 +81,12 @@ const PerformanceTable = props => {
             <TableCell>Name</TableCell>
             <TableCell>Cost</TableCell>
             <TableCell>Earnings</TableCell>
-            <TableCell align="right">Current qScore</TableCell>
+            <TableCell align="right">
+              <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+                <sup>e</sup>
+              </span>
+              Score
+            </TableCell>
             {/* <TableCell align="right">Last Login</TableCell> */}
           </TableRow>
         </TableHead>

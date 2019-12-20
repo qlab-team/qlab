@@ -1,6 +1,9 @@
+/////////////// IMPORTS
 import React, { useState } from "react";
+// material ui
 import { Button, withStyles } from "@material-ui/core";
 
+/////////////// STYLES
 const styles = {
   Confirmation: {
     padding: 20,
@@ -67,10 +70,13 @@ function CheckButton(props) {
         variant="contained"
         color="primary"
       >
+        {props.answerValidation}
+        {""}
         {buttonValue}
       </Button>
     </React.Fragment>
   );
 }
 
+/////////////// EXPORTS
 export default withStyles(styles)(CheckButton);

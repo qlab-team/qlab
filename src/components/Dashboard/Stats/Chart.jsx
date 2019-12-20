@@ -7,7 +7,6 @@ import Title from "../Title";
 // material ui
 import { useTheme, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
 // recharts
 import {
   LineChart,
@@ -51,9 +50,8 @@ const useStyles = makeStyles(theme => ({
 
 /////////////// UTILITIES
 function createData(time, qScore) {
-  return { time, ℚScore: qScore };
+  return { time, eScore: qScore };
 }
-
 class CustomizedLabel extends PureComponent {
   render() {
     const { x, y, value } = this.props;
@@ -74,6 +72,7 @@ class CustomizedLabel extends PureComponent {
   }
 }
 
+/////////////// COMPONENT
 const Chart = props => {
   const classes = useStyles();
   const theme = useTheme();
@@ -99,7 +98,7 @@ const Chart = props => {
     <React.Fragment>
       <Title>
         <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-          ℚ
+          <sup>e</sup>
         </span>
         Score{" "}
         <Button
@@ -152,7 +151,7 @@ const Chart = props => {
           <Line
             label={<CustomizedLabel />}
             type="monotone"
-            dataKey="ℚScore"
+            dataKey="eScore"
             stroke={theme.palette.primary.main}
             dot={false}
           />
@@ -162,6 +161,7 @@ const Chart = props => {
   );
 };
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
@@ -169,4 +169,5 @@ const mapStateToProps = state => {
   };
 };
 
+/////////////// EXPORTS
 export default connect(mapStateToProps)(Chart);

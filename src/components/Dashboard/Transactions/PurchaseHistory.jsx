@@ -12,7 +12,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
-
 // redux
 import { connect } from "react-redux";
 
@@ -58,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const PurchaseHistory = props => {
   const classes = useStyles();
+  const { user } = props;
   // for pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -69,8 +69,6 @@ const PurchaseHistory = props => {
     setPage(0);
   };
 
-  // set props from redux
-  const { user } = props;
   // date format
   function date_formating(timeStamp, type) {
     return new Date(timeStamp * 1000).toLocaleDateString("en-US", {
@@ -156,4 +154,6 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user
   };
 };
+
+/////////////// EXPORTS
 export default connect(mapStateToProps)(PurchaseHistory);

@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const QuizHistory = props => {
   const classes = useStyles();
+  const { transactions } = props;
   // for pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -67,9 +68,6 @@ const QuizHistory = props => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // set props from redux
-  const { transactions } = props;
 
   // date format
   function date_formating(timeStamp) {

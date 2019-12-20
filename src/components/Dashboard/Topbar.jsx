@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/////////////// UTILITIES
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
   const style = useSpring({
@@ -93,7 +94,6 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     </animated.div>
   );
 });
-
 Fade.propTypes = {
   children: PropTypes.element,
   in: PropTypes.bool,
@@ -103,12 +103,9 @@ Fade.propTypes = {
 
 /////////////// COMPONENT
 const Topbar = props => {
-  //Set Props from Redux
-
-  //Use Styles
   const classes = useStyles();
 
-  // popper logic
+  // popper
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -194,7 +191,11 @@ const Topbar = props => {
             {user.profile.earnings_today ? (
               <div className={classes.paper}>
                 Your investments returned{" "}
-                <b>{user.profile.earnings_today || 0}</b> points today!{" "}
+                <b>{user.profile.earnings_today || 0}</b>{" "}
+                <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+                  ℚ
+                </span>
+                Points today!{" "}
               </div>
             ) : (
               <div className={classes.paper}>No investment income today. </div>

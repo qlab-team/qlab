@@ -1,15 +1,20 @@
+/////////////// IMPORTS
 import React, { Component } from "react";
-//import { Typography } from '@material-ui/core'
+// components
 import QuizAnswers from "./QuizAnswers";
-import { LinearProgress, Grid } from "@material-ui/core";
 import CheckButton from "./CheckButton";
-import { connect } from "react-redux";
-import { getQuiz } from "../../store/actions/quizActions";
-import AnswerValidator from "./AnswerValidator";
 import QuizFinished from "./quizFinished/QuizFinished";
-import { withStyles } from "@material-ui/core/styles";
+import AnswerValidator from "./AnswerValidator";
+// redux
+import { connect } from "react-redux";
 import { compose } from "redux";
+//actions
+import { getQuiz } from "../../store/actions/quizActions";
+// material ui
+import { withStyles } from "@material-ui/core/styles";
+import { LinearProgress, Grid } from "@material-ui/core";
 
+/////////////// STYLES
 const styles = {
   Validator: {
     backgroundColor:
@@ -31,6 +36,7 @@ const styles = {
   }
 };
 
+/////////////// COMPONENT
 class QuizMain extends Component {
   constructor(props) {
     super(props);
@@ -116,6 +122,7 @@ class QuizMain extends Component {
   render() {
     const { classes } = this.props;
 
+    // eslint-disable-next-line
     let answerValidation = "";
     if (this.state.answerConfirmation !== "") {
       answerValidation = (
@@ -171,9 +178,9 @@ class QuizMain extends Component {
                 updateProgressBar={this.updateProgressBar}
                 toggleAnswerSelections={this.toggleAnswerSelections}
                 eraseAnswerHighlight={this.eraseAnswerHighlight}
+                answerValidation={answerValidation}
               />
             </Grid>
-            {answerValidation}
           </Grid>
         </React.Fragment>
       );
@@ -182,19 +189,20 @@ class QuizMain extends Component {
   }
 }
 
+/////////////// REDUX
 const mapStateToProps = state => {
   return {
     quizId: state.quiz.currentQuiz,
     quiz: state.quiz.quizInfo
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     getQuiz: quizId => dispatch(getQuiz(quizId))
   };
 };
 
+/////////////// EXPORTS
 export default compose(
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)

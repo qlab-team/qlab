@@ -65,12 +65,9 @@ const useStyles = makeStyles(theme => ({
 const Leaders = props => {
   const classes = useStyles();
 
-  // set props from redux
   const { leaderboard } = props;
-  //Leaderboard
   const allUsers = leaderboard.board;
 
-  //Nice Dates
   const last_updated = new Date(
     leaderboard.last_updated.seconds * 1000
   ).toLocaleDateString("en-US", { dateStyle: "long" });
@@ -91,7 +88,7 @@ const Leaders = props => {
             </TableCell>
             <TableCell align="right">
               <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-                ℚ
+                <sup>e</sup>
               </span>
               Score
             </TableCell>
@@ -149,9 +146,9 @@ const Leaders = props => {
                         ...investmentData,
                         msg: {
                           title: `Do you want to make this investment?`,
-                          body: `${
+                          body: `In ${
                             investmentData.username
-                          }? for ${investmentData.q_score * 5}`
+                          } for ${investmentData.q_score * 5} ℚPoints`
                         },
                         date: new Date().toString()
                       });
