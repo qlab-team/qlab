@@ -122,6 +122,7 @@ class QuizMain extends Component {
   render() {
     const { classes } = this.props;
 
+    // eslint-disable-next-line
     let answerValidation = "";
     if (this.state.answerConfirmation !== "") {
       answerValidation = (
@@ -177,9 +178,9 @@ class QuizMain extends Component {
                 updateProgressBar={this.updateProgressBar}
                 toggleAnswerSelections={this.toggleAnswerSelections}
                 eraseAnswerHighlight={this.eraseAnswerHighlight}
+                answerValidation={answerValidation}
               />
             </Grid>
-            {answerValidation}
           </Grid>
         </React.Fragment>
       );

@@ -7,16 +7,18 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Achievements from "./Achievements";
-import Input from "@material-ui/core/Input";
-import Button from "@material-ui/core/Button";
+// components
+import Dialog from "../../Utility/Dialog";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-import changeUserName from "../../../store/reducers/userReducer";
+// import changeUserName from "../../../store/reducers/userReducer";
 import { getUserAndLogin } from "../../../store/actions/userActions";
 import { getItems } from "../../../store/actions/profileActions";
+import { openDialog } from "../../../store/actions/dialogActions";
 import Badges from "./Badges";
+import { changeUserName } from "../../../store/actions/profileActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -93,7 +95,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Profile = props => {
   const classes = useStyles();
-  const [userInputField, changeUserInputField] = useState("");
   // eslint-disable-next-line
   const [userInput, changeUserInput] = useState("hello");
   const [name, setName] = React.useState("Composed TextField");
@@ -149,48 +150,15 @@ const Profile = props => {
     }
   }, [userAchievements, curUserAchievements, getItems]);
 
-  const showUserNameInputField = () => {
-    if (userInputField !== "") {
-      changeUserInputField("");
-      return;
-    }
-
-    const updateUserInput = event => {
-      console.log(event.target.value);
-      console.log(userInput);
-      changeUserInput(event.target.value);
-    };
-
-    const changeUserNameOnDatabase = event => {
-      event.preventDefault();
-      console.log(name);
-    };
-
-    changeUserInputField(
-      <form onSubmit={changeUserNameOnDatabase}>
-        <Input
-          value={userInput}
-          onChange={updateUserInput}
-          className={classes.input}
-        />
-        <Button
-          size="small"
-          type="submit"
-          className={classes.button}
-          color="primary"
-          variant="contained"
-          onClick={changeUserNameOnDatabase}
-        >
-          Submit
-        </Button>
-      </form>
-    );
-  };
   return (
     user.isLoggedIn && (
       <div>
         {auth.isLoaded && (
           <>
+            <Dialog
+              dialogCallback={props.changeUserName}
+              usernameChange={true}
+            />
             <Paper className={classes.paper}>
               <Grid container wrap="nowrap">
                 <Grid item>
@@ -206,13 +174,18 @@ const Profile = props => {
                   </Typography>
 
                   <Typography
-                    onClick={showUserNameInputField}
+                    onClick={() => {
+                      props.openDialog(true, {
+                        msg: {
+                          title: "What's your new username?"
+                        }
+                      });
+                    }}
                     className={classes.changeUserName}
                     variant="h5"
                   >
-                    Change Username
+                    Change username
                   </Typography>
-                  {userInputField}
                 </Grid>
               </Grid>
             </Paper>
@@ -281,7 +254,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeUserName: newUserName => dispatch(changeUserName(newUserName)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
-    getItems: () => dispatch(getItems())
+    getItems: () => dispatch(getItems()),
+    openDialog: (open, data) => dispatch(openDialog(open, data)),
+    changeUsername: userName => dispatch(changeUserName())
   };
 };
 

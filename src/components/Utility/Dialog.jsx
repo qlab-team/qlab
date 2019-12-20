@@ -1,8 +1,9 @@
 /////////////// IMPORTS
-import React from "react";
+import React, { useState } from "react";
 // material ui
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -16,6 +17,11 @@ import { compose } from "redux";
 /////////////// COMPONENT
 const AlertDialog = props => {
   const { auth, user, isDialogOpen, dialogData, error, qAtTheEnd } = props;
+  const [userName, changeUserName] = useState("");
+  const handleChange = e => {
+    changeUserName(e.target.value);
+    console.log(userName);
+  };
   return (
     <div>
       <Dialog
@@ -30,20 +36,25 @@ const AlertDialog = props => {
           {!error && dialogData.msg ? dialogData.msg.title : "Error"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {!error && dialogData ? (
-              <>
-                {dialogData.msg && dialogData.msg.body}
-                {qAtTheEnd && (
-                  <span style={{ opacity: 0.5, fontSize: "smaller" }}>
-                    <sup>ℚ</sup>
-                  </span>
-                )}
-              </>
-            ) : (
-              error
-            )}
-          </DialogContentText>
+          {!props.usernameChange ? (
+            <DialogContentText id="alert-dialog-description">
+              {!error && dialogData ? (
+                <>
+                  {dialogData.msg && dialogData.msg.body}
+                  {qAtTheEnd && (
+                    <span style={{ opacity: 0.5, fontSize: "smaller" }}>
+                      <sup>ℚ</sup>
+                    </span>
+                  )}
+                </>
+              ) : (
+                error
+              )}
+            </DialogContentText>
+          ) : (
+            // THIS IS YOUR INPUT COMPONENT
+            <TextField onChange={handleChange} />
+          )}
         </DialogContent>
         <DialogActions>
           <Button
@@ -60,7 +71,7 @@ const AlertDialog = props => {
             onClick={() => {
               props.openDialog(false, null, error);
               if (!error) {
-                props.dialogCallback(dialogData, auth, user);
+                props.dialogCallback({ ...dialogData, userName }, auth, user);
               }
             }}
             color="primary"
@@ -94,6 +105,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  AlertDialog
-);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(AlertDialog);

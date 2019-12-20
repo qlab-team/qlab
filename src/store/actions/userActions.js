@@ -78,17 +78,17 @@ export const userLogout = authId => {
   };
 };
 
-export const changeUserName = newUserName => {
-  return (dispatch, getState, { getFirestore }) => {
-    console.log("Change Username Called");
-    const state = getState();
-    const userAuthId = state.user.profile.auth_id;
-    const usersCollection = getFirestore().collection("users");
-    usersCollection.where("auth_id", "==", userAuthId).update({
-      username: newUserName
-    });
-  };
-};
+// export const changeUserName = newUserName => {
+//   return (dispatch, getState, { getFirestore }) => {
+//     console.log("Change Username Called");
+//     const state = getState();
+//     const userAuthId = state.user.profile.auth_id;
+//     const usersCollection = getFirestore().collection("users");
+//     usersCollection.where("auth_id", "==", userAuthId).update({
+//       username: newUserName
+//     });
+//   };
+// };
 
 export const getUserData = () => {
   return (dispatch, getState, { getFirestore }) => {
