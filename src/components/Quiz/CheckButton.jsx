@@ -70,6 +70,8 @@ function CheckButton(props) {
         variant="contained"
         color="primary"
       >
+        {props.answerValidation}
+        {""}
         {buttonValue}
       </Button>
     </React.Fragment>
