@@ -7,8 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Achievements from "./Achievements";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+// components
+import Dialog from "../../Utility/Dialog";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -16,6 +16,7 @@ import { compose } from "redux";
 import changeUserName from "../../../store/reducers/userReducer";
 import { getUserAndLogin } from "../../../store/actions/userActions";
 import { getItems } from "../../../store/actions/profileActions";
+import { openDialog } from "../../../store/actions/dialogActions";
 import Badges from "./Badges";
 
 /////////////// STYLES
@@ -93,7 +94,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Profile = props => {
   const classes = useStyles();
-  const [userInputField, changeUserInputField] = useState("");
   // eslint-disable-next-line
   const [userInput, changeUserInput] = useState("");
 
@@ -104,12 +104,6 @@ const Profile = props => {
   const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
 
   const { user, auth, userItems, userAchievements, getItems } = props;
-  // useEffect(() => {
-  //   if (user.isLoggedIn) {
-  //     props.getItems();
-  //   }
-  //   // eslint-disable-next-line
-  // }, [user.isLoggedIn]);
 
   useEffect(() => {
     if (auth.isLoaded) props.getUserAndLogin(auth);
@@ -150,45 +144,12 @@ const Profile = props => {
     }
   }, [userAchievements, curUserAchievements, getItems]);
 
-  const showUserNameInputField = () => {
-    if (userInputField !== "") {
-      changeUserInputField("");
-      return;
-    }
-
-    const updateUserInput = event => {
-      changeUserInput(event.target.value);
-      changeUserInput("he");
-    };
-
-    const changeUserNameOnDatabase = event => {
-      event.preventDefault();
-    };
-
-    changeUserInputField(
-      <form onSubmit={changeUserNameOnDatabase}>
-        <TextField
-          onChange={e => updateUserInput(e)}
-          className={classes.input}
-        />
-        <Button
-          size="small"
-          type="submit"
-          className={classes.button}
-          color="primary"
-          variant="contained"
-          onClick={changeUserNameOnDatabase}
-        >
-          Submit
-        </Button>
-      </form>
-    );
-  };
   return (
     user.isLoggedIn && (
       <div>
         {auth.isLoaded && (
           <>
+            <Dialog usernameChange={true} />
             <Paper className={classes.paper}>
               <Grid container wrap="nowrap">
                 <Grid item>
@@ -204,13 +165,18 @@ const Profile = props => {
                   </Typography>
 
                   <Typography
-                    onClick={showUserNameInputField}
+                    onClick={() => {
+                      props.openDialog(true, {
+                        msg: {
+                          title: "What's your new username?"
+                        }
+                      });
+                    }}
                     className={classes.changeUserName}
                     variant="h5"
                   >
-                    Change Username
+                    Change username
                   </Typography>
-                  {userInputField}
                 </Grid>
               </Grid>
             </Paper>
@@ -279,14 +245,10 @@ const mapDispatchToProps = dispatch => {
   return {
     changeUserName: newUserName => dispatch(changeUserName(newUserName)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
-    getItems: () => dispatch(getItems())
+    getItems: () => dispatch(getItems()),
+    openDialog: (open, data) => dispatch(openDialog(open, data))
   };
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(Profile);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);
