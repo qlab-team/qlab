@@ -76,6 +76,7 @@ jobs: # a collection of steps
   deploy_static_dev:
     executor: qlab
     steps:
+      - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -92,6 +93,7 @@ jobs: # a collection of steps
   deploy_functions_dev:
     executor: qlab
     steps:
+      - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
