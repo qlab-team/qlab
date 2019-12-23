@@ -92,8 +92,10 @@ const PurchaseHistory = props => {
             <TableBody>
               {user.profile.items ? (
                 (user.profile.items.sort((a, b) => {
-                  if (a.purchaseDate < b.purchaseDate) return -1;
-                  if (a.purchaseDate > b.purchaseDate) return 1;
+                  if (Date.parse(a.purchase_date) < Date.parse(b.purchase_date))
+                    return 1;
+                  if (Date.parse(a.purchase_date) > Date.parse(b.purchase_date))
+                    return -1;
                   return 0;
                 }),
                 user.profile.items
