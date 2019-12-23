@@ -37,6 +37,9 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - run: # Run FrontEnd Tests
           name: Run Jest Test
           command: yarn test
@@ -55,6 +58,9 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
