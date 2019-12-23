@@ -11,7 +11,7 @@ jobs: # a collection of steps
     executor: qlab
     steps: # a collection of executable commands
       - checkout: # special step to check out source code to working directory
-          path: qlab
+          path: /qlab
       - run: # Update Yarn if required
           name: update yarn
           command: "sudo yarn upgrade"
