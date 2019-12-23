@@ -1,6 +1,4 @@
 const functions = require("firebase-functions");
-
-// The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
 
 export const whoInvestedInYou = functions.firestore
@@ -17,26 +15,26 @@ export const whoInvestedInYou = functions.firestore
 
     if (investmentsBefore.length === investmentsAfter.length) {
       //No Changes, Do Nothing
-      console.log("No Investments");
+      console.info("No Investments");
       return;
     } else if (investmentsBefore.length > investmentsAfter.length) {
       // Process a Divestment
-      console.log("Divestment Detected");
+      console.info("Divestment Detected");
 
       let divestment_user_id;
 
       if (investmentsAfter.length === 0) {
-        console.log("No More Investments");
+        console.info("No More Investments");
 
         divestment_user_id = investmentsBefore[0].user_id;
       } else if (investmentsAfter.length === 1) {
-        console.log("One More Investment Exists");
+        console.info("One More Investment Exists");
         divestment_user_id = investmentsBefore.filter((investment: any) => {
           return investment.user_id !== investmentsAfter[0].user_id;
         })[0].user_id;
       }
 
-      console.log(`${investor_user_id} divested from ${divestment_user_id}`);
+      console.info(`${investor_user_id} divested from ${divestment_user_id}`);
 
       return admin
         .firestore()
@@ -50,7 +48,7 @@ export const whoInvestedInYou = functions.firestore
         });
     } else if (investmentsAfter.length > investmentsBefore.length) {
       // Process an Investment
-      console.log("Investment Detected");
+      console.info("Investment Detected");
 
       let newInvestmentObject;
 
@@ -62,7 +60,7 @@ export const whoInvestedInYou = functions.firestore
         })[0];
       }
 
-      console.log(
+      console.info(
         `${investor_user_id} invested in ${newInvestmentObject.user_id}`
       );
 
@@ -81,7 +79,7 @@ export const whoInvestedInYou = functions.firestore
         .doc(investor_user_id)
         .set(invested_in_me_object, { merge: true })
         .catch((err: any) => {
-          console.log("Error creating account", err);
+          console.error("Error creating account", err);
         });
     }
   });

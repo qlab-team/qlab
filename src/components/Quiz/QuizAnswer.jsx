@@ -11,7 +11,6 @@ const styles = theme => ({
       fontSize: 20,
       borderRadius: 20
     },
-
     wordWrap: "break-word"
   },
 

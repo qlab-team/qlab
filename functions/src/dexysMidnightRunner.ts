@@ -84,14 +84,14 @@ const q_score_updates = (users: any) => {
 
   //Commit Batch of Q_Score Updates
   batchQScoreWrite.commit().then(() => {
-    console.log("Updated Q_Scores for All Users");
+    console.info("Updated Q_Scores for All Users");
   });
 
   return q_score_map;
 };
 
 const investmentUpdates = (users: any, q_score_map: any) => {
-  console.log("Starting Investment Updates");
+  console.info("Starting Investment Updates");
   // TODO - 500 limit on this batch again
   const batchInvestmentWrite = admin.firestore().batch();
 
@@ -153,14 +153,14 @@ const investmentUpdates = (users: any, q_score_map: any) => {
     });
   });
 
-  console.log("About to commit Earnings");
+  console.info("About to commit Earnings");
   // console.log(historyChanges);
   return Promise.all(historyChanges)
     .then(() => {
       batchInvestmentWrite.commit();
     })
     .catch((err: any) => {
-      console.log("Error Committing Investment Batch", err);
+      console.error("Error Committing Investment Batch", err);
     });
 };
 
@@ -201,14 +201,14 @@ const updateHistoryTable = (
       });
     })
     .catch((err: any) => {
-      console.log("Error Updating History Table", err);
+      console.error("Error Updating History Table", err);
     });
 };
 
 export const dexysMidnightRunner = functions.pubsub
-  .schedule("every day 00:00") //Every Day for Publishing
-  // .schedule('every 1 hours') //Every Hour For Development
-  //.schedule('every 15 mins') //Every 15 Mins For Testing
+  .schedule("every day 00:00") //Every Day as Standard
+  // .schedule('every 1 hours') //Every Hour is for Development
+  //.schedule('every 15 mins') //Every 15 Mins is for Testing
   .timeZone("Asia/Tokyo")
   .onRun((context: any) => {
     return admin
@@ -216,18 +216,18 @@ export const dexysMidnightRunner = functions.pubsub
       .collection("users")
       .get()
       .then((users: any) => {
-        console.log("Got All Users");
+        console.info("Got All Users");
         const q_score_map = q_score_updates(users);
         return { q_score_map, users };
       })
       .then((result: any) => {
-        console.log("Updated QScores");
+        console.info("Updated QScores");
         return investmentUpdates(result.users, result.q_score_map);
       })
       .then(() => {
-        console.log("Updated Investments");
+        console.info("Updated Investments");
       })
       .catch((err: any) => {
-        console.log("COME ON, EILEEN!", err);
+        console.error("COME ON, EILEEN! Error Running Midnight CRON Job", err);
       });
   });

@@ -1,15 +1,10 @@
 const functions = require("firebase-functions");
-
-// The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
 
 const generateAllUsersBoard = (users: any) => {
-  // const highestScoreUser = { id: "", score: 0 };
-  // const lowestScoreUser = { id: "", score: 500 };
-
   const board = users.map((user: any) => {
     const userData = user.data();
-    // If there is no photoURL, it sets to random avatar URL
+    // If there is no photoURL, set the URL to a random avatar from JoeSchmoe.io
     let photoURL = "https://joeschmoe.io/api/v1/random";
     if (userData.photoURL) photoURL = userData.photoURL;
 
@@ -21,8 +16,6 @@ const generateAllUsersBoard = (users: any) => {
       photoURL: photoURL
     };
   });
-
-  console.log("function called....");
   return {
     board,
     last_updated: new Date()
@@ -37,7 +30,7 @@ export const updateLeaderboard = functions.firestore
       .collection("users")
       .get()
       .then((users: any) => {
-        console.log("Got Users");
+        console.info("Got Users");
         admin
           .firestore()
           .collection("leaderboard")
@@ -45,6 +38,6 @@ export const updateLeaderboard = functions.firestore
           .update(generateAllUsersBoard(users.docs));
       })
       .catch((err: any) => {
-        console.log("Error creating account", err);
+        console.error("Error updating leaderboard", err);
       });
   });

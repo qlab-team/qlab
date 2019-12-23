@@ -1,53 +1,33 @@
-version: 2.1 # use CircleCI 2.1
+version: 2.1
 
 executors:
   qlab:
-    working_directory: ~/repository # our name of the directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
+    working_directory: ~/repository
+    docker:
+      - image: circleci/node:10.16.3
 
-jobs: # a collection of steps
-  init: # Set Up Everything
+jobs:
+  init:
     executor: qlab
-    steps: # a collection of executable commands
-      - checkout # special step to check out source code to working directory
-      - run: # Update Yarn if required
+    steps:
+      - checkout
+      - run:
           name: update yarn
           command: "sudo yarn upgrade"
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-      - save_cache: # special step to save the dependency cache
+      - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
-  build_test_static: # runs not using Workflows must have a `build` job as entry point
-    executor: qlab
-
-    steps: # a collection of executable commands
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - run: # Run FrontEnd Tests
-          name: Run Jest Test
-          command: yarn test
-      - run: # Test Build the Project
-          name: Testing the Build Process "#Will it Build?"
-          command: yarn build
-
-  build_test_functions: # runs not using Workflows must have a `build` job as entry point
+  build_test_static:
     executor: qlab
     steps:
       - checkout
@@ -55,13 +35,31 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-      - run: # Install Packages for Functions
+      - run:
+          name: Run Jest Test
+          command: yarn test
+      - run:
+          name: Testing the Build Process "#Will it Build?"
+          command: yarn build
+
+  build_test_functions:
+    executor: qlab
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - run:
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
-      - run: # Run Backend Tests
+      - run:
           name: Run Backend Firebase and Cloud Functions Tests
           command: yarn testFunctions
 
@@ -73,13 +71,13 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-      - run: # Test Build the Project
+      - run:
           name: Building the Static Website
           command: yarn build
-      - run: # Deploy Static Site to Firebase
+      - run:
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting -P default
 
@@ -91,15 +89,15 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - attach_workspace:
           at: ~/repository/functions
-      - run: # Install Packages for Functions
+      - run:
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
-      - run: # Deploy Functions
+      - run:
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions -P default
 
@@ -111,31 +109,33 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - run:
           name: Building the Static Website
           command: yarn build
-      - run: # Deploy Rules
+      - run:
           name: Deploy Rules
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules -P default
 
   deploy_prod:
     executor: qlab
     steps:
-      - checkout # special step to check out source code to working directory
-      - run: # Update Yarn if required
+      - checkout
+      - run:
           name: update yarn
           command: "sudo yarn upgrade"
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: # Run Yarn
+      - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
+      - run:
+          name: Install Dependencies for Hosting
+          command: cd functions && npm install && cd ..
       - run:
           name: SED In New Config
           command: sed -i 's/"DEV"/"PROD"/g' ./src/config/fbConfig.js
@@ -150,7 +150,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - init # Set Up the Project
+      - init
       - build_test_static:
           requires:
             - init
@@ -160,7 +160,6 @@ workflows:
       - deploy_static_dev:
           requires:
             - build_test_static
-            - init
           filters:
             branches:
               only: master
