@@ -33,7 +33,7 @@ const calculateNewQScore = (user: any) => {
   } else if (newQScore <= 0) {
     return 0;
   } else {
-    return currentQScore + quizDoneModifier + randomAddition;
+    return newQScore;
   }
 };
 

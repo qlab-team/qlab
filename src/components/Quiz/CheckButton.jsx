@@ -41,25 +41,25 @@ const styles = {
 function CheckButton(props) {
   const [buttonValue, setButtonValue] = useState("CHECK");
 
-  let answerConfirmation = "";
   const answerChecker = e => {
     if (props.userHasSelected === false) return;
     if (buttonValue === "NEXT") {
       props.resetSelections();
       props.eraseAnswerHighlight();
+      props.changeBackgroundColor("reset");
       setButtonValue("CHECK");
       props.updateCurrentQuestion();
       props.getAnswerConfirmation("");
     } else if (props.currentAnswer === props.currentCorrectAnswer) {
       setButtonValue("NEXT");
-      answerConfirmation = "true";
       props.updateProgressBar();
-      props.getAnswerConfirmation(answerConfirmation);
+      props.getAnswerConfirmation("true");
+      props.changeBackgroundColor("true");
     } else {
       setButtonValue("NEXT");
-      answerConfirmation = "false";
       props.addQuizQuestionToEnd();
-      props.getAnswerConfirmation(answerConfirmation);
+      props.getAnswerConfirmation("false");
+      props.changeBackgroundColor("false");
     }
   };
   return (
