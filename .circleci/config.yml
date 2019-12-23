@@ -10,9 +10,7 @@ jobs: # a collection of steps
   init: # Set Up Everything
     executor: qlab
     steps: # a collection of executable commands
-      - run: mkdir -p qlab
       - checkout: # special step to check out source code to working directory
-          path: /qlab
       - run: # Update Yarn if required
           name: update yarn
           command: "sudo yarn upgrade"
@@ -23,34 +21,28 @@ jobs: # a collection of steps
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Run Yarn
           name: Install Dependencies
-          command: cd qlab && yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile
       - save_cache: # special step to save the dependency cache
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - persist_to_workspace:
-          root: ~/repository
-          paths:
-            - qlab
 
   build_test_static: # runs not using Workflows must have a `build` job as entry point
     executor: qlab
 
     steps: # a collection of executable commands
+      - checkout:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - attach_workspace:
-          root: ~/repository
-          at: ~/repository/qlab
-      - run:
-          name: Move Into Project
-          command: cd qlab
       - run: # Run FrontEnd Tests
           name: Run Jest Test
           command: yarn test
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
@@ -58,16 +50,11 @@ jobs: # a collection of steps
   build_test_functions: # runs not using Workflows must have a `build` job as entry point
     executor: qlab
     steps:
+      - checkout:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - attach_workspace:
-          root: ~/repository
-          at: ~/repository/qlab
-      - run:
-          name: Move Into Project
-          command: cd qlab
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
