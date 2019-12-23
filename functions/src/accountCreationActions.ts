@@ -1,6 +1,4 @@
 const functions = require("firebase-functions");
-
-// The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin");
 
 export const generateNewUser = functions.auth.user().onCreate((auth: any) => {
@@ -9,12 +7,12 @@ export const generateNewUser = functions.auth.user().onCreate((auth: any) => {
     .collection("users")
     .add(generateUser(auth))
     .then((document: any) => {
-      console.log("Account Created");
+      console.info("Account Created");
       createNewTransactionHistory(document.id, auth.uid);
       return;
     })
     .catch((err: any) => {
-      console.log("Error creating account", err);
+      console.error("Error creating account", err);
     });
 });
 
@@ -44,11 +42,11 @@ const createNewTransactionHistory = (user_id: string, auth_id: string) => {
     .doc(user_id)
     .set(generateUserHistory(auth_id))
     .then(() => {
-      console.log("Transaction History Created");
+      console.info("Transaction History Created");
       return;
     })
     .catch((err: any) => {
-      console.log("Error creating Transaction History", err);
+      console.error("Error creating Transaction History", err);
     });
 };
 

@@ -22,7 +22,6 @@ export const userBadgeChecker = functions.firestore
   });
 
 const giveUserAchievement = (userId: string, achievement: string) => {
-  console.log(userId);
   admin
     .firestore()
     .collection("users")
@@ -31,8 +30,11 @@ const giveUserAchievement = (userId: string, achievement: string) => {
       achievements: admin.firestore.FieldValue.arrayUnion({
         achievement_name: achievement
       })
+    })
+    .catch((err: any) => {
+      console.error("Error Giving Acheivement", err);
     });
-  console.log("achievement set");
+  console.info("Achievement set");
 };
 
 export const checkTopAndBottomOfLeaderBoard = functions.firestore
@@ -43,7 +45,6 @@ export const checkTopAndBottomOfLeaderBoard = functions.firestore
       .collection("users")
       .get()
       .then((users: any) => {
-        console.log(users.docs);
         const topAndBottomUsers = getTopAndBottomUser(users.docs);
         giveUserAchievement(
           topAndBottomUsers[1].id,
@@ -56,7 +57,7 @@ export const checkTopAndBottomOfLeaderBoard = functions.firestore
         );
       })
       .catch((err: any) => {
-        console.log("Error creating account", err);
+        console.error("Error Giving Acheivements", err);
       });
   });
 
@@ -81,17 +82,3 @@ const getTopAndBottomUser = (users: any) => {
   console.log(lowestScoreUser, highestScoreUser);
   return [lowestScoreUser, highestScoreUser];
 };
-
-//call function to give the user an achievement
-// console.log("highest ", highestScoreUser.id);
-// console.log("highest ", lowestScoreUser.id);
-
-// giveUserAchievement(
-//   highestScoreUser.id,
-//   "Reached the top of the leaderboard!"
-// );
-
-// giveUserAchievement(
-//   lowestScoreUser.id,
-//   "Reached the... bottom of the leaderboard!"
-// );
