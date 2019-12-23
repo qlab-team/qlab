@@ -3,13 +3,8 @@ import React from "react";
 // components
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
-<<<<<<< HEAD
 import Link from "@material-ui/core/Link";
 import { Typography, Tooltip } from "@material-ui/core/";
-=======
-import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
->>>>>>> d7e3726563ac3567df331d9793fd8b58fd32e5eb
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
