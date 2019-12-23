@@ -105,8 +105,6 @@ const Chart = props => {
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
 
-  console.log(chartData);
-
   function formatXAxis(tickItem) {
     return moment(tickItem).format("MMM Do YYYY");
   }

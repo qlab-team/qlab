@@ -10,11 +10,9 @@ import thunk from "redux-thunk";
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
-//import seedQuizzes from "./store/seedQuizzes";
 // material ui
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 import { deepPurple } from "@material-ui/core/colors";
-//seedQuizzes(); uncomment to add a new quiz
 const theme = createMuiTheme({
   palette: {
     type: "dark",
@@ -71,6 +69,9 @@ const theme = createMuiTheme({
     ].join(",")
   }
 });
+
+// hide console.logs by shadowing console object
+console.log = function() {};
 
 const store = createStore(
   rootReducer,

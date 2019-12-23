@@ -199,7 +199,7 @@ const Profile = props => {
                 </Grid>
                 <Grid
                   container
-                  flexDirection="column"
+                  // flexDirection="column"
                   alignItems="center"
                   justify="space-around"
                 >
@@ -216,7 +216,7 @@ const Profile = props => {
 
                 <Grid
                   container
-                  flexDirection="column"
+                  // flexDirection="column"
                   alignItems="center"
                   justify="space-around"
                 >
