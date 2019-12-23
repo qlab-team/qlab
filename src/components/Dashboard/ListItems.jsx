@@ -26,13 +26,15 @@ import { setBadgeInvisible } from "../../store/actions/sidebarActions";
 
 /////////////// COMPONENTS
 const MainListItems = props => {
+  console.log(props);
   return (
     <div>
       <Link
         style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/profile"
         onClick={() => {
-          // props.handleDrawerClose();
+          if (props.handleDrawerClose) props.handleDrawerClose("xs");
+          console.log(props);
           props.setBadgeInvisible({ profile: true });
         }}
       >
@@ -53,7 +55,7 @@ const MainListItems = props => {
         style={{ textDecoration: "none", color: "white" }}
         to="/dashboard/stats"
         onClick={() => {
-          // props.handleDrawerClose();
+          if (props.handleDrawerClose) props.handleDrawerClose("xs");
           props.setBadgeInvisible({ stats: true });
         }}
       >

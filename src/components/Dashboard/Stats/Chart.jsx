@@ -48,6 +48,14 @@ const useStyles = makeStyles(theme => ({
   },
   tooltip: {
     fontSize: "1.4em"
+  },
+  link: {
+    textDecoration: "none",
+    color: "whitesmoke",
+    fontWeight: 700,
+    "&:hover": {
+      textDecoration: "underline"
+    }
   }
 }));
 
@@ -90,11 +98,14 @@ const Chart = props => {
         const q_score = user.profile.q_score_history[hist].q_score;
         return createData(date.getTime(), q_score);
       });
+      if (data.length >= 4) data.unshift(createData(new Date().getTime()));
       data.reverse();
       updateChartData(data);
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
+
+  console.log(chartData);
 
   function formatXAxis(tickItem) {
     return moment(tickItem).format("MMM Do YYYY");
@@ -111,7 +122,7 @@ const Chart = props => {
         }
         placement="top"
       >
-        <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        <Typography>
           <span className="qPointsMark" style={{ fontSize: "smaller" }}>
             <sup>e</sup>
           </span>
@@ -131,54 +142,65 @@ const Chart = props => {
           </Button>
         </Typography>
       </MaterialToolTip>
-
-      <ResponsiveContainer>
-        <LineChart
-          data={chartData}
-          margin={{
-            top: 16,
-            right: 24,
-            bottom: 16,
-            left: 24
-          }}
-        >
-          <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
-          <XAxis
-            dataKey="time"
-            scale="time"
-            tickFormatter={formatXAxis}
-            stroke={theme.palette.text.secondary}
-          />
-          <Tooltip
-            viewBox={{
-              x: 0,
-              y: 0,
-              width: 400,
-              height: 400,
-              borderRadius: "5px"
+      {chartData.length >= 4 ? (
+        <ResponsiveContainer>
+          <LineChart
+            data={chartData}
+            margin={{
+              top: 16,
+              right: 24,
+              bottom: 16,
+              left: 24
             }}
-            labelStyle={{ fontSize: "10px", color: "violet" }}
-            labelFormatter={formatXAxis}
-          />
-          <YAxis width={15} stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              position="left"
-              style={{
-                textAnchor: "middle",
-                fill: theme.palette.text.primary
+          >
+            <CartesianGrid stroke={"mediumpurple"} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="time"
+              scale="time"
+              tickFormatter={formatXAxis}
+              stroke={theme.palette.text.secondary}
+            />
+            <Tooltip
+              viewBox={{
+                x: 0,
+                y: 0,
+                width: 400,
+                height: 400,
+                borderRadius: "5px"
               }}
-            ></Label>
-          </YAxis>
-          <Line
-            label={<CustomizedLabel />}
-            type="monotone"
-            dataKey="eScore"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+              labelStyle={{ fontSize: "10px", color: "violet" }}
+              labelFormatter={formatXAxis}
+            />
+            <YAxis width={15} stroke={theme.palette.text.secondary}>
+              <Label
+                angle={270}
+                position="left"
+                style={{
+                  textAnchor: "middle",
+                  fill: theme.palette.text.primary
+                }}
+              ></Label>
+            </YAxis>
+            <Line
+              label={<CustomizedLabel />}
+              type="monotone"
+              dataKey="eScore"
+              stroke={theme.palette.primary.main}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      ) : (
+        <React.Fragment>
+          <p>Welcome to QLAB!</p>
+          <p>Your eScore changes will be plotted here after a couple days. </p>
+          <p>
+            <a className={classes.link} href="/dashboard/quizzes">
+              Why not solve some quizzes meanwhile?
+            </a>
+          </p>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

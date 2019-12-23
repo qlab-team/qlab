@@ -10,9 +10,9 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 /////////////// UTILITIES
-function preventDefault(event) {
-  event.preventDefault();
-}
+// function preventDefault(event) {
+//   event.preventDefault();
+// }
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -60,7 +60,7 @@ const QPoints = props => {
         on {new Date().toLocaleDateString("en-US")}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="/dashboard/store">
           Buy goodies
         </Link>
       </div>
