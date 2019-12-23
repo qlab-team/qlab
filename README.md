@@ -1,4 +1,4 @@
-# qlab
+# QLAB
 
 ![qlab logo](/misc/qlab-logo-1.png "QLAB Logo")
 
@@ -72,7 +72,7 @@ Local Host URL for a given function will be at: `localhost:5000/qlab-cc/asia-nor
 
 ## The QLAB Team
 
-### <img src="misc/eriko.png" width="50px"> Eriko [@nouvelle](https://www.github.com/forbesd7)
+### <img src="misc/eriko.png" width="50px"> Eriko [@nouvelle](https://www.github.com/nouvelle)
 
 <!-- Frontend, Testing, React/Redux -->
 
