@@ -48,7 +48,7 @@ const QPoints = props => {
         on {new Date().toLocaleDateString("en-US")}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="/dashboard/store">
           Buy goodies
         </Link>
       </div>
