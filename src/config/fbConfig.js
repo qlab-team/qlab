@@ -27,10 +27,7 @@ const dev_config = {
 const appVersion = "DEV";
 
 const config = appVersion === "PROD" ? prod_config : dev_config;
-// const config = prod_config;
 firebase.initializeApp(config);
-console.log(process.env);
-// firebase.firestore().settings({ timestampsInSnapshots: true });
 firebase.firestore().settings({});
 
 export default firebase;

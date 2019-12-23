@@ -46,7 +46,6 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   button: {
-    // background: "rgb(92,27,249)",
     margin: theme.spacing(3),
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -222,13 +221,6 @@ const Sidebar = props => {
           {"QLAB"}
         </Typography>
       )}
-      {/* <Link
-        className={classes.button}
-        style={{ textDecoration: "none" }}
-        to="/quiz"
-      >
-        quiz
-      </Link> */}
     </Drawer>
   );
 };

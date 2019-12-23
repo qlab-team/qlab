@@ -1,13 +1,13 @@
 * {
   box-sizing: border-box;
 }
+
 /* FONTS */
 /* Aquino */
 @font-face {
   font-family: "Aquino";
   src: url("../assets/fonts/Aquino-Demo.ttf") format("truetype");
 }
-
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css?family=Fira+Code|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed&display=swap");
 @import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap");
@@ -57,7 +57,6 @@ code {
 }
 
 .qPointsMark {
-  /* animation-name: qPointsGlow; */
   color: rgb(224, 190, 243);
   animation-timing-function: ease-in-out;
   animation-duration: 2s;
@@ -66,11 +65,6 @@ code {
 
 .widget {
   transform: translate(13.5px, 0px);
-}
-
-/*  lock icon, Login page */
-.MuiSvgIcon-root path {
-  color: whitesmoke;
 }
 
 /* chart tooltip */

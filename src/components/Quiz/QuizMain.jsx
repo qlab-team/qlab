@@ -233,8 +233,5 @@ const mapDispatchToProps = dispatch => {
 /////////////// EXPORTS
 export default compose(
   withStyles(styles),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(QuizMain);

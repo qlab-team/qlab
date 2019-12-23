@@ -1,7 +1,6 @@
 const test = require("firebase-functions-test")();
 const chai = require("chai");
 const assert = chai.assert;
-
 const sinon = require("sinon");
 const admin = require("firebase-admin");
 
@@ -16,9 +15,7 @@ describe("QLAB Functions Test", () => {
 
   // eslint-disable-next-line
   after(() => {
-    // Restore admin.initializeApp() to its original method.
     adminInitStub.restore();
-    // Do other cleanup tasks.
     test.cleanup();
   });
 

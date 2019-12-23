@@ -87,7 +87,6 @@ const Login = props => {
 
   if (auth.isLoaded) {
     if (!auth.isEmpty) {
-      console.log("Redirecting to Dashboard");
       return <Redirect to="/dashboard/stats" />;
     }
   }

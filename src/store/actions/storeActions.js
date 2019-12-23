@@ -1,7 +1,5 @@
 const getStoreItems = () => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get Store Items Called");
-    // make async call to database
     const firestore = getFirestore();
     return firestore
       .collection("store")
@@ -20,11 +18,6 @@ const purchaseItem = (data, auth) => {
     const state = getState();
     const user = state.user;
 
-    console.log("Purchase Item Called");
-    console.log(
-      "Add Item Called",
-      `user_qPoints: ${user.profile.q_points} item_price: ${data.price}`
-    );
     const firestore = getFirestore();
     firestore
       .collection("users")
@@ -35,10 +28,6 @@ const purchaseItem = (data, auth) => {
         let userHasEnoughQPoints =
           user.profile.q_points >= data.price ? true : false;
         if (!userHasEnoughQPoints) {
-          console.log(
-            "Not enough qPoints for this purchase.",
-            `qPoints: ${user.profile.q_points}, item price: ${data.price}`
-          );
           dispatch({
             type: "OPEN_DIALOG",
             open: true,
@@ -53,7 +42,6 @@ const purchaseItem = (data, auth) => {
           if (item.item_id === data.id) userHasItem = true;
         });
         if (userHasItem) {
-          console.log("User already has this item.");
           dispatch({
             type: "OPEN_DIALOG",
             open: true,
@@ -75,21 +63,16 @@ const purchaseItem = (data, auth) => {
               q_points: user.profile.q_points - data.price
             })
             .then(() => {
-              console.log("Show New Badge Called");
               dispatch({
                 type: "SET_BADGE_INVISIBLE",
                 profile: false
               });
             });
-          console.log(
-            `Purchase complete. Remaining qPoints: ${user.profile.q_points -
-              data.price}`
-          );
         }
       })
 
       .catch(e => {
-        console.log("err :", e);
+        console.error("err :", e);
       });
   };
 };
