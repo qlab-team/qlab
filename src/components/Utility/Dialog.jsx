@@ -110,6 +110,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  AlertDialog
-);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(AlertDialog);

@@ -3,10 +3,10 @@ import React, { PureComponent } from "react";
 import { useEffect, useState } from "react";
 import moment from "moment";
 // components
-import Title from "../Title";
 // material ui
 import { useTheme, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import { Typography, Button } from "@material-ui/core/";
+import MaterialToolTip from "@material-ui/core/Tooltip";
 // recharts
 import {
   LineChart,
@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     },
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
+  },
+  tooltip: {
+    fontSize: "1.4em"
   },
   link: {
     textDecoration: "none",
@@ -108,25 +111,35 @@ const Chart = props => {
 
   return (
     <React.Fragment>
-      <Title>
-        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-          <sup>e</sup>
-        </span>
-        Score{" "}
-        <Button
-          className={classes.button}
-          style={{ textDecoration: "none" }}
-          onMouseEnter={e => {
-            e.target.innerHTML = user.profile.q_score;
-          }}
-          onMouseLeave={e => {
-            e.target.innerHTML = user.profile.q_score;
-          }}
-        >
-          <></>
-          {user.profile.q_score}
-        </Button>
-      </Title>
+      <MaterialToolTip
+        title={
+          <span className={classes.tooltip}>
+            eScore is a a score representing your effort! The more you study
+            each day, the higher it will go!
+          </span>
+        }
+        placement="top"
+      >
+        <Typography>
+          <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+            <sup>e</sup>
+          </span>
+          Score{" "}
+          <Button
+            className={classes.button}
+            style={{ textDecoration: "none" }}
+            onMouseEnter={e => {
+              e.target.innerHTML = user.profile.q_score;
+            }}
+            onMouseLeave={e => {
+              e.target.innerHTML = user.profile.q_score;
+            }}
+          >
+            <></>
+            {user.profile.q_score}
+          </Button>
+        </Typography>
+      </MaterialToolTip>
       {chartData.length >= 4 ? (
         <ResponsiveContainer>
           <LineChart

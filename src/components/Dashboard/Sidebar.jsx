@@ -185,7 +185,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {auth.displayName ? auth.displayName : "...loading"}
+              {props.userName ? props.userName : "...loading"}
             </Typography>
           </Grid>
         </Grid>
@@ -230,7 +230,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     auth: state.firebase.auth,
-    userItems: state.user.profile.items
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -241,4 +240,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Sidebar);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Sidebar);

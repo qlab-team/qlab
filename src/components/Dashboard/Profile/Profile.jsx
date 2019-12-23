@@ -97,16 +97,20 @@ const Profile = props => {
   const [curUserAchievements, changeCurUserAchievements] = useState("");
   const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
 
-  const { user, auth, userItems, userAchievements, getItems } = props;
-
+  const { user, auth, userItems, userAchievements, getItems, userName } = props;
+  //Make sure user is logged in before getting info
   useEffect(() => {
     if (auth.isLoaded) props.getUserAndLogin(auth);
     // eslint-disable-next-line
   }, [auth.isLoaded]);
 
+  //update username if it has changed
+  //Load new badges if they've changed
+  console.log("test", props.test);
+
   useEffect(() => {
     if (userItems) {
-      props.getItems();
+      getItems();
       changeCurUserItems(userItems);
     }
     if (curUserItems !== "") {
@@ -116,9 +120,9 @@ const Profile = props => {
         })
       );
     }
-    // eslint-disable-next-line
   }, [userItems, curUserItems, getItems]);
 
+  // Load new achievements if they've changed
   useEffect(() => {
     if (userAchievements) {
       getItems();
@@ -157,9 +161,11 @@ const Profile = props => {
                   />
                 </Grid>
                 <Grid item xs zeroMinWidth>
-                  <Typography className={classes.userName} color="primary">
-                    {user.profile.username}
-                  </Typography>
+                  {
+                    <Typography className={classes.userName} color="primary">
+                      {userName}
+                    </Typography>
+                  }
 
                   <Typography
                     onClick={() => {
@@ -216,7 +222,8 @@ const mapStateToProps = state => {
     user: state.user,
     test: state,
     userItems: state.user.profile.items,
-    userAchievements: state.user.profile.achievements
+    userAchievements: state.user.profile.achievements,
+    userName: state.user.profile.username
   };
 };
 const mapDispatchToProps = dispatch => {

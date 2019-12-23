@@ -15,15 +15,60 @@ You can then invest your points in your friends to benefit from their effort and
 
 Our feature plans for the app:
 
-- [ ] CI/CD Pipline ➰
-- [ ] User can _sign in_ and _create personal profile_ 👤
-- [ ] User can _take a quiz_ and gain points for it 👩🏻‍🏫
-- [ ] Users can _invest_ points in their friends 💰
-- [ ] _Investment statistics_ based on daily calculated _engagement score_ 🧮
-- [ ] Dashboard 🎛
-- [ ] Leaderboard 🔝
+- [x] CI/CD Pipline ➰
+- [x] User can _sign in_ and _create personal profile_ 👤
+- [x] User can _take a quiz_ and gain points for it 👩🏻‍🏫
+- [x] Users can _invest_ points in their friends 💰
+- [x] _Investment statistics_ based on daily calculated _engagement score_ 🧮
+- [x] Dashboard 🎛
+- [x] Leaderboard 🔝
 - [ ] Multiple quiz types 🧩
 - [ ] Make it awesome! 🔥
+
+## 12 Factor Checklist
+
+- [x] 1 - Codebase Revision Control
+  - [x] Code Stored on Github
+- [x] 2 - Dependencies
+  - [x] package.json File Used with Yarn
+  - [x] Node Version Specified in Main package.json
+  - [x] Node Version Specified in Sub Package.json
+- [x] 3 - Configuration
+  - [x] Relevant Firebase Configuration stored in environment variables for deployment in CircleCI
+- [x] 4 - Backing Services - Treat backing services as attached resources
+  - _This is challenging when considering Firebase, as using the React Firebase CLI ties you into Firebase's 'way of doing things'_
+  - [x] Frontend is agnostic to the Backend Process Source
+- [x] 5 - Build, Release, Run
+  - [x] Build Stage Run in Circle CI
+  - [x] CircleCI Deploys Release using some Env Config
+  - [x] Firebase Executes the Release
+- [x] 6 - Processes
+  - [x] Database is single source of truth
+  - [x] App can handle non-existence of localstorage data
+- [x] 7 - Port Binding
+  - [x] Runtime Listens on a given port
+    - _Available Through Firebase_
+- [x] 8 - Concurrency
+  - [x] Backend Processes That can be concurrent handled as separate cloud functions
+- [x] 9 - Disposability
+  - [x] Fast Startup Times for Firestore and Cloud Functions
+  - _Available Through Firebase_
+- [x] 10 - DEV / PROD Parity
+  - [x] DEV and PROD Versioning
+  - [x] Get CircleCI to fully build from promoted DEV version
+- [ ] 11 - Logs
+  - [ ] User Changes to Database are Logged using a helper cloud function
+  - [x] Cloud Function Processes are Logged
+    - _Cloud Functions are automatically logged with simple console.logs_
+- [x] 12 - Admin Processes
+  - [x] Admin Code Shipped with Main Codebase
+  - [x] Command Line
+    - [x] Quizzes can be added from Command Line
+      - _Added Script to Handle this_
+  - [x] One off DB changes can be made easily
+    - _Available Through Firebase_
+  - [x] One off Cloud Function Operations can be run easily (free with Firebase)
+    - _Available Through Firebase_
 
 ## Development
 
@@ -62,13 +107,12 @@ Consider using the Node Version Manager: [nvm](https://github.com/nvm-sh/nvm) to
 This project specifically uses Node Version `node:10.16.3` for its build and cloud functions.
 
 Also, remember to set up your [Local Emulator](https://firebase.google.com/docs/functions/local-emulator) properly with:
+
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="path/to/key.json"
 ```
 
 Local Host URL for a given function will be at: `localhost:5000/qlab-cc/asia-northeast1/didUserQuizYesterday`
-
-
 
 ## The QLAB Team
 

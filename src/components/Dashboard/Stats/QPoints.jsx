@@ -1,11 +1,10 @@
 /////////////// IMPORTS
 import React from "react";
 // components
-import Title from "../Title";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import { Typography, Tooltip } from "@material-ui/core/";
 // redux
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -17,6 +16,9 @@ const useStyles = makeStyles(theme => ({
   },
   points: {
     fontSize: "4rem"
+  },
+  tooltip: {
+    fontSize: "1.4em"
   }
 }));
 
@@ -27,12 +29,22 @@ const QPoints = props => {
 
   return (
     <React.Fragment>
-      <Title>
-        <span className="qPointsMark" style={{ fontSize: "smaller" }}>
-          ℚ
-        </span>
-        Points
-      </Title>
+      <Tooltip
+        title={
+          <span className={classes.tooltip}>
+            ℚPoints are your currency! You can spend them on badges and climb
+            the leaderboard.
+          </span>
+        }
+        placement="top"
+      >
+        <Typography component="h2" variant="h6" color="primary" gutterBottom>
+          <span className="qPointsMark" style={{ fontSize: "smaller" }}>
+            ℚ
+          </span>
+          Points
+        </Typography>
+      </Tooltip>
       <Typography className={classes.points} component="p" variant="h4">
         {user.isLoggedIn && user.profile.q_points}
         <span className="qPointsMark" style={{ fontSize: "smaller" }}>
