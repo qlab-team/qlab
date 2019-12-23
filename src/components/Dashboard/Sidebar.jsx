@@ -238,7 +238,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     auth: state.firebase.auth,
-    userName: state.profile.username
   };
 };
 const mapDispatchToProps = dispatch => {
