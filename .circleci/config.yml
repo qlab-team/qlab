@@ -1,9 +1,14 @@
-version: 2.0 # use CircleCI 2.0
-jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+version: 2.1 # use CircleCI 2.1
+
+executors:
+  qlab:
     working_directory: ~/repository # our name of the directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
+
+jobs: # a collection of steps
+  init: # Set Up Everything
+    executor: qlab
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
@@ -22,63 +27,160 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: # Install Packages for Functions
-          name: Install Dependencies for Hosting
-          command: cd functions && yarn && cd ..
+
+  build_test_static: # runs not using Workflows must have a `build` job as entry point
+    executor: qlab
+
+    steps: # a collection of executable commands
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - run: # Run FrontEnd Tests
           name: Run Jest Test
           command: yarn test
-      - run: # Run Backend Tests
-          name: Run Backend Firebase and Cloud Functions Tests
-          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
-  deploy: # deploy script
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+      - persist_to_workspace:
+          root: ~/repository
+          paths:
+            - build
+
+  build_test_functions: # runs not using Workflows must have a `build` job as entry point
+    executor: qlab
     steps:
       - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && npm install && cd ..
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunctions
+      - persist_to_workspace:
+          root: ~/repository
+          paths:
+            - functions
+
+  deploy_static_dev:
+    executor: qlab
+    steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - attach_workspace:
+          at: ~/repository/build
+      - run: # Deploy Static Site to Firebase
+          name: Deploy to Firebase
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+
+  deploy_functions_dev:
+    executor: qlab
+    steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - attach_workspace:
+          at: ~/repository/functions
+      - run: # Deploy Functions
+          name: Deploy Functions
+          command: yarn buildFunctions & yarn deployFunctions
+
+  deploy_rules_dev:
+    executor: qlab
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: # Run Yarn
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - run: # Deploy Rules
+          name: Deploy Rules
+          command: yarn deployRules
+
+  deploy_prod:
+    executor: qlab
+    steps:
+      - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
           name: update yarn
           command: "sudo yarn upgrade"
       - restore_cache: # special step to restore the dependency cache
-          name: Restore Yarn Package Cache for Hosting
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Run Yarn
-          name: Install Dependencies for Hosting
+          name: Install Dependencies
           command: yarn install --frozen-lockfile
-      - save_cache: # special step to save the dependency cache
-          name: Save Yarn Package Cache for Hosting
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run: # Install Packages for Functions
-          name: Install Dependencies for Hosting
-          command: cd functions && yarn && cd ..
-      - run: # Build the Project
-          name: react-build
+      - run:
+          name: SED In New Config
+          command: sed -i 's/"DEV"/"PROD"/g' ./src/config/fbConfig.js
+      - run:
+          name: Rebuild to Prod Version
           command: yarn build
-      - run: # Deploy Static Site to Firebase
-          name: Deploy to Firebase
-          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
-      - run: # Deploy Functions
-          name: Deploy Functions
-          command: yarn buildFunctions & yarn deployFunctions
-      - run: # Deploy Rules
-          name: Deploy Rules
-          command: yarn deployRules
+      - run:
+          name: Deploy to Production
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" -P production
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build # perform this first
-      - deploy: # perform second
+      - init # Set Up the Project
+      - build_test_static:
           requires:
-            - build
-          filters: # only for the master branch
+            - init
+      - build_test_functions:
+          requires:
+            - init
+      - deploy_static_dev:
+          requires:
+            - build_test_static
+            - init
+          filters:
             branches:
               only: master
+      - deploy_functions_dev:
+          requires:
+            - build_test_functions
+          filters:
+            branches:
+              only: master
+      - deploy_rules_dev:
+          requires:
+            - init
+          filters:
+            branches:
+              only: master
+      - prod_hold_for_approval:
+          type: approval
+          requires:
+            - deploy_static_dev
+            - deploy_functions_dev
+            - deploy_rules_dev
+      - deploy_prod:
+          requires:
+            - prod_hold_for_approval

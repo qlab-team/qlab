@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "qlab-cc"
+    "default": "qlab-cc",
+    "production": "qlab-prod"
   }
 }
