@@ -5,7 +5,6 @@ const initState = {
 const profileReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_ITEMS": {
-      //state.currentQuiz = action.quizId;
       return {
         ...state,
         items: action.items,

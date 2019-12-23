@@ -1,5 +1,3 @@
-// WILL NEED TO MOVE OTHER INVESTMENT PROCESSES INTO HERE
-
 const initState = {
   investmentIncome: 0,
   investmentPayoutToday: false,
