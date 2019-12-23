@@ -2,9 +2,9 @@ version: 2.1 # use CircleCI 2.1
 
 executors:
   qlab:
-    working_directory: ~/repository # our name of the directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
+    working_directory: ~/repository
+    docker: #Use CircleCIs
+      - image: circleci/node:10.16.3
 
 jobs: # a collection of steps
   init: # Set Up Everything
@@ -136,6 +136,9 @@ jobs: # a collection of steps
       - run: # Run Yarn
           name: Install Dependencies
           command: yarn install --frozen-lockfile
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && npm install && cd ..
       - run:
           name: SED In New Config
           command: sed -i 's/"DEV"/"PROD"/g' ./src/config/fbConfig.js
