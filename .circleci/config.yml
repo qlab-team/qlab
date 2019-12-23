@@ -103,6 +103,9 @@ jobs: # a collection of steps
           command: yarn install --frozen-lockfile
       - attach_workspace:
           at: ~/repository/functions
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && npm install && cd ..
       - run: # Deploy Functions
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions -P default
@@ -110,8 +113,12 @@ jobs: # a collection of steps
   deploy_rules_dev:
     executor: qlab
     steps:
-      - checkout
-      - restore_cache:
+      - checkout # special step to check out source code to working directory
+      - run: # Update Yarn if required
+          name: update yarn
+          command: "sudo yarn upgrade"
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
