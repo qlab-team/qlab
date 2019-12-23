@@ -1,7 +1,5 @@
 const getQuizzes = quizId => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get Quizzes Called");
-    // make async call to database
     const firestore = getFirestore();
     return firestore
       .collection("quizzes")

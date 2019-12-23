@@ -53,7 +53,7 @@ class QuizMain extends Component {
       currentAnswer: "",
       currentCorrectAnswer: "",
       answerConfirmation: "",
-      quizTitle: "Planets Level 1", //will get this from the store afterwards
+      quizTitle: "Planets Level 1",
       Quiz: []
     };
   }

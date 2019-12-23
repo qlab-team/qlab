@@ -70,9 +70,6 @@ const theme = createMuiTheme({
   }
 });
 
-// hide console.logs by shadowing console object
-console.log = function() {};
-
 const store = createStore(
   rootReducer,
   compose(

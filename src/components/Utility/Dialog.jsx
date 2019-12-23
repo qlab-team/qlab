@@ -50,7 +50,6 @@ const AlertDialog = props => {
               )}
             </DialogContentText>
           ) : (
-            // THIS IS YOUR INPUT COMPONENT
             <TextField
               onChange={e => {
                 username = e.target.value;

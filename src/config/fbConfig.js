@@ -2,7 +2,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
-// Replace this with your own config details
 const config = {
   apiKey: "AIzaSyD9aJpocdFwzNf7kVRQk7c0rxfXwcC2og0",
   authDomain: "qlab-cc.firebaseapp.com",
@@ -14,7 +13,6 @@ const config = {
   measurementId: "G-HDGRZHMZDV"
 };
 firebase.initializeApp(config);
-// firebase.firestore().settings({ timestampsInSnapshots: true });
 firebase.firestore().settings({});
 
 export default firebase;

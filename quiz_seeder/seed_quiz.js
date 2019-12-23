@@ -27,19 +27,15 @@ function seedQuizzes() {
     .collection("quizzes")
     .get()
     .then(snap => {
-      console.log("Got Quizzes");
       return snap.size; // will return the collection size
     })
     .then(quiz_id => {
-      console.log(`Adding Quiz #${quiz_id}`);
       return admin
         .firestore()
         .collection("quizzes")
         .doc(`${quiz_id}`) //set i to be one more than current amount of documents.
         .set(generate_quiz_object(quiz_id))
-        .then(function() {
-          console.log("Quiz successfully added!");
-        })
+        .then(function() {})
         .catch(function(error) {
           console.error("Error writing document: ", error);
         });

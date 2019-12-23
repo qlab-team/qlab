@@ -130,21 +130,17 @@ const Dashboard = props => {
     if (xs) setOpen(false);
   };
 
-  // set props from redux
   const { auth, user, investments } = props;
 
   useEffect(() => {
     if (user.isLoggedIn) {
       if (!investments.checked) {
-        console.log("Investments not yet checked.");
       }
     }
     // eslint-disable-next-line
   }, [user.isLoggedIn]);
 
-  // if auth not loaded, don't worry
   if (auth.isLoaded) {
-    // if no auth, redirect
     if (auth.isEmpty) return <Redirect to="/" />;
   }
 

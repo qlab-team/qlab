@@ -7,8 +7,6 @@ const updateQuizInfo = quizId => {
 
 const getQuiz = quizId => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get Quiz Called");
-    // make async call to database
     const firestore = getFirestore();
     return firestore.get({ collection: "quizzes", doc: quizId }).then(doc => {
       dispatch({ type: "GET_QUIZ", quiz: doc.data() });
@@ -18,7 +16,6 @@ const getQuiz = quizId => {
 
 const addQuizInfo = quizPoints => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Add Quiz Info Called");
     const state = getState();
     const quiz_info = state.quiz.quizInfo;
     const user_id = state.user.user_id;
@@ -48,14 +45,13 @@ const addQuizInfo = quizPoints => {
           });
       })
       .catch(e => {
-        console.log("Could Not Update Quiz Info:", e);
+        console.error("Could Not Update Quiz Info:", e);
       });
   };
 };
 
 const updateQuizRatingOnDatabase = userQuizRating => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Update Quiz Rating Called");
     const firestore = getFirestore();
     const state = getState();
     const quizId = state.quiz.currentQuiz;

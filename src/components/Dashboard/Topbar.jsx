@@ -10,7 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import Typography from "@material-ui/core/Typography";
-import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
+import { useSpring, animated } from "react-spring/web.cjs";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 // actions
@@ -22,7 +22,7 @@ import { compose } from "redux";
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
   toolbar: {
-    paddingRight: 24 // keep right padding when drawer closed
+    paddingRight: 24
   },
   dashboardOpen: {
     display: "flex",
@@ -104,8 +104,6 @@ Fade.propTypes = {
 /////////////// COMPONENT
 const Topbar = props => {
   const classes = useStyles();
-
-  // popper
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -118,7 +116,6 @@ const Topbar = props => {
 
   React.useEffect(() => {
     if (user.isLoggedIn) {
-      console.log("EARNINGS TODAY:", user.profile.earnings_today);
       setEarningsToday(user.profile.earnings_today);
     }
     // eslint-disable-next-line

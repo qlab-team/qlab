@@ -1,7 +1,5 @@
 export const getUserAndLogin = auth => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get User and Login Called");
-    // make async call to database
     const usersCollection = getFirestore().collection("users");
     const getUser = () => {
       usersCollection
@@ -9,14 +7,10 @@ export const getUserAndLogin = auth => {
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
-            console.log("No matching documents.");
-            // createUser(auth, usersCollection);
-            // getUser();
             return;
           }
 
           if (snapshot.size !== 1) {
-            console.log("There should only be one user with this id.");
             return;
           }
 
@@ -28,7 +22,7 @@ export const getUserAndLogin = auth => {
           });
         })
         .catch(err => {
-          console.log("Error getting documents", err);
+          console.error("Error getting documents", err);
         });
     };
     getUser();
@@ -37,7 +31,6 @@ export const getUserAndLogin = auth => {
 
 export const userLogout = authId => {
   return dispatch => {
-    console.log("User Logout Called");
     dispatch({
       type: "USER_LOGOUT"
     });
@@ -46,7 +39,6 @@ export const userLogout = authId => {
 
 export const changeUsername = data => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Change Username Called");
     const state = getState();
     const user = state.user;
     const usersCollection = getFirestore().collection("users");
@@ -57,15 +49,12 @@ export const changeUsername = data => {
       })
       .then(() => {
         dispatch({ type: "CHANGE_USERNAME", newUsername: data.newUsername });
-        console.log("Username updated!");
       });
   };
 };
 
 export const getUserData = () => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get User Data Called");
-    // make async call to database
     const state = getState();
     const user_id = state.user.user_id;
     const usersCollection = getFirestore().collection("users");
@@ -82,7 +71,7 @@ export const getUserData = () => {
         dispatch({ type: "GET_INVESTORS", investors });
       })
       .catch(err => {
-        console.log("Error getting documents", err);
+        console.error("Error getting documents", err);
       });
   };
 };

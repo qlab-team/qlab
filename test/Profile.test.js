@@ -51,15 +51,11 @@ const state = {
 };
 
 describe("Chech props", () => {
-  // Create mock store
   const createMockStore = configureStore();
-  // Initialize mockstore with state
   const store = createMockStore(state);
 
-  // const wrapper = shallowWithStore(<Profile />, store);
   const wrapper = shallow(<Profile store={store} />);
 
-  // Validating the props
   it("Chech props : userItems", () => {
     expect(wrapper.props().userItems).toBe(state.userItems);
   });

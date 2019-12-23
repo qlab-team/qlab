@@ -105,7 +105,6 @@ const Login = props => {
   if (auth.isLoaded) {
     //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
-      console.log("Redirecting to Dashboard");
       return <Redirect to="/dashboard/stats" />;
     }
   }

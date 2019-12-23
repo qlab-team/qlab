@@ -201,9 +201,6 @@ export default function seedQuizzes() {
         quiz_rating: 0,
         times_quiz_taken: 0
       })
-      .then(function() {
-        console.log("Quizzes successfully written!");
-      })
       .catch(function(error) {
         console.error("Error writing document: ", error);
       });
