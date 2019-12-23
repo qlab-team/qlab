@@ -1,9 +1,14 @@
 version: 2.0 # use CircleCI 2.0
-jobs: # a collection of steps
-  init: # Set Up Everything
+
+executors:
+  qlab-executor:
     working_directory: ~/repository # our name of the directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
+
+jobs: # a collection of steps
+  init: # Set Up Everything
+    executor: qlab-executor
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
@@ -22,12 +27,18 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - persist_to_workspace:
+        root: ~/repository
+        paths:
+          - ./*
 
   build_test_static: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+    executor: qlab-executor
+      
     steps: # a collection of executable commands
+    - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ./
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && yarn && cd ..
@@ -42,10 +53,10 @@ jobs: # a collection of steps
           command: yarn build
 
   build_test_functions: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
-    steps: # a collection of executable commands
+    executor: qlab-executor
+    steps:
+    - attach_workspace:
+          at: ./
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
