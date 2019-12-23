@@ -159,7 +159,7 @@ const Topbar = props => {
           to="/dashboard/stats"
         >
           <Badge
-            // max={500}
+            max={200}
             badgeContent={`+${user.profile.earnings_today}`}
             color="secondary"
             invisible={!earningsToday > 0}

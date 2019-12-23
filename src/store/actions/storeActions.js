@@ -15,8 +15,11 @@ const getStoreItems = () => {
   };
 };
 
-const purchaseItem = (data, auth, user) => {
+const purchaseItem = (data, auth) => {
   return (dispatch, getState, { getFirestore }) => {
+    const state = getState();
+    const user = state.user;
+
     console.log("Purchase Item Called");
     console.log(
       "Add Item Called",

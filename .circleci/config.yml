@@ -28,9 +28,15 @@ jobs: # a collection of steps
     docker:
       - image: circleci/node:10.16.3
     steps: # a collection of executable commands
-      # - run: # Run FrontEnd Tests // disabled for now—react-three-fiber is messing w tests -vic
-      #     name: Run Jest Test
-      #     command: yarn test
+      - run: # Install Packages for Functions
+          name: Install Dependencies for Hosting
+          command: cd functions && yarn && cd ..
+      - run: # Run FrontEnd Tests
+          name: Run Jest Test
+          command: yarn test
+      - run: # Run Backend Tests
+          name: Run Backend Firebase and Cloud Functions Tests
+          command: yarn testFunctions
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
