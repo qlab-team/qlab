@@ -9,11 +9,6 @@ import { Typography, Tooltip } from "@material-ui/core/";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-/////////////// UTILITIES
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
   depositContext: {

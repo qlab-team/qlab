@@ -1,15 +1,12 @@
 export const addInvestment = data => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Add Investment Called");
     const firestore = getFirestore();
     const state = getState();
     const user_id = state.user.user_id;
 
     const points_cost = data.q_score * 5;
 
-    //Cancel Out if Investment Is in Oneself
     if (data.user_id === user_id) {
-      console.log("You cannot invest in yourself.");
       dispatch({
         type: "OPEN_DIALOG",
         open: true,
@@ -19,13 +16,8 @@ export const addInvestment = data => {
       return;
     }
 
-    //Cancel Out if you don't have enough money to buy the investment
     const currentPoints = state.user.profile.q_points;
     if (points_cost > currentPoints) {
-      console.log(
-        "You don't have enough money for this investment.",
-        `Cost: ${points_cost} current qPoints: ${currentPoints}`
-      );
       dispatch({
         type: "OPEN_DIALOG",
         open: true,
@@ -42,9 +34,7 @@ export const addInvestment = data => {
       .then(document => {
         const investments = document.data().investments;
 
-        //Cancel Out if There are Already Two Investments
         if (investments.length >= 2) {
-          console.log("You already have two investments!");
           dispatch({
             type: "OPEN_DIALOG",
             open: true,
@@ -54,11 +44,9 @@ export const addInvestment = data => {
           return;
         }
 
-        //Cancel Out if Investment Already Exists
         for (let invInd = 0; invInd < investments.length; invInd++) {
           const investment = investments[invInd];
           if (investment.user_id === data.user_id) {
-            console.log("You already have this investment!");
             dispatch({
               type: "OPEN_DIALOG",
               open: true,
@@ -69,14 +57,11 @@ export const addInvestment = data => {
           }
         }
 
-        // show badge in stats list item
-        console.log("Set Badge Invisible Called: false");
         dispatch({
           type: "SET_BADGE_INVISIBLE",
           stats: false
         });
 
-        // New Investment Object
         const newInvestmentObject = {
           display_name: data.username,
           date: data.investment_made,
@@ -87,7 +72,6 @@ export const addInvestment = data => {
           photoURL: data.photoURL
         };
 
-        // Add to User
         firestore
           .collection("users")
           .doc(user_id)
@@ -95,9 +79,7 @@ export const addInvestment = data => {
             investments: firestore.FieldValue.arrayUnion(newInvestmentObject),
             q_points: firestore.FieldValue.increment(-points_cost)
           });
-        console.log("New Investment Created!");
 
-        // New Investment History Object
         const newInvestmentHistoryObject = {
           active: true,
           points_cost,
@@ -117,18 +99,15 @@ export const addInvestment = data => {
               newInvestmentHistoryObject
             )
           });
-        console.log("Investment History Object Created!");
       })
       .catch(e => {
-        console.log("err :", e);
+        console.error("err :", e);
       });
   };
 };
 
 export const getInvestments = auth => {
   return (dispatch, getState, { getFirestore }) => {
-    // make async call to database
-    console.log("Get Investments for Stats Called");
     const firestore = getFirestore();
     firestore
       .collection("users")
@@ -141,24 +120,21 @@ export const getInvestments = auth => {
         });
       })
       .catch(e => {
-        console.log("err :", e);
+        console.error("err :", e);
       });
   };
 };
 
 export const removeInvestment = toBeRemoved => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Remove Investment Called");
     const firestore = getFirestore();
     const state = getState();
     const user_id = state.user.user_id;
     let newInvestments = [];
-    // get current investments and filter them
     firestore
       .collection("users")
       .doc(user_id)
       .get()
-      // filter the investments
       .then(doc => {
         const docData = doc.data();
         const currInvestments = docData.investments;
@@ -168,7 +144,6 @@ export const removeInvestment = toBeRemoved => {
         return newInvestments;
       })
       .then(newInvestments => {
-        // update the investments with the new array
         return firestore
           .collection("users")
           .doc(user_id)
@@ -177,22 +152,17 @@ export const removeInvestment = toBeRemoved => {
           });
       })
       .then(() => {
-        console.log("Investment removed.");
-        //Update State
         dispatch({
           type: "GET_INVESTMENTS",
           investments: newInvestments
         });
       })
       .then(() => {
-        // Close Out History
         firestore
           .collection("transaction_history")
           .doc(user_id)
           .get()
-          // Get History
           .then(doc => {
-            // Map New History, deactivating old ones
             const newHistory = doc.data().investment_history.map(record => {
               if (record.active && record.user_id === toBeRemoved.user_id) {
                 return {
@@ -203,25 +173,20 @@ export const removeInvestment = toBeRemoved => {
               }
               return record;
             });
-            // Send Update
             firestore
               .collection("transaction_history")
               .doc(user_id)
               .update({
                 investment_history: newHistory
               });
-            console.log("Transaction History Updated");
           });
       })
-      .catch(e => {
-        console.log("err :", e);
-      });
+      .catch(e => {});
   };
 };
 
 export const notificationRead = () => {
   return dispatch => {
-    console.log("Investment Notification Called");
     dispatch({
       type: "INVESTMENT_NOTIFICATION_READ"
     });

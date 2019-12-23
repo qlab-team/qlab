@@ -1,7 +1,5 @@
 const getLeaderboard = () => {
   return (dispatch, getState, { getFirestore }) => {
-    // make async call to database
-    console.log("Get Leaderboard Called");
     const firestore = getFirestore();
     firestore
       .get({ collection: "leaderboard", doc: "allUsers" })
@@ -12,7 +10,7 @@ const getLeaderboard = () => {
         });
       })
       .catch(e => {
-        console.log("err :", e);
+        console.error("err :", e);
       });
   };
 };

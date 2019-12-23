@@ -28,7 +28,6 @@ import Container from "@material-ui/core/Container";
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
   paper: {
-    // marginTop: theme.spacing(8),
     color: "#FFF",
     display: "flex",
     flexDirection: "column",
@@ -36,8 +35,6 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     color: "white"
-    // background:
-    //   "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -46,12 +43,10 @@ const useStyles = makeStyles(theme => ({
       "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
     padding: theme.spacing(3),
     borderRadius: 20
-    // background:
-    //   "linear-gradient(178deg, rgba(169,101,255,1) 0%, rgba(92,27,249,1) 100%)"
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -62,25 +57,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 /////////////// UTILITIES
-// firebaseUI config
 const uiConfig = {
-  // popup signin flow vs redirect flow
   signInFlow: "popup",
-  // redirect to /dashboard
-  //signInSuccessUrl: "/dashboard",
-  // auth providers
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ],
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
   callbacks: {
-    //Run This After Signin
     signInSuccessWithAuthResult: () => {
       return false;
     }
   }
 };
-// copyright
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -98,14 +83,10 @@ function Copyright() {
 const Login = props => {
   const classes = useStyles();
 
-  // Set Props from Redux
   const { auth } = props;
 
-  //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
-      console.log("Redirecting to Dashboard");
       return <Redirect to="/dashboard/stats" />;
     }
   }
@@ -200,4 +181,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Login);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Login);

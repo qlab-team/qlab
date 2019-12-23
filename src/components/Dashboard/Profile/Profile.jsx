@@ -54,10 +54,7 @@ const useStyles = makeStyles(theme => ({
       cursor: "pointer"
     }
   },
-
   button: {
-    // paddingRight: 10,
-    // borderRadius: 50,
     marginLeft: 5,
     fontSize: 10,
     textTransform: "none",
@@ -73,7 +70,6 @@ const useStyles = makeStyles(theme => ({
       "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
     [theme.breakpoints.down("xs")]: {
       fontSize: 10,
-      // borderRadius: 20,
       marginTop: 10
     }
   },
@@ -94,8 +90,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const Profile = props => {
   const classes = useStyles();
-  // eslint-disable-next-line
-  const [userInput, changeUserInput] = useState("hello");
 
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
@@ -104,15 +98,10 @@ const Profile = props => {
   const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
 
   const { user, auth, userItems, userAchievements, getItems, userName } = props;
-  //Make sure user is logged in before getting info
   useEffect(() => {
     if (auth.isLoaded) props.getUserAndLogin(auth);
     // eslint-disable-next-line
   }, [auth.isLoaded]);
-
-  //update username if it has changed
-  //Load new badges if they've changed
-  console.log("test", props.test);
 
   useEffect(() => {
     if (userItems) {
@@ -128,7 +117,6 @@ const Profile = props => {
     }
   }, [userItems, curUserItems, getItems]);
 
-  // Load new achievements if they've changed
   useEffect(() => {
     if (userAchievements) {
       getItems();
@@ -197,12 +185,7 @@ const Profile = props => {
                 <Grid className={classes.title} item xs={12}>
                   <Typography variant="h5">Badges</Typography>
                 </Grid>
-                <Grid
-                  container
-                  // flexDirection="column"
-                  alignItems="center"
-                  justify="space-around"
-                >
+                <Grid container alignItems="center" justify="space-around">
                   {userItemsArr}
                 </Grid>
               </Grid>
@@ -214,12 +197,7 @@ const Profile = props => {
                   <Typography variant="h5">Achievements</Typography>
                 </Grid>
 
-                <Grid
-                  container
-                  // flexDirection="column"
-                  alignItems="center"
-                  justify="space-around"
-                >
+                <Grid container alignItems="center" justify="space-around">
                   {curUserAchievementsArr}
                 </Grid>
               </Grid>
@@ -252,9 +230,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(Profile);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Profile);

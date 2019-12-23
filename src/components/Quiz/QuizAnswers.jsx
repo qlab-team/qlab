@@ -7,9 +7,6 @@ import QuizAnswer from "./QuizAnswer";
 
 /////////////// STYLES
 const styles = theme => ({
-  Grid: {
-    // padding: theme.spacing(3)
-  },
   Title: {
     margin: 40,
     color: "white",

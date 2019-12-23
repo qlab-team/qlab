@@ -1,9 +1,6 @@
 const getTransactions = authId => {
   return (dispatch, getState, { getFirestore }) => {
-    console.log("Get getTransactions Called");
-    // make async call to database
     const firestore = getFirestore();
-
     firestore
       .collection("transaction_history")
       .where("auth_id", "==", authId)
@@ -15,7 +12,7 @@ const getTransactions = authId => {
         });
       })
       .catch(e => {
-        console.log("err :", e);
+        console.error("err :", e);
       });
   };
 };

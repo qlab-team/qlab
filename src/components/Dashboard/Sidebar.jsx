@@ -46,7 +46,6 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   button: {
-    // background: "rgb(92,27,249)",
     margin: theme.spacing(3),
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
@@ -186,7 +185,7 @@ const Sidebar = props => {
               display="block"
               gutterBottom
             >
-              {props.userName ? props.userName : "...loading"}
+              {auth.displayName ? auth.displayName : "...loading"}
             </Typography>
           </Grid>
         </Grid>
@@ -222,13 +221,6 @@ const Sidebar = props => {
           {"QLAB"}
         </Typography>
       )}
-      {/* <Link
-        className={classes.button}
-        style={{ textDecoration: "none" }}
-        to="/quiz"
-      >
-        quiz
-      </Link> */}
     </Drawer>
   );
 };
@@ -238,6 +230,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     auth: state.firebase.auth,
+    userName: state.profile.username
   };
 };
 const mapDispatchToProps = dispatch => {

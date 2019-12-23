@@ -56,7 +56,6 @@ const useStyles = makeStyles(theme => ({
 /////////////// COMPONENT
 const About = props => {
   const classes = useStyles();
-  // set props from redux
   const { auth } = props;
 
   const [questionsAndAnswers] = useState([
@@ -97,9 +96,7 @@ const About = props => {
     }
   ]);
   const isLogin = () => {
-    // if auth not loaded, don't worry
     if (auth.isLoaded) {
-      // if no auth, redirect
       if (auth.isEmpty) {
         props.history.push("/");
         return;
