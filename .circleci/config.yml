@@ -1,14 +1,14 @@
 version: 2.0 # use CircleCI 2.0
 
 executors:
-  qlab-executor:
+  qlab:
     working_directory: ~/repository # our name of the directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:10.16.3 # Using pre-built circle-Ci Docker Image
 
 jobs: # a collection of steps
   init: # Set Up Everything
-    executor: qlab-executor
+    executor: qlab
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
@@ -27,18 +27,15 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - persist_to_workspace:
-        root: ~/repository
-        paths:
-          - ./*
 
   build_test_static: # runs not using Workflows must have a `build` job as entry point
-    executor: qlab-executor
-      
+    executor: qlab
+
     steps: # a collection of executable commands
-    - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ./*
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && yarn && cd ..
@@ -53,10 +50,12 @@ jobs: # a collection of steps
           command: yarn build
 
   build_test_functions: # runs not using Workflows must have a `build` job as entry point
-    executor: qlab-executor
+    executor: qlab
     steps:
-    - attach_workspace:
-          at: ./
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
@@ -65,36 +64,28 @@ jobs: # a collection of steps
           command: yarn testFunctions
 
   deploy_static_dev:
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+    executor: qlab
     steps:
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
 
   deploy_functions_dev:
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+    executor: qlab
     steps:
       - run: # Deploy Functions
           name: Deploy Functions
           command: yarn buildFunctions & yarn deployFunctions
 
   deploy_rules_dev:
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+    executor: qlab
     steps:
       - run: # Deploy Rules
           name: Deploy Rules
           command: yarn deployRules
 
   deploy_prod:
-    working_directory: ~/repository
-    docker:
-      - image: circleci/node:10.16.3
+    executor: qlab
     steps:
       - run:
           name: SED In New Config
