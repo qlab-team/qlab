@@ -120,7 +120,7 @@ jobs: # a collection of steps
           command: yarn install --frozen-lockfile
       - run: # Deploy Rules
           name: Deploy Rules
-          command: yarn deployRules
+          command: firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules
 
   deploy_prod:
     executor: qlab

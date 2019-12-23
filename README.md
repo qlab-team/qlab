@@ -58,7 +58,8 @@ Our feature plans for the app:
   - [x] Get CircleCI to fully build from promoted DEV version
 - [ ] 11 - Logs
   - [ ] User Changes to Database are Logged using a helper cloud function
-  - [x] Cloud Function Processes are Logged - Get this for Free with Cloud Functions
+  - [x] Cloud Function Processes are Logged
+    - _Cloud Functions are automatically logged with simple console.logs_
 - [x] 12 - Admin Processes
   - [x] Admin Code Shipped with Main Codebase
   - [x] Command Line
