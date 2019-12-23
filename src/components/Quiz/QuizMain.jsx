@@ -121,8 +121,6 @@ class QuizMain extends Component {
 
   changeBackgroundColor = answerConfirmation => {
     if (answerConfirmation === "true") {
-      // console.log(this.mainViewRef.current.classList.contains("wr"));
-      // if (this.mainViewRef.current.classList.contains("wrongSelection")) {
       this.mainViewRef.current.classList.remove(
         this.props.classes.wrongSelection
       );
@@ -237,8 +235,5 @@ const mapDispatchToProps = dispatch => {
 /////////////// EXPORTS
 export default compose(
   withStyles(styles),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(QuizMain);

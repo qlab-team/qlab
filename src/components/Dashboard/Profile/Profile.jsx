@@ -98,15 +98,10 @@ const Profile = props => {
   const [curUserAchievementsArr, changeCurUserAchievementsArr] = useState("");
 
   const { user, auth, userItems, userAchievements, getItems, userName } = props;
-  //Make sure user is logged in before getting info
   useEffect(() => {
     if (auth.isLoaded) props.getUserAndLogin(auth);
     // eslint-disable-next-line
   }, [auth.isLoaded]);
-
-  //update username if it has changed
-  //Load new badges if they've changed
-  console.log("test", props.test);
 
   useEffect(() => {
     if (userItems) {
@@ -122,7 +117,6 @@ const Profile = props => {
     }
   }, [userItems, curUserItems, getItems]);
 
-  // Load new achievements if they've changed
   useEffect(() => {
     if (userAchievements) {
       getItems();
