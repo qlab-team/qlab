@@ -93,14 +93,15 @@ const QuizFinished = props => {
   const classes = useStyles();
   const [userRating, updateUserRating] = useState(0);
 
+  const { addQuizInfo, quizPoints } = props;
   useEffect(() => {
-    props.addQuizInfo(props.quizPoints);
-    // eslint-disable-next-line
-  }, []);
+    addQuizInfo(quizPoints);
+  }, [addQuizInfo, quizPoints]);
 
   const updateQuizState = rating => {
     updateUserRating(rating);
   };
+
   const updateQuizRating = () => {
     props.updateQuizRatingOnDatabase(userRating);
   };
@@ -156,6 +157,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 /////////////// EXPORTS
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  QuizFinished
-);
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(QuizFinished);

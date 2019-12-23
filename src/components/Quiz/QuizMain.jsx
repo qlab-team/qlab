@@ -123,10 +123,6 @@ class QuizMain extends Component {
 
   changeBackgroundColor = answerConfirmation => {
     if (answerConfirmation === "true") {
-      this.mainViewRef.current.classList.remove(
-        this.props.classes.wrongSelection
-      );
-
       this.mainViewRef.current.classList.add(
         this.props.classes.correctSelection
       );
@@ -152,8 +148,8 @@ class QuizMain extends Component {
   render() {
     const { classes } = this.props;
 
-    // eslint-disable-next-line
-    let answerValidation = "";
+    let answerValidation;
+
     if (this.state.answerConfirmation !== "") {
       answerValidation = (
         <AnswerValidator answerConfirmation={this.state.answerConfirmation} />
