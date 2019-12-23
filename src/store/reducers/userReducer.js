@@ -22,6 +22,14 @@ const userReducer = (state = initState, action) => {
         ...state,
         investors: action.investors
       };
+    case "CHANGE_USERNAME":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          username: action.newUsername
+        }
+      };
     default:
       return state;
   }

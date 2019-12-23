@@ -1,4 +1,4 @@
-export const addInvestment = (data, auth, user) => {
+export const addInvestment = data => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Add Investment Called");
     const firestore = getFirestore();
@@ -146,7 +146,7 @@ export const getInvestments = auth => {
   };
 };
 
-export const removeInvestment = (toBeRemoved, auth) => {
+export const removeInvestment = toBeRemoved => {
   return (dispatch, getState, { getFirestore }) => {
     console.log("Remove Investment Called");
     const firestore = getFirestore();

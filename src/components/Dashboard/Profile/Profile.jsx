@@ -13,7 +13,7 @@ import Dialog from "../../Utility/Dialog";
 import { connect } from "react-redux";
 import { compose } from "redux";
 // actions
-// import changeUserName from "../../../store/reducers/userReducer";
+import { changeUsername } from "../../../store/actions/userActions";
 import { getUserAndLogin } from "../../../store/actions/userActions";
 import { getItems } from "../../../store/actions/profileActions";
 import { openDialog } from "../../../store/actions/dialogActions";
@@ -156,8 +156,8 @@ const Profile = props => {
         {auth.isLoaded && (
           <>
             <Dialog
-              dialogCallback={props.changeUserName}
               usernameChange={true}
+              dialogCallback={props.changeUsername}
             />
             <Paper className={classes.paper}>
               <Grid container wrap="nowrap">
@@ -178,9 +178,12 @@ const Profile = props => {
                   <Typography
                     onClick={() => {
                       props.openDialog(true, {
+                        data: null,
                         msg: {
-                          title: "What's your new username?"
-                        }
+                          title: "What's your new username?",
+                          body: ""
+                        },
+                        date: new Date().toString()
                       });
                     }}
                     className={classes.changeUserName}
@@ -191,18 +194,6 @@ const Profile = props => {
                 </Grid>
               </Grid>
             </Paper>
-            {/* <Paper className={classes.paper}>
-              <Typography variant="h5">Achievements</Typography>
-
-              for quizzes done & date (if we still need/want it)
-              <Typography variant="h5">
-                You have solved {user.profile.quiz_total} quizzes.
-              </Typography>
-              <Typography variant="body1">
-                {user.profile.last_quiz_done.toDate().toLocaleDateString("en-US")}
-              </Typography>
-            </Paper> */}
-
             <Paper className={classes.paper}>
               <Grid container justify="center">
                 <Grid className={classes.title} item xs={12}>
@@ -255,7 +246,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    changeUserName: newUserName => dispatch(changeUserName(newUserName)),
+    changeUsername: data => dispatch(changeUsername(data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     getItems: () => dispatch(getItems()),
     openDialog: (open, data) => dispatch(openDialog(open, data)),
