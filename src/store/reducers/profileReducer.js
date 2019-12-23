@@ -9,7 +9,8 @@ const profileReducer = (state = initState, action) => {
       return {
         ...state,
         items: action.items,
-        achievements: action.achievements
+        achievements: action.achievements,
+        username: action.username
       };
     }
     default:

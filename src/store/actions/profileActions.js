@@ -11,6 +11,7 @@ const getItems = () => {
       .then(res => {
         dispatch({
           type: "GET_ITEMS",
+          username: res.data().username,
           items: res.data().items,
           achievements: res.data().achievements
         });
