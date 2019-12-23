@@ -26,7 +26,6 @@ import { setBadgeInvisible } from "../../store/actions/sidebarActions";
 
 /////////////// COMPONENTS
 const MainListItems = props => {
-  console.log(props);
   return (
     <div>
       <Link
@@ -34,19 +33,20 @@ const MainListItems = props => {
         to="/dashboard/profile"
         onClick={() => {
           if (props.handleDrawerClose) props.handleDrawerClose("xs");
-          console.log(props);
           props.setBadgeInvisible({ profile: true });
         }}
       >
         <ListItem button>
           <ListItemIcon>
-            <DashboardIcon />
-            <Badge
-              max={500}
-              badgeContent={`NEW`}
-              color="secondary"
-              invisible={props.sidebar.badgesInvisible.profile}
-            ></Badge>
+            <React.Fragment>
+              <DashboardIcon />
+              <Badge
+                max={500}
+                badgeContent={`NEW`}
+                color="secondary"
+                invisible={props.sidebar.badgesInvisible.profile}
+              ></Badge>
+            </React.Fragment>
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
