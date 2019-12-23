@@ -88,7 +88,7 @@ jobs: # a collection of steps
           at: ~/repository/build
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
-          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting -P default
 
   deploy_functions_dev:
     executor: qlab
@@ -105,7 +105,7 @@ jobs: # a collection of steps
           at: ~/repository/functions
       - run: # Deploy Functions
           name: Deploy Functions
-          command: yarn buildFunctions & yarn deployFunctions
+          command: yarn buildFunctions & yarn deployFunctions -P default
 
   deploy_rules_dev:
     executor: qlab
@@ -120,7 +120,7 @@ jobs: # a collection of steps
           command: yarn install --frozen-lockfile
       - run: # Deploy Rules
           name: Deploy Rules
-          command: yarn deployRules
+          command: firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules -P default
 
   deploy_prod:
     executor: qlab
