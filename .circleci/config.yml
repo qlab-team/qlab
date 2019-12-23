@@ -46,10 +46,6 @@ jobs: # a collection of steps
       - run: # Test Build the Project
           name: Testing the Build Process "#Will it Build?"
           command: yarn build
-      - persist_to_workspace:
-          root: ~/repository
-          paths:
-            - build
 
   build_test_functions: # runs not using Workflows must have a `build` job as entry point
     executor: qlab
@@ -68,10 +64,6 @@ jobs: # a collection of steps
       - run: # Run Backend Tests
           name: Run Backend Firebase and Cloud Functions Tests
           command: yarn testFunctions
-      - persist_to_workspace:
-          root: ~/repository
-          paths:
-            - functions
 
   deploy_static_dev:
     executor: qlab
@@ -84,8 +76,9 @@ jobs: # a collection of steps
       - run: # Run Yarn
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-      - attach_workspace:
-          at: ~/repository/build
+      - run: # Test Build the Project
+          name: Building the Static Website
+          command: yarn build
       - run: # Deploy Static Site to Firebase
           name: Deploy to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only hosting -P default
@@ -113,18 +106,17 @@ jobs: # a collection of steps
   deploy_rules_dev:
     executor: qlab
     steps:
-      - checkout # special step to check out source code to working directory
-      - run: # Update Yarn if required
-          name: update yarn
-          command: "sudo yarn upgrade"
-      - restore_cache: # special step to restore the dependency cache
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - checkout
+      - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run: # Run Yarn
           name: Install Dependencies
           command: yarn install --frozen-lockfile
+      - run:
+          name: Building the Static Website
+          command: yarn build
       - run: # Deploy Rules
           name: Deploy Rules
           command: firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules -P default
