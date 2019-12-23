@@ -59,7 +59,7 @@ class QuizMain extends Component {
       currentAnswer: "",
       currentCorrectAnswer: "",
       answerConfirmation: "",
-      quizTitle: "Planets Level 1", //will get this from the store afterwards
+      quizTitle: "",
       Quiz: []
     };
     this.mainViewRef = React.createRef();
@@ -67,10 +67,12 @@ class QuizMain extends Component {
 
   componentDidMount() {
     this.props.getQuiz(this.props.quizId).then(res => {
-      this.setState({ Quiz: this.props.quiz.quiz_questions });
-      this.setState({ quizLength: this.props.quiz.quiz_length });
-      this.setState({ loadedOrNot: true });
-      this.setState({ quizPoints: this.props.quiz.quiz_points });
+      this.setState({
+        Quiz: this.props.quiz.quiz_questions,
+        quizLength: this.props.quiz.quiz_length,
+        loadedOrNot: true,
+        quizPoints: this.props.quiz.quiz_points
+      });
     });
   }
 
@@ -121,12 +123,6 @@ class QuizMain extends Component {
 
   changeBackgroundColor = answerConfirmation => {
     if (answerConfirmation === "true") {
-      // console.log(this.mainViewRef.current.classList.contains("wr"));
-      // if (this.mainViewRef.current.classList.contains("wrongSelection")) {
-      this.mainViewRef.current.classList.remove(
-        this.props.classes.wrongSelection
-      );
-
       this.mainViewRef.current.classList.add(
         this.props.classes.correctSelection
       );
@@ -152,8 +148,8 @@ class QuizMain extends Component {
   render() {
     const { classes } = this.props;
 
-    // eslint-disable-next-line
-    let answerValidation = "";
+    let answerValidation;
+
     if (this.state.answerConfirmation !== "") {
       answerValidation = (
         <AnswerValidator answerConfirmation={this.state.answerConfirmation} />
