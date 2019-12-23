@@ -21,6 +21,7 @@ import Grid from "@material-ui/core/Grid";
 // react-router
 import { Redirect } from "react-router-dom";
 // actions
+import { getItems } from "../../store/actions/profileActions";
 import { getUserAndLogin, userLogout } from "../../store/actions/userActions";
 
 /////////////// STYLES
@@ -142,15 +143,16 @@ const Sidebar = props => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { auth } = props;
+  const { auth, userItems, getItems } = props;
 
   useEffect(() => {
     if (auth.isLoaded) {
       if (auth.isEmpty) return <Redirect to="/" />;
       props.getUserAndLogin(auth);
+      getItems();
     }
     // eslint-disable-next-line
-  }, [auth.isLoaded]);
+  }, [auth.isLoaded, userItems]);
 
   return (
     <Drawer
@@ -237,13 +239,16 @@ const Sidebar = props => {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    userName: state.profile.username,
+    userItems: state.user.profile.items
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
-    userLogout: () => dispatch(userLogout())
+    userLogout: () => dispatch(userLogout()),
+    getItems: () => dispatch(getItems())
   };
 };
 
