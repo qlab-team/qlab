@@ -4,7 +4,7 @@ import React from "react";
 import Title from "../Title";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 // redux
 import { connect } from "react-redux";
@@ -48,7 +48,10 @@ const QPoints = props => {
         on {new Date().toLocaleDateString("en-US")}
       </Typography>
       <div>
-        <Link color="primary" href="/dashboard/store">
+        <Link
+          style={{ textDecoration: "none", color: "white", cursor: "pointer" }}
+          to="/dashboard/store"
+        >
           Buy goodies
         </Link>
       </div>
