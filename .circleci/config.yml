@@ -10,7 +10,7 @@ jobs: # a collection of steps
   init: # Set Up Everything
     executor: qlab
     steps: # a collection of executable commands
-      - checkout: # special step to check out source code to working directory
+      - checkout # special step to check out source code to working directory
       - run: # Update Yarn if required
           name: update yarn
           command: "sudo yarn upgrade"
@@ -32,7 +32,7 @@ jobs: # a collection of steps
     executor: qlab
 
     steps: # a collection of executable commands
-      - checkout:
+      - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -50,7 +50,7 @@ jobs: # a collection of steps
   build_test_functions: # runs not using Workflows must have a `build` job as entry point
     executor: qlab
     steps:
-      - checkout:
+      - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
