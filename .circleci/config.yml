@@ -41,7 +41,7 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - attach_to_workspace:
+      - attach_workspace:
           root: ~/repository
           at: ~/repository/src
       - run: # Install Packages for Functions
@@ -64,7 +64,7 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - attach_to_workspace:
+      - attach_workspace:
           root: ~/repository
           at: ~/repository/functions
       - run: # Install Packages for Functions
