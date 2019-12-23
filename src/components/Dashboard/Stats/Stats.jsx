@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  chartContainer: {
+    overflow: "hidden"
+  },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
@@ -35,7 +38,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column"
   },
   fixedHeight: {
-    height: 240
+    height: 240,
+    overflow: "hidden"
   }
 }));
 
