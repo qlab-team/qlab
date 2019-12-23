@@ -33,6 +33,12 @@ const styles = {
   },
   progress: {
     minWidth: "90vw"
+  },
+  correctSelection: {
+    background: "limegreen"
+  },
+  wrongSelection: {
+    background: "red"
   }
 };
 
@@ -56,6 +62,7 @@ class QuizMain extends Component {
       quizTitle: "Planets Level 1", //will get this from the store afterwards
       Quiz: []
     };
+    this.mainViewRef = React.createRef();
   }
 
   componentDidMount() {
@@ -112,6 +119,29 @@ class QuizMain extends Component {
     this.setState({ userHasSelected: false });
   };
 
+  changeBackgroundColor = answerConfirmation => {
+    if (answerConfirmation === "true") {
+      // console.log(this.mainViewRef.current.classList.contains("wr"));
+      // if (this.mainViewRef.current.classList.contains("wrongSelection")) {
+      this.mainViewRef.current.classList.remove(
+        this.props.classes.wrongSelection
+      );
+
+      this.mainViewRef.current.classList.add(
+        this.props.classes.correctSelection
+      );
+    } else if (answerConfirmation === "false") {
+      this.mainViewRef.current.classList.add(this.props.classes.wrongSelection);
+    } else {
+      this.mainViewRef.current.classList.remove(
+        this.props.classes.wrongSelection
+      );
+      this.mainViewRef.current.classList.remove(
+        this.props.classes.correctSelection
+      );
+    }
+  };
+
   addQuizQuestionToEnd = () => {
     let updatedQuiz = this.state.Quiz;
     const currentQuestion = this.state.Quiz[this.state.currentQuestion];
@@ -141,6 +171,7 @@ class QuizMain extends Component {
         <React.Fragment>
           <Grid
             className={classes.QuizMain}
+            ref={this.mainViewRef}
             container
             direction="column"
             alignItems="center"
@@ -179,6 +210,7 @@ class QuizMain extends Component {
                 toggleAnswerSelections={this.toggleAnswerSelections}
                 eraseAnswerHighlight={this.eraseAnswerHighlight}
                 answerValidation={answerValidation}
+                changeBackgroundColor={this.changeBackgroundColor}
               />
             </Grid>
           </Grid>
@@ -205,5 +237,8 @@ const mapDispatchToProps = dispatch => {
 /////////////// EXPORTS
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(QuizMain);

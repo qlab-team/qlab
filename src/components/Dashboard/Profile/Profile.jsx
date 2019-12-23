@@ -18,7 +18,6 @@ import { getUserAndLogin } from "../../../store/actions/userActions";
 import { getItems } from "../../../store/actions/profileActions";
 import { openDialog } from "../../../store/actions/dialogActions";
 import Badges from "./Badges";
-import { changeUserName } from "../../../store/actions/profileActions";
 
 /////////////// STYLES
 const useStyles = makeStyles(theme => ({
@@ -97,7 +96,6 @@ const Profile = props => {
   const classes = useStyles();
   // eslint-disable-next-line
   const [userInput, changeUserInput] = useState("hello");
-  const [name, setName] = React.useState("Composed TextField");
 
   const [curUserItems, changeCurUserItems] = useState("");
   const [userItemsArr, changeUserItemsArr] = useState("");
@@ -114,10 +112,11 @@ const Profile = props => {
 
   //update username if it has changed
   //Load new badges if they've changed
+  console.log("test", props.test);
 
   useEffect(() => {
     if (userItems) {
-      props.getItems();
+      getItems();
       changeCurUserItems(userItems);
     }
     if (curUserItems !== "") {
@@ -127,7 +126,6 @@ const Profile = props => {
         })
       );
     }
-    // eslint-disable-next-line
   }, [userItems, curUserItems, getItems]);
 
   // Load new achievements if they've changed
@@ -169,11 +167,11 @@ const Profile = props => {
                   />
                 </Grid>
                 <Grid item xs zeroMinWidth>
-                  {user.profile.username && (
+                  {
                     <Typography className={classes.userName} color="primary">
                       {userName}
                     </Typography>
-                  )}
+                  }
 
                   <Typography
                     onClick={() => {
@@ -249,8 +247,7 @@ const mapDispatchToProps = dispatch => {
     changeUsername: data => dispatch(changeUsername(data)),
     getUserAndLogin: auth => dispatch(getUserAndLogin(auth)),
     getItems: () => dispatch(getItems()),
-    openDialog: (open, data) => dispatch(openDialog(open, data)),
-    changeUsername: userName => dispatch(changeUserName())
+    openDialog: (open, data) => dispatch(openDialog(open, data))
   };
 };
 

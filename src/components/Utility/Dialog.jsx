@@ -1,5 +1,5 @@
 /////////////// IMPORTS
-import React, { useState } from "react";
+import React from "react";
 // material ui
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -54,7 +54,6 @@ const AlertDialog = props => {
             <TextField
               onChange={e => {
                 username = e.target.value;
-                console.log(username);
               }}
             />
           )}

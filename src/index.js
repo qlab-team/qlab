@@ -49,8 +49,8 @@ const theme = createMuiTheme({
     },
     MuiLinearProgress: {
       barColorPrimary: {
-        background:
-          "linear-gradient(45deg, rgba(101,255,236,1) 0%, rgba(27,249,32,1) 100%)",
+        background: "linear-gradient(to right, #0cebeb, #20e3b2, #29ffc6)",
+
         borderRadius: 50
       }
     }
