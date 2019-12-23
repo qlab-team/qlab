@@ -27,6 +27,11 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - persist_to_workspace:
+          root: ~/repository
+          paths:
+            - src
+            - functions
 
   build_test_static: # runs not using Workflows must have a `build` job as entry point
     executor: qlab
@@ -36,6 +41,9 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - attach_to_workspace:
+          root: ~/repository
+          at: ~/repository/src
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && yarn && cd ..
@@ -56,6 +64,9 @@ jobs: # a collection of steps
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
+      - attach_to_workspace:
+          root: ~/repository
+          at: ~/repository/functions
       - run: # Install Packages for Functions
           name: Install Dependencies for Hosting
           command: cd functions && npm install && cd ..
