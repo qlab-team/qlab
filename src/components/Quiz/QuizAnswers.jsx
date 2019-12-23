@@ -27,6 +27,7 @@ const QuizAnswers = props => {
   };
 
   const eraseHighlight = props.eraseHighlight;
+
   useEffect(() => {
     if (eraseHighlight === true) {
       changeCorrectSelector("");
