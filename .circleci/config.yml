@@ -119,7 +119,7 @@ jobs: # a collection of steps
           command: yarn build
       - run: # Deploy Rules
           name: Deploy Rules
-          command: firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules -P default
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --only firestore:rules -P default
 
   deploy_prod:
     executor: qlab
