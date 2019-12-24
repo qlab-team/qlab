@@ -47,12 +47,9 @@ const useStyles = makeStyles(theme => ({
 const TileAndStartButton = props => {
   const classes = useStyles();
 
-  // Set Props from Redux
   const { auth } = props;
 
-  //If Auth Not Loaded, Don't Worry
   if (auth.isLoaded) {
-    //If Auth Exists, Get User Data and Set Login to True and Redirect To Dashboard
     if (!auth.isEmpty) {
       return <Redirect to="/dashboard/stats" />;
     }
